@@ -1,5 +1,6 @@
 # TOC
    - [Loading a config](#loading-a-config)
+   - [Saving a config](#saving-a-config)
 <a name=""></a>
  
 <a name="loading-a-config"></a>
@@ -7,7 +8,7 @@
 when trying to load an unexistant file, it should throw.
 
 ```js
-doormen.shouldThrow( function() { kungFig.load( __dirname + '/sample/unexistant.json' ) } ) ;
+doormen.shouldThrow( function() { kungFig.load( __dirname + '/sample/unexistant.json' ) ; } ) ;
 ```
 
 should load a simple JSON file without dependency.
@@ -60,6 +61,16 @@ shouldBe.b = shouldBe ;
 doormen.equals( kungFig.load( __dirname + '/sample/circular.json' ) , shouldBe ) ;
 ```
 
+should RE-load flawlessly a config with a circular reference to itself.
+
+```js
+// Build the circular config here
+var shouldBe = { "a": "A" } ;
+shouldBe.b = shouldBe ;
+
+doormen.equals( kungFig.load( __dirname + '/sample/circular.json' ) , shouldBe ) ;
+```
+
 should load flawlessly a config with many circular includes.
 
 ```js
@@ -75,5 +86,30 @@ shouldBe.circularOne = a ;
 shouldBe.circularTwo = b ;
 
 doormen.equals( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) , shouldBe ) ;
+```
+
+should RE-load flawlessly a config with many circular includes.
+
+```js
+// Build the circular config here
+var shouldBe = { "hello": "world!" } ;
+
+var a = { "some": "data" } ;
+var b = { "more": "data" } ;
+a.toBe = b ;
+b.toA = a ;
+
+shouldBe.circularOne = a ;
+shouldBe.circularTwo = b ;
+
+doormen.equals( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) , shouldBe ) ;
+```
+
+<a name="saving-a-config"></a>
+# Saving a config
+.
+
+```js
+//doormen.equals( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) , shouldBe ) ;
 ```
 

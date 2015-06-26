@@ -38,7 +38,7 @@ describe( "Loading a config" , function() {
 	
 	it( "when trying to load an unexistant file, it should throw" , function() {
 		
-		doormen.shouldThrow( function() { kungFig.load( __dirname + '/sample/unexistant.json' ) } ) ;
+		doormen.shouldThrow( function() { kungFig.load( __dirname + '/sample/unexistant.json' ) ; } ) ;
 	} ) ;
 	
 	it( "should load a simple JSON file without dependency" , function() {
@@ -88,6 +88,15 @@ describe( "Loading a config" , function() {
 		doormen.equals( kungFig.load( __dirname + '/sample/circular.json' ) , shouldBe ) ;
 	} ) ;
 	
+	it( "should RE-load flawlessly a config with a circular reference to itself" , function() {
+		
+		// Build the circular config here
+		var shouldBe = { "a": "A" } ;
+		shouldBe.b = shouldBe ;
+		
+		doormen.equals( kungFig.load( __dirname + '/sample/circular.json' ) , shouldBe ) ;
+	} ) ;
+	
 	it( "should load flawlessly a config with many circular includes" , function() {
 		
 		// Build the circular config here
@@ -102,6 +111,32 @@ describe( "Loading a config" , function() {
 		shouldBe.circularTwo = b ;
 		
 		doormen.equals( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) , shouldBe ) ;
+	} ) ;
+	
+	it( "should RE-load flawlessly a config with many circular includes" , function() {
+		
+		// Build the circular config here
+		var shouldBe = { "hello": "world!" } ;
+		
+		var a = { "some": "data" } ;
+		var b = { "more": "data" } ;
+		a.toBe = b ;
+		b.toA = a ;
+		
+		shouldBe.circularOne = a ;
+		shouldBe.circularTwo = b ;
+		
+		doormen.equals( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) , shouldBe ) ;
+	} ) ;
+} ) ;
+
+
+
+describe( "Saving a config" , function() {
+	
+	it( "" , function() {
+		
+		//doormen.equals( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) , shouldBe ) ;
 	} ) ;
 } ) ;
 
