@@ -10,7 +10,7 @@
     "tree-kit": "^0.5.5"
   },
   "devDependencies": {
-    "expect.js": "^0.3.1",
+    "doormen": "^0.1.4",
     "jshint": "^2.5.6",
     "mocha": "^2.2.5"
   },

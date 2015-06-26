@@ -29,27 +29,79 @@
 
 var tree = require( 'tree-kit' ) ;
 
-var kungFig ;
-
-if ( process.argv.length )
-{
-	// We are running in Node.js
-	kungFig = require( '../lib/kungFig.js' ) ;
-}
-else
-{
-	// We are running in a browser
-	//console.log( 'Running browser version' ) ;
-	kungFig = require( '../lib/browser.js' ) ;
-}
-
-var expect = require( 'expect.js' ) ;
+var kungFig = require( '../lib/kungFig.js' ) ;
+var doormen = require( 'doormen' ) ;
 
 
 
-describe( "..." , function() {
+describe( "Loading a config" , function() {
 	
-	it( "..." , function() {
+	it( "when trying to load an unexistant file, it should throw" , function() {
+		
+		doormen.shouldThrow( function() { kungFig.load( __dirname + '/sample/unexistant.json' ) } ) ;
+	} ) ;
+	
+	it( "should load a simple JSON file without dependency" , function() {
+		
+		doormen.equals(
+			kungFig.load( __dirname + '/sample/simple.json' ) ,
+			{ just: 'a', simple: { test: '!' } }
+		) ;
+	} ) ;
+	
+	it( "should load a JSON file with many relative dependencies" , function() {
+		
+		doormen.equals(
+			kungFig.load( __dirname + '/sample/withIncludes.json' ) ,
+			{
+				simple: 'test',
+				firstInclude: {
+					one: 1,
+					two: {
+						three: 3,
+						four: {
+							hello: 'world!'
+						},
+						five: {
+							just: 'a',
+							simple: {
+								test: '!'
+							}
+						}
+					}
+				},
+				nested: {
+					secondInclude: {
+						hello: 'world!'
+					}
+				}
+			}
+		) ;
+	} ) ;
+	
+	it( "should load flawlessly a config with a circular reference to itself" , function() {
+		
+		// Build the circular config here
+		var shouldBe = { "a": "A" } ;
+		shouldBe.b = shouldBe ;
+		
+		doormen.equals( kungFig.load( __dirname + '/sample/circular.json' ) , shouldBe ) ;
+	} ) ;
+	
+	it( "should load flawlessly a config with many circular includes" , function() {
+		
+		// Build the circular config here
+		var shouldBe = { "hello": "world!" } ;
+		
+		var a = { "some": "data" } ;
+		var b = { "more": "data" } ;
+		a.toBe = b ;
+		b.toA = a ;
+		
+		shouldBe.circularOne = a ;
+		shouldBe.circularTwo = b ;
+		
+		doormen.equals( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) , shouldBe ) ;
 	} ) ;
 } ) ;
 
