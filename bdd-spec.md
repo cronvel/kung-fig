@@ -51,7 +51,7 @@ doormen.equals(
 ) ;
 ```
 
-should load flawlessly a config with a circular reference to itself.
+should load flawlessly a config with a circular include to itself.
 
 ```js
 // Build the circular config here
@@ -61,7 +61,7 @@ shouldBe.b = shouldBe ;
 doormen.equals( kungFig.load( __dirname + '/sample/circular.json' ) , shouldBe ) ;
 ```
 
-should RE-load flawlessly a config with a circular reference to itself.
+should RE-load flawlessly a config with a circular include to itself.
 
 ```js
 // Build the circular config here
@@ -103,6 +103,69 @@ shouldBe.circularOne = a ;
 shouldBe.circularTwo = b ;
 
 doormen.equals( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) , shouldBe ) ;
+```
+
+should load flawlessly a config with a reference to itself.
+
+```js
+doormen.equals(
+	kungFig.load( __dirname + '/sample/selfReference.json' ) ,
+	{
+		"a": "A",
+		"sub": {
+			"key": "value",
+			"refA": "A"
+		},
+		"refB": {
+			"key": "value",
+			"refA": "A"
+		},
+		"refC": "value"
+	}
+) ;
+```
+
+should load a JSON file with many relative dependencies and sub-references.
+
+```js
+doormen.equals(
+	kungFig.load( __dirname + '/sample/withIncludesRef.json' ) ,
+	{
+		simple: 'test',
+		firstInclude: {
+			three: 3,
+			four: {
+				hello: 'world!'
+			},
+			five: {
+				just: 'a',
+				simple: {
+					test: '!'
+				}
+			}
+		},
+		nested: {
+			secondInclude: 'world!',
+			thirdInclude: 3
+		}
+	}
+) ;
+```
+
+should load flawlessly a config with a circular reference to itself.
+
+```js
+// Build the circular config here
+var shouldBe = {
+	"a": "A",
+	"sub": {
+		"key": "value"
+	}
+} ;
+
+shouldBe.sub.ref = shouldBe ;
+
+doormen.equals( kungFig.load( __dirname + '/sample/selfCircularReference.json' ) , shouldBe ) ;
 ```
 
 <a name="saving-a-config"></a>
