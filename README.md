@@ -180,9 +180,67 @@ doormen.equals( kungFig.load( __dirname + '/sample/selfCircularReference.json' )
 
 <a name="saving-a-config"></a>
 # Saving a config
-.
+should stringify a simple config.
 
 ```js
-//doormen.equals( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) , shouldBe ) ;
+var conf = {
+	a: "Haha!",
+	b: "Bee!",
+	sub: {
+		c: "See!"
+	}
+} ;
+
+doormen.equals( kungFig.save( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!"\n  }\n}' ) ;
+```
+
+should stringify a config that have circular references.
+
+```js
+var conf = {
+	a: "Haha!",
+	b: "Bee!",
+	sub: {
+		c: "See!"
+	}
+} ;
+
+conf.sub.circular = conf ;
+
+//console.log( kungFig.save( conf ) ) ;
+doormen.equals( kungFig.save( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!",\n    "circular": "@:"\n  }\n}' ) ;
+
+
+var conf = {
+	a: "Haha!",
+	b: "Bee!",
+	sub: {
+		c: "See!"
+	}
+} ;
+
+conf.sub.circular = conf.sub ;
+
+//console.log( kungFig.save( conf ) ) ;
+doormen.equals( kungFig.save( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!",\n    "circular": "@:sub"\n  }\n}' ) ;
+
+
+var conf = {
+	a: "Haha!",
+	b: "Bee!",
+	sub: {
+		sub: {
+			c: "See!"
+		}
+	}
+} ;
+
+conf.sub.sub.circular = conf.sub.sub ;
+
+//console.log( kungFig.save( conf ) ) ;
+doormen.equals(
+	kungFig.save( conf ) , 
+	'{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "sub": {\n      "c": "See!",\n      "circular": "@:sub.sub"\n    }\n  }\n}'
+) ;
 ```
 
