@@ -49,6 +49,24 @@ describe( "Loading a config" , function() {
 		) ;
 	} ) ;
 	
+	it( "should load a simple JSON file without dependency, containing an array" , function() {
+		
+		//console.log( kungFig.load( __dirname + '/sample/simpleWithArrays.json' ) ) ;
+		doormen.equals(
+			kungFig.load( __dirname + '/sample/simpleWithArrays.json' ) ,
+			{ just: [ 'a' , 'simple' , [ 'test' , '!' ] ] }
+		) ;
+	} ) ;
+	
+	it( "should load a simple JSON file without dependency, which is an array" , function() {
+		
+		//console.log( kungFig.load( __dirname + '/sample/simpleArray.json' ) ) ;
+		doormen.equals(
+			kungFig.load( __dirname + '/sample/simpleArray.json' ) ,
+			[ 'a' , 'simple' , [ 'test' , '!' ] ]
+		) ;
+	} ) ;
+	
 	it( "should load a JSON file with many relative dependencies" , function() {
 		
 		doormen.equals(
@@ -129,6 +147,22 @@ describe( "Loading a config" , function() {
 		doormen.equals( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) , shouldBe ) ;
 	} ) ;
 	
+	it( "should load flawlessly a config which is an array with many circular includes" , function() {
+		
+		// Build the circular config here
+		var shouldBe = [ "world!" ] ;
+		
+		var a = [ "data" ] ;
+		var b = [ "data" ] ;
+		a[ 1 ] = b ;
+		b[ 1 ] = a ;
+		
+		shouldBe[ 1 ] = a ;
+		shouldBe[ 2 ] = b ;
+		
+		doormen.equals( kungFig.load( __dirname + '/sample/withCircularIncludesArray.json' ) , shouldBe ) ;
+	} ) ;
+	
 	it( "should load flawlessly a config with a reference to itself" , function() {
 		
 		doormen.equals(
@@ -145,6 +179,25 @@ describe( "Loading a config" , function() {
 				},
 				"refC": "value"
 			}
+		) ;
+	} ) ;
+	
+	it( "should load flawlessly a config which is an array with a reference to itself" , function() {
+		
+		doormen.equals(
+			kungFig.load( __dirname + '/sample/selfReferenceArray.json' ) ,
+			[
+				"A",
+				[
+					"value",
+					"A"
+				],
+				[
+					"value",
+					"A"
+				],
+				"value"
+			]
 		) ;
 	} ) ;
 	
@@ -174,6 +227,32 @@ describe( "Loading a config" , function() {
 		) ;
 	} ) ;
 	
+	it( "should load a JSON file which is an array with many relative dependencies and sub-references" , function() {
+		
+		//console.log( kungFig.load( __dirname + '/sample/withIncludesRefArray.json' ) ) ;
+		doormen.equals(
+			kungFig.load( __dirname + '/sample/withIncludesRefArray.json' ) ,
+			[
+				'test',
+				[
+					3,
+					[ 'hello', 'world!' ],
+					{
+						just: 'a',
+						simple: {
+							test: '!'
+						}
+					}
+				],
+				[
+					'world!',
+					'hello',
+					3
+				]
+			]
+		) ;
+	} ) ;
+	
 	it( "should load flawlessly a config with a circular reference to itself" , function() {
 		
 		// Build the circular config here
@@ -189,14 +268,21 @@ describe( "Loading a config" , function() {
 		doormen.equals( kungFig.load( __dirname + '/sample/selfCircularReference.json' ) , shouldBe ) ;
 	} ) ;
 	
-	it( "Arrays..." ) ;
+	it( "should load flawlessly a config which is an array with a circular reference to itself" , function() {
+		
+		// Build the circular config here
+		var shouldBe = [ "A" , [ "value" ] ] ;
+		shouldBe[ 1 ][ 1 ] = shouldBe ;
+		
+		doormen.equals( kungFig.load( __dirname + '/sample/selfCircularReferenceArray.json' ) , shouldBe ) ;
+	} ) ;
 } ) ;
 
 
 
 describe( "Saving a config" , function() {
 	
-	it( "zzz should stringify a simple config" , function() {
+	it( "should stringify a simple config" , function() {
 		
 		var conf = {
 			a: "Haha!",
@@ -208,6 +294,15 @@ describe( "Saving a config" , function() {
 		
 		//console.log( kungFig.save( conf ) ) ;
 		doormen.equals( kungFig.save( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!"\n  }\n}' ) ;
+	} ) ;
+	
+	it( "should stringify a config of arrays" , function() {
+		
+		var str ;
+		
+		str = kungFig.save( kungFig.load( __dirname + '/sample/withIncludesRefArray.json' ) ) ;
+		//console.log( str ) ;
+		doormen.equals( str , '[\n  "test",\n  [\n    3,\n    [\n      "hello",\n      "world!"\n    ],\n    {\n      "just": "a",\n      "simple": {\n        "test": "!"\n      }\n    }\n  ],\n  [\n    "world!",\n    "hello",\n    3\n  ]\n]' ) ;
 	} ) ;
 	
 	it( "should stringify a config that have circular references" , function() {
@@ -259,16 +354,24 @@ describe( "Saving a config" , function() {
 		) ;
 	} ) ;
 	
-	it( "should load flawlessly a config with many circular includes" , function() {
+	it( "should load and save flawlessly a config with many circular includes" , function() {
 		
 		var str ;
 		
 		str = kungFig.save( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) ) ;
-		console.log( str ) ;
+		//console.log( str ) ;
 		doormen.equals( str , '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "toBe": "@:circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "toA": "@:circularOne"\n  }\n}' ) ;
 	} ) ;
 	
-	it( "Arrays..." ) ;
+	it( "should load and save flawlessly a config which is an array with many circular includes" , function() {
+		
+		var str ;
+		
+		str = kungFig.save( kungFig.load( __dirname + '/sample/withCircularIncludesArray.json' ) ) ;
+		//console.log( str ) ;
+		doormen.equals( str , '[\n  "world!",\n  [\n    "data",\n    "@:#2"\n  ],\n  [\n    "data",\n    "@:#1"\n  ]\n]' ) ;
+	} ) ;
+	
 	it( "Files..." ) ;
 } ) ;
 

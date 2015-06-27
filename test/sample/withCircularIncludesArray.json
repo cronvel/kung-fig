@@ -1,0 +1,5 @@
+[
+	"world!",
+	"@circularIncludesArray/a.json",
+	"@circularIncludesArray/b.json"
+]
