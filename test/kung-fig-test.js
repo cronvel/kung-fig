@@ -196,7 +196,7 @@ describe( "Loading a config" , function() {
 
 describe( "Saving a config" , function() {
 	
-	it( "should stringify a simple config" , function() {
+	it( "zzz should stringify a simple config" , function() {
 		
 		var conf = {
 			a: "Haha!",
@@ -206,6 +206,7 @@ describe( "Saving a config" , function() {
 			}
 		} ;
 		
+		//console.log( kungFig.save( conf ) ) ;
 		doormen.equals( kungFig.save( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!"\n  }\n}' ) ;
 	} ) ;
 	
@@ -263,7 +264,7 @@ describe( "Saving a config" , function() {
 		var str ;
 		
 		str = kungFig.save( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) ) ;
-		//console.log( str ) ;
+		console.log( str ) ;
 		doormen.equals( str , '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "toBe": "@:circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "toA": "@:circularOne"\n  }\n}' ) ;
 	} ) ;
 	

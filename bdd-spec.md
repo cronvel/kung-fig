@@ -1,3 +1,14 @@
+{
+  "hello": "world!",
+  "circularOne": {
+    "some": "data",
+    "toBe": "@:circularTwo"
+  },
+  "circularTwo": {
+    "more": "data",
+    "toA": "@:circularOne"
+  }
+}
 # TOC
    - [Loading a config](#loading-a-config)
    - [Saving a config](#saving-a-config)
@@ -170,7 +181,7 @@ doormen.equals( kungFig.load( __dirname + '/sample/selfCircularReference.json' )
 
 <a name="saving-a-config"></a>
 # Saving a config
-should stringify a simple config.
+zzz should stringify a simple config.
 
 ```js
 var conf = {
@@ -181,6 +192,7 @@ var conf = {
 	}
 } ;
 
+//console.log( kungFig.save( conf ) ) ;
 doormen.equals( kungFig.save( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!"\n  }\n}' ) ;
 ```
 
@@ -240,7 +252,7 @@ should load flawlessly a config with many circular includes.
 var str ;
 
 str = kungFig.save( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) ) ;
-//console.log( str ) ;
+console.log( str ) ;
 doormen.equals( str , '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "toBe": "@:circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "toA": "@:circularOne"\n  }\n}' ) ;
 ```
 
