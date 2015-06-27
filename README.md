@@ -244,3 +244,13 @@ doormen.equals(
 ) ;
 ```
 
+should load flawlessly a config with many circular includes.
+
+```js
+var str ;
+
+str = kungFig.save( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) ) ;
+//console.log( str ) ;
+doormen.equals( str , '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "toBe": "@:circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "toA": "@:circularOne"\n  }\n}' ) ;
+```
+
