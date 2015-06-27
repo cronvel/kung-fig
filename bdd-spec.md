@@ -359,3 +359,15 @@ str = kungFig.save( kungFig.load( __dirname + '/sample/withCircularIncludesArray
 doormen.equals( str , '[\n  "world!",\n  [\n    "data",\n    "@:#2"\n  ],\n  [\n    "data",\n    "@:#1"\n  ]\n]' ) ;
 ```
 
+should load and save flawlessly a config with many circular includes.
+
+```js
+var str ;
+
+kungFig.save( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) , __dirname + '/output.json' ) ;
+str = fs.readFileSync( __dirname + '/output.json' ).toString() ;
+//console.log( str ) ;
+doormen.equals( str , '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "toBe": "@:circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "toA": "@:circularOne"\n  }\n}' ) ;
+fs.unlinkSync( __dirname + '/output.json' ) ;
+```
+
