@@ -1,6 +1,6 @@
 {
   "name": "kung-fig",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Yet another JSON config loader.",
   "main": "lib/kungFig.js",
   "directories": {
