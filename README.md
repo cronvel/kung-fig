@@ -11,6 +11,7 @@ Early alpha.
 # TOC
    - [Loading a config](#loading-a-config)
    - [Saving a config](#saving-a-config)
+   - [JS modules](#js-modules)
 <a name=""></a>
  
 <a name="loading-a-config"></a>
@@ -379,5 +380,32 @@ str = fs.readFileSync( __dirname + '/output.json' ).toString() ;
 //console.log( str ) ;
 doormen.equals( str , '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "toBe": "@:circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "toA": "@:circularOne"\n  }\n}' ) ;
 fs.unlinkSync( __dirname + '/output.json' ) ;
+```
+
+<a name="js-modules"></a>
+# JS modules
+should load a JS module.
+
+```js
+doormen.equals(
+	kungFig.load( __dirname + '/sample/js/one.js' ) ,
+	require(  __dirname + '/sample/js/one.js' )
+) ;
+```
+
+should load a JSON file with many relative dependencies and sub-references to a JS module.
+
+```js
+doormen.equals(
+	kungFig.load( __dirname + '/sample/withJsIncludesRef.json' ) ,
+	{
+		simple: 'test',
+		firstInclude: require(  __dirname + '/sample/js/one.js' ) ,
+		nested: {
+			secondInclude: require(  __dirname + '/sample/js/one.js' ).helloFunc ,
+			thirdInclude: require(  __dirname + '/sample/js/one.js' ).awesomeFunc
+		}
+	}
+) ;
 ```
 
