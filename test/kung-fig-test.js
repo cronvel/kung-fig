@@ -385,3 +385,35 @@ describe( "Saving a config" , function() {
 	} ) ;
 } ) ;
 
+
+	
+describe( "JS modules" , function() {
+	
+	it( "should load a JS module" , function() {
+		
+		doormen.equals(
+			kungFig.load( __dirname + '/sample/js/one.js' ) ,
+			require(  __dirname + '/sample/js/one.js' )
+		) ;
+	} ) ;
+	
+	it( "should load a JSON file with many relative dependencies and sub-references to a JS module" , function() {
+		
+		doormen.equals(
+			kungFig.load( __dirname + '/sample/withJsIncludesRef.json' ) ,
+			{
+				simple: 'test',
+				firstInclude: require(  __dirname + '/sample/js/one.js' ) ,
+				nested: {
+					secondInclude: require(  __dirname + '/sample/js/one.js' ).helloFunc ,
+					thirdInclude: require(  __dirname + '/sample/js/one.js' ).awesomeFunc
+				}
+			}
+		) ;
+	} ) ;
+	
+	it( "Save JS modules" ) ;
+} ) ;
+
+
+
