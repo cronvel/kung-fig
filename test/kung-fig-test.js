@@ -277,6 +277,11 @@ describe( "Loading a config" , function() {
 		
 		doormen.equals( kungFig.load( __dirname + '/sample/selfCircularReferenceArray.json' ) , shouldBe ) ;
 	} ) ;
+	
+	it( "path starting with ./" ) ;
+	it( "path starting with ../" ) ;
+	it( "path starting with ~/" ) ;
+	it( "Recursive parent search: path containing .../" ) ;
 } ) ;
 
 
