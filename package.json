@@ -11,7 +11,7 @@
     "tree-kit": "^0.5.5"
   },
   "devDependencies": {
-    "doormen": "^0.1.4",
+    "doormen": "^0.2.16",
     "jshint": "^2.5.6",
     "mocha": "^2.2.5"
   },
