@@ -2,7 +2,7 @@
 	"one": 1,
 	"two": {
 		"three": 3,
-		"four": "@two.json",
-		"five": "@../simple.json"
+		"@four": "two.json",
+		"@five": "../simple.json"
 	}
 }

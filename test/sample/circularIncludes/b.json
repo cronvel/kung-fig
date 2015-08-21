@@ -1,4 +1,4 @@
 {
 	"more": "data",
-	"toA": "@a.json"
+	"@toA": "a.json"
 }
