@@ -79,8 +79,7 @@ describe( "Loading a config" , function() {
 			kungFig.load( __dirname + '/sample/withUnexistantOptionalInclude.json' ) ,
 			{
 				simple: "test",
-				unexistant: undefined
-				        
+				unexistant: {}
 			}
 		) ;
 	} ) ;

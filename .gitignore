@@ -7,7 +7,6 @@
 *.html.gz
 *.css.gz
 *.js.gz
-*.png
 .spellcast
 build
 _build

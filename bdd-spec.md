@@ -41,6 +41,24 @@ doormen.equals(
 ) ;
 ```
 
+when loading a file with and unexistant dependency using the '@', it should throw.
+
+```js
+doormen.shouldThrow( function() { kungFig.load( __dirname + '/sample/withUnexistantInclude.json' ) ; } ) ;
+```
+
+when loading a file with and unexistant dependency using the '?@', it should not throw.
+
+```js
+doormen.equals(
+	kungFig.load( __dirname + '/sample/withUnexistantOptionalInclude.json' ) ,
+	{
+		simple: "test",
+		unexistant: {}
+	}
+) ;
+```
+
 should load a JSON file with many relative dependencies.
 
 ```js
@@ -126,23 +144,6 @@ shouldBe.circularTwo = b ;
 doormen.equals( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) , shouldBe ) ;
 ```
 
-should load flawlessly a config which is an array with many circular includes.
-
-```js
-// Build the circular config here
-var shouldBe = [ "world!" ] ;
-
-var a = [ "data" ] ;
-var b = [ "data" ] ;
-a[ 1 ] = b ;
-b[ 1 ] = a ;
-
-shouldBe[ 1 ] = a ;
-shouldBe[ 2 ] = b ;
-
-doormen.equals( kungFig.load( __dirname + '/sample/withCircularIncludesArray.json' ) , shouldBe ) ;
-```
-
 should load flawlessly a config with a reference to itself.
 
 ```js
@@ -160,26 +161,6 @@ doormen.equals(
 		},
 		"refC": "value"
 	}
-) ;
-```
-
-should load flawlessly a config which is an array with a reference to itself.
-
-```js
-doormen.equals(
-	kungFig.load( __dirname + '/sample/selfReferenceArray.json' ) ,
-	[
-		"A",
-		[
-			"value",
-			"A"
-		],
-		[
-			"value",
-			"A"
-		],
-		"value"
-	]
 ) ;
 ```
 
@@ -210,33 +191,6 @@ doormen.equals(
 ) ;
 ```
 
-should load a JSON file which is an array with many relative dependencies and sub-references.
-
-```js
-//console.log( kungFig.load( __dirname + '/sample/withIncludesRefArray.json' ) ) ;
-doormen.equals(
-	kungFig.load( __dirname + '/sample/withIncludesRefArray.json' ) ,
-	[
-		'test',
-		[
-			3,
-			[ 'hello', 'world!' ],
-			{
-				just: 'a',
-				simple: {
-					test: '!'
-				}
-			}
-		],
-		[
-			'world!',
-			'hello',
-			3
-		]
-	]
-) ;
-```
-
 should load flawlessly a config with a circular reference to itself.
 
 ```js
@@ -251,16 +205,6 @@ var shouldBe = {
 shouldBe.sub.ref = shouldBe ;
 
 doormen.equals( kungFig.load( __dirname + '/sample/selfCircularReference.json' ) , shouldBe ) ;
-```
-
-should load flawlessly a config which is an array with a circular reference to itself.
-
-```js
-// Build the circular config here
-var shouldBe = [ "A" , [ "value" ] ] ;
-shouldBe[ 1 ][ 1 ] = shouldBe ;
-
-doormen.equals( kungFig.load( __dirname + '/sample/selfCircularReferenceArray.json' ) , shouldBe ) ;
 ```
 
 <a name="saving-a-config"></a>
@@ -280,16 +224,6 @@ var conf = {
 doormen.equals( kungFig.save( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!"\n  }\n}' ) ;
 ```
 
-should stringify a config of arrays.
-
-```js
-var str ;
-
-str = kungFig.save( kungFig.load( __dirname + '/sample/withIncludesRefArray.json' ) ) ;
-//console.log( str ) ;
-doormen.equals( str , '[\n  "test",\n  [\n    3,\n    [\n      "hello",\n      "world!"\n    ],\n    {\n      "just": "a",\n      "simple": {\n        "test": "!"\n      }\n    }\n  ],\n  [\n    "world!",\n    "hello",\n    3\n  ]\n]' ) ;
-```
-
 should stringify a config that have circular references.
 
 ```js
@@ -304,7 +238,7 @@ var conf = {
 conf.sub.circular = conf ;
 
 //console.log( kungFig.save( conf ) ) ;
-doormen.equals( kungFig.save( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!",\n    "circular": "@:"\n  }\n}' ) ;
+doormen.equals( kungFig.save( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!",\n    "@circular": ";"\n  }\n}' ) ;
 
 
 var conf = {
@@ -318,7 +252,7 @@ var conf = {
 conf.sub.circular = conf.sub ;
 
 //console.log( kungFig.save( conf ) ) ;
-doormen.equals( kungFig.save( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!",\n    "circular": "@:sub"\n  }\n}' ) ;
+doormen.equals( kungFig.save( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!",\n    "@circular": ";sub"\n  }\n}' ) ;
 
 
 var conf = {
@@ -336,7 +270,7 @@ conf.sub.sub.circular = conf.sub.sub ;
 //console.log( kungFig.save( conf ) ) ;
 doormen.equals(
 	kungFig.save( conf ) , 
-	'{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "sub": {\n      "c": "See!",\n      "circular": "@:sub.sub"\n    }\n  }\n}'
+	'{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "sub": {\n      "c": "See!",\n      "@circular": ";sub.sub"\n    }\n  }\n}'
 ) ;
 ```
 
@@ -347,17 +281,7 @@ var str ;
 
 str = kungFig.save( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) ) ;
 //console.log( str ) ;
-doormen.equals( str , '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "toBe": "@:circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "toA": "@:circularOne"\n  }\n}' ) ;
-```
-
-should load and save flawlessly a config which is an array with many circular includes.
-
-```js
-var str ;
-
-str = kungFig.save( kungFig.load( __dirname + '/sample/withCircularIncludesArray.json' ) ) ;
-//console.log( str ) ;
-doormen.equals( str , '[\n  "world!",\n  [\n    "data",\n    "@:#2"\n  ],\n  [\n    "data",\n    "@:#1"\n  ]\n]' ) ;
+doormen.equals( str , '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "@toBe": ";circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "@toA": ";circularOne"\n  }\n}' ) ;
 ```
 
 should load and save flawlessly a config with many circular includes.
@@ -368,7 +292,7 @@ var str ;
 kungFig.save( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) , __dirname + '/output.json' ) ;
 str = fs.readFileSync( __dirname + '/output.json' ).toString() ;
 //console.log( str ) ;
-doormen.equals( str , '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "toBe": "@:circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "toA": "@:circularOne"\n  }\n}' ) ;
+doormen.equals( str , '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "@toBe": ";circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "@toA": ";circularOne"\n  }\n}' ) ;
 fs.unlinkSync( __dirname + '/output.json' ) ;
 ```
 
