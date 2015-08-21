@@ -2,6 +2,7 @@
    - [Loading a config](#loading-a-config)
    - [Saving a config](#saving-a-config)
    - [JS modules](#js-modules)
+   - [Operator behaviours](#operator-behaviours)
 <a name=""></a>
  
 <a name="loading-a-config"></a>
@@ -55,6 +56,31 @@ doormen.equals(
 	{
 		simple: "test",
 		unexistant: {}
+	}
+) ;
+```
+
+when loading a file, all Tree-Ops should be reduced.
+
+```js
+doormen.equals(
+	kungFig.load( __dirname + '/sample/withTreeOps.json' ) ,
+	{
+		simple: "test",
+		int: 7
+	}
+) ;
+```
+
+when loading a file and explicitly turning the 'reduce' option off, Tree Operations should not be reduced.
+
+```js
+doormen.equals(
+	kungFig.load( __dirname + '/sample/withTreeOps.json' , { reduce: false } ) ,
+	{
+		simple: "test",
+		int: 5,
+		"+int": 2
 	}
 ) ;
 ```
@@ -319,6 +345,112 @@ doormen.equals(
 			secondInclude: require(  __dirname + '/sample/js/one.js' ).helloFunc ,
 			thirdInclude: require(  __dirname + '/sample/js/one.js' ).awesomeFunc
 		}
+	}
+) ;
+```
+
+<a name="operator-behaviours"></a>
+# Operator behaviours
+mixing + and * for the same base key should preserve operation order (first *, then +).
+
+```js
+var creature = {
+	hp: 8 ,
+	attack: 5 ,
+	defense: 3 ,
+	move: 1
+} ;
+
+var shield = {
+	"+defense": 3 ,
+} ;
+
+var enchantedArmor = {
+	"*defense": 2 ,
+	"+defense": 1 ,
+	"+magic": 1
+} ;
+
+doormen.equals(
+	kungFig.stack( creature , shield , enchantedArmor ) ,
+	{
+		hp: 8 ,
+		attack: 5 ,
+		defense: 3 ,
+		move: 1 ,
+		"+defense": 4 ,
+		"*defense": 2 ,
+		"+magic": 1
+	}
+) ;
+
+doormen.equals(
+	kungFig.reduce( creature , shield , enchantedArmor ) ,
+	{
+		hp: 8 ,
+		attack: 5 ,
+		defense: 10 ,
+		move: 1 ,
+		"+magic": 1
+	}
+) ;
+```
+
+- and / should be converted to + and *.
+
+```js
+var creature = {
+	hp: 8 ,
+	attack: 5 ,
+	defense: 8 ,
+	move: 1
+} ;
+
+var cursedAmulet = {
+	"-defense": 2 ,
+} ;
+
+var cursedRing = {
+	"/defense": 2 ,
+} ;
+
+doormen.equals(
+	kungFig.stack( cursedAmulet ) ,
+	{ "+defense": -2 }
+) ;
+
+doormen.equals(
+	kungFig.stack( cursedRing ) ,
+	{ "*defense": 0.5 }
+) ;
+
+doormen.equals(
+	kungFig.stack( cursedAmulet , cursedRing ) ,
+	{
+		"+defense": -2 ,
+		"*defense": 0.5
+	}
+) ;
+
+doormen.equals(
+	kungFig.stack( creature , cursedAmulet , cursedRing ) ,
+	{
+		hp: 8 ,
+		attack: 5 ,
+		defense: 8 ,
+		"+defense": -2 ,
+		"*defense": 0.5 ,
+		move: 1
+	}
+) ;
+
+doormen.equals(
+	kungFig.reduce( creature , cursedAmulet , cursedRing ) ,
+	{
+		hp: 8 ,
+		attack: 5 ,
+		defense: 2 ,
+		move: 1
 	}
 ) ;
 ```
