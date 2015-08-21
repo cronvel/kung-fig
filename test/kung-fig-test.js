@@ -84,6 +84,29 @@ describe( "Loading a config" , function() {
 		) ;
 	} ) ;
 	
+	it( "when loading a file, all Tree-Ops should be reduced" , function() {
+		
+		doormen.equals(
+			kungFig.load( __dirname + '/sample/withTreeOps.json' ) ,
+			{
+				simple: "test",
+				int: 7
+			}
+		) ;
+	} ) ;
+	
+	it( "when loading a file and explicitly turning the 'reduce' option off, Tree Operations should not be reduced" , function() {
+		
+		doormen.equals(
+			kungFig.load( __dirname + '/sample/withTreeOps.json' , { reduce: false } ) ,
+			{
+				simple: "test",
+				int: 5,
+				"+int": 2
+			}
+		) ;
+	} ) ;
+	
 	it( "should load a JSON file with many relative dependencies" , function() {
 		
 		doormen.equals(
