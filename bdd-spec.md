@@ -116,6 +116,60 @@ doormen.equals(
 ) ;
 ```
 
+should load flawlessly a config with a circular include to itself.
+
+```js
+// Build the circular config here
+var shouldBe = { "a": "A" } ;
+shouldBe.b = shouldBe ;
+
+doormen.equals( kungFig.load( __dirname + '/sample/circular.json' ) , shouldBe ) ;
+```
+
+should RE-load flawlessly a config with a circular include to itself.
+
+```js
+// Build the circular config here
+var shouldBe = { "a": "A" } ;
+shouldBe.b = shouldBe ;
+
+doormen.equals( kungFig.load( __dirname + '/sample/circular.json' ) , shouldBe ) ;
+```
+
+should load flawlessly a config with many circular includes.
+
+```js
+// Build the circular config here
+var shouldBe = { "hello": "world!" } ;
+
+var a = { "some": "data" } ;
+var b = { "more": "data" } ;
+a.toBe = b ;
+b.toA = a ;
+
+shouldBe.circularOne = a ;
+shouldBe.circularTwo = b ;
+
+doormen.equals( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) , shouldBe ) ;
+```
+
+should RE-load flawlessly a config with many circular includes.
+
+```js
+// Build the circular config here
+var shouldBe = { "hello": "world!" } ;
+
+var a = { "some": "data" } ;
+var b = { "more": "data" } ;
+a.toBe = b ;
+b.toA = a ;
+
+shouldBe.circularOne = a ;
+shouldBe.circularTwo = b ;
+
+doormen.equals( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) , shouldBe ) ;
+```
+
 should load flawlessly a config with a reference to itself.
 
 ```js
@@ -161,6 +215,22 @@ doormen.equals(
 		}
 	}
 ) ;
+```
+
+should load flawlessly a config with a circular reference to itself.
+
+```js
+// Build the circular config here
+var shouldBe = {
+	"a": "A",
+	"sub": {
+		"key": "value"
+	}
+} ;
+
+shouldBe.sub.ref = shouldBe ;
+
+doormen.equals( kungFig.load( __dirname + '/sample/selfCircularReference.json' ) , shouldBe ) ;
 ```
 
 <a name="saving-a-config"></a>
@@ -228,6 +298,28 @@ doormen.equals(
 	kungFig.save( conf ) , 
 	'{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "sub": {\n      "c": "See!",\n      "@circular": ";sub.sub"\n    }\n  }\n}'
 ) ;
+```
+
+should load and save flawlessly a config with many circular includes.
+
+```js
+var str ;
+
+str = kungFig.save( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) ) ;
+//console.log( str ) ;
+doormen.equals( str , '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "@toBe": ";circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "@toA": ";circularOne"\n  }\n}' ) ;
+```
+
+should load and save flawlessly a config with many circular includes.
+
+```js
+var str ;
+
+kungFig.save( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) , __dirname + '/output.json' ) ;
+str = fs.readFileSync( __dirname + '/output.json' ).toString() ;
+//console.log( str ) ;
+doormen.equals( str , '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "@toBe": ";circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "@toA": ";circularOne"\n  }\n}' ) ;
+fs.unlinkSync( __dirname + '/output.json' ) ;
 ```
 
 <a name="js-modules"></a>
