@@ -455,7 +455,7 @@ doormen.equals(
 ) ;
 ```
 
-the combining operator *> .
+the combining operator *>.
 
 ```js
 var tree = {
@@ -491,6 +491,57 @@ doormen.equals(
 			a: 4,
 			b: 8
 		}
+	}
+) ;
+```
+
+the combining operator *> with no baseKey should combine in the root element.
+
+```js
+var tree = {
+	a: 3,
+	b: 5
+} ;
+
+var mods = {
+	"*>": {
+		"+a": 1,
+		"+b": 3
+	}
+} ;
+
+doormen.equals(
+	kungFig.stack( tree , mods ) ,
+	{
+		a: 3,
+		b: 5,
+		"+a": 1,
+		"+b": 3
+	}
+) ;
+
+doormen.equals(
+	kungFig.reduce( tree , mods ) ,
+	{
+		a: 4,
+		b: 8
+	}
+) ;
+
+var tree = {
+	a: 3,
+	b: 5,
+	"*>": {
+		"+a": 1,
+		"+b": 3
+	}
+} ;
+
+doormen.equals(
+	kungFig.reduce( tree ) ,
+	{
+		a: 4,
+		b: 8
 	}
 ) ;
 ```
