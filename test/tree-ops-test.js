@@ -76,7 +76,6 @@ describe( "Operator behaviours" , function() {
 				"+magic": 1
 			}
 		) ;
-		
 	} ) ;
 	
 	it( "- and / should be converted to + and *" , function() {
@@ -137,5 +136,45 @@ describe( "Operator behaviours" , function() {
 		) ;
 		
 	} ) ;
+	
+	it( "the combining operator *> " , function() {
+		
+		var tree = {
+			subtree: {
+				a: 3,
+				b: 5
+			}
+		} ;
+		
+		var mods = {
+			"*>subtree": {
+				"+a": 1,
+				"+b": 3
+			}
+		} ;
+		
+		doormen.equals(
+			kungFig.stack( tree , mods ) ,
+			{
+				subtree: {
+					a: 3,
+					b: 5,
+					"+a": 1,
+					"+b": 3
+				}
+			}
+		) ;
+		
+		doormen.equals(
+			kungFig.reduce( tree , mods ) ,
+			{
+				subtree: {
+					a: 4,
+					b: 8
+				}
+			}
+		) ;
+	} ) ;
+	
 } ) ;
 
