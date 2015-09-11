@@ -4,7 +4,7 @@
 
 ![Kung Fig!](https://raw.githubusercontent.com/cronvel/kung-fig/master/kung-fig.png)
 
-Yet another JSON config loader.
+The Kung Fu of JSON config!
 
 Support includes and circular includes.
 

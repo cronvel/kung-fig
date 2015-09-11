@@ -1,7 +1,7 @@
 {
   "name": "kung-fig",
   "version": "0.3.4",
-  "description": "Yet another JSON config loader.",
+  "description": "The Kung Fu of JSON config!",
   "main": "lib/kungFig.js",
   "directories": {
     "test": "test"
