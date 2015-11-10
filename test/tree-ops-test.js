@@ -226,5 +226,16 @@ describe( "Operator behaviours" , function() {
 		) ;
 	} ) ;
 	
+	it( "arrays should not be combined recursively" , function() {
+		
+		var o = { a: [ { b: 2, c: 3 }, { d: 5 } ] } ;
+		var o2 = { a: [ { b: 52 } ] } ;
+		
+		doormen.equals(
+			kungFig.reduce( {} , o , o2 ) ,
+			{ a: [ { b: 52 } ] }
+		) ;
+	} ) ;
+	
 } ) ;
 
