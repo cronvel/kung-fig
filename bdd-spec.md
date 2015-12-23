@@ -333,6 +333,20 @@ doormen.equals(
 ) ;
 ```
 
+should load a JS module exporting a function.
+
+```js
+doormen.equals(
+	typeof kungFig.load( __dirname + '/sample/function.js' ) ,
+	'function'
+) ;
+
+doormen.equals(
+	kungFig.load( __dirname + '/sample/function.js' )() ,
+	'world'
+) ;
+```
+
 should load a JSON file with many relative dependencies and sub-references to a JS module.
 
 ```js
@@ -543,6 +557,18 @@ doormen.equals(
 		a: 4,
 		b: 8
 	}
+) ;
+```
+
+arrays should not be combined recursively.
+
+```js
+var o = { a: [ { b: 2, c: 3 }, { d: 5 } ] } ;
+var o2 = { a: [ { b: 52 } ] } ;
+
+doormen.equals(
+	kungFig.reduce( {} , o , o2 ) ,
+	{ a: [ { b: 52 } ] }
 ) ;
 ```
 

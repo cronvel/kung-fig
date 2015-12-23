@@ -1,6 +1,6 @@
 {
   "name": "kung-fig",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "The Kung Fu of JSON config!",
   "main": "lib/kungFig.js",
   "directories": {
@@ -16,7 +16,7 @@
     "mocha": "^2.2.5"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha -R dot"
   },
   "repository": {
     "type": "git",

@@ -353,6 +353,19 @@ describe( "JS modules" , function() {
 		) ;
 	} ) ;
 	
+	it( "should load a JS module exporting a function" , function() {
+		
+		doormen.equals(
+			typeof kungFig.load( __dirname + '/sample/function.js' ) ,
+			'function'
+		) ;
+		
+		doormen.equals(
+			kungFig.load( __dirname + '/sample/function.js' )() ,
+			'world'
+		) ;
+	} ) ;
+	
 	it( "should load a JSON file with many relative dependencies and sub-references to a JS module" , function() {
 		
 		doormen.equals(
