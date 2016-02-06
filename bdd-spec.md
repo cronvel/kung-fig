@@ -60,6 +60,13 @@ doormen.equals(
 ) ;
 ```
 
+when loading a file with and bad JSON content dependency using the '?@', it should throw.
+
+```js
+doormen.shouldThrow( function() { kungFig.load( __dirname + '/sample/withBadOptionalInclude.json' ) ; } ) ;
+//kungFig.load( __dirname + '/sample/withBadOptionalInclude.json' ) ;
+```
+
 when loading a file, all Tree-Ops should be reduced.
 
 ```js
