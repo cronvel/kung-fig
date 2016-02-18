@@ -25,6 +25,8 @@
 /* jshint unused:false */
 /* global describe, it, before, after */
 
+"use strict" ;
+
 
 
 var fs = require( 'fs' ) ;
