@@ -42,7 +42,12 @@ describe( "kfg stringify" , function() {
 			b: "bob" ,
 			c: null ,
 			d: true ,
-			e: false
+			e: false ,
+			f: NaN ,
+			g: Infinity ,
+			h: - Infinity ,
+			"some key": "some value" ,
+			"1key": "1value" ,
 		} ;
 		
 		console.log( stringify( o ) ) ;

@@ -1,0 +1,23 @@
+
+classe      : katana
+generique   : saber
+hands       : 2
+name        : katana
+description :
+	> This is a wonderful katana with a blueish blade!
+	> This is a two-handed weapon.
+durability  : 24
+
+
+melee :
+	toHit  + -2
+	attack + 6
+	AT     * 12
+	reach  + 7
+	size   : 4
+	power  + 3
+	damages :
+		-	type    : cutting
+			damage  + 14
+		-	type    : fire
+			damage  : 10
