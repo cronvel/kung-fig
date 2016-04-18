@@ -46,8 +46,32 @@ describe( "kfg stringify" , function() {
 			f: NaN ,
 			g: Infinity ,
 			h: - Infinity ,
+			needQuote: {
+				a: "1" ,
+				c: "null" ,
+				d: "true" ,
+				e: "false" ,
+				f: "NaN" ,
+				g: "Infinity" ,
+				h: "-Infinity" ,
+				sp1: " bob" ,
+				sp2: "bob " ,
+				sp3: "bob\nbob" ,
+			} ,
 			"some key": "some value" ,
+			"some-key": "some value" ,
+			"some_key": "some value" ,
 			"1key": "1value" ,
+			obj: {
+				i: 'ay',
+				j: 'djay',
+			} ,
+			obj2: {
+				k: 'K',
+				l: 'L',
+			} ,
+			arr: [ 1,2,3 ] ,
+			arr2: [ 4,5,6, [ 7,8,9 ] , { m: 'm' , n: 'n' } ] ,
 		} ;
 		
 		console.log( stringify( o ) ) ;
