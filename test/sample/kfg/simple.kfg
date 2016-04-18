@@ -1,0 +1,19 @@
+a: 1
+b:2
+c   :3
+
+# a comment
+		# another comment
+
+some key  :  some value
+d: null
+e :true
+f : false
+g : NaN
+h : Infinity
+i : -Infinity
+
+sub:
+	k:1
+	l : 2
+
