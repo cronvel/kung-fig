@@ -7,8 +7,12 @@ c   :3
 
 some key  :  some value
 d: null
-e :true
-f : false
+e1 :true
+e2: on
+e3: yes   
+f1 : false
+f2 : no
+f3 : off
 g : NaN
 h : Infinity
 i : -Infinity
@@ -16,4 +20,17 @@ i : -Infinity
 sub:
 	k:1
 	l : 2
+	sub  :   
+		another key  : another value
+	sub2 :
+		"subway": "no!"
+sub2:
+	no : way
 
+sub3:
+	nooo : wai!
+
+list:
+	- one
+	- two
+	- three
