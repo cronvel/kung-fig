@@ -30,7 +30,9 @@
 
 
 var stringify = require( '../lib/kfgStringify.js' ) ;
+var parse = require( '../lib/kfgParse.js' ) ;
 var doormen = require( 'doormen' ) ;
+var fs = require( 'fs' ) ;
 
 
 
@@ -75,6 +77,16 @@ describe( "kfg stringify" , function() {
 		} ;
 		
 		console.log( stringify( o ) ) ;
+	} ) ;
+	
+} ) ;
+
+
+
+describe( "kfg parse" , function() {
+	
+	it( "zzz" , function() {
+		console.log( parse( fs.readFileSync( __dirname + '/sample/kfg/simple.kfg' , 'utf8' ) ) ) ;
 	} ) ;
 	
 } ) ;
