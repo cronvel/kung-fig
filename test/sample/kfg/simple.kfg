@@ -22,7 +22,7 @@ sub:
 		another key  : another value
 	k:1
 	l : 2
-	sub2 :
+	"sub2" :
 		"subway": "no!"
 sub2:
 	no : way
@@ -30,17 +30,47 @@ sub2:
 sub3:
 	nooo : wai!
 
+text :
+	> A cool story:
+	>
+	> It all started a Friday...
+
 list:
 	- one
 	- two
 	- three
 
-#list embeded:
-#	-
-#		first name: Bill
-#		last name: Baroud
-#	-
-#		first name: Joe
-#		last name: Doe
+list embedded:
+	# Without array beautifier
+	-
+		first name: Bill
+		last name: Baroud
+	-
+		first name: Joe
+		"last name": "Doe"
+	-
+		-
+			- one
+			- two
+			- three
+		-
+			- four
+			- five
+		-
+			- six
+			- seven
+	
+	# With array beautifier
+	-	first name: Bill
+		last name: Baroud
+	-	first name: Joe
+		last name: Doe
+	-	-	- one
+			- two
+			- three
+		-	- four
+			- five
+		-	- six
+			- seven
 
 

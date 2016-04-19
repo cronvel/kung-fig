@@ -38,7 +38,7 @@ var fs = require( 'fs' ) ;
 
 describe( "kfg stringify" , function() {
 	
-	it( "..." , function() {
+	it( "Stringify a whole object" , function() {
 		var o = {
 			a: 1 ,
 			b: "bob" ,
@@ -76,7 +76,8 @@ describe( "kfg stringify" , function() {
 			arr2: [ 4,5,6, [ 7,8,9 ] , { m: 'm' , n: 'n' } ] ,
 		} ;
 		
-		console.log( stringify( o ) ) ;
+		var s = stringify( o ) ;
+		//console.log( s ) ;
 	} ) ;
 	
 } ) ;
@@ -85,8 +86,49 @@ describe( "kfg stringify" , function() {
 
 describe( "kfg parse" , function() {
 	
-	it( "zzz" , function() {
-		console.log( parse( fs.readFileSync( __dirname + '/sample/kfg/simple.kfg' , 'utf8' ) ) ) ;
+	it( "Parse a whole file" , function() {
+		var o ;
+		
+		o = parse( fs.readFileSync( __dirname + '/sample/kfg/simple.kfg' , 'utf8' ) ) ;
+		
+		//console.log( require( 'util' ).inspect( o , { depth: 10 } ) ) ;
+		
+		doormen.equals( o , {
+			a: 1,
+			b: 2,
+			c: 3,
+			'some key': 'some value',
+			d: null,
+			e1: true,
+			e2: true,
+			e3: true,
+			f1: false,
+			f2: false,
+			f3: false,
+			g: NaN,
+			h: Infinity,
+			i: -Infinity,
+			sub: 
+				{ sub: { 'another key': 'another value' },
+				k: 1,
+				l: 2,
+				sub2: { subway: 'no!' } },
+			sub2: { no: 'way' },
+			sub3: { nooo: 'wai!' },
+			text: "A cool story:\n\nIt all started a Friday..." ,
+			list: [ 'one', 'two', 'three' ],
+			'list embedded': 
+				[ { 'first name': 'Bill', 'last name': 'Baroud' },
+				{ 'first name': 'Joe', 'last name': 'Doe' },
+				[ [ 'one', 'two', 'three' ],
+				[ 'four', 'five' ],
+				[ 'six', 'seven' ] ],
+				{ 'first name': 'Bill', 'last name': 'Baroud' },
+				{ 'first name': 'Joe', 'last name': 'Doe' },
+				[ [ 'one', 'two', 'three' ],
+				[ 'four', 'five' ],
+				[ 'six', 'seven' ] ] ]
+		} ) ;
 	} ) ;
 	
 } ) ;

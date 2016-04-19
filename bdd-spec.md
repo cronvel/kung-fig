@@ -1,10 +1,107 @@
 # TOC
+   - [kfg stringify](#kfg-stringify)
+   - [kfg parse](#kfg-parse)
    - [Loading a config](#loading-a-config)
    - [Saving a config](#saving-a-config)
    - [JS modules](#js-modules)
    - [Operator behaviours](#operator-behaviours)
 <a name=""></a>
  
+<a name="kfg-stringify"></a>
+# kfg stringify
+Stringify a whole object.
+
+```js
+var o = {
+	a: 1 ,
+	b: "bob" ,
+	c: null ,
+	d: true ,
+	e: false ,
+	f: NaN ,
+	g: Infinity ,
+	h: - Infinity ,
+	needQuote: {
+		a: "1" ,
+		c: "null" ,
+		d: "true" ,
+		e: "false" ,
+		f: "NaN" ,
+		g: "Infinity" ,
+		h: "-Infinity" ,
+		sp1: " bob" ,
+		sp2: "bob " ,
+		sp3: "bob\nbob" ,
+	} ,
+	"some key": "some value" ,
+	"some-key": "some value" ,
+	"some_key": "some value" ,
+	"1key": "1value" ,
+	obj: {
+		i: 'ay',
+		j: 'djay',
+	} ,
+	obj2: {
+		k: 'K',
+		l: 'L',
+	} ,
+	arr: [ 1,2,3 ] ,
+	arr2: [ 4,5,6, [ 7,8,9 ] , { m: 'm' , n: 'n' } ] ,
+} ;
+
+var s = stringify( o ) ;
+//console.log( s ) ;
+```
+
+<a name="kfg-parse"></a>
+# kfg parse
+Parse a whole file.
+
+```js
+var o ;
+
+o = parse( fs.readFileSync( __dirname + '/sample/kfg/simple.kfg' , 'utf8' ) ) ;
+
+//console.log( require( 'util' ).inspect( o , { depth: 10 } ) ) ;
+
+doormen.equals( o , {
+	a: 1,
+	b: 2,
+	c: 3,
+	'some key': 'some value',
+	d: null,
+	e1: true,
+	e2: true,
+	e3: true,
+	f1: false,
+	f2: false,
+	f3: false,
+	g: NaN,
+	h: Infinity,
+	i: -Infinity,
+	sub: 
+		{ sub: { 'another key': 'another value' },
+		k: 1,
+		l: 2,
+		sub2: { subway: 'no!' } },
+	sub2: { no: 'way' },
+	sub3: { nooo: 'wai!' },
+	text: "A cool story:\n\nIt all started a Friday..." ,
+	list: [ 'one', 'two', 'three' ],
+	'list embedded': 
+		[ { 'first name': 'Bill', 'last name': 'Baroud' },
+		{ 'first name': 'Joe', 'last name': 'Doe' },
+		[ [ 'one', 'two', 'three' ],
+		[ 'four', 'five' ],
+		[ 'six', 'seven' ] ],
+		{ 'first name': 'Bill', 'last name': 'Baroud' },
+		{ 'first name': 'Joe', 'last name': 'Doe' },
+		[ [ 'one', 'two', 'three' ],
+		[ 'four', 'five' ],
+		[ 'six', 'seven' ] ] ]
+} ) ;
+```
+
 <a name="loading-a-config"></a>
 # Loading a config
 when trying to load an unexistant file, it should throw.
