@@ -18,10 +18,10 @@ h : Infinity
 i : -Infinity
 
 sub:
-	k:1
-	l : 2
 	sub  :   
 		another key  : another value
+	k:1
+	l : 2
 	sub2 :
 		"subway": "no!"
 sub2:
@@ -34,3 +34,13 @@ list:
 	- one
 	- two
 	- three
+
+#list embeded:
+#	-
+#		first name: Bill
+#		last name: Baroud
+#	-
+#		first name: Joe
+#		last name: Doe
+
+
