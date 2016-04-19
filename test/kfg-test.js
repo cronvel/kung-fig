@@ -29,8 +29,9 @@
 
 
 
-var stringify = require( '../lib/kfgStringify.js' ) ;
-var parse = require( '../lib/kfgParse.js' ) ;
+var kungFig = require( '../lib/kungFig.js' ) ;
+var stringify = kungFig.stringify ;
+var parse = kungFig.parse ;
 var doormen = require( 'doormen' ) ;
 var fs = require( 'fs' ) ;
 
@@ -78,6 +79,10 @@ describe( "kfg stringify" , function() {
 		
 		var s = stringify( o ) ;
 		//console.log( s ) ;
+		
+		// Check that the original object and the stringified/parsed object are equals:
+		doormen.equals( o , parse( s ) ) ;
+		//require( 'expect.js' )( o ).to.eql( parse( s ) ) ;
 	} ) ;
 	
 } ) ;

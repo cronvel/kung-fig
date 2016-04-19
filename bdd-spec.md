@@ -51,6 +51,10 @@ var o = {
 
 var s = stringify( o ) ;
 //console.log( s ) ;
+
+// Check that the original object and the stringified/parsed object are equals:
+doormen.equals( o , parse( s ) ) ;
+//require( 'expect.js' )( o ).to.eql( parse( s ) ) ;
 ```
 
 <a name="kfg-parse"></a>
