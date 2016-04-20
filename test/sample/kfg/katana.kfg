@@ -11,20 +11,6 @@ durability  : 24
 
 
 melee :
-	toHit  + -2
-	attack + 6
-	AT     * 12
-	reach  + 7
-	size   : 4
-	power  + 3
-	damages :
-		-	type    : cutting
-			damage  + 14
-		-	type    : fire
-			damage  : 10
-
-
-melee :
 	toHit:  (+) -2
 	attack: (+) 6
 	AT:     (*) 12

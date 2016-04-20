@@ -70,12 +70,12 @@ describe( "Loading a config" , function() {
 		) ;
 	} ) ;
 	
-	it( "when loading a file with and unexistant dependency using the '@', it should throw" , function() {
+	it( "when loading a file with and unexistant dependency using the '@@', it should throw" , function() {
 		
 		doormen.shouldThrow( function() { kungFig.load( __dirname + '/sample/withUnexistantInclude.json' ) ; } ) ;
 	} ) ;
 	
-	it( "when loading a file with and unexistant dependency using the '?@', it should not throw" , function() {
+	it( "when loading a file with and unexistant dependency using the '@', it should not throw" , function() {
 		
 		doormen.equals(
 			kungFig.load( __dirname + '/sample/withUnexistantOptionalInclude.json' ) ,
@@ -86,7 +86,7 @@ describe( "Loading a config" , function() {
 		) ;
 	} ) ;
 	
-	it( "when loading a file with and bad JSON content dependency using the '?@', it should throw" , function() {
+	it( "when loading a file with and bad JSON content dependency using the '@', it should throw" , function() {
 		
 		doormen.shouldThrow( function() { kungFig.load( __dirname + '/sample/withBadOptionalInclude.json' ) ; } ) ;
 		//kungFig.load( __dirname + '/sample/withBadOptionalInclude.json' ) ;
@@ -292,7 +292,7 @@ describe( "Saving a config" , function() {
 		conf.sub.circular = conf ;
 		
 		//console.log( kungFig.save( conf ) ) ;
-		doormen.equals( kungFig.save( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!",\n    "@circular": ";"\n  }\n}' ) ;
+		doormen.equals( kungFig.save( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!",\n    "@@circular": ";"\n  }\n}' ) ;
 		
 		
 		var conf = {
@@ -306,7 +306,7 @@ describe( "Saving a config" , function() {
 		conf.sub.circular = conf.sub ;
 		
 		//console.log( kungFig.save( conf ) ) ;
-		doormen.equals( kungFig.save( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!",\n    "@circular": ";sub"\n  }\n}' ) ;
+		doormen.equals( kungFig.save( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!",\n    "@@circular": ";sub"\n  }\n}' ) ;
 		
 		
 		var conf = {
@@ -324,7 +324,7 @@ describe( "Saving a config" , function() {
 		//console.log( kungFig.save( conf ) ) ;
 		doormen.equals(
 			kungFig.save( conf ) , 
-			'{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "sub": {\n      "c": "See!",\n      "@circular": ";sub.sub"\n    }\n  }\n}'
+			'{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "sub": {\n      "c": "See!",\n      "@@circular": ";sub.sub"\n    }\n  }\n}'
 		) ;
 	} ) ;
 	
@@ -334,7 +334,7 @@ describe( "Saving a config" , function() {
 		
 		str = kungFig.save( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) ) ;
 		//console.log( str ) ;
-		doormen.equals( str , '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "@toBe": ";circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "@toA": ";circularOne"\n  }\n}' ) ;
+		doormen.equals( str , '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "@@toBe": ";circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "@@toA": ";circularOne"\n  }\n}' ) ;
 	} ) ;
 	
 	it( "should load and save flawlessly a config with many circular includes" , function() {
@@ -344,7 +344,7 @@ describe( "Saving a config" , function() {
 		kungFig.save( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) , __dirname + '/output.json' ) ;
 		str = fs.readFileSync( __dirname + '/output.json' ).toString() ;
 		//console.log( str ) ;
-		doormen.equals( str , '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "@toBe": ";circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "@toA": ";circularOne"\n  }\n}' ) ;
+		doormen.equals( str , '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "@@toBe": ";circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "@@toA": ";circularOne"\n  }\n}' ) ;
 		fs.unlinkSync( __dirname + '/output.json' ) ;
 	} ) ;
 } ) ;
@@ -493,7 +493,7 @@ describe( "Broken array references" , function() {
 		
 		str = kungFig.save( kungFig.load( __dirname + '/sample/withCircularIncludesArray.json' ) ) ;
 		//console.log( str ) ;
-		doormen.equals( str , '[\n  "world!",\n  [\n    "data",\n    "@:#2"\n  ],\n  [\n    "data",\n    "@:#1"\n  ]\n]' ) ;
+		doormen.equals( str , '[\n  "world!",\n  [\n    "data",\n    "@@:#2"\n  ],\n  [\n    "data",\n    "@@:#1"\n  ]\n]' ) ;
 	} ) ;
 	
 } ) ;

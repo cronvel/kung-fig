@@ -191,13 +191,13 @@ doormen.equals(
 ) ;
 ```
 
-when loading a file with and unexistant dependency using the '@', it should throw.
+when loading a file with and unexistant dependency using the '@@', it should throw.
 
 ```js
 doormen.shouldThrow( function() { kungFig.load( __dirname + '/sample/withUnexistantInclude.json' ) ; } ) ;
 ```
 
-when loading a file with and unexistant dependency using the '?@', it should not throw.
+when loading a file with and unexistant dependency using the '@', it should not throw.
 
 ```js
 doormen.equals(
@@ -209,7 +209,7 @@ doormen.equals(
 ) ;
 ```
 
-when loading a file with and bad JSON content dependency using the '?@', it should throw.
+when loading a file with and bad JSON content dependency using the '@', it should throw.
 
 ```js
 doormen.shouldThrow( function() { kungFig.load( __dirname + '/sample/withBadOptionalInclude.json' ) ; } ) ;
@@ -420,7 +420,7 @@ var conf = {
 conf.sub.circular = conf ;
 
 //console.log( kungFig.save( conf ) ) ;
-doormen.equals( kungFig.save( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!",\n    "@circular": ";"\n  }\n}' ) ;
+doormen.equals( kungFig.save( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!",\n    "@@circular": ";"\n  }\n}' ) ;
 
 
 var conf = {
@@ -434,7 +434,7 @@ var conf = {
 conf.sub.circular = conf.sub ;
 
 //console.log( kungFig.save( conf ) ) ;
-doormen.equals( kungFig.save( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!",\n    "@circular": ";sub"\n  }\n}' ) ;
+doormen.equals( kungFig.save( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!",\n    "@@circular": ";sub"\n  }\n}' ) ;
 
 
 var conf = {
@@ -452,7 +452,7 @@ conf.sub.sub.circular = conf.sub.sub ;
 //console.log( kungFig.save( conf ) ) ;
 doormen.equals(
 	kungFig.save( conf ) , 
-	'{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "sub": {\n      "c": "See!",\n      "@circular": ";sub.sub"\n    }\n  }\n}'
+	'{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "sub": {\n      "c": "See!",\n      "@@circular": ";sub.sub"\n    }\n  }\n}'
 ) ;
 ```
 
@@ -463,7 +463,7 @@ var str ;
 
 str = kungFig.save( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) ) ;
 //console.log( str ) ;
-doormen.equals( str , '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "@toBe": ";circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "@toA": ";circularOne"\n  }\n}' ) ;
+doormen.equals( str , '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "@@toBe": ";circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "@@toA": ";circularOne"\n  }\n}' ) ;
 ```
 
 should load and save flawlessly a config with many circular includes.
@@ -474,7 +474,7 @@ var str ;
 kungFig.save( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) , __dirname + '/output.json' ) ;
 str = fs.readFileSync( __dirname + '/output.json' ).toString() ;
 //console.log( str ) ;
-doormen.equals( str , '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "@toBe": ";circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "@toA": ";circularOne"\n  }\n}' ) ;
+doormen.equals( str , '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "@@toBe": ";circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "@@toA": ";circularOne"\n  }\n}' ) ;
 fs.unlinkSync( __dirname + '/output.json' ) ;
 ```
 
