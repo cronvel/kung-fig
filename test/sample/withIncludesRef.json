@@ -1,8 +1,8 @@
 {
 	"simple": "test",
-	"@firstInclude": "includes/one.json;two",
+	"@@firstInclude": "includes/one.json;two",
 	"nested": {
-		"@secondInclude": "includes/two.json;hello",
-		"@thirdInclude": "includes/one.json;two.three"
+		"@@secondInclude": "includes/two.json;hello",
+		"@@thirdInclude": "includes/one.json;two.three"
 	}
 }

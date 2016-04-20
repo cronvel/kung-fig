@@ -1,4 +1,4 @@
 {
 	"simple": "test",
-	"?@bad": "bad.json"
+	"@bad": "bad.json"
 }

@@ -1,5 +1,5 @@
 {
 	"hello": "world!",
-	"@circularOne": "circularIncludes/a.json",
-	"@circularTwo": "circularIncludes/b.json"
+	"@@circularOne": "circularIncludes/a.json",
+	"@@circularTwo": "circularIncludes/b.json"
 }

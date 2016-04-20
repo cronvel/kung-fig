@@ -2,8 +2,8 @@
 	"a": "A",
 	"sub": {
 		"key": "value",
-		"@refA": ";a"
+		"@@refA": ";a"
 	},
-	"@refB": ";sub",
-	"@refC": ";sub.key"
+	"@@refB": ";sub",
+	"@@refC": ";sub.key"
 }

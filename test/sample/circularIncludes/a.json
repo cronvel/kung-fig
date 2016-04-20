@@ -1,4 +1,4 @@
 {
 	"some": "data",
-	"@toBe": "b.json"
+	"@@toBe": "b.json"
 }
