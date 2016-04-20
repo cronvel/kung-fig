@@ -15,9 +15,9 @@ melee :
 	attack: (+) 6
 	AT:     (*) 12
 	reach:  (+) 7
-	size:   (=) 4
+	size:       4
 	power:  (+) 3
-	damages: (*>)
+	damages:
 		-	type    : cutting
 			damage  : (+) 14
 		-	type    : fire

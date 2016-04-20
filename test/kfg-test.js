@@ -175,7 +175,8 @@ describe( "kfg parse" , function() {
 			'@@mandatory include': "path/to/mandatory-include.kfg",
 			'@+include2': 'path/to/include.kfg',
 			'@(u-ops)include3': 'path/to/include.kfg',
-			'@@(u-ops)include4': 'path/to/mandatory-include.kfg'
+			'@@(u-ops)include4': 'path/to/mandatory-include.kfg',
+			'*>merge': { something: 1, 'something else': 12 },
 		} ) ;
 	} ) ;
 } ) ;

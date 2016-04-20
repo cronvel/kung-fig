@@ -13,3 +13,7 @@ mandatory include: @@path/to/mandatory-include.kfg
 include2: (+) @path/to/include.kfg
 include3: (u-ops) @path/to/include.kfg
 include4: (u-ops) @@path/to/mandatory-include.kfg
+
+merge: (*>)
+	something: 1
+	something else: 12
