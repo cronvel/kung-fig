@@ -145,7 +145,12 @@ doormen.equals( o , {
 	'*time': 0.9,
 	'(u-ops)damages': 1.2,
 	'()+strange key': 3,
-	'()(another strange key)': 5
+	'()(another strange key)': 5,
+	'@include': "path/to/include.kfg",
+	'@@mandatory include': "path/to/mandatory-include.kfg",
+	'@+include2': 'path/to/include.kfg',
+	'@(u-ops)include3': 'path/to/include.kfg',
+	'@@(u-ops)include4': 'path/to/mandatory-include.kfg'
 } ) ;
 ```
 
