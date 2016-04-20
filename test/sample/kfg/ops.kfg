@@ -1,0 +1,9 @@
+
+attack: (+) 2
+defense:(+)-1
+time: (*)0.9  
+damages:(u-ops) 1.2  
+
+"+strange key": 3
+"(another strange key)": 5
+

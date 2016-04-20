@@ -39,7 +39,7 @@ var fs = require( 'fs' ) ;
 
 describe( "kfg stringify" , function() {
 	
-	it( "Stringify a whole object" , function() {
+	it( "stringify a basic object" , function() {
 		var o = {
 			a: 1 ,
 			b: "bob" ,
@@ -60,6 +60,7 @@ describe( "kfg stringify" , function() {
 				sp1: " bob" ,
 				sp2: "bob " ,
 				sp3: "bob\nbob" ,
+				sp4: '"bob\nbob"' ,
 			} ,
 			"some key": "some value" ,
 			"some-key": "some value" ,
@@ -85,13 +86,33 @@ describe( "kfg stringify" , function() {
 		//require( 'expect.js' )( o ).to.eql( parse( s ) ) ;
 	} ) ;
 	
+	it( "stringify an object with operators" , function() {
+		var o = {
+			'+attack': 2,
+			'-defense': 1,
+			'*time': 0.9,
+			'(u-ops)damages': 1.2,
+			'()+strange key': 3,
+			'()(another strange key)': 5,
+			'()-hey': 5,
+			'#hey': 5,
+		} ;
+		
+		var s = stringify( o ) ;
+		//console.log( s ) ;
+		//console.log( parse( s ) ) ;
+		
+		// Check that the original object and the stringified/parsed object are equals:
+		require( 'expect.js' )( o ).to.eql( parse( s ) ) ;
+		doormen.equals( o , parse( s ) ) ;
+	} ) ;
 } ) ;
 
 
 
 describe( "kfg parse" , function() {
 	
-	it( "Parse a whole file" , function() {
+	it( "parse a basic file" , function() {
 		var o ;
 		
 		o = parse( fs.readFileSync( __dirname + '/sample/kfg/simple.kfg' , 'utf8' ) ) ;
@@ -136,5 +157,21 @@ describe( "kfg parse" , function() {
 		} ) ;
 	} ) ;
 	
+	it( "parse a file with operators" , function() {
+		var o ;
+		
+		o = parse( fs.readFileSync( __dirname + '/sample/kfg/ops.kfg' , 'utf8' ) ) ;
+		
+		//console.log( require( 'util' ).inspect( o , { depth: 10 } ) ) ;
+		
+		doormen.equals( o , {
+			'+attack': 2,
+			'+defense': -1,
+			'*time': 0.9,
+			'(u-ops)damages': 1.2,
+			'()+strange key': 3,
+			'()(another strange key)': 5
+		} ) ;
+	} ) ;
 } ) ;
 

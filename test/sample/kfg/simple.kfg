@@ -60,7 +60,7 @@ list embedded:
 			- six
 			- seven
 	
-	# With array beautifier
+	# With compact-list beautifier
 	-	first name: Bill
 		last name: Baroud
 	-	first name: Joe

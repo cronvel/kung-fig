@@ -9,7 +9,7 @@
  
 <a name="kfg-stringify"></a>
 # kfg stringify
-Stringify a whole object.
+stringify a basic object.
 
 ```js
 var o = {
@@ -32,6 +32,7 @@ var o = {
 		sp1: " bob" ,
 		sp2: "bob " ,
 		sp3: "bob\nbob" ,
+		sp4: '"bob\nbob"' ,
 	} ,
 	"some key": "some value" ,
 	"some-key": "some value" ,
@@ -57,9 +58,32 @@ doormen.equals( o , parse( s ) ) ;
 //require( 'expect.js' )( o ).to.eql( parse( s ) ) ;
 ```
 
+stringify an object with operators.
+
+```js
+var o = {
+	'+attack': 2,
+	'-defense': 1,
+	'*time': 0.9,
+	'(u-ops)damages': 1.2,
+	'()+strange key': 3,
+	'()(another strange key)': 5,
+	'()-hey': 5,
+	'#hey': 5,
+} ;
+
+var s = stringify( o ) ;
+//console.log( s ) ;
+//console.log( parse( s ) ) ;
+
+// Check that the original object and the stringified/parsed object are equals:
+require( 'expect.js' )( o ).to.eql( parse( s ) ) ;
+doormen.equals( o , parse( s ) ) ;
+```
+
 <a name="kfg-parse"></a>
 # kfg parse
-Parse a whole file.
+parse a basic file.
 
 ```js
 var o ;
@@ -103,6 +127,25 @@ doormen.equals( o , {
 		[ [ 'one', 'two', 'three' ],
 		[ 'four', 'five' ],
 		[ 'six', 'seven' ] ] ]
+} ) ;
+```
+
+parse a file with operators.
+
+```js
+var o ;
+
+o = parse( fs.readFileSync( __dirname + '/sample/kfg/ops.kfg' , 'utf8' ) ) ;
+
+//console.log( require( 'util' ).inspect( o , { depth: 10 } ) ) ;
+
+doormen.equals( o , {
+	'+attack': 2,
+	'+defense': -1,
+	'*time': 0.9,
+	'(u-ops)damages': 1.2,
+	'()+strange key': 3,
+	'()(another strange key)': 5
 } ) ;
 ```
 
