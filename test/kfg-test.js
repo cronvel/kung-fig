@@ -96,6 +96,7 @@ describe( "kfg stringify" , function() {
 			'()(another strange key)': 5,
 			'()-hey': 5,
 			'#hey': 5,
+			'@*>': '/path/to/something/',
 		} ;
 		
 		var s = stringify( o ) ;
@@ -103,7 +104,7 @@ describe( "kfg stringify" , function() {
 		//console.log( parse( s ) ) ;
 		
 		// Check that the original object and the stringified/parsed object are equals:
-		require( 'expect.js' )( o ).to.eql( parse( s ) ) ;
+		//require( 'expect.js' )( o ).to.eql( parse( s ) ) ;
 		doormen.equals( o , parse( s ) ) ;
 	} ) ;
 } ) ;
@@ -177,6 +178,7 @@ describe( "kfg parse" , function() {
 			'@(u-ops)include3': 'path/to/include.kfg',
 			'@@(u-ops)include4': 'path/to/mandatory-include.kfg',
 			'*>merge': { something: 1, 'something else': 12 },
+			'@*>': 'path/to/something',
 		} ) ;
 	} ) ;
 } ) ;

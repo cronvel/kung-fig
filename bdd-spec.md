@@ -70,6 +70,7 @@ var o = {
 	'()(another strange key)': 5,
 	'()-hey': 5,
 	'#hey': 5,
+	'@*>': '/path/to/something/',
 } ;
 
 var s = stringify( o ) ;
@@ -77,7 +78,7 @@ var s = stringify( o ) ;
 //console.log( parse( s ) ) ;
 
 // Check that the original object and the stringified/parsed object are equals:
-require( 'expect.js' )( o ).to.eql( parse( s ) ) ;
+//require( 'expect.js' )( o ).to.eql( parse( s ) ) ;
 doormen.equals( o , parse( s ) ) ;
 ```
 
@@ -152,6 +153,7 @@ doormen.equals( o , {
 	'@(u-ops)include3': 'path/to/include.kfg',
 	'@@(u-ops)include4': 'path/to/mandatory-include.kfg',
 	'*>merge': { something: 1, 'something else': 12 },
+	'@*>': 'path/to/something',
 } ) ;
 ```
 

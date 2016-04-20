@@ -17,3 +17,6 @@ include4: (u-ops) @@path/to/mandatory-include.kfg
 merge: (*>)
 	something: 1
 	something else: 12
+
+# root merging
+(*>) @path/to/something
