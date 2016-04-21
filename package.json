@@ -1,6 +1,6 @@
 {
   "name": "kung-fig",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "description": "The Kung Fu of JSON config!",
   "main": "lib/kungFig.js",
   "directories": {
