@@ -1,0 +1,7 @@
+{
+	"array": [
+		{ "@@": "simple.json" } ,
+		{ "@@": ";refArray" }
+	] ,
+	"refArray": [ 1,2,3 ]
+}

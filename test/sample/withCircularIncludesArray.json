@@ -1,5 +1,5 @@
 [
 	"world!",
-	"@@circularIncludesArray/a.json",
-	"@@circularIncludesArray/b.json"
+	{ "@@": "circularIncludesArray/a.json" },
+	{ "@@": "circularIncludesArray/b.json" }
 ]

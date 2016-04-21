@@ -423,17 +423,25 @@ describe( "JS modules" , function() {
 
 
 
-
-
-return ;
-
-
-
-
-
-describe( "Broken array references" , function() {
+describe( "Array references" , function() {
+	
+	it( "should load flawlessly a config which is an array with simple includes" , function() {
+		
+		var o = kungFig.load( __dirname + '/sample/simpleArrayRef.json' ) ;
+		//console.log( JSON.stringify( o , null , '  ' ) ) ;
+		doormen.equals( o , {
+			array: [
+				{ just: "a", simple: { test: "!" } },
+				[ 1,2,3 ]
+			],
+			refArray: [ 1,2,3 ]
+		} ) ;
+		doormen.equals( o.array[ 1 ] === o.refArray , true ) ;
+	} ) ;
 	
 	it( "should load flawlessly a config which is an array with many circular includes" , function() {
+		
+		var o = kungFig.load( __dirname + '/sample/withCircularIncludesArray.json' ) ;
 		
 		// Build the circular config here
 		var shouldBe = [ "world!" ] ;
@@ -446,7 +454,7 @@ describe( "Broken array references" , function() {
 		shouldBe[ 1 ] = a ;
 		shouldBe[ 2 ] = b ;
 		
-		doormen.equals( kungFig.load( __dirname + '/sample/withCircularIncludesArray.json' ) , shouldBe ) ;
+		doormen.equals( o , shouldBe ) ;
 	} ) ;
 	
 	it( "should load flawlessly a config which is an array with a reference to itself" , function() {
@@ -496,16 +504,14 @@ describe( "Broken array references" , function() {
 	
 	it( "should load flawlessly a config which is an array with a circular reference to itself" , function() {
 		
+		//console.log( kungFig.load( __dirname + '/sample/selfCircularReferenceArray.json' ) ) ;
+		
 		// Build the circular config here
 		var shouldBe = [ "A" , [ "value" ] ] ;
 		shouldBe[ 1 ][ 1 ] = shouldBe ;
 		
 		doormen.equals( kungFig.load( __dirname + '/sample/selfCircularReferenceArray.json' ) , shouldBe ) ;
 	} ) ;
-	
-	
-	
-	
 	
 	it( "should stringify a config of arrays" , function() {
 		
@@ -518,13 +524,15 @@ describe( "Broken array references" , function() {
 	
 	it( "should load and save flawlessly a config which is an array with many circular includes" , function() {
 		
-		var str ;
+		var o , str ;
 		
-		str = kungFig.save( kungFig.load( __dirname + '/sample/withCircularIncludesArray.json' ) ) ;
+		o = kungFig.load( __dirname + '/sample/withCircularIncludesArray.json' ) ;
+		//console.log( o ) ;
+		str = kungFig.save( o ) ;
 		//console.log( str ) ;
-		doormen.equals( str , '[\n  "world!",\n  [\n    "data",\n    "@@:#2"\n  ],\n  [\n    "data",\n    "@@:#1"\n  ]\n]' ) ;
+		//console.log( str.replace( /\n/g , () => '\\n' ) ) ;
+		doormen.equals( str , '[\n  "world!",\n  [\n    "data",\n    {\n      "@@": ";[2]"\n    }\n  ],\n  [\n    "data",\n    {\n      "@@": ";[1]"\n    }\n  ]\n]' ) ;
 	} ) ;
-	
 } ) ;
 	
 

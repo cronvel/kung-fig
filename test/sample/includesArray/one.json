@@ -2,7 +2,7 @@
 	1,
 	[
 		3,
-		"@@two.json",
-		"@@../simple.json"
+		{ "@@": "two.json" },
+		{ "@@": "../simple.json" }
 	]
 ]
