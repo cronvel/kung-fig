@@ -304,8 +304,8 @@ describe( "Saving a config" , function() {
 			}
 		} ;
 		
-		//console.log( kungFig.save( conf ) ) ;
-		doormen.equals( kungFig.save( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!"\n  }\n}' ) ;
+		//console.log( kungFig.saveJson( conf ) ) ;
+		doormen.equals( kungFig.saveJson( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!"\n  }\n}' ) ;
 	} ) ;
 	
 	it( "should stringify a config that have circular references" , function() {
@@ -320,8 +320,8 @@ describe( "Saving a config" , function() {
 		
 		conf.sub.circular = conf ;
 		
-		//console.log( kungFig.save( conf ) ) ;
-		doormen.equals( kungFig.save( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!",\n    "@@circular": ";"\n  }\n}' ) ;
+		//console.log( kungFig.saveJson( conf ) ) ;
+		doormen.equals( kungFig.saveJson( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!",\n    "@@circular": ";"\n  }\n}' ) ;
 		
 		
 		var conf = {
@@ -334,8 +334,8 @@ describe( "Saving a config" , function() {
 		
 		conf.sub.circular = conf.sub ;
 		
-		//console.log( kungFig.save( conf ) ) ;
-		doormen.equals( kungFig.save( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!",\n    "@@circular": ";sub"\n  }\n}' ) ;
+		//console.log( kungFig.saveJson( conf ) ) ;
+		doormen.equals( kungFig.saveJson( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!",\n    "@@circular": ";sub"\n  }\n}' ) ;
 		
 		
 		var conf = {
@@ -350,9 +350,9 @@ describe( "Saving a config" , function() {
 		
 		conf.sub.sub.circular = conf.sub.sub ;
 		
-		//console.log( kungFig.save( conf ) ) ;
+		//console.log( kungFig.saveJson( conf ) ) ;
 		doormen.equals(
-			kungFig.save( conf ) , 
+			kungFig.saveJson( conf ) , 
 			'{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "sub": {\n      "c": "See!",\n      "@@circular": ";sub.sub"\n    }\n  }\n}'
 		) ;
 	} ) ;
@@ -361,7 +361,7 @@ describe( "Saving a config" , function() {
 		
 		var str ;
 		
-		str = kungFig.save( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) ) ;
+		str = kungFig.saveJson( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) ) ;
 		//console.log( str ) ;
 		doormen.equals( str , '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "@@toBe": ";circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "@@toA": ";circularOne"\n  }\n}' ) ;
 	} ) ;
@@ -370,7 +370,7 @@ describe( "Saving a config" , function() {
 		
 		var str ;
 		
-		kungFig.save( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) , __dirname + '/output.json' ) ;
+		kungFig.saveJson( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) , __dirname + '/output.json' ) ;
 		str = fs.readFileSync( __dirname + '/output.json' ).toString() ;
 		//console.log( str ) ;
 		doormen.equals( str , '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "@@toBe": ";circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "@@toA": ";circularOne"\n  }\n}' ) ;
@@ -517,7 +517,7 @@ describe( "Array references" , function() {
 		
 		var str ;
 		
-		str = kungFig.save( kungFig.load( __dirname + '/sample/withIncludesRefArray.json' ) ) ;
+		str = kungFig.saveJson( kungFig.load( __dirname + '/sample/withIncludesRefArray.json' ) ) ;
 		//console.log( str ) ;
 		doormen.equals( str , '[\n  "test",\n  [\n    3,\n    [\n      "hello",\n      "world!"\n    ],\n    {\n      "just": "a",\n      "simple": {\n        "test": "!"\n      }\n    }\n  ],\n  [\n    "world!",\n    "hello",\n    3\n  ]\n]' ) ;
 	} ) ;
@@ -528,7 +528,7 @@ describe( "Array references" , function() {
 		
 		o = kungFig.load( __dirname + '/sample/withCircularIncludesArray.json' ) ;
 		//console.log( o ) ;
-		str = kungFig.save( o ) ;
+		str = kungFig.saveJson( o ) ;
 		//console.log( str ) ;
 		//console.log( str.replace( /\n/g , () => '\\n' ) ) ;
 		doormen.equals( str , '[\n  "world!",\n  [\n    "data",\n    {\n      "@@": ";[2]"\n    }\n  ],\n  [\n    "data",\n    {\n      "@@": ";[1]"\n    }\n  ]\n]' ) ;
