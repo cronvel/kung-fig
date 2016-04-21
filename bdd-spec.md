@@ -72,11 +72,15 @@ var o = {
 	'()-hey': 5,
 	'#hey': 5,
 	'@*>': '/path/to/something/',
+	'@': '/path/to/something/',
+	'@@': '/path/to/something/',
 } ;
 
 var s = stringify( o ) ;
 //console.log( s ) ;
 //console.log( parse( s ) ) ;
+var expected = 'attack: (+) 2\ndefense: (-) 1\ntime: (*) 0.9\ndamages: (u-ops) 1.2\n+strange key: 3\n"(another strange key)": 5\n"-hey": 5\n"#hey": 5\n(*>) @/path/to/something/\n() @/path/to/something/\n() @@/path/to/something/\n' ;
+doormen.equals( s , expected ) ;
 
 // Check that the original object and the stringified/parsed object are equals:
 //require( 'expect.js' )( o ).to.eql( parse( s ) ) ;
@@ -436,8 +440,9 @@ var conf = {
 	}
 } ;
 
-//console.log( kungFig.save( conf ) ) ;
-doormen.equals( kungFig.save( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!"\n  }\n}' ) ;
+//console.log( kungFig.saveKfg( conf ).replace( /\n/g , () => '\\n' ).replace( /\t/g , () => '\\t' ) ) ;
+doormen.equals( kungFig.saveJson( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!"\n  }\n}' ) ;
+doormen.equals( kungFig.saveKfg( conf ) , 'a: Haha!\nb: Bee!\nsub:\n\tc: See!\n' ) ;
 ```
 
 should stringify a config that have circular references.
@@ -453,8 +458,9 @@ var conf = {
 
 conf.sub.circular = conf ;
 
-//console.log( kungFig.save( conf ) ) ;
-doormen.equals( kungFig.save( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!",\n    "@@circular": ";"\n  }\n}' ) ;
+//console.log( kungFig.saveKfg( conf ).replace( /\n/g , () => '\\n' ).replace( /\t/g , () => '\\t' ) ) ;
+doormen.equals( kungFig.saveJson( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!",\n    "@@circular": ";"\n  }\n}' ) ;
+doormen.equals( kungFig.saveKfg( conf ) , 'a: Haha!\nb: Bee!\nsub:\n\tc: See!\n\tcircular: @@;\n' ) ;
 
 
 var conf = {
@@ -467,8 +473,9 @@ var conf = {
 
 conf.sub.circular = conf.sub ;
 
-//console.log( kungFig.save( conf ) ) ;
-doormen.equals( kungFig.save( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!",\n    "@@circular": ";sub"\n  }\n}' ) ;
+//console.log( kungFig.saveKfg( conf ).replace( /\n/g , () => '\\n' ).replace( /\t/g , () => '\\t' ) ) ;
+doormen.equals( kungFig.saveJson( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!",\n    "@@circular": ";sub"\n  }\n}' ) ;
+doormen.equals( kungFig.saveKfg( conf ) , 'a: Haha!\nb: Bee!\nsub:\n\tc: See!\n\tcircular: @@;sub\n' ) ;
 
 
 var conf = {
@@ -483,11 +490,12 @@ var conf = {
 
 conf.sub.sub.circular = conf.sub.sub ;
 
-//console.log( kungFig.save( conf ) ) ;
+//console.log( kungFig.saveKfg( conf ).replace( /\n/g , () => '\\n' ).replace( /\t/g , () => '\\t' ) ) ;
 doormen.equals(
-	kungFig.save( conf ) , 
+	kungFig.saveJson( conf ) , 
 	'{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "sub": {\n      "c": "See!",\n      "@@circular": ";sub.sub"\n    }\n  }\n}'
 ) ;
+doormen.equals( kungFig.saveKfg( conf ) , 'a: Haha!\nb: Bee!\nsub:\n\tsub:\n\t\tc: See!\n\t\tcircular: @@;sub.sub\n' ) ;
 ```
 
 should load and save flawlessly a config with many circular includes.
@@ -495,21 +503,32 @@ should load and save flawlessly a config with many circular includes.
 ```js
 var str ;
 
-str = kungFig.save( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) ) ;
+str = kungFig.saveJson( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) ) ;
 //console.log( str ) ;
 doormen.equals( str , '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "@@toBe": ";circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "@@toA": ";circularOne"\n  }\n}' ) ;
+
+str = kungFig.saveKfg( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) ) ;
+//console.log( str ) ;
+//console.log( str.replace( /\n/g , () => '\\n' ).replace( /\t/g , () => '\\t' ) ) ;
+doormen.equals( str , "hello: world!\ncircularOne:\n\tsome: data\n\ttoBe: @@;circularTwo\ncircularTwo:\n\tmore: data\n\ttoA: @@;circularOne\n" ) ;
 ```
 
-should load and save flawlessly a config with many circular includes.
+should load and save to disk flawlessly a config with many circular includes.
 
 ```js
 var str ;
 
-kungFig.save( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) , __dirname + '/output.json' ) ;
+kungFig.saveJson( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) , __dirname + '/output.json' ) ;
 str = fs.readFileSync( __dirname + '/output.json' ).toString() ;
 //console.log( str ) ;
 doormen.equals( str , '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "@@toBe": ";circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "@@toA": ";circularOne"\n  }\n}' ) ;
 fs.unlinkSync( __dirname + '/output.json' ) ;
+
+kungFig.saveKfg( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) , __dirname + '/output.kfg' ) ;
+str = fs.readFileSync( __dirname + '/output.kfg' ).toString() ;
+//console.log( str ) ;
+doormen.equals( str , "hello: world!\ncircularOne:\n\tsome: data\n\ttoBe: @@;circularTwo\ncircularTwo:\n\tmore: data\n\ttoA: @@;circularOne\n" ) ;
+fs.unlinkSync( __dirname + '/output.kfg' ) ;
 ```
 
 <a name="js-modules"></a>
@@ -653,7 +672,7 @@ should stringify a config of arrays.
 ```js
 var str ;
 
-str = kungFig.save( kungFig.load( __dirname + '/sample/withIncludesRefArray.json' ) ) ;
+str = kungFig.saveJson( kungFig.load( __dirname + '/sample/withIncludesRefArray.json' ) ) ;
 //console.log( str ) ;
 doormen.equals( str , '[\n  "test",\n  [\n    3,\n    [\n      "hello",\n      "world!"\n    ],\n    {\n      "just": "a",\n      "simple": {\n        "test": "!"\n      }\n    }\n  ],\n  [\n    "world!",\n    "hello",\n    3\n  ]\n]' ) ;
 ```
@@ -665,7 +684,7 @@ var o , str ;
 
 o = kungFig.load( __dirname + '/sample/withCircularIncludesArray.json' ) ;
 //console.log( o ) ;
-str = kungFig.save( o ) ;
+str = kungFig.saveJson( o ) ;
 //console.log( str ) ;
 //console.log( str.replace( /\n/g , () => '\\n' ) ) ;
 doormen.equals( str , '[\n  "world!",\n  [\n    "data",\n    {\n      "@@": ";[2]"\n    }\n  ],\n  [\n    "data",\n    {\n      "@@": ";[1]"\n    }\n  ]\n]' ) ;

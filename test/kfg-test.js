@@ -97,11 +97,16 @@ describe( "kfg stringify" , function() {
 			'()-hey': 5,
 			'#hey': 5,
 			'@*>': '/path/to/something/',
+			'@': '/path/to/something/',
+			'@@': '/path/to/something/',
 		} ;
 		
 		var s = stringify( o ) ;
 		//console.log( s ) ;
 		//console.log( parse( s ) ) ;
+
+		var expected = 'attack: (+) 2\ndefense: (-) 1\ntime: (*) 0.9\ndamages: (u-ops) 1.2\n+strange key: 3\n"(another strange key)": 5\n"-hey": 5\n"#hey": 5\n(*>) @/path/to/something/\n() @/path/to/something/\n() @@/path/to/something/\n' ;
+		doormen.equals( s , expected ) ;
 		
 		// Check that the original object and the stringified/parsed object are equals:
 		//require( 'expect.js' )( o ).to.eql( parse( s ) ) ;
