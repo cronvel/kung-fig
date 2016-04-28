@@ -209,6 +209,15 @@ doormen.equals(
 ) ;
 ```
 
+should load a simple txt file.
+
+```js
+doormen.equals(
+	kungFig.load( __dirname + '/sample/txt/lorem.txt' ) ,
+	"Lorem ipsum dolor."
+) ;
+```
+
 should load a simple JSON file without dependency, containing an array.
 
 ```js
@@ -275,6 +284,21 @@ doormen.equals(
 		simple: "test",
 		int: 5,
 		"+int": 2
+	}
+) ;
+```
+
+should load a JSON file with a txt dependency.
+
+```js
+doormen.equals(
+	kungFig.load( __dirname + '/sample/withTxtInclude.json' ) ,
+	{
+		"simple": "test",
+		"firstInclude": "Lorem ipsum dolor.",
+		"nested": {
+			"secondInclude": "Lorem ipsum dolor."
+		}
 	}
 ) ;
 ```

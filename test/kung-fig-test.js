@@ -81,6 +81,14 @@ describe( "Loading a config" , function() {
 		) ;
 	} ) ;
 	
+	it( "should load a simple txt file" , function() {
+		
+		doormen.equals(
+			kungFig.load( __dirname + '/sample/txt/lorem.txt' ) ,
+			"Lorem ipsum dolor."
+		) ;
+	} ) ;
+	
 	it( "should load a simple JSON file without dependency, containing an array" , function() {
 		
 		//console.log( kungFig.load( __dirname + '/sample/simpleWithArrays.json' ) ) ;
@@ -140,6 +148,20 @@ describe( "Loading a config" , function() {
 				simple: "test",
 				int: 5,
 				"+int": 2
+			}
+		) ;
+	} ) ;
+	
+	it( "should load a JSON file with a txt dependency" , function() {
+		
+		doormen.equals(
+			kungFig.load( __dirname + '/sample/withTxtInclude.json' ) ,
+			{
+				"simple": "test",
+				"firstInclude": "Lorem ipsum dolor.",
+				"nested": {
+					"secondInclude": "Lorem ipsum dolor."
+				}
 			}
 		) ;
 	} ) ;
