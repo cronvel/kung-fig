@@ -186,5 +186,13 @@ describe( "kfg parse" , function() {
 			'@*>': 'path/to/something',
 		} ) ;
 	} ) ;
+	
+	it( "parse a file with instances of constructors" , function() {
+		var o ;
+		
+		o = parse( fs.readFileSync( __dirname + '/sample/kfg/instances.kfg' , 'utf8' ) ) ;
+		
+		console.log( require( 'util' ).inspect( o , { depth: 10 } ) ) ;
+	} ) ;
 } ) ;
 
