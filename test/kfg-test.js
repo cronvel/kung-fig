@@ -33,6 +33,7 @@ var kungFig = require( '../lib/kungFig.js' ) ;
 var stringify = kungFig.stringify ;
 var parse = kungFig.parse ;
 var doormen = require( 'doormen' ) ;
+var string = require( 'string-kit' ) ;
 var fs = require( 'fs' ) ;
 
 
@@ -104,8 +105,41 @@ describe( "kfg stringify" , function() {
 		var s = stringify( o ) ;
 		//console.log( s ) ;
 		//console.log( parse( s ) ) ;
-
+		
 		var expected = 'attack: (+) 2\ndefense: (-) 1\ntime: (*) 0.9\ndamages: (u-ops) 1.2\n+strange key: 3\n"(another strange key)": 5\n"-hey": 5\n"#hey": 5\n(*>) @/path/to/something/\n() @/path/to/something/\n() @@/path/to/something/\n' ;
+		doormen.equals( s , expected ) ;
+		
+		// Check that the original object and the stringified/parsed object are equals:
+		//require( 'expect.js' )( o ).to.eql( parse( s ) ) ;
+		doormen.equals( o , parse( s ) ) ;
+	} ) ;
+	
+	it( "stringify an object with special instances (regex, date)" , function() {
+		var o = {
+			date1: new Date( 123456789 ) ,
+			regex1: /abc/ ,
+			array: [
+				[
+					new Date( 123456789 ) ,
+					/abc/ig ,
+				] ,
+				[
+					new Date( 123456789 ) ,
+					/abc/ig ,
+				] ,
+			] ,
+			object: {
+				date2: new Date( 123456789 ) ,
+				regex2: /abc/ig ,
+			}
+		} ;
+		
+		var s = stringify( o ) ;
+		//console.log( s ) ;
+		//console.log( string.escape.control( s ) ) ;
+		//console.log( parse( s ) ) ;
+		
+		var expected = 'date1: <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)\nregex1: <regex> /abc/\narray:\n\t-\t- <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)\n\t\t- <regex> /abc/gi\n\t-\t- <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)\n\t\t- <regex> /abc/gi\nobject:\n\tdate2: <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)\n\tregex2: <regex> /abc/gi\n' ;
 		doormen.equals( s , expected ) ;
 		
 		// Check that the original object and the stringified/parsed object are equals:
@@ -187,12 +221,24 @@ describe( "kfg parse" , function() {
 		} ) ;
 	} ) ;
 	
-	it( "parse a file with instances of constructors" , function() {
+	it( "parse a file with special instances (regex, date)" , function() {
 		var o ;
 		
 		o = parse( fs.readFileSync( __dirname + '/sample/kfg/instances.kfg' , 'utf8' ) ) ;
 		
-		console.log( require( 'util' ).inspect( o , { depth: 10 } ) ) ;
+		//console.log( require( 'util' ).inspect( o , { depth: 10 } ) ) ;
+		//console.log( JSON.stringify( o ) ) ;
+		
+		doormen.equals(
+			JSON.stringify( o ) ,
+			'{"a":1234,"date1":"2016-04-29T10:08:14.000Z","date2":"2016-04-29T10:08:08.645Z","b":"toto","regex1":{},"sub":{"sub":{"date3":"1970-01-01T00:00:01.000Z","regex2":{}}},"d":2}'
+		) ;
+		
+		doormen.equals( o.regex1 instanceof RegExp , true ) ;
+		doormen.equals( o.regex1.toString() , "/abc/" ) ;
+		
+		doormen.equals( o.sub.sub.regex2 instanceof RegExp , true ) ;
+		doormen.equals( o.sub.sub.regex2.toString() , "/abc/m" ) ;
 	} ) ;
 } ) ;
 

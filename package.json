@@ -1,6 +1,6 @@
 {
   "name": "kung-fig",
-  "version": "0.8.6",
+  "version": "0.9.0",
   "description": "The Kung Fu of JSON config!",
   "main": "lib/kungFig.js",
   "directories": {
@@ -8,12 +8,13 @@
   },
   "dependencies": {
     "osenv": "^0.1.3",
-    "tree-kit": "^0.5.7"
+    "tree-kit": "^0.5.19"
   },
   "devDependencies": {
-    "doormen": "^0.2.16",
-    "jshint": "^2.5.6",
-    "mocha": "^2.2.5"
+    "doormen": "^0.4.18",
+    "jshint": "^2.9.2",
+    "mocha": "^2.4.5",
+    "string-kit": "^0.4.3"
   },
   "scripts": {
     "test": "mocha -R dot"
