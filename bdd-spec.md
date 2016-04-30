@@ -950,6 +950,62 @@ doormen.equals(
 ) ;
 ```
 
+the concat after (append) operator +>.
+
+```js
+var tree = {
+	array: [ 3,5,11 ]
+} ;
+
+var mods = {
+	"+>array": [ 2,7 ]
+} ;
+
+//console.log( kungFig.stack( tree , mods ) ) ;
+doormen.equals(
+	kungFig.stack( tree , mods ) ,
+	{
+		array: [ 3,5,11 ],
+		"+>array": [ 2,7 ]
+	}
+) ;
+
+doormen.equals(
+	kungFig.reduce( tree , mods ) ,
+	{
+		array: [ 3,5,11,2,7 ]
+	}
+) ;
+```
+
+the concat before (prepend) operator <+.
+
+```js
+var tree = {
+	array: [ 3,5,11 ]
+} ;
+
+var mods = {
+	"<+array": [ 2,7 ]
+} ;
+
+//console.log( kungFig.stack( tree , mods ) ) ;
+doormen.equals(
+	kungFig.stack( tree , mods ) ,
+	{
+		array: [ 3,5,11 ],
+		"<+array": [ 2,7 ]
+	}
+) ;
+
+doormen.equals(
+	kungFig.reduce( tree , mods ) ,
+	{
+		array: [ 2,7,3,5,11 ]
+	}
+) ;
+```
+
 the combining before operator <*.
 
 ```js

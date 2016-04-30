@@ -198,6 +198,60 @@ describe( "Operator behaviours" , function() {
 		) ;
 	} ) ;
 	
+	it( "the concat after (append) operator +>" , function() {
+		
+		var tree = {
+			array: [ 3,5,11 ]
+		} ;
+		
+		var mods = {
+			"+>array": [ 2,7 ]
+		} ;
+		
+		//console.log( kungFig.stack( tree , mods ) ) ;
+		doormen.equals(
+			kungFig.stack( tree , mods ) ,
+			{
+				array: [ 3,5,11 ],
+				"+>array": [ 2,7 ]
+			}
+		) ;
+		
+		doormen.equals(
+			kungFig.reduce( tree , mods ) ,
+			{
+				array: [ 3,5,11,2,7 ]
+			}
+		) ;
+	} ) ;
+	
+	it( "the concat before (prepend) operator <+" , function() {
+		
+		var tree = {
+			array: [ 3,5,11 ]
+		} ;
+		
+		var mods = {
+			"<+array": [ 2,7 ]
+		} ;
+		
+		//console.log( kungFig.stack( tree , mods ) ) ;
+		doormen.equals(
+			kungFig.stack( tree , mods ) ,
+			{
+				array: [ 3,5,11 ],
+				"<+array": [ 2,7 ]
+			}
+		) ;
+		
+		doormen.equals(
+			kungFig.reduce( tree , mods ) ,
+			{
+				array: [ 2,7,3,5,11 ]
+			}
+		) ;
+	} ) ;
+	
 	it( "the combining before operator <*" , function() {
 		
 		var tree = {
