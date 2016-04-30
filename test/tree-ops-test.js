@@ -139,19 +139,21 @@ describe( "Operator behaviours" , function() {
 		
 	} ) ;
 	
-	it( "the combining operator *>" , function() {
+	it( "the combining after operator *>" , function() {
 		
 		var tree = {
 			subtree: {
 				a: 3,
-				b: 5
+				b: 5,
+				c: 11
 			}
 		} ;
 		
 		var mods = {
 			"*>subtree": {
 				"+a": 1,
-				"+b": 3
+				"+b": 3,
+				c: 12
 			}
 		} ;
 		
@@ -161,6 +163,7 @@ describe( "Operator behaviours" , function() {
 				subtree: {
 					a: 3,
 					b: 5,
+					c: 12,
 					"+a": 1,
 					"+b": 3
 				}
@@ -172,23 +175,72 @@ describe( "Operator behaviours" , function() {
 			{
 				subtree: {
 					a: 4,
-					b: 8
+					b: 8,
+					c: 12
 				}
 			}
 		) ;
 	} ) ;
 	
-	it( "the combining operator *> with no baseKey should combine in the root element" , function() {
+	it( "the combining before operator <*" , function() {
+		
+		var tree = {
+			subtree: {
+				a: 3,
+				b: 5,
+				c: 11
+			}
+		} ;
+		
+		var mods = {
+			"<*subtree": {
+				"+a": 1,
+				"+b": 3,
+				c: 12,
+				d: 7
+			}
+		} ;
+		
+		doormen.equals(
+			kungFig.stack( tree , mods ) ,
+			{
+				subtree: {
+					a: 3,
+					b: 5,
+					c: 11,
+					d: 7,
+					"+a": 1,
+					"+b": 3
+				}
+			}
+		) ;
+		
+		doormen.equals(
+			kungFig.reduce( tree , mods ) ,
+			{
+				subtree: {
+					a: 4,
+					b: 8,
+					c: 11,
+					d: 7
+				}
+			}
+		) ;
+	} ) ;
+	
+	it( "the combining after operator *> with no baseKey should combine in the root element" , function() {
 		
 		var tree = {
 			a: 3,
-			b: 5
+			b: 5,
+			c: 11
 		} ;
 		
 		var mods = {
 			"*>": {
 				"+a": 1,
-				"+b": 3
+				"+b": 3,
+				c: 12
 			}
 		} ;
 		
@@ -197,6 +249,7 @@ describe( "Operator behaviours" , function() {
 			{
 				a: 3,
 				b: 5,
+				c: 12,
 				"+a": 1,
 				"+b": 3
 			}
@@ -206,16 +259,19 @@ describe( "Operator behaviours" , function() {
 			kungFig.reduce( tree , mods ) ,
 			{
 				a: 4,
-				b: 8
+				b: 8,
+				c: 12
 			}
 		) ;
 		
 		var tree = {
 			a: 3,
 			b: 5,
+			c: 11,
 			"*>": {
 				"+a": 1,
-				"+b": 3
+				"+b": 3,
+				c: 12
 			}
 		} ;
 		
@@ -223,7 +279,70 @@ describe( "Operator behaviours" , function() {
 			kungFig.reduce( tree ) ,
 			{
 				a: 4,
-				b: 8
+				b: 8,
+				c: 12
+			}
+		) ;
+	} ) ;
+	
+	it( "the combining before operator <* with no baseKey should combine in the root element" , function() {
+		
+		var tree = {
+			a: 3,
+			b: 5,
+			c: 11
+		} ;
+		
+		var mods = {
+			"<*": {
+				"+a": 1,
+				"+b": 3,
+				c: 12,
+				d: 7
+			}
+		} ;
+		
+		doormen.equals(
+			kungFig.stack( tree , mods ) ,
+			{
+				a: 3,
+				b: 5,
+				c: 11,
+				d: 7,
+				"+a": 1,
+				"+b": 3
+			}
+		) ;
+		
+		doormen.equals(
+			kungFig.reduce( tree , mods ) ,
+			{
+				a: 4,
+				b: 8,
+				c: 11,
+				d: 7
+			}
+		) ;
+		
+		var tree = {
+			a: 3,
+			b: 5,
+			c: 11,
+			"<*": {
+				"+a": 1,
+				"+b": 3,
+				c: 12,
+				d: 7
+			}
+		} ;
+		
+		doormen.equals(
+			kungFig.reduce( tree ) ,
+			{
+				a: 4,
+				b: 8,
+				c: 11,
+				d: 7
 			}
 		) ;
 	} ) ;
