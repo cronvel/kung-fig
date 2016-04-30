@@ -1,6 +1,6 @@
 {
   "name": "kung-fig",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "The Kung Fu of JSON config!",
   "main": "lib/kungFig.js",
   "directories": {
@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "doormen": "^0.4.18",
+    "expect.js": "^0.3.1",
     "jshint": "^2.9.2",
     "mocha": "^2.4.5",
     "string-kit": "^0.4.3"

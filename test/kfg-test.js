@@ -33,6 +33,7 @@ var kungFig = require( '../lib/kungFig.js' ) ;
 var stringify = kungFig.stringify ;
 var parse = kungFig.parse ;
 var doormen = require( 'doormen' ) ;
+var expect = require( 'expect.js' ) ;
 var string = require( 'string-kit' ) ;
 var fs = require( 'fs' ) ;
 
@@ -114,8 +115,9 @@ describe( "kfg stringify" , function() {
 		doormen.equals( o , parse( s ) ) ;
 	} ) ;
 	
-	it( "stringify an object with special instances (regex, date)" , function() {
+	it( "stringify an object with special instances (bin, date, regex)" , function() {
 		var o = {
+			bin: new Buffer( 'af461e0a' , 'hex' ) ,
 			date1: new Date( 123456789 ) ,
 			regex1: /abc/ ,
 			array: [
@@ -139,12 +141,21 @@ describe( "kfg stringify" , function() {
 		//console.log( string.escape.control( s ) ) ;
 		//console.log( parse( s ) ) ;
 		
-		var expected = 'date1: <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)\nregex1: <regex> /abc/\narray:\n\t-\t- <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)\n\t\t- <regex> /abc/gi\n\t-\t- <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)\n\t\t- <regex> /abc/gi\nobject:\n\tdate2: <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)\n\tregex2: <regex> /abc/gi\n' ;
+		var expected = 'bin: <bin16> af461e0a\ndate1: <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)\nregex1: <regex> /abc/\narray:\n\t-\t- <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)\n\t\t- <regex> /abc/gi\n\t-\t- <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)\n\t\t- <regex> /abc/gi\nobject:\n\tdate2: <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)\n\tregex2: <regex> /abc/gi\n' ;
 		doormen.equals( s , expected ) ;
 		
+		var o2 = parse( s ) ;
+		
 		// Check that the original object and the stringified/parsed object are equals:
-		//require( 'expect.js' )( o ).to.eql( parse( s ) ) ;
-		doormen.equals( o , parse( s ) ) ;
+		//expect( o ).to.eql( o2 ) ;
+		
+		expect( o2.bin ).to.be.an( Buffer ) ;
+		expect( o2.bin.toString( 'hex' ) ).to.be( o.bin.toString( 'hex' ) ) ;
+		
+		delete o.bin ;
+		delete o2.bin ;
+		
+		doormen.equals( o , o2 ) ;
 	} ) ;
 } ) ;
 
@@ -221,7 +232,7 @@ describe( "kfg parse" , function() {
 		} ) ;
 	} ) ;
 	
-	it( "parse a file with special instances (regex, date)" , function() {
+	it( "parse a file with special instances (bin, date, regex)" , function() {
 		var o ;
 		
 		o = parse( fs.readFileSync( __dirname + '/sample/kfg/instances.kfg' , 'utf8' ) ) ;
@@ -231,7 +242,7 @@ describe( "kfg parse" , function() {
 		
 		doormen.equals(
 			JSON.stringify( o ) ,
-			'{"a":1234,"date1":"2016-04-29T10:08:14.000Z","date2":"2016-04-29T10:08:08.645Z","b":"toto","regex1":{},"sub":{"sub":{"date3":"1970-01-01T00:00:01.000Z","regex2":{}}},"d":2}'
+			'{"a":1234,"bin":{"type":"Buffer","data":[253,16,75,25]},"date1":"2016-04-29T10:08:14.000Z","date2":"2016-04-29T10:08:08.645Z","b":"toto","regex1":{},"sub":{"sub":{"date3":"1970-01-01T00:00:01.000Z","regex2":{}}},"d":2}'
 		) ;
 		
 		doormen.equals( o.regex1 instanceof RegExp , true ) ;
@@ -239,6 +250,8 @@ describe( "kfg parse" , function() {
 		
 		doormen.equals( o.sub.sub.regex2 instanceof RegExp , true ) ;
 		doormen.equals( o.sub.sub.regex2.toString() , "/abc/m" ) ;
+		
+		doormen.equals( o.bin.toString( 'hex' ) , "fd104b19" ) ;
 	} ) ;
 } ) ;
 
