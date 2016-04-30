@@ -909,16 +909,32 @@ var mods = {
 	}
 } ;
 
+//console.log( kungFig.stack( tree , mods ) ) ;
 doormen.equals(
 	kungFig.stack( tree , mods ) ,
 	{
+		//*
+		subtree: {
+			a: 3,
+			b: 5,
+			c: 11
+		},
+		"*>subtree": {
+			"+a": 1,
+			"+b": 3,
+			c: 12
+		}
+		//*/
+		
+		/*
 		subtree: {
 			a: 3,
 			b: 5,
 			c: 12,
 			"+a": 1,
 			"+b": 3
-		}
+		},
+		//*/
 	}
 ) ;
 
@@ -954,9 +970,25 @@ var mods = {
 	}
 } ;
 
+//console.log( kungFig.stack( tree , mods ) ) ;
 doormen.equals(
 	kungFig.stack( tree , mods ) ,
 	{
+		//*
+		subtree: {
+			a: 3,
+			b: 5,
+			c: 11
+		},
+		"<*subtree": {
+			"+a": 1,
+			"+b": 3,
+			c: 12,
+			d: 7
+		}
+		//*/
+		
+		/*
 		subtree: {
 			a: 3,
 			b: 5,
@@ -965,6 +997,7 @@ doormen.equals(
 			"+a": 1,
 			"+b": 3
 		}
+		//*/
 	}
 ) ;
 
@@ -998,8 +1031,23 @@ var mods = {
 	}
 } ;
 
+//console.log( kungFig.stack( tree , mods ) ) ;
 doormen.equals(
 	kungFig.stack( tree , mods ) ,
+	//*
+	{
+		a: 3,
+		b: 5,
+		c: 11,
+		"*>": {
+			"+a": 1,
+			"+b": 3,
+			c: 12
+		}
+	}
+	//*/
+	
+	/*
 	{
 		a: 3,
 		b: 5,
@@ -1007,6 +1055,7 @@ doormen.equals(
 		"+a": 1,
 		"+b": 3
 	}
+	//*/
 ) ;
 
 doormen.equals(
@@ -1057,8 +1106,24 @@ var mods = {
 	}
 } ;
 
+//console.log( kungFig.stack( tree , mods ) ) ;
 doormen.equals(
 	kungFig.stack( tree , mods ) ,
+	//*
+	{
+		a: 3,
+		b: 5,
+		c: 11,
+		"<*": {
+			"+a": 1,
+			"+b": 3,
+			c: 12,
+			d: 7
+		}
+	}
+	//*/
+	
+	/*
 	{
 		a: 3,
 		b: 5,
@@ -1067,6 +1132,7 @@ doormen.equals(
 		"+a": 1,
 		"+b": 3
 	}
+	//*/
 ) ;
 
 doormen.equals(
