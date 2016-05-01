@@ -480,3 +480,66 @@ describe( "Operator behaviours" , function() {
 	
 } ) ;
 
+
+
+describe( "Operator extensions" , function() {
+	
+	it( "simple operator extension" , function() {
+		
+		var ext = kungFig.extendOperators( {
+			pow: {
+				priority: 100 ,
+				stack: function( source , target , key , baseKey ) {
+					//console.log( target[ key ] , source[ key ] ) ;
+					if ( target[ key ] === undefined ) { target[ key ] = source[ key ] ; }
+					else { target[ key ] *= source[ key ] ; }
+				} ,
+				reduce: function( target , key , baseKey ) {
+					target[ baseKey ] = Math.pow( target[ baseKey ] , target[ key ] ) ;
+					delete target[ key ] ;
+				}
+			}
+		} ) ;
+		
+		var tree = {
+			a: 3,
+			b: 5,
+			"+b": 2,
+			"(pow)a": 2
+		} ;
+		
+		//console.log( ext ) ;
+		
+		doormen.equals(
+			ext.reduce( tree ) ,
+			{ a: 9, b: 7 }
+		) ;
+		
+		tree = {
+			a: 3,
+			b: 5,
+			"(pow)a": 2
+		} ;
+		
+		var mods = {
+			"(pow)a": 3
+		} ;
+		
+		//console.log( ext.stack( tree , mods ) ) ;
+		
+		doormen.equals(
+			ext.stack( tree , mods ) ,
+			{ a: 3, b: 5, "(pow)a": 6 }
+		) ;
+		
+		//console.log( ext.reduce( tree , mods ) ) ;
+		
+		doormen.equals(
+			ext.reduce( tree , mods ) ,
+			{ a: 729, b: 5 }
+		) ;
+	} ) ;
+} ) ;
+
+
+	
