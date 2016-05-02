@@ -1,0 +1,13 @@
+
+
+Kung-Fig:
+
+- Includes: replace the ';' separator by '#'
+
+
+
+KFG:
+
+- include support in array element
+- support the inline '>'
+
