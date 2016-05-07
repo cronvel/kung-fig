@@ -105,10 +105,11 @@ describe( "KFG stringify" , function() {
 		} ;
 		
 		var s = stringify( o ) ;
-		console.log( s ) ;
+		//console.log( s ) ;
+		//console.log( string.escape.control( s ) ) ;
 		//console.log( parse( s ) ) ;
 		
-		var expected = 'attack: (+) 2\ndefense: (-) 1\ntime: (*) 0.9\ndamages: (u-ops) 1.2\n+strange key: 3\n"(another strange key)": 5\n"-hey": 5\n"#hey": 5\n(*>) @/path/to/something/\n() @/path/to/something/\n() @@/path/to/something/\n' ;
+		var expected = 'attack: (+) 2\ndefense: (-) 1\ntime: (*) 0.9\ndamages: (u-ops) 1.2\n+strange key: 3\n"(another strange key)": 5\n"-hey": 5\n"#hey": 5\n(*>) @/path/to/something/\n() @/path/to/something/\n() @@/path/to/something/\nlist:\n\t- one\n\t- two\n\t- @@/path/to/something/\n' ;
 		doormen.equals( s , expected ) ;
 		
 		// Check that the original object and the stringified/parsed object are equals:
