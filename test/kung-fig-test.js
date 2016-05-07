@@ -112,7 +112,7 @@ describe( "Loading a config" , function() {
 		doormen.shouldThrow( function() { kungFig.load( __dirname + '/sample/withUnexistantInclude.json' ) ; } ) ;
 	} ) ;
 	
-	it( "when loading a file with and unexistant dependency using the '@', it should not throw" , function() {
+	it( "when loading a file with an unexistant dependency using the '@', it should not throw" , function() {
 		
 		doormen.equals(
 			kungFig.load( __dirname + '/sample/withUnexistantOptionalInclude.json' ) ,

@@ -18,5 +18,10 @@ merge: (*>)
 	something: 1
 	something else: 12
 
+list:
+	- one
+	- two
+	- @@path/to/include.kfg
+
 # root merging
 (*>) @path/to/something

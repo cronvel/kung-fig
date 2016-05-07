@@ -39,7 +39,7 @@ var fs = require( 'fs' ) ;
 
 
 
-describe( "kfg stringify" , function() {
+describe( "KFG stringify" , function() {
 	
 	it( "stringify a basic object" , function() {
 		var o = {
@@ -101,10 +101,11 @@ describe( "kfg stringify" , function() {
 			'@*>': '/path/to/something/',
 			'@': '/path/to/something/',
 			'@@': '/path/to/something/',
+			list: [ 'one' , 'two' , { "@@": '/path/to/something/' } ] ,
 		} ;
 		
 		var s = stringify( o ) ;
-		//console.log( s ) ;
+		console.log( s ) ;
 		//console.log( parse( s ) ) ;
 		
 		var expected = 'attack: (+) 2\ndefense: (-) 1\ntime: (*) 0.9\ndamages: (u-ops) 1.2\n+strange key: 3\n"(another strange key)": 5\n"-hey": 5\n"#hey": 5\n(*>) @/path/to/something/\n() @/path/to/something/\n() @@/path/to/something/\n' ;
@@ -161,12 +162,11 @@ describe( "kfg stringify" , function() {
 
 
 
-describe( "kfg parse" , function() {
+describe( "KFG parse" , function() {
 	
 	it( "parse a basic file" , function() {
-		var o ;
 		
-		o = parse( fs.readFileSync( __dirname + '/sample/kfg/simple.kfg' , 'utf8' ) ) ;
+		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/simple.kfg' , 'utf8' ) ) ;
 		
 		//console.log( require( 'util' ).inspect( o , { depth: 10 } ) ) ;
 		
@@ -209,9 +209,8 @@ describe( "kfg parse" , function() {
 	} ) ;
 	
 	it( "parse a file with operators" , function() {
-		var o ;
 		
-		o = parse( fs.readFileSync( __dirname + '/sample/kfg/ops.kfg' , 'utf8' ) ) ;
+		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/ops.kfg' , 'utf8' ) ) ;
 		
 		//console.log( require( 'util' ).inspect( o , { depth: 10 } ) ) ;
 		
@@ -228,14 +227,14 @@ describe( "kfg parse" , function() {
 			'@(u-ops)include3': 'path/to/include.kfg',
 			'@@(u-ops)include4': 'path/to/mandatory-include.kfg',
 			'*>merge': { something: 1, 'something else': 12 },
+			list: [ 'one' , 'two' , { '@@': 'path/to/include.kfg' } ] ,
 			'@*>': 'path/to/something',
 		} ) ;
 	} ) ;
 	
 	it( "parse a file with special instances (bin, date, regex)" , function() {
-		var o ;
 		
-		o = parse( fs.readFileSync( __dirname + '/sample/kfg/instances.kfg' , 'utf8' ) ) ;
+		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/instances.kfg' , 'utf8' ) ) ;
 		
 		//console.log( require( 'util' ).inspect( o , { depth: 10 } ) ) ;
 		//console.log( JSON.stringify( o ) ) ;
@@ -254,4 +253,6 @@ describe( "kfg parse" , function() {
 		doormen.equals( o.bin.toString( 'hex' ) , "fd104b19" ) ;
 	} ) ;
 } ) ;
+
+
 
