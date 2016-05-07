@@ -35,10 +35,12 @@ text :
 	>
 	> It all started a Friday...
 
+inline-string: > This is an inline string!
+
 list:
 	- one
 	- two
-	- three
+	- > three
 
 list embedded:
 	# Without array beautifier

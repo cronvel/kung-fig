@@ -168,6 +168,7 @@ doormen.equals( o , {
 	sub2: { no: 'way' },
 	sub3: { nooo: 'wai!' },
 	text: "A cool story:\n\nIt all started a Friday..." ,
+	"inline-string": "This is an inline string!" ,
 	list: [ 'one', 'two', 'three' ],
 	'list embedded': 
 		[ { 'first name': 'Bill', 'last name': 'Baroud' },
