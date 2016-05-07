@@ -2,7 +2,7 @@
 	"simple": "test",
 	"@@firstInclude": "js/one.js",
 	"nested": {
-		"@@secondInclude": "js/one.js;helloFunc",
-		"@@thirdInclude": "js/one.js;awesomeFunc"
+		"@@secondInclude": "js/one.js#helloFunc",
+		"@@thirdInclude": "js/one.js#awesomeFunc"
 	}
 }

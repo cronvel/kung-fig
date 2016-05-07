@@ -343,9 +343,10 @@ describe( "Saving a config" , function() {
 		
 		conf.sub.circular = conf ;
 		
+		//console.log( kungFig.saveJson( conf ).replace( /\n/g , () => '\\n' ).replace( /\t/g , () => '\\t' ) ) ;
 		//console.log( kungFig.saveKfg( conf ).replace( /\n/g , () => '\\n' ).replace( /\t/g , () => '\\t' ) ) ;
-		doormen.equals( kungFig.saveJson( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!",\n    "@@circular": ";"\n  }\n}' ) ;
-		doormen.equals( kungFig.saveKfg( conf ) , 'a: Haha!\nb: Bee!\nsub:\n\tc: See!\n\tcircular: @@;\n' ) ;
+		doormen.equals( kungFig.saveJson( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!",\n    "@@circular": "#"\n  }\n}' ) ;
+		doormen.equals( kungFig.saveKfg( conf ) , 'a: Haha!\nb: Bee!\nsub:\n\tc: See!\n\tcircular: @@#\n' ) ;
 		
 		
 		var conf = {
@@ -359,8 +360,8 @@ describe( "Saving a config" , function() {
 		conf.sub.circular = conf.sub ;
 		
 		//console.log( kungFig.saveKfg( conf ).replace( /\n/g , () => '\\n' ).replace( /\t/g , () => '\\t' ) ) ;
-		doormen.equals( kungFig.saveJson( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!",\n    "@@circular": ";sub"\n  }\n}' ) ;
-		doormen.equals( kungFig.saveKfg( conf ) , 'a: Haha!\nb: Bee!\nsub:\n\tc: See!\n\tcircular: @@;sub\n' ) ;
+		doormen.equals( kungFig.saveJson( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!",\n    "@@circular": "#sub"\n  }\n}' ) ;
+		doormen.equals( kungFig.saveKfg( conf ) , 'a: Haha!\nb: Bee!\nsub:\n\tc: See!\n\tcircular: @@#sub\n' ) ;
 		
 		
 		var conf = {
@@ -378,9 +379,9 @@ describe( "Saving a config" , function() {
 		//console.log( kungFig.saveKfg( conf ).replace( /\n/g , () => '\\n' ).replace( /\t/g , () => '\\t' ) ) ;
 		doormen.equals(
 			kungFig.saveJson( conf ) , 
-			'{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "sub": {\n      "c": "See!",\n      "@@circular": ";sub.sub"\n    }\n  }\n}'
+			'{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "sub": {\n      "c": "See!",\n      "@@circular": "#sub.sub"\n    }\n  }\n}'
 		) ;
-		doormen.equals( kungFig.saveKfg( conf ) , 'a: Haha!\nb: Bee!\nsub:\n\tsub:\n\t\tc: See!\n\t\tcircular: @@;sub.sub\n' ) ;
+		doormen.equals( kungFig.saveKfg( conf ) , 'a: Haha!\nb: Bee!\nsub:\n\tsub:\n\t\tc: See!\n\t\tcircular: @@#sub.sub\n' ) ;
 	} ) ;
 	
 	it( "should load and save flawlessly a config with many circular includes" , function() {
@@ -389,12 +390,12 @@ describe( "Saving a config" , function() {
 		
 		str = kungFig.saveJson( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) ) ;
 		//console.log( str ) ;
-		doormen.equals( str , '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "@@toBe": ";circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "@@toA": ";circularOne"\n  }\n}' ) ;
+		doormen.equals( str , '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "@@toBe": "#circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "@@toA": "#circularOne"\n  }\n}' ) ;
 		
 		str = kungFig.saveKfg( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) ) ;
 		//console.log( str ) ;
 		//console.log( str.replace( /\n/g , () => '\\n' ).replace( /\t/g , () => '\\t' ) ) ;
-		doormen.equals( str , "hello: world!\ncircularOne:\n\tsome: data\n\ttoBe: @@;circularTwo\ncircularTwo:\n\tmore: data\n\ttoA: @@;circularOne\n" ) ;
+		doormen.equals( str , "hello: world!\ncircularOne:\n\tsome: data\n\ttoBe: @@#circularTwo\ncircularTwo:\n\tmore: data\n\ttoA: @@#circularOne\n" ) ;
 	} ) ;
 	
 	it( "should load and save to disk flawlessly a config with many circular includes" , function() {
@@ -404,13 +405,13 @@ describe( "Saving a config" , function() {
 		kungFig.saveJson( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) , __dirname + '/output.json' ) ;
 		str = fs.readFileSync( __dirname + '/output.json' ).toString() ;
 		//console.log( str ) ;
-		doormen.equals( str , '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "@@toBe": ";circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "@@toA": ";circularOne"\n  }\n}' ) ;
+		doormen.equals( str , '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "@@toBe": "#circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "@@toA": "#circularOne"\n  }\n}' ) ;
 		fs.unlinkSync( __dirname + '/output.json' ) ;
 		
 		kungFig.saveKfg( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) , __dirname + '/output.kfg' ) ;
 		str = fs.readFileSync( __dirname + '/output.kfg' ).toString() ;
 		//console.log( str ) ;
-		doormen.equals( str , "hello: world!\ncircularOne:\n\tsome: data\n\ttoBe: @@;circularTwo\ncircularTwo:\n\tmore: data\n\ttoA: @@;circularOne\n" ) ;
+		doormen.equals( str , "hello: world!\ncircularOne:\n\tsome: data\n\ttoBe: @@#circularTwo\ncircularTwo:\n\tmore: data\n\ttoA: @@#circularOne\n" ) ;
 		fs.unlinkSync( __dirname + '/output.kfg' ) ;
 	} ) ;
 } ) ;
@@ -568,7 +569,7 @@ describe( "Array references" , function() {
 		str = kungFig.saveJson( o ) ;
 		//console.log( str ) ;
 		//console.log( str.replace( /\n/g , () => '\\n' ) ) ;
-		doormen.equals( str , '[\n  "world!",\n  [\n    "data",\n    {\n      "@@": ";[2]"\n    }\n  ],\n  [\n    "data",\n    {\n      "@@": ";[1]"\n    }\n  ]\n]' ) ;
+		doormen.equals( str , '[\n  "world!",\n  [\n    "data",\n    {\n      "@@": "#[2]"\n    }\n  ],\n  [\n    "data",\n    {\n      "@@": "#[1]"\n    }\n  ]\n]' ) ;
 	} ) ;
 } ) ;
 	

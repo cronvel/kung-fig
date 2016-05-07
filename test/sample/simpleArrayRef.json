@@ -1,7 +1,7 @@
 {
 	"array": [
 		{ "@@": "simple.json" } ,
-		{ "@@": ";refArray" }
+		{ "@@": "#refArray" }
 	] ,
 	"refArray": [ 1,2,3 ]
 }
