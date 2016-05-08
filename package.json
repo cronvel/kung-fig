@@ -1,6 +1,6 @@
 {
   "name": "kung-fig",
-  "version": "0.12.0",
+  "version": "0.12.1",
   "engines": {
     "node": ">=4.0.0"
   },
@@ -14,7 +14,7 @@
     "tree-kit": "^0.5.19"
   },
   "devDependencies": {
-    "doormen": "^0.4.18",
+    "doormen": "^0.4.19",
     "expect.js": "^0.3.1",
     "jshint": "^2.9.2",
     "mocha": "^2.4.5",
