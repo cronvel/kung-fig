@@ -255,7 +255,7 @@ describe( "KFG parse" , function() {
 		doormen.equals( o.bin.toString( 'hex' ) , "fd104b19" ) ;
 	} ) ;
 	
-	it( "zzz parse a file with special custom instances" , function() {
+	it( "parse a file with special custom instances" , function() {
 		
 		function Simple( value )
 		{
@@ -281,8 +281,8 @@ describe( "KFG parse" , function() {
 		
 		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/custom-instances.kfg' , 'utf8' ) , options ) ;
 		
-		console.log( o ) ;
-		doormen.equals( JSON.stringify( o ) , '{"simple":{"str":"abc"}}' ) ;
+		//console.log( o ) ;
+		doormen.equals( JSON.stringify( o ) , '{"simple":{"str":"abc"},"complex":{"str":"hello","int":6}}' ) ;
 	} ) ;
 	
 	it( "parse a file in tag-mode" , function() {
