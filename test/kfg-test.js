@@ -254,6 +254,58 @@ describe( "KFG parse" , function() {
 		
 		doormen.equals( o.bin.toString( 'hex' ) , "fd104b19" ) ;
 	} ) ;
+	
+	it( "zzz parse a file with special custom instances" , function() {
+		
+		function Simple( value )
+		{
+			var self = Object.create( Simple.prototype ) ;
+			self.str = value ;
+			return self ;
+		}
+		
+		function Complex( value )
+		{
+			var self = Object.create( Complex.prototype ) ;
+			self.str = value.str ;
+			self.int = value.int ;
+			return self ;
+		}
+		
+		var options = {
+			customConstructors: {
+				simple: Simple ,
+				complex: Complex
+			}
+		} ;
+		
+		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/custom-instances.kfg' , 'utf8' ) , options ) ;
+		
+		console.log( o ) ;
+		doormen.equals( JSON.stringify( o ) , '{"simple":{"str":"abc"}}' ) ;
+	} ) ;
+	
+	it( "parse a file in tag-mode" , function() {
+		
+		function Tag( value , attributes )
+		{
+			var self = Object.create( Tag.prototype ) ;
+			self.id = attributes[ 0 ] ;
+			self.some = value.some ;
+			return self ;
+		}
+		
+		var options = {
+			tagMode: true ,
+			customConstructors: {
+				tag: Tag
+			}
+		} ;
+		
+		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/tag.kfg' , 'utf8' ) , options ) ;
+		
+		console.log( o ) ;
+	} ) ;
 } ) ;
 
 
