@@ -307,7 +307,7 @@ describe( "KFG parse" , function() {
 		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/tag.kfg' , 'utf8' ) , options ) ;
 		
 		//console.log( o ) ;
-		console.log( string.inspect( { style: 'color' , depth: 5 } , o ) ) ;
+		console.log( string.inspect( { style: 'color' , depth: 15 } , o ) ) ;
 	} ) ;
 } ) ;
 
