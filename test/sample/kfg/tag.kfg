@@ -1,0 +1,16 @@
+
+[tag id1]
+	some: value
+	another: one
+
+[tag id2]
+	some: other value
+	nested:
+		a: 1
+		b: 2
+
+[container]
+	[tag]
+	[anothertag]
+
+# <date> 1/1/99

@@ -287,7 +287,7 @@ describe( "KFG parse" , function() {
 		doormen.equals( JSON.stringify( o ) , '{"simple":{"str":"abc"},"complex":{"str":"hello","int":6}}' ) ;
 	} ) ;
 	
-	it( "parse a file in tag-mode" , function() {
+	it( "zzz parse a file in tag-mode" , function() {
 		
 		function Tag( value , attributes )
 		{
@@ -306,7 +306,8 @@ describe( "KFG parse" , function() {
 		
 		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/tag.kfg' , 'utf8' ) , options ) ;
 		
-		console.log( o ) ;
+		//console.log( o ) ;
+		console.log( string.inspect( { style: 'color' , depth: 5 } , o ) ) ;
 	} ) ;
 } ) ;
 
