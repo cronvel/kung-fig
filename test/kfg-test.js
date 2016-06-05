@@ -165,6 +165,8 @@ describe( "KFG stringify" , function() {
 
 describe( "KFG parse" , function() {
 	
+	it( "parse scalar at top-level" ) ;
+	
 	it( "parse a basic file" , function() {
 		
 		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/simple.kfg' , 'utf8' ) ) ;
