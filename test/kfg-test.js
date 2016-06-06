@@ -166,15 +166,15 @@ describe( "KFG stringify" , function() {
 	} ) ;
 	
 	it( "stringify an object with tags" , function() {
-		var o = TagContainer.create( [
-			Tag.create( 'if' , 'something > constant' , TagContainer.create( [
-				Tag.create( 'do' , '' , 'some tasks' ) ,
-				Tag.create( 'do' , '' , 'some other tasks' )
+		var o = new TagContainer( [
+			new Tag( 'if' , 'something > constant' , new TagContainer( [
+				new Tag( 'do' , '' , 'some tasks' ) ,
+				new Tag( 'do' , '' , 'some other tasks' )
 			] ) ) ,
-			Tag.create( 'else' , undefined , TagContainer.create( [
-				Tag.create( 'do' , undefined , TagContainer.create( [
-					Tag.create( 'do' , '' , [ 'one' , 'two' , 'three' ] ) ,
-					Tag.create( 'do' , '' , { a: 1 , b: 2 } )
+			new Tag( 'else' , undefined , new TagContainer( [
+				new Tag( 'do' , undefined , new TagContainer( [
+					new Tag( 'do' , '' , [ 'one' , 'two' , 'three' ] ) ,
+					new Tag( 'do' , '' , { a: 1 , b: 2 } )
 				] ) )
 			] ) )
 		] ) ;
@@ -190,6 +190,67 @@ describe( "KFG stringify" , function() {
 		doormen.equals( s , expected ) ;
 		
 		var o2 = parse( s ) ;
+		
+		// Check that the original object and the stringified/parsed object are equals:
+		//expect( o ).to.eql( o2 ) ;
+		
+		expect( o2 ).to.be.a( TagContainer ) ;
+		expect( o2.children[ 0 ] ).to.be.a( Tag ) ;
+		
+		doormen.equals( o2 , o ) ;
+	} ) ;
+	
+	it( "stringify an object with tags, featuring custom tags prototype" , function() {
+		
+		function IfTag() {} ;
+		IfTag.prototype = Object.create( Tag.prototype ) ;
+		IfTag.prototype.constructor = IfTag ;
+		
+		IfTag.create = function createIfTag( attributes , content ) {
+			var self = Object.create( IfTag.prototype ) ;
+			Tag.call( self , 'if' , attributes , content ) ;
+			return self ;
+		} ;
+		
+		IfTag.prototype.parseAttributes = function parseAttributes( attributes )
+		{
+			var splitted = attributes.split( / +/ ) ;
+			return {
+				left: splitted[ 0 ] ,
+				operator: splitted[ 1 ] ,
+				right: splitted[ 2 ]
+			} ;
+		}
+		
+		IfTag.prototype.stringifyAttributes = function stringifyAttributes() {
+			return this.attributes.left + ' ' + this.attributes.operator + ' ' + this.attributes.right ;
+		} ;
+		
+		var o = new TagContainer( [
+			IfTag.create( 'something > constant' , new TagContainer( [
+				new Tag( 'do' , '' , 'some tasks' ) ,
+				new Tag( 'do' , '' , 'some other tasks' )
+			] ) ) ,
+			new Tag( 'else' , undefined , new TagContainer( [
+				new Tag( 'do' , undefined , new TagContainer( [
+					new Tag( 'do' , '' , [ 'one' , 'two' , 'three' ] ) ,
+					new Tag( 'do' , '' , { a: 1 , b: 2 } )
+				] ) )
+			] ) )
+		] ) ;
+		
+		//console.log( o ) ;
+		var s = stringify( o ) ;
+		
+		//console.log( s ) ;
+		//console.log( string.escape.control( s ) ) ;
+		//console.log( parse( s ) ) ;
+		
+		var expected = '[if something > constant]\n\t[do] some tasks\n\t[do] some other tasks\n[else]\n\t[do]\n\t\t[do]\n\t\t\t- one\n\t\t\t- two\n\t\t\t- three\n\t\t[do]\n\t\t\ta: 1\n\t\t\tb: 2\n' ;
+		doormen.equals( s , expected ) ;
+		
+		var o2 = parse( s , { tags: { if: IfTag.create } } ) ;
+		//console.log( o2 ) ;
 		
 		// Check that the original object and the stringified/parsed object are equals:
 		//expect( o ).to.eql( o2 ) ;
@@ -337,7 +398,43 @@ describe( "KFG parse" , function() {
 		//console.log( string.inspect( { style: 'color' , depth: 15 } , o ) ) ;
 		//console.log( string.escape.control( JSON.stringify( o ) ) ) ;
 		
-		doormen.equals( JSON.stringify( o ) , '{"children":[{"name":"tag","attributes":"id1","value":{"some":"value","another":"one"}},{"name":"tag","attributes":"id2","value":{"some":"other value","nested":{"a":1,"b":2,"c":{"children":[{"name":"if","attributes":"something > constant","value":{"children":[{"name":"do","attributes":"","value":"some work"}]}},{"name":"else","attributes":"","value":{"children":[{"name":"do","attributes":"","value":"something else"}]}}]}}}},{"name":"container","attributes":"","value":{"children":[{"name":"tag","attributes":""},{"name":"anothertag","attributes":""},{"name":"complex","attributes":"tag hello=\\"<world]]]\\\\\\"!\\" some[3].path[6]"}]}}]}' ) ;
+		doormen.equals( JSON.stringify( o ) , '{"children":[{"name":"tag","attributes":"id1","content":{"some":"value","another":"one"}},{"name":"tag","attributes":"id2","content":{"some":"other value","nested":{"a":1,"b":2,"c":{"children":[{"name":"if","attributes":"something > constant","content":{"children":[{"name":"do","attributes":"","content":"some work"}]}},{"name":"else","attributes":"","content":{"children":[{"name":"do","attributes":"","content":"something else"}]}}]}}}},{"name":"container","attributes":"","content":{"children":[{"name":"tag","attributes":""},{"name":"anothertag","attributes":""},{"name":"complex","attributes":"tag hello=\\"<world]]]\\\\\\"!\\" some[3].path[6]"}]}}]}' ) ;
+	} ) ;
+	
+	it( "parse a file containing tags, with custom tags prototypes" , function() {
+		
+		function IfTag() {} ;
+		IfTag.prototype = Object.create( Tag.prototype ) ;
+		IfTag.prototype.constructor = IfTag ;
+		
+		IfTag.create = function createIfTag( attributes , content ) {
+			var self = Object.create( IfTag.prototype ) ;
+			Tag.call( self , 'if' , attributes , content ) ;
+			return self ;
+		} ;
+		
+		IfTag.prototype.parseAttributes = function parseAttributes( attributes )
+		{
+			var splitted = attributes.split( / +/ ) ;
+			return {
+				left: splitted[ 0 ] ,
+				operator: splitted[ 1 ] ,
+				right: splitted[ 2 ]
+			} ;
+		}
+		
+		IfTag.prototype.stringifyAttributes = function stringifyAttributes() {
+			return this.attributes.left + ' ' + this.attributes.operator + ' ' + this.attributes.right ;
+		} ;
+		
+		
+		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/tag.kfg' , 'utf8' ) , { tags: { if: IfTag.create } } ) ;
+		
+		//console.log( o ) ;
+		//console.log( string.inspect( { style: 'color' , depth: 15 } , o ) ) ;
+		//console.log( string.escape.control( JSON.stringify( o ) ) ) ;
+		
+		doormen.equals( JSON.stringify( o ) , '{"children":[{"name":"tag","attributes":"id1","content":{"some":"value","another":"one"}},{"name":"tag","attributes":"id2","content":{"some":"other value","nested":{"a":1,"b":2,"c":{"children":[{"name":"if","attributes":{"left":"something","operator":">","right":"constant"},"content":{"children":[{"name":"do","attributes":"","content":"some work"}]}},{"name":"else","attributes":"","content":{"children":[{"name":"do","attributes":"","content":"something else"}]}}]}}}},{"name":"container","attributes":"","content":{"children":[{"name":"tag","attributes":""},{"name":"anothertag","attributes":""},{"name":"complex","attributes":"tag hello=\\"<world]]]\\\\\\"!\\" some[3].path[6]"}]}}]}' ) ;
 	} ) ;
 } ) ;
 

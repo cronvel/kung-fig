@@ -4,11 +4,11 @@
 
 ![Kung Fig!](https://raw.githubusercontent.com/cronvel/kung-fig/master/kung-fig.png)
 
-The Kung Fu of JSON config!
+The Kung Fu of configuration files!
 
 Support includes and circular includes.
 
-Alpha version.
+Beta version.
 
 
 
