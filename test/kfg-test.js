@@ -156,16 +156,16 @@ describe( "KFG stringify" , function() {
 		// Check that the original object and the stringified/parsed object are equals:
 		//expect( o ).to.eql( o2 ) ;
 		
-		expect( o2.bin ).to.be.an( Buffer ) ;
+		expect( o2.bin ).to.be.a( Buffer ) ;
 		expect( o2.bin.toString( 'hex' ) ).to.be( o.bin.toString( 'hex' ) ) ;
 		
 		delete o.bin ;
 		delete o2.bin ;
 		
-		doormen.equals( o , o2 ) ;
+		doormen.equals( o2 , o ) ;
 	} ) ;
 	
-	it( "xxx stringify an object with tags" , function() {
+	it( "stringify an object with tags" , function() {
 		var o = TagContainer.create( [
 			Tag.create( 'if' , 'something > constant' , TagContainer.create( [
 				Tag.create( 'do' , '' , 'some tasks' ) ,
@@ -181,13 +181,12 @@ describe( "KFG stringify" , function() {
 		
 		
 		var s = stringify( o ) ;
-		console.log( s ) ;
 		
-		return ;
+		//console.log( s ) ;
 		//console.log( string.escape.control( s ) ) ;
 		//console.log( parse( s ) ) ;
 		
-		var expected = 'bin: <bin16> af461e0a\ndate1: <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)\nregex1: <regex> /abc/\narray:\n\t-\t- <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)\n\t\t- <regex> /abc/gi\n\t-\t- <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)\n\t\t- <regex> /abc/gi\nobject:\n\tdate2: <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)\n\tregex2: <regex> /abc/gi\n' ;
+		var expected = '[if something > constant]\n\t[do] some tasks\n\t[do] some other tasks\n[else]\n\t[do]\n\t\t[do]\n\t\t\t- one\n\t\t\t- two\n\t\t\t- three\n\t\t[do]\n\t\t\ta: 1\n\t\t\tb: 2\n' ;
 		doormen.equals( s , expected ) ;
 		
 		var o2 = parse( s ) ;
@@ -195,13 +194,10 @@ describe( "KFG stringify" , function() {
 		// Check that the original object and the stringified/parsed object are equals:
 		//expect( o ).to.eql( o2 ) ;
 		
-		expect( o2.bin ).to.be.an( Buffer ) ;
-		expect( o2.bin.toString( 'hex' ) ).to.be( o.bin.toString( 'hex' ) ) ;
+		expect( o2 ).to.be.a( TagContainer ) ;
+		expect( o2.children[ 0 ] ).to.be.a( Tag ) ;
 		
-		delete o.bin ;
-		delete o2.bin ;
-		
-		doormen.equals( o , o2 ) ;
+		doormen.equals( o2 , o ) ;
 	} ) ;
 } ) ;
 
@@ -333,12 +329,15 @@ describe( "KFG parse" , function() {
 		doormen.equals( JSON.stringify( o ) , '{"simple":{"str":"abc"},"complex":{"str":"hello","int":6}}' ) ;
 	} ) ;
 	
-	it( "zzz parse a file containing tags" , function() {
+	it( "parse a file containing tags" , function() {
 		
 		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/tag.kfg' , 'utf8' ) ) ;
 		
 		//console.log( o ) ;
-		console.log( string.inspect( { style: 'color' , depth: 15 } , o ) ) ;
+		//console.log( string.inspect( { style: 'color' , depth: 15 } , o ) ) ;
+		//console.log( string.escape.control( JSON.stringify( o ) ) ) ;
+		
+		doormen.equals( JSON.stringify( o ) , '{"children":[{"name":"tag","attributes":"id1","value":{"some":"value","another":"one"}},{"name":"tag","attributes":"id2","value":{"some":"other value","nested":{"a":1,"b":2,"c":{"children":[{"name":"if","attributes":"something > constant","value":{"children":[{"name":"do","attributes":"","value":"some work"}]}},{"name":"else","attributes":"","value":{"children":[{"name":"do","attributes":"","value":"something else"}]}}]}}}},{"name":"container","attributes":"","value":{"children":[{"name":"tag","attributes":""},{"name":"anothertag","attributes":""},{"name":"complex","attributes":"tag hello=\\"<world]]]\\\\\\"!\\" some[3].path[6]"}]}}]}' ) ;
 	} ) ;
 } ) ;
 

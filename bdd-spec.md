@@ -23,6 +23,8 @@ var o = {
 	f: NaN ,
 	g: Infinity ,
 	h: - Infinity ,
+	j1: {} ,
+	j2: [] ,
 	needQuote: {
 		a: "1" ,
 		c: "null" ,
@@ -127,13 +129,50 @@ var o2 = parse( s ) ;
 // Check that the original object and the stringified/parsed object are equals:
 //expect( o ).to.eql( o2 ) ;
 
-expect( o2.bin ).to.be.an( Buffer ) ;
+expect( o2.bin ).to.be.a( Buffer ) ;
 expect( o2.bin.toString( 'hex' ) ).to.be( o.bin.toString( 'hex' ) ) ;
 
 delete o.bin ;
 delete o2.bin ;
 
-doormen.equals( o , o2 ) ;
+doormen.equals( o2 , o ) ;
+```
+
+stringify an object with tags.
+
+```js
+var o = TagContainer.create( [
+	Tag.create( 'if' , 'something > constant' , TagContainer.create( [
+		Tag.create( 'do' , '' , 'some tasks' ) ,
+		Tag.create( 'do' , '' , 'some other tasks' )
+	] ) ) ,
+	Tag.create( 'else' , undefined , TagContainer.create( [
+		Tag.create( 'do' , undefined , TagContainer.create( [
+			Tag.create( 'do' , '' , [ 'one' , 'two' , 'three' ] ) ,
+			Tag.create( 'do' , '' , { a: 1 , b: 2 } )
+		] ) )
+	] ) )
+] ) ;
+
+
+var s = stringify( o ) ;
+
+//console.log( s ) ;
+//console.log( string.escape.control( s ) ) ;
+//console.log( parse( s ) ) ;
+
+var expected = '[if something > constant]\n\t[do] some tasks\n\t[do] some other tasks\n[else]\n\t[do]\n\t\t[do]\n\t\t\t- one\n\t\t\t- two\n\t\t\t- three\n\t\t[do]\n\t\t\ta: 1\n\t\t\tb: 2\n' ;
+doormen.equals( s , expected ) ;
+
+var o2 = parse( s ) ;
+
+// Check that the original object and the stringified/parsed object are equals:
+//expect( o ).to.eql( o2 ) ;
+
+expect( o2 ).to.be.a( TagContainer ) ;
+expect( o2.children[ 0 ] ).to.be.a( Tag ) ;
+
+doormen.equals( o2 , o ) ;
 ```
 
 <a name="kfg-parse"></a>
@@ -160,6 +199,8 @@ doormen.equals( o , {
 	g: NaN,
 	h: Infinity,
 	i: -Infinity,
+	j1: {},
+	j2: [],
 	sub: 
 		{ sub: { 'another key': 'another value' },
 		k: 1,
@@ -229,6 +270,49 @@ doormen.equals( o.sub.sub.regex2 instanceof RegExp , true ) ;
 doormen.equals( o.sub.sub.regex2.toString() , "/abc/m" ) ;
 
 doormen.equals( o.bin.toString( 'hex' ) , "fd104b19" ) ;
+```
+
+parse a file with special custom instances.
+
+```js
+function Simple( value )
+{
+	var self = Object.create( Simple.prototype ) ;
+	self.str = value ;
+	return self ;
+}
+
+function Complex( value )
+{
+	var self = Object.create( Complex.prototype ) ;
+	self.str = value.str ;
+	self.int = value.int ;
+	return self ;
+}
+
+var options = {
+	classes: {
+		simple: Simple ,
+		complex: Complex
+	}
+} ;
+
+var o = parse( fs.readFileSync( __dirname + '/sample/kfg/custom-instances.kfg' , 'utf8' ) , options ) ;
+
+//console.log( o ) ;
+doormen.equals( JSON.stringify( o ) , '{"simple":{"str":"abc"},"complex":{"str":"hello","int":6}}' ) ;
+```
+
+parse a file containing tags.
+
+```js
+var o = parse( fs.readFileSync( __dirname + '/sample/kfg/tag.kfg' , 'utf8' ) ) ;
+
+//console.log( o ) ;
+//console.log( string.inspect( { style: 'color' , depth: 15 } , o ) ) ;
+//console.log( string.escape.control( JSON.stringify( o ) ) ) ;
+
+doormen.equals( JSON.stringify( o ) , '{"children":[{"name":"tag","attributes":"id1","value":{"some":"value","another":"one"}},{"name":"tag","attributes":"id2","value":{"some":"other value","nested":{"a":1,"b":2,"c":{"children":[{"name":"if","attributes":"something > constant","value":{"children":[{"name":"do","attributes":"","value":"some work"}]}},{"name":"else","attributes":"","value":{"children":[{"name":"do","attributes":"","value":"something else"}]}}]}}}},{"name":"container","attributes":"","value":{"children":[{"name":"tag","attributes":""},{"name":"anothertag","attributes":""},{"name":"complex","attributes":"tag hello=\\"<world]]]\\\\\\"!\\" some[3].path[6]"}]}}]}' ) ;
 ```
 
 <a name="loading-a-config"></a>
