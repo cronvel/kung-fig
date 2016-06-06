@@ -32,6 +32,9 @@
 var kungFig = require( '../lib/kungFig.js' ) ;
 var stringify = kungFig.stringify ;
 var parse = kungFig.parse ;
+var Tag = kungFig.Tag ;
+var TagContainer = kungFig.TagContainer ;
+
 var doormen = require( 'doormen' ) ;
 var expect = require( 'expect.js' ) ;
 var string = require( 'string-kit' ) ;
@@ -51,6 +54,8 @@ describe( "KFG stringify" , function() {
 			f: NaN ,
 			g: Infinity ,
 			h: - Infinity ,
+			j1: {} ,
+			j2: [] ,
 			needQuote: {
 				a: "1" ,
 				c: "null" ,
@@ -159,6 +164,45 @@ describe( "KFG stringify" , function() {
 		
 		doormen.equals( o , o2 ) ;
 	} ) ;
+	
+	it( "xxx stringify an object with tags" , function() {
+		var o = TagContainer.create( [
+			Tag.create( 'if' , 'something > constant' , TagContainer.create( [
+				Tag.create( 'do' , '' , 'some tasks' ) ,
+				Tag.create( 'do' , '' , 'some other tasks' )
+			] ) ) ,
+			Tag.create( 'else' , undefined , TagContainer.create( [
+				Tag.create( 'do' , undefined , TagContainer.create( [
+					Tag.create( 'do' , '' , [ 'one' , 'two' , 'three' ] ) ,
+					Tag.create( 'do' , '' , { a: 1 , b: 2 } )
+				] ) )
+			] ) )
+		] ) ;
+		
+		
+		var s = stringify( o ) ;
+		console.log( s ) ;
+		
+		return ;
+		//console.log( string.escape.control( s ) ) ;
+		//console.log( parse( s ) ) ;
+		
+		var expected = 'bin: <bin16> af461e0a\ndate1: <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)\nregex1: <regex> /abc/\narray:\n\t-\t- <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)\n\t\t- <regex> /abc/gi\n\t-\t- <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)\n\t\t- <regex> /abc/gi\nobject:\n\tdate2: <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)\n\tregex2: <regex> /abc/gi\n' ;
+		doormen.equals( s , expected ) ;
+		
+		var o2 = parse( s ) ;
+		
+		// Check that the original object and the stringified/parsed object are equals:
+		//expect( o ).to.eql( o2 ) ;
+		
+		expect( o2.bin ).to.be.an( Buffer ) ;
+		expect( o2.bin.toString( 'hex' ) ).to.be( o.bin.toString( 'hex' ) ) ;
+		
+		delete o.bin ;
+		delete o2.bin ;
+		
+		doormen.equals( o , o2 ) ;
+	} ) ;
 } ) ;
 
 
@@ -188,6 +232,8 @@ describe( "KFG parse" , function() {
 			g: NaN,
 			h: Infinity,
 			i: -Infinity,
+			j1: {},
+			j2: [],
 			sub: 
 				{ sub: { 'another key': 'another value' },
 				k: 1,
@@ -275,7 +321,7 @@ describe( "KFG parse" , function() {
 		}
 		
 		var options = {
-			customConstructors: {
+			classes: {
 				simple: Simple ,
 				complex: Complex
 			}
@@ -287,24 +333,9 @@ describe( "KFG parse" , function() {
 		doormen.equals( JSON.stringify( o ) , '{"simple":{"str":"abc"},"complex":{"str":"hello","int":6}}' ) ;
 	} ) ;
 	
-	it( "zzz parse a file in tag-mode" , function() {
+	it( "zzz parse a file containing tags" , function() {
 		
-		function Tag( value , attributes )
-		{
-			var self = Object.create( Tag.prototype ) ;
-			self.id = attributes[ 0 ] ;
-			self.some = value.some ;
-			return self ;
-		}
-		
-		var options = {
-			tagMode: true ,
-			customConstructors: {
-				tag: Tag
-			}
-		} ;
-		
-		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/tag.kfg' , 'utf8' ) , options ) ;
+		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/tag.kfg' , 'utf8' ) ) ;
 		
 		//console.log( o ) ;
 		console.log( string.inspect( { style: 'color' , depth: 15 } , o ) ) ;

@@ -16,6 +16,8 @@ f3 : off
 g : NaN
 h : Infinity
 i : -Infinity
+j1: <object>
+j2: <array>
 
 sub:
 	sub  :   
