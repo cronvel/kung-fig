@@ -38,6 +38,71 @@ var doormen = require( 'doormen' ) ;
 
 describe( "Operator behaviours" , function() {
 	
+	it( "tmp" , function() {
+		
+		var creature = {
+			hp: 8 ,
+			attack: 5 ,
+			defense: 3 ,
+			move: 1 ,
+			"+defense": 3
+		} ;
+		
+		doormen.equals(
+			kungFig.reduce( creature ) ,
+			{
+				hp: 8 ,
+				attack: 5 ,
+				defense: 6 ,
+				move: 1
+			}
+		) ;
+	} ) ;
+	
+	it( "tmp stack" , function() {
+		
+		var creature = {
+			hp: 8 ,
+			attack: 5 ,
+			defense: 3 ,
+			move: 1 ,
+			"+defense": 3
+		} ;
+		
+		doormen.equals(
+			kungFig.stack( creature , { hp: 10 , "+defense": 2 , evasion: 7 } ) ,
+			{
+				attack: 5,
+				defense: 3,
+				move: 1,
+				'#hp': [ 8, 10 ],
+				'#+defense': [ 3, 2 ],
+				evasion: 7
+			}
+		) ;
+	} ) ;
+	
+	it( "tmp foreach" , function() {
+		
+		var creature = {
+			hp: 8 ,
+			attack: 5 ,
+			defense: 3 ,
+			move: 1 ,
+			"#+defense": [3,4,5]
+		} ;
+		
+		doormen.equals(
+			kungFig.reduce( creature ) ,
+			{
+				hp: 8 ,
+				attack: 5 ,
+				defense: 15 ,
+				move: 1
+			}
+		) ;
+	} ) ;
+	
 	it( "mixing + and * for the same base key should preserve operation order (first *, then +)" , function() {
 		
 		var creature = {
