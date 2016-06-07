@@ -37,5 +37,13 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/cronvel/kung-fig/issues"
+  },
+  "copyright": {
+    "title": "Kung Fig",
+    "years": [
+      2015,
+      2016
+    ],
+    "owner": "Cédric Ronvel"
   }
 }
