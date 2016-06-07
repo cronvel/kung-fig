@@ -122,6 +122,10 @@ describe( "Operator behaviours" , function() {
 			"+magic": 1
 		} ;
 		
+		var helmet = {
+			"+defense": 1 ,
+		} ;
+		
 		doormen.equals(
 			kungFig.stack( creature , shield , enchantedArmor ) ,
 			{
@@ -129,7 +133,20 @@ describe( "Operator behaviours" , function() {
 				attack: 5 ,
 				defense: 3 ,
 				move: 1 ,
-				"+defense": 4 ,
+				"#+defense": [3,1] ,
+				"*defense": 2 ,
+				"+magic": 1
+			}
+		) ;
+		
+		doormen.equals(
+			kungFig.stack( creature , shield , enchantedArmor , helmet ) ,
+			{
+				hp: 8 ,
+				attack: 5 ,
+				defense: 3 ,
+				move: 1 ,
+				"#+defense": [3,1,1] ,
 				"*defense": 2 ,
 				"+magic": 1
 			}
