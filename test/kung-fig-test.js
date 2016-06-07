@@ -107,7 +107,7 @@ describe( "Loading a config" , function() {
 		) ;
 	} ) ;
 	
-	it( "when loading a file with and unexistant dependency using the '@@', it should throw" , function() {
+	it( "when loading a file with an unexistant dependency using the '@@', it should throw" , function() {
 		
 		doormen.shouldThrow( function() { kungFig.load( __dirname + '/sample/withUnexistantInclude.json' ) ; } ) ;
 	} ) ;
@@ -123,7 +123,7 @@ describe( "Loading a config" , function() {
 		) ;
 	} ) ;
 	
-	it( "when loading a file with and bad JSON content dependency using the '@', it should throw" , function() {
+	it( "when loading a file with a bad JSON content dependency using the '@', it should throw" , function() {
 		
 		doormen.shouldThrow( function() { kungFig.load( __dirname + '/sample/withBadOptionalInclude.json' ) ; } ) ;
 		//kungFig.load( __dirname + '/sample/withBadOptionalInclude.json' ) ;
@@ -192,6 +192,47 @@ describe( "Loading a config" , function() {
 						hello: 'world!'
 					}
 				}
+			}
+		) ;
+	} ) ;
+	
+	it( "should load a JSON file with a glob dependency" , function() {
+		
+		doormen.equals(
+			kungFig.load( __dirname + '/sample/withGlobIncludes.json' ) ,
+			{
+				simple: 'test',
+				globInclude: [
+					{
+						one: 1 ,
+						two: {
+							five: {
+								just: "a" ,
+								simple: {
+									test: "!" 
+								}
+							} ,
+							four: {
+								hello: "world!"
+							} ,
+							three: 3
+						}
+					} ,
+					{
+						hello: "world!" 
+					}
+				]
+			}
+		) ;
+	} ) ;
+	
+	it( "should load a JSON file with a glob dependency that resolve to no files" , function() {
+		
+		doormen.equals(
+			kungFig.load( __dirname + '/sample/withUnexistantGlobInclude.json' ) ,
+			{
+				simple: 'test',
+				globInclude: []
 			}
 		) ;
 	} ) ;

@@ -490,7 +490,7 @@ doormen.equals(
 ) ;
 ```
 
-when loading a file with and unexistant dependency using the '@@', it should throw.
+when loading a file with an unexistant dependency using the '@@', it should throw.
 
 ```js
 doormen.shouldThrow( function() { kungFig.load( __dirname + '/sample/withUnexistantInclude.json' ) ; } ) ;
@@ -508,7 +508,7 @@ doormen.equals(
 ) ;
 ```
 
-when loading a file with and bad JSON content dependency using the '@', it should throw.
+when loading a file with a bad JSON content dependency using the '@', it should throw.
 
 ```js
 doormen.shouldThrow( function() { kungFig.load( __dirname + '/sample/withBadOptionalInclude.json' ) ; } ) ;
@@ -582,6 +582,49 @@ doormen.equals(
 				hello: 'world!'
 			}
 		}
+	}
+) ;
+```
+
+should load a JSON file with a glob dependency.
+
+```js
+doormen.equals(
+	kungFig.load( __dirname + '/sample/withGlobIncludes.json' ) ,
+	{
+		simple: 'test',
+		globInclude: [
+			{
+				one: 1 ,
+				two: {
+					five: {
+						just: "a" ,
+						simple: {
+							test: "!" 
+						}
+					} ,
+					four: {
+						hello: "world!"
+					} ,
+					three: 3
+				}
+			} ,
+			{
+				hello: "world!" 
+			}
+		]
+	}
+) ;
+```
+
+should load a JSON file with a glob dependency that resolve to no files.
+
+```js
+doormen.equals(
+	kungFig.load( __dirname + '/sample/withUnexistantGlobInclude.json' ) ,
+	{
+		simple: 'test',
+		globInclude: []
 	}
 ) ;
 ```
