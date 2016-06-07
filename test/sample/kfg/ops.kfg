@@ -18,6 +18,11 @@ merge: (*>)
 	something: 1
 	something else: 12
 
+foreach: (#+)
+	- 1
+	- 2
+	- 3
+
 list:
 	- one
 	- two

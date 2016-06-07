@@ -102,7 +102,8 @@ describe( "KFG stringify" , function() {
 			'()+strange key': 3,
 			'()(another strange key)': 5,
 			'()-hey': 5,
-			'#hey': 5,
+			'~hey': 5,
+			'@@#*>': '/path/to/*/something/',
 			'@*>': '/path/to/something/',
 			'@': '/path/to/something/',
 			'@@': '/path/to/something/',
@@ -114,7 +115,7 @@ describe( "KFG stringify" , function() {
 		//console.log( string.escape.control( s ) ) ;
 		//console.log( parse( s ) ) ;
 		
-		var expected = 'attack: (+) 2\ndefense: (-) 1\ntime: (*) 0.9\ndamages: (u-ops) 1.2\n+strange key: 3\n"(another strange key)": 5\n"-hey": 5\n"#hey": 5\n(*>) @/path/to/something/\n() @/path/to/something/\n() @@/path/to/something/\nlist:\n\t- one\n\t- two\n\t- @@/path/to/something/\n' ;
+		var expected = 'attack: (+) 2\ndefense: (-) 1\ntime: (*) 0.9\ndamages: (u-ops) 1.2\n+strange key: 3\n"(another strange key)": 5\n"-hey": 5\n~hey: 5\n(#*>) @@/path/to/*/something/\n(*>) @/path/to/something/\n() @/path/to/something/\n() @@/path/to/something/\nlist:\n\t- one\n\t- two\n\t- @@/path/to/something/\n' ;
 		doormen.equals( s , expected ) ;
 		
 		// Check that the original object and the stringified/parsed object are equals:
@@ -334,6 +335,7 @@ describe( "KFG parse" , function() {
 			'@(u-ops)include3': 'path/to/include.kfg',
 			'@@(u-ops)include4': 'path/to/mandatory-include.kfg',
 			'*>merge': { something: 1, 'something else': 12 },
+			'#+foreach': [1,2,3],
 			list: [ 'one' , 'two' , { '@@': 'path/to/include.kfg' } ] ,
 			'@*>': 'path/to/something',
 		} ) ;
