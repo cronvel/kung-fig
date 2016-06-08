@@ -6,6 +6,7 @@
    - [JS modules](#js-modules)
    - [Array references](#array-references)
    - [Operator behaviours](#operator-behaviours)
+   - [Complex, deeper test](#complex-deeper-test)
    - [Operator extensions](#operator-extensions)
 <a name=""></a>
  
@@ -73,7 +74,8 @@ var o = {
 	'()+strange key': 3,
 	'()(another strange key)': 5,
 	'()-hey': 5,
-	'#hey': 5,
+	'~hey': 5,
+	'@@#*>': '/path/to/*/something/',
 	'@*>': '/path/to/something/',
 	'@': '/path/to/something/',
 	'@@': '/path/to/something/',
@@ -85,7 +87,7 @@ var s = stringify( o ) ;
 //console.log( string.escape.control( s ) ) ;
 //console.log( parse( s ) ) ;
 
-var expected = 'attack: (+) 2\ndefense: (-) 1\ntime: (*) 0.9\ndamages: (u-ops) 1.2\n+strange key: 3\n"(another strange key)": 5\n"-hey": 5\n"#hey": 5\n(*>) @/path/to/something/\n() @/path/to/something/\n() @@/path/to/something/\nlist:\n\t- one\n\t- two\n\t- @@/path/to/something/\n' ;
+var expected = 'attack: (+) 2\ndefense: (-) 1\ntime: (*) 0.9\ndamages: (u-ops) 1.2\n+strange key: 3\n"(another strange key)": 5\n"-hey": 5\n~hey: 5\n(#*>) @@/path/to/*/something/\n(*>) @/path/to/something/\n() @/path/to/something/\n() @@/path/to/something/\nlist:\n\t- one\n\t- two\n\t- @@/path/to/something/\n' ;
 doormen.equals( s , expected ) ;
 
 // Check that the original object and the stringified/parsed object are equals:
@@ -307,6 +309,7 @@ doormen.equals( o , {
 	'@(u-ops)include3': 'path/to/include.kfg',
 	'@@(u-ops)include4': 'path/to/mandatory-include.kfg',
 	'*>merge': { something: 1, 'something else': 12 },
+	'#+foreach': [1,2,3],
 	list: [ 'one' , 'two' , { '@@': 'path/to/include.kfg' } ] ,
 	'@*>': 'path/to/something',
 } ) ;
@@ -613,6 +616,27 @@ doormen.equals(
 				hello: "world!" 
 			}
 		]
+	}
+) ;
+```
+
+should load a JSON file with a glob+merge dependency.
+
+```js
+doormen.equals(
+	kungFig.load( __dirname + '/sample/withGlobMerge.json' ) ,
+	{
+		a: "A" ,
+		a2: 12 ,
+		sub: {
+			b: "two" ,
+			b2: "two-two" ,
+			subsub: {
+				c: 3 ,
+				c2: "C2" ,
+				c3: "C3"
+			}
+		}
 	}
 ) ;
 ```
@@ -1012,6 +1036,147 @@ doormen.equals( str , '[\n  "world!",\n  [\n    "data",\n    {\n      "@@": "#[2
 
 <a name="operator-behaviours"></a>
 # Operator behaviours
+simple stack and reduce on a single object.
+
+```js
+var creature = {
+	hp: 8 ,
+	attack: 5 ,
+	defense: 3 ,
+	move: 1 ,
+	"+defense": 3
+} ;
+
+doormen.equals(
+	kungFig.stack( creature ) ,
+	{
+		hp: 8 ,
+		attack: 5 ,
+		defense: 3 ,
+		move: 1 ,
+		"+defense": 3
+	}
+) ;
+
+doormen.equals(
+	kungFig.reduce( creature ) ,
+	{
+		hp: 8 ,
+		attack: 5 ,
+		defense: 6 ,
+		move: 1
+	}
+) ;
+```
+
+simple stack and reduce on two and three objects.
+
+```js
+var creature = {
+	hp: 8 ,
+	attack: 5 ,
+	defense: 3 ,
+	move: 1 ,
+	"+defense": 3
+} ;
+
+var amulet = {
+	"+defense": 1 ,
+	"+hp": 1
+} ;
+
+var ring = {
+	"+defense": 1 ,
+	"#+hp": [1,1]
+} ;
+
+doormen.equals(
+	kungFig.stack( creature , amulet ) ,
+	{
+		hp: 8 ,
+		attack: 5 ,
+		defense: 3 ,
+		move: 1 ,
+		"#+defense": [3,1] ,
+		"+hp": 1
+	}
+) ;
+
+doormen.equals(
+	kungFig.stack( creature , amulet , ring ) ,
+	{
+		hp: 8 ,
+		attack: 5 ,
+		defense: 3 ,
+		move: 1 ,
+		"#+defense": [3,1,1] ,
+		"#+hp": [1,1,1]
+	}
+) ;
+
+doormen.equals(
+	kungFig.reduce( {} , creature , amulet ) ,
+	{
+		hp: 9 ,
+		attack: 5 ,
+		defense: 7 ,
+		move: 1
+	}
+) ;
+
+doormen.equals(
+	kungFig.reduce( {} , creature , amulet , ring ) ,
+	{
+		hp: 11 ,
+		attack: 5 ,
+		defense: 8 ,
+		move: 1
+	}
+) ;
+```
+
+check stack behaviour bug, when a 'foreach' and 'non-foreach' key are mixed.
+
+```js
+var creature = {
+	hp: 8 ,
+	attack: 5 ,
+	defense: 3 ,
+	move: 1 ,
+	"+defense": 3
+} ;
+
+var warrior = {
+	hp: 10 ,
+	"#+defense": [2] ,
+	evasion: 7
+} ;
+
+doormen.equals(
+	kungFig.stack( creature , warrior ) ,
+	{
+		attack: 5,
+		defense: 3,
+		move: 1,
+		'#hp': [ 8, 10 ],
+		'#+defense': [ 3, 2 ],
+		evasion: 7
+	}
+) ;
+
+doormen.equals(
+	kungFig.stack( warrior , creature ) ,
+	{
+		attack: 5,
+		defense: 3,
+		move: 1,
+		'#hp': [ 10 , 8 ],
+		'#+defense': [ 2, 3 ],
+		evasion: 7
+	}
+) ;
+```
+
 mixing + and * for the same base key should preserve operation order (first *, then +).
 
 ```js
@@ -1032,6 +1197,10 @@ var enchantedArmor = {
 	"+magic": 1
 } ;
 
+var helmet = {
+	"+defense": 1 ,
+} ;
+
 doormen.equals(
 	kungFig.stack( creature , shield , enchantedArmor ) ,
 	{
@@ -1039,79 +1208,33 @@ doormen.equals(
 		attack: 5 ,
 		defense: 3 ,
 		move: 1 ,
-		"+defense": 4 ,
+		"#+defense": [3,1] ,
 		"*defense": 2 ,
 		"+magic": 1
 	}
 ) ;
 
 doormen.equals(
-	kungFig.reduce( creature , shield , enchantedArmor ) ,
+	kungFig.stack( creature , shield , enchantedArmor , helmet ) ,
 	{
 		hp: 8 ,
 		attack: 5 ,
-		defense: 10 ,
+		defense: 3 ,
 		move: 1 ,
+		"#+defense": [3,1,1] ,
+		"*defense": 2 ,
 		"+magic": 1
 	}
 ) ;
-```
-
-- and / should be converted to + and *.
-
-```js
-var creature = {
-	hp: 8 ,
-	attack: 5 ,
-	defense: 8 ,
-	move: 1
-} ;
-
-var cursedAmulet = {
-	"-defense": 2 ,
-} ;
-
-var cursedRing = {
-	"/defense": 2 ,
-} ;
 
 doormen.equals(
-	kungFig.stack( cursedAmulet ) ,
-	{ "+defense": -2 }
-) ;
-
-doormen.equals(
-	kungFig.stack( cursedRing ) ,
-	{ "*defense": 0.5 }
-) ;
-
-doormen.equals(
-	kungFig.stack( cursedAmulet , cursedRing ) ,
-	{
-		"+defense": -2 ,
-		"*defense": 0.5
-	}
-) ;
-
-doormen.equals(
-	kungFig.stack( creature , cursedAmulet , cursedRing ) ,
+	kungFig.reduce( creature , shield , enchantedArmor , helmet ) ,
 	{
 		hp: 8 ,
 		attack: 5 ,
-		defense: 8 ,
-		"+defense": -2 ,
-		"*defense": 0.5 ,
-		move: 1
-	}
-) ;
-
-doormen.equals(
-	kungFig.reduce( creature , cursedAmulet , cursedRing ) ,
-	{
-		hp: 8 ,
-		attack: 5 ,
-		defense: 2 ,
-		move: 1
+		defense: 11 ,
+		move: 1 ,
+		"+magic": 1
 	}
 ) ;
 ```
@@ -1172,62 +1295,6 @@ doormen.equals(
 			b: 8,
 			c: 12
 		}
-	}
-) ;
-```
-
-the concat after (append) operator +>.
-
-```js
-var tree = {
-	array: [ 3,5,11 ]
-} ;
-
-var mods = {
-	"+>array": [ 2,7 ]
-} ;
-
-//console.log( kungFig.stack( tree , mods ) ) ;
-doormen.equals(
-	kungFig.stack( tree , mods ) ,
-	{
-		array: [ 3,5,11 ],
-		"+>array": [ 2,7 ]
-	}
-) ;
-
-doormen.equals(
-	kungFig.reduce( tree , mods ) ,
-	{
-		array: [ 3,5,11,2,7 ]
-	}
-) ;
-```
-
-the concat before (prepend) operator <+.
-
-```js
-var tree = {
-	array: [ 3,5,11 ]
-} ;
-
-var mods = {
-	"<+array": [ 2,7 ]
-} ;
-
-//console.log( kungFig.stack( tree , mods ) ) ;
-doormen.equals(
-	kungFig.stack( tree , mods ) ,
-	{
-		array: [ 3,5,11 ],
-		"<+array": [ 2,7 ]
-	}
-) ;
-
-doormen.equals(
-	kungFig.reduce( tree , mods ) ,
-	{
-		array: [ 2,7,3,5,11 ]
 	}
 ) ;
 ```
@@ -1349,7 +1416,9 @@ doormen.equals(
 	}
 ) ;
 
-var tree = {
+//console.log( "\n---------\n" ) ;
+
+tree = {
 	a: 3,
 	b: 5,
 	c: 11,
@@ -1427,7 +1496,7 @@ doormen.equals(
 	}
 ) ;
 
-var tree = {
+tree = {
 	a: 3,
 	b: 5,
 	c: 11,
@@ -1450,6 +1519,62 @@ doormen.equals(
 ) ;
 ```
 
+the concat after (append) operator +>.
+
+```js
+var tree = {
+	array: [ 3,5,11 ]
+} ;
+
+var mods = {
+	"+>array": [ 2,7 ]
+} ;
+
+//console.log( kungFig.stack( tree , mods ) ) ;
+doormen.equals(
+	kungFig.stack( tree , mods ) ,
+	{
+		array: [ 3,5,11 ],
+		"+>array": [ 2,7 ]
+	}
+) ;
+
+doormen.equals(
+	kungFig.reduce( tree , mods ) ,
+	{
+		array: [ 3,5,11,2,7 ]
+	}
+) ;
+```
+
+the concat before (prepend) operator <+.
+
+```js
+var tree = {
+	array: [ 3,5,11 ]
+} ;
+
+var mods = {
+	"<+array": [ 2,7 ]
+} ;
+
+//console.log( kungFig.stack( tree , mods ) ) ;
+doormen.equals(
+	kungFig.stack( tree , mods ) ,
+	{
+		array: [ 3,5,11 ],
+		"<+array": [ 2,7 ]
+	}
+) ;
+
+doormen.equals(
+	kungFig.reduce( tree , mods ) ,
+	{
+		array: [ 2,7,3,5,11 ]
+	}
+) ;
+```
+
 arrays should not be combined recursively.
 
 ```js
@@ -1462,6 +1587,99 @@ doormen.equals(
 ) ;
 ```
 
+<a name="complex-deeper-test"></a>
+# Complex, deeper test
+simple foreach.
+
+```js
+var creature = {
+	hp: 8 ,
+	attack: 5 ,
+	defense: 3 ,
+	move: 1 ,
+	"#+defense": [3,4,5]
+} ;
+
+doormen.equals(
+	kungFig.reduce( creature ) ,
+	{
+		hp: 8 ,
+		attack: 5 ,
+		defense: 15 ,
+		move: 1
+	}
+) ;
+```
+
+combining foreach on nested objects.
+
+```js
+var creature = {
+	hp: 8 ,
+	attack: 5 ,
+	defense: 3 ,
+	move: 1 ,
+	attacks: {
+		kick: {
+			toHit: 10,
+			damage: 15,
+			elements: {
+				impact: true
+			}
+		}
+	} ,
+	"#*>": [
+		{
+			hp: 10,
+			evasion: 5,
+			attacks: {
+				kick: {
+					toHit: 8,
+					elements: {
+						lightning: true,
+						wind: true
+					}
+				}
+			}
+		} ,
+		{
+			hp: 9,
+			attacks: {
+				kick: {
+					elements: {
+						fire: true,
+						wind: false
+					}
+				}
+			}
+		}
+	]
+} ;
+
+doormen.equals(
+	kungFig.reduce( creature ) ,
+	{
+		hp: 9 ,
+		attack: 5 ,
+		defense: 3 ,
+		move: 1 ,
+		evasion: 5 ,
+		attacks: {
+			kick: {
+				toHit: 8,
+				damage: 15,
+				elements: {
+					impact: true,
+					lightning: true,
+					fire: true,
+					wind: false
+				}
+			}
+		} ,
+	}
+) ;
+```
+
 <a name="operator-extensions"></a>
 # Operator extensions
 simple operator extension.
@@ -1470,14 +1688,29 @@ simple operator extension.
 var ext = kungFig.extendOperators( {
 	pow: {
 		priority: 100 ,
-		stack: function( source , target , key , baseKey ) {
-			//console.log( target[ key ] , source[ key ] ) ;
-			if ( target[ key ] === undefined ) { target[ key ] = source[ key ] ; }
-			else { target[ key ] *= source[ key ] ; }
-		} ,
-		reduce: function( target , key , baseKey ) {
-			target[ baseKey ] = Math.pow( target[ baseKey ] , target[ key ] ) ;
-			delete target[ key ] ;
+		reduce: function( existing , operands ) {
+			var i , iMax = operands.length , operand = 1 ;
+			
+			for ( i = 0 ; i < iMax ; i ++ )
+			{
+				if ( ! isNaN( operands[ i ] ) )
+				{
+					operand *= + operands[ i ] ;
+				}
+			}
+			
+			if ( ! isNaN( existing ) )
+			{
+				existing = Math.pow( + existing , operand ) ;
+				operands.length = 0 ;
+				return existing ;
+			}
+			else
+			{
+				operands[ 0 ] = operand ;
+				operands.length = 1 ;
+				return existing ;
+			}
 		}
 	}
 } ) ;
@@ -1510,7 +1743,7 @@ var mods = {
 
 doormen.equals(
 	ext.stack( tree , mods ) ,
-	{ a: 3, b: 5, "(pow)a": 6 }
+	{ a: 3, b: 5, "(#pow)a": [2,3] }
 ) ;
 
 //console.log( ext.reduce( tree , mods ) ) ;

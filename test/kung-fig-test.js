@@ -228,6 +228,26 @@ describe( "Loading a config" , function() {
 		) ;
 	} ) ;
 	
+	it( "should load a JSON file with a glob+merge dependency" , function() {
+		
+		doormen.equals(
+			kungFig.load( __dirname + '/sample/withGlobMerge.json' ) ,
+			{
+				a: "A" ,
+				a2: 12 ,
+				sub: {
+					b: "two" ,
+					b2: "two-two" ,
+					subsub: {
+						c: 3 ,
+						c2: "C2" ,
+						c3: "C3"
+					}
+				}
+			}
+		) ;
+	} ) ;
+	
 	it( "should load a JSON file with a glob dependency that resolve to no files" , function() {
 		
 		doormen.equals(
