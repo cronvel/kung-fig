@@ -38,7 +38,7 @@ var doormen = require( 'doormen' ) ;
 
 describe( "Operator behaviours" , function() {
 	
-	it( "tmp" , function() {
+	it( "simple stack and reduce on a single object" , function() {
 		
 		var creature = {
 			hp: 8 ,
@@ -47,6 +47,17 @@ describe( "Operator behaviours" , function() {
 			move: 1 ,
 			"+defense": 3
 		} ;
+		
+		doormen.equals(
+			kungFig.stack( creature ) ,
+			{
+				hp: 8 ,
+				attack: 5 ,
+				defense: 3 ,
+				move: 1 ,
+				"+defense": 3
+			}
+		) ;
 		
 		doormen.equals(
 			kungFig.reduce( creature ) ,
@@ -59,7 +70,7 @@ describe( "Operator behaviours" , function() {
 		) ;
 	} ) ;
 	
-	it( "tmp stack" , function() {
+	it( "simple stack and reduce on two and three objects" , function() {
 		
 		var creature = {
 			hp: 8 ,
@@ -69,8 +80,79 @@ describe( "Operator behaviours" , function() {
 			"+defense": 3
 		} ;
 		
+		var amulet = {
+			"+defense": 1 ,
+			"+hp": 1
+		} ;
+		
+		var ring = {
+			"+defense": 1 ,
+			"#+hp": [1,1]
+		} ;
+		
 		doormen.equals(
-			kungFig.stack( creature , { hp: 10 , "+defense": 2 , evasion: 7 } ) ,
+			kungFig.stack( creature , amulet ) ,
+			{
+				hp: 8 ,
+				attack: 5 ,
+				defense: 3 ,
+				move: 1 ,
+				"#+defense": [3,1] ,
+				"+hp": 1
+			}
+		) ;
+		
+		doormen.equals(
+			kungFig.stack( creature , amulet , ring ) ,
+			{
+				hp: 8 ,
+				attack: 5 ,
+				defense: 3 ,
+				move: 1 ,
+				"#+defense": [3,1,1] ,
+				"#+hp": [1,1,1]
+			}
+		) ;
+		
+		doormen.equals(
+			kungFig.reduce( {} , creature , amulet ) ,
+			{
+				hp: 9 ,
+				attack: 5 ,
+				defense: 7 ,
+				move: 1
+			}
+		) ;
+		
+		doormen.equals(
+			kungFig.reduce( {} , creature , amulet , ring ) ,
+			{
+				hp: 11 ,
+				attack: 5 ,
+				defense: 8 ,
+				move: 1
+			}
+		) ;
+	} ) ;
+	
+	it( "check stack behaviour bug, when a 'foreach' and 'non-foreach' key are mixed" , function() {
+		
+		var creature = {
+			hp: 8 ,
+			attack: 5 ,
+			defense: 3 ,
+			move: 1 ,
+			"+defense": 3
+		} ;
+		
+		var warrior = {
+			hp: 10 ,
+			"#+defense": [2] ,
+			evasion: 7
+		} ;
+		
+		doormen.equals(
+			kungFig.stack( creature , warrior ) ,
 			{
 				attack: 5,
 				defense: 3,
@@ -80,25 +162,16 @@ describe( "Operator behaviours" , function() {
 				evasion: 7
 			}
 		) ;
-	} ) ;
-	
-	it( "tmp foreach" , function() {
-		
-		var creature = {
-			hp: 8 ,
-			attack: 5 ,
-			defense: 3 ,
-			move: 1 ,
-			"#+defense": [3,4,5]
-		} ;
 		
 		doormen.equals(
-			kungFig.reduce( creature ) ,
+			kungFig.stack( warrior , creature ) ,
 			{
-				hp: 8 ,
-				attack: 5 ,
-				defense: 15 ,
-				move: 1
+				attack: 5,
+				defense: 3,
+				move: 1,
+				'#hp': [ 10 , 8 ],
+				'#+defense': [ 2, 3 ],
+				evasion: 7
 			}
 		) ;
 	} ) ;
@@ -399,7 +472,7 @@ describe( "Operator behaviours" , function() {
 			}
 		) ;
 		
-		console.log( "\n---------\n" ) ;
+		//console.log( "\n---------\n" ) ;
 		
 		tree = {
 			a: 3,
@@ -565,6 +638,100 @@ describe( "Operator behaviours" , function() {
 		) ;
 	} ) ;
 	
+} ) ;
+
+
+
+describe( "Complex, deeper test" , function() {
+	
+	it( "simple foreach" , function() {
+		
+		var creature = {
+			hp: 8 ,
+			attack: 5 ,
+			defense: 3 ,
+			move: 1 ,
+			"#+defense": [3,4,5]
+		} ;
+		
+		doormen.equals(
+			kungFig.reduce( creature ) ,
+			{
+				hp: 8 ,
+				attack: 5 ,
+				defense: 15 ,
+				move: 1
+			}
+		) ;
+	} ) ;
+	
+	it( "combining foreach on nested objects" , function() {
+		
+		var creature = {
+			hp: 8 ,
+			attack: 5 ,
+			defense: 3 ,
+			move: 1 ,
+			attacks: {
+				kick: {
+					toHit: 10,
+					damage: 15,
+					elements: {
+						impact: true
+					}
+				}
+			} ,
+			"#*>": [
+				{
+					hp: 10,
+					evasion: 5,
+					attacks: {
+						kick: {
+							toHit: 8,
+							elements: {
+								lightning: true,
+								wind: true
+							}
+						}
+					}
+				} ,
+				{
+					hp: 9,
+					attacks: {
+						kick: {
+							elements: {
+								fire: true,
+								wind: false
+							}
+						}
+					}
+				}
+			]
+		} ;
+		
+		doormen.equals(
+			kungFig.reduce( creature ) ,
+			{
+				hp: 9 ,
+				attack: 5 ,
+				defense: 3 ,
+				move: 1 ,
+				evasion: 5 ,
+				attacks: {
+					kick: {
+						toHit: 8,
+						damage: 15,
+						elements: {
+							impact: true,
+							lightning: true,
+							fire: true,
+							wind: false
+						}
+					}
+				} ,
+			}
+		) ;
+	} ) ;
 } ) ;
 
 
