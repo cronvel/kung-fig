@@ -153,17 +153,18 @@ describe( "Operator behaviours" , function() {
 		) ;
 		
 		doormen.equals(
-			kungFig.reduce( creature , shield , enchantedArmor ) ,
+			kungFig.reduce( creature , shield , enchantedArmor , helmet ) ,
 			{
 				hp: 8 ,
 				attack: 5 ,
-				defense: 10 ,
+				defense: 11 ,
 				move: 1 ,
 				"+magic": 1
 			}
 		) ;
 	} ) ;
 	
+	/*
 	it( "- and / should be converted to + and *" , function() {
 		
 		var creature = {
@@ -222,6 +223,7 @@ describe( "Operator behaviours" , function() {
 		) ;
 		
 	} ) ;
+	*/
 	
 	it( "the combining after operator *>" , function() {
 		
@@ -278,60 +280,6 @@ describe( "Operator behaviours" , function() {
 					b: 8,
 					c: 12
 				}
-			}
-		) ;
-	} ) ;
-	
-	it( "the concat after (append) operator +>" , function() {
-		
-		var tree = {
-			array: [ 3,5,11 ]
-		} ;
-		
-		var mods = {
-			"+>array": [ 2,7 ]
-		} ;
-		
-		//console.log( kungFig.stack( tree , mods ) ) ;
-		doormen.equals(
-			kungFig.stack( tree , mods ) ,
-			{
-				array: [ 3,5,11 ],
-				"+>array": [ 2,7 ]
-			}
-		) ;
-		
-		doormen.equals(
-			kungFig.reduce( tree , mods ) ,
-			{
-				array: [ 3,5,11,2,7 ]
-			}
-		) ;
-	} ) ;
-	
-	it( "the concat before (prepend) operator <+" , function() {
-		
-		var tree = {
-			array: [ 3,5,11 ]
-		} ;
-		
-		var mods = {
-			"<+array": [ 2,7 ]
-		} ;
-		
-		//console.log( kungFig.stack( tree , mods ) ) ;
-		doormen.equals(
-			kungFig.stack( tree , mods ) ,
-			{
-				array: [ 3,5,11 ],
-				"<+array": [ 2,7 ]
-			}
-		) ;
-		
-		doormen.equals(
-			kungFig.reduce( tree , mods ) ,
-			{
-				array: [ 2,7,3,5,11 ]
 			}
 		) ;
 	} ) ;
@@ -451,7 +399,9 @@ describe( "Operator behaviours" , function() {
 			}
 		) ;
 		
-		var tree = {
+		console.log( "\n---------\n" ) ;
+		
+		tree = {
 			a: 3,
 			b: 5,
 			c: 11,
@@ -528,7 +478,7 @@ describe( "Operator behaviours" , function() {
 			}
 		) ;
 		
-		var tree = {
+		tree = {
 			a: 3,
 			b: 5,
 			c: 11,
@@ -551,6 +501,59 @@ describe( "Operator behaviours" , function() {
 		) ;
 	} ) ;
 	
+	it( "the concat after (append) operator +>" , function() {
+		
+		var tree = {
+			array: [ 3,5,11 ]
+		} ;
+		
+		var mods = {
+			"+>array": [ 2,7 ]
+		} ;
+		
+		//console.log( kungFig.stack( tree , mods ) ) ;
+		doormen.equals(
+			kungFig.stack( tree , mods ) ,
+			{
+				array: [ 3,5,11 ],
+				"+>array": [ 2,7 ]
+			}
+		) ;
+		
+		doormen.equals(
+			kungFig.reduce( tree , mods ) ,
+			{
+				array: [ 3,5,11,2,7 ]
+			}
+		) ;
+	} ) ;
+	
+	it( "the concat before (prepend) operator <+" , function() {
+		
+		var tree = {
+			array: [ 3,5,11 ]
+		} ;
+		
+		var mods = {
+			"<+array": [ 2,7 ]
+		} ;
+		
+		//console.log( kungFig.stack( tree , mods ) ) ;
+		doormen.equals(
+			kungFig.stack( tree , mods ) ,
+			{
+				array: [ 3,5,11 ],
+				"<+array": [ 2,7 ]
+			}
+		) ;
+		
+		doormen.equals(
+			kungFig.reduce( tree , mods ) ,
+			{
+				array: [ 2,7,3,5,11 ]
+			}
+		) ;
+	} ) ;
 	it( "arrays should not be combined recursively" , function() {
 		
 		var o = { a: [ { b: 2, c: 3 }, { d: 5 } ] } ;
@@ -573,14 +576,29 @@ describe( "Operator extensions" , function() {
 		var ext = kungFig.extendOperators( {
 			pow: {
 				priority: 100 ,
-				stack: function( source , target , key , baseKey ) {
-					//console.log( target[ key ] , source[ key ] ) ;
-					if ( target[ key ] === undefined ) { target[ key ] = source[ key ] ; }
-					else { target[ key ] *= source[ key ] ; }
-				} ,
-				reduce: function( target , key , baseKey ) {
-					target[ baseKey ] = Math.pow( target[ baseKey ] , target[ key ] ) ;
-					delete target[ key ] ;
+				reduce: function( existing , operands ) {
+					var i , iMax = operands.length , operand = 1 ;
+					
+					for ( i = 0 ; i < iMax ; i ++ )
+					{
+						if ( ! isNaN( operands[ i ] ) )
+						{
+							operand *= + operands[ i ] ;
+						}
+					}
+					
+					if ( ! isNaN( existing ) )
+					{
+						existing = Math.pow( + existing , operand ) ;
+						operands.length = 0 ;
+						return existing ;
+					}
+					else
+					{
+						operands[ 0 ] = operand ;
+						operands.length = 1 ;
+						return existing ;
+					}
 				}
 			}
 		} ) ;
@@ -613,7 +631,7 @@ describe( "Operator extensions" , function() {
 		
 		doormen.equals(
 			ext.stack( tree , mods ) ,
-			{ a: 3, b: 5, "(pow)a": 6 }
+			{ a: 3, b: 5, "(#pow)a": [2,3] }
 		) ;
 		
 		//console.log( ext.reduce( tree , mods ) ) ;
