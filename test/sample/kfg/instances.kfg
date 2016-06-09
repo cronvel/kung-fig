@@ -9,3 +9,4 @@ sub:
 		date3: <Date> 1000
 		regex2: <regex> /abc/m
 d: 2
+json: <JSON> > {"a":1,"b":2,"array":[1,2,"three"]}

@@ -315,7 +315,7 @@ doormen.equals( o , {
 } ) ;
 ```
 
-parse a file with special instances (bin, date, regex).
+parse a file with special instances (json, bin, date, regex).
 
 ```js
 var o = parse( fs.readFileSync( __dirname + '/sample/kfg/instances.kfg' , 'utf8' ) ) ;
@@ -325,7 +325,7 @@ var o = parse( fs.readFileSync( __dirname + '/sample/kfg/instances.kfg' , 'utf8'
 
 doormen.equals(
 	JSON.stringify( o ) ,
-	'{"a":1234,"bin":{"type":"Buffer","data":[253,16,75,25]},"date1":"2016-04-29T10:08:14.000Z","date2":"2016-04-29T10:08:08.645Z","b":"toto","regex1":{},"sub":{"sub":{"date3":"1970-01-01T00:00:01.000Z","regex2":{}}},"d":2}'
+	'{"a":1234,"bin":{"type":"Buffer","data":[253,16,75,25]},"date1":"2016-04-29T10:08:14.000Z","date2":"2016-04-29T10:08:08.645Z","b":"toto","regex1":{},"sub":{"sub":{"date3":"1970-01-01T00:00:01.000Z","regex2":{}}},"d":2,"json":{"a":1,"b":2,"array":[1,2,"three"]}}'
 ) ;
 
 doormen.equals( o.regex1 instanceof RegExp , true ) ;
