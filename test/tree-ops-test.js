@@ -811,4 +811,4 @@ describe( "Operator extensions" , function() {
 } ) ;
 
 
-	
+
