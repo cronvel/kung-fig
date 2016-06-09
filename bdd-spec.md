@@ -1299,6 +1299,141 @@ doormen.equals(
 ) ;
 ```
 
+*> and *>> priorities.
+
+```js
+var tree = {
+	subtree: {
+		a: 3,
+		b: 5
+	}
+} ;
+
+var mods1 = {
+	"*>>subtree": {
+		a: 1
+	}
+} ;
+
+var mods2 = {
+	"*>subtree": {
+		a: 2
+	}
+} ;
+
+doormen.equals(
+	kungFig.reduce( tree , mods1 , mods2 ) ,
+	{ subtree: { a: 1, b: 5 } }
+) ;
+
+doormen.equals(
+	kungFig.reduce( tree , mods2 , mods1 ) ,
+	{ subtree: { a: 1, b: 5 } }
+) ;
+
+tree = {
+	subtree: {
+		a: 3,
+		b: 5
+	} ,
+	"*>>subtree": {
+		a: 1
+	} ,
+	"*>subtree": {
+		a: 2
+	}
+} ;
+
+doormen.equals(
+	kungFig.reduce( tree ) ,
+	{ subtree: { a: 1, b: 5 } }
+) ;
+
+tree = {
+	subtree: {
+		a: 3,
+		b: 5
+	} ,
+	"*>subtree": {
+		a: 2
+	} ,
+	"*>>subtree": {
+		a: 1
+	}
+} ;
+
+doormen.equals(
+	kungFig.reduce( tree ) ,
+	{ subtree: { a: 1, b: 5 } }
+) ;
+```
+
+<* and <<* priorities.
+
+```js
+var tree = {
+	subtree: {
+		b: 5
+	}
+} ;
+
+var mods1 = {
+	"<<*subtree": {
+		a: 1
+	}
+} ;
+
+var mods2 = {
+	"<*subtree": {
+		a: 2
+	}
+} ;
+
+doormen.equals(
+	kungFig.reduce( tree , mods1 , mods2 ) ,
+	{ subtree: { a: 2, b: 5 } }
+) ;
+
+doormen.equals(
+	kungFig.reduce( tree , mods2 , mods1 ) ,
+	{ subtree: { a: 2, b: 5 } }
+) ;
+
+tree = {
+	subtree: {
+		b: 5
+	} ,
+	"<<*subtree": {
+		a: 1
+	} ,
+	"<*subtree": {
+		a: 2
+	}
+} ;
+
+doormen.equals(
+	kungFig.reduce( tree ) ,
+	{ subtree: { a: 2, b: 5 } }
+) ;
+
+tree = {
+	subtree: {
+		b: 5
+	} ,
+	"<*subtree": {
+		a: 2
+	} ,
+	"<<*subtree": {
+		a: 1
+	}
+} ;
+
+doormen.equals(
+	kungFig.reduce( tree ) ,
+	{ subtree: { a: 2, b: 5 } }
+) ;
+```
+
 the combining before operator <*.
 
 ```js
@@ -1516,6 +1651,81 @@ doormen.equals(
 		c: 11,
 		d: 7
 	}
+) ;
+```
+
+root and non-root operator priorities.
+
+```js
+var tree = {
+	subtree: {
+		a: 3,
+		b: 5
+	}
+} ;
+
+var mods1 = {
+	"*>subtree": {
+		a: 1
+	}
+} ;
+
+var mods2 = {
+	"*>": {
+		subtree: {
+			a: 2
+		}
+	}
+} ;
+
+doormen.equals(
+	kungFig.reduce( tree , mods1 , mods2 ) ,
+	{ subtree: { a: 2, b: 5 } }
+) ;
+
+doormen.equals(
+	kungFig.reduce( tree , mods2 , mods1 ) ,
+	{ subtree: { a: 2, b: 5 } }
+) ;
+
+tree = {
+	subtree: {
+		a: 3,
+		b: 5
+	} ,
+	"*>subtree": {
+		a: 1
+	} ,
+	"*>": {
+		subtree: {
+			a: 2
+		}
+	}
+} ;
+
+doormen.equals(
+	kungFig.reduce( tree ) ,
+	{ subtree: { a: 2, b: 5 } }
+) ;
+
+tree = {
+	subtree: {
+		a: 3,
+		b: 5
+	} ,
+	"*>": {
+		subtree: {
+			a: 2
+		}
+	} ,
+	"*>subtree": {
+		a: 1
+	}
+} ;
+
+doormen.equals(
+	kungFig.reduce( tree ) ,
+	{ subtree: { a: 2, b: 5 } }
 ) ;
 ```
 

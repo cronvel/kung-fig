@@ -237,67 +237,6 @@ describe( "Operator behaviours" , function() {
 		) ;
 	} ) ;
 	
-	/*
-	it( "- and / should be converted to + and *" , function() {
-		
-		var creature = {
-			hp: 8 ,
-			attack: 5 ,
-			defense: 8 ,
-			move: 1
-		} ;
-		
-		var cursedAmulet = {
-			"-defense": 2 ,
-		} ;
-		
-		var cursedRing = {
-			"/defense": 2 ,
-		} ;
-		
-		doormen.equals(
-			kungFig.stack( cursedAmulet ) ,
-			{ "+defense": -2 }
-		) ;
-		
-		doormen.equals(
-			kungFig.stack( cursedRing ) ,
-			{ "*defense": 0.5 }
-		) ;
-		
-		doormen.equals(
-			kungFig.stack( cursedAmulet , cursedRing ) ,
-			{
-				"+defense": -2 ,
-				"*defense": 0.5
-			}
-		) ;
-		
-		doormen.equals(
-			kungFig.stack( creature , cursedAmulet , cursedRing ) ,
-			{
-				hp: 8 ,
-				attack: 5 ,
-				defense: 8 ,
-				"+defense": -2 ,
-				"*defense": 0.5 ,
-				move: 1
-			}
-		) ;
-		
-		doormen.equals(
-			kungFig.reduce( creature , cursedAmulet , cursedRing ) ,
-			{
-				hp: 8 ,
-				attack: 5 ,
-				defense: 2 ,
-				move: 1
-			}
-		) ;
-		
-	} ) ;
-	*/
-	
 	it( "the combining after operator *>" , function() {
 		
 		var tree = {
@@ -354,6 +293,139 @@ describe( "Operator behaviours" , function() {
 					c: 12
 				}
 			}
+		) ;
+	} ) ;
+	
+	it( "*> and *>> priorities" , function() {
+		
+		var tree = {
+			subtree: {
+				a: 3,
+				b: 5
+			}
+		} ;
+		
+		var mods1 = {
+			"*>>subtree": {
+				a: 1
+			}
+		} ;
+		
+		var mods2 = {
+			"*>subtree": {
+				a: 2
+			}
+		} ;
+		
+		doormen.equals(
+			kungFig.reduce( tree , mods1 , mods2 ) ,
+			{ subtree: { a: 1, b: 5 } }
+		) ;
+		
+		doormen.equals(
+			kungFig.reduce( tree , mods2 , mods1 ) ,
+			{ subtree: { a: 1, b: 5 } }
+		) ;
+		
+		tree = {
+			subtree: {
+				a: 3,
+				b: 5
+			} ,
+			"*>>subtree": {
+				a: 1
+			} ,
+			"*>subtree": {
+				a: 2
+			}
+		} ;
+		
+		doormen.equals(
+			kungFig.reduce( tree ) ,
+			{ subtree: { a: 1, b: 5 } }
+		) ;
+		
+		tree = {
+			subtree: {
+				a: 3,
+				b: 5
+			} ,
+			"*>subtree": {
+				a: 2
+			} ,
+			"*>>subtree": {
+				a: 1
+			}
+		} ;
+		
+		doormen.equals(
+			kungFig.reduce( tree ) ,
+			{ subtree: { a: 1, b: 5 } }
+		) ;
+	} ) ;
+	
+	it( "<* and <<* priorities" , function() {
+		
+		var tree = {
+			subtree: {
+				b: 5
+			}
+		} ;
+		
+		var mods1 = {
+			"<<*subtree": {
+				a: 1
+			}
+		} ;
+		
+		var mods2 = {
+			"<*subtree": {
+				a: 2
+			}
+		} ;
+		
+		doormen.equals(
+			kungFig.reduce( tree , mods1 , mods2 ) ,
+			{ subtree: { a: 2, b: 5 } }
+		) ;
+		
+		doormen.equals(
+			kungFig.reduce( tree , mods2 , mods1 ) ,
+			{ subtree: { a: 2, b: 5 } }
+		) ;
+		
+		tree = {
+			subtree: {
+				b: 5
+			} ,
+			"<<*subtree": {
+				a: 1
+			} ,
+			"<*subtree": {
+				a: 2
+			}
+		} ;
+		
+		doormen.equals(
+			kungFig.reduce( tree ) ,
+			{ subtree: { a: 2, b: 5 } }
+		) ;
+		
+		tree = {
+			subtree: {
+				b: 5
+			} ,
+			"<*subtree": {
+				a: 2
+			} ,
+			"<<*subtree": {
+				a: 1
+			}
+		} ;
+		
+		doormen.equals(
+			kungFig.reduce( tree ) ,
+			{ subtree: { a: 2, b: 5 } }
 		) ;
 	} ) ;
 	
@@ -571,6 +643,80 @@ describe( "Operator behaviours" , function() {
 				c: 11,
 				d: 7
 			}
+		) ;
+	} ) ;
+	
+	it ( "root and non-root operator priorities" , function() {
+		
+		var tree = {
+			subtree: {
+				a: 3,
+				b: 5
+			}
+		} ;
+		
+		var mods1 = {
+			"*>subtree": {
+				a: 1
+			}
+		} ;
+		
+		var mods2 = {
+			"*>": {
+				subtree: {
+					a: 2
+				}
+			}
+		} ;
+		
+		doormen.equals(
+			kungFig.reduce( tree , mods1 , mods2 ) ,
+			{ subtree: { a: 2, b: 5 } }
+		) ;
+		
+		doormen.equals(
+			kungFig.reduce( tree , mods2 , mods1 ) ,
+			{ subtree: { a: 2, b: 5 } }
+		) ;
+		
+		tree = {
+			subtree: {
+				a: 3,
+				b: 5
+			} ,
+			"*>subtree": {
+				a: 1
+			} ,
+			"*>": {
+				subtree: {
+					a: 2
+				}
+			}
+		} ;
+		
+		doormen.equals(
+			kungFig.reduce( tree ) ,
+			{ subtree: { a: 2, b: 5 } }
+		) ;
+		
+		tree = {
+			subtree: {
+				a: 3,
+				b: 5
+			} ,
+			"*>": {
+				subtree: {
+					a: 2
+				}
+			} ,
+			"*>subtree": {
+				a: 1
+			}
+		} ;
+		
+		doormen.equals(
+			kungFig.reduce( tree ) ,
+			{ subtree: { a: 2, b: 5 } }
 		) ;
 	} ) ;
 	
