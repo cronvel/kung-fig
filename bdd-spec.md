@@ -241,6 +241,23 @@ doormen.equals( o2 , o ) ;
 
 <a name="kfg-parse"></a>
 # KFG parse
+numbers and string ambiguity.
+
+```js
+doormen.equals( parse( "v:1" ) , {v:1} ) ;
+doormen.equals( parse( "v:1l" ) , {v:"1l"} ) ;
+doormen.equals( parse( "v:10e2" ) , {v:1000} ) ;
+doormen.equals( parse( "v:123.5" ) , {v:123.5} ) ;
+doormen.equals( parse( "v:123.e5" ) , {v:"123.e5"} ) ;
+```
+
+constant and string ambiguity.
+
+```js
+doormen.equals( parse( "v:true" ) , {v:true} ) ;
+doormen.equals( parse( "v:true or false" ) , {v:"true or false"} ) ;
+```
+
 parse a basic file.
 
 ```js

@@ -271,6 +271,19 @@ describe( "KFG parse" , function() {
 	
 	it( "parse scalar at top-level" ) ;
 	
+	it( "numbers and string ambiguity" , function() {
+		doormen.equals( parse( "v:1" ) , {v:1} ) ;
+		doormen.equals( parse( "v:1l" ) , {v:"1l"} ) ;
+		doormen.equals( parse( "v:10e2" ) , {v:1000} ) ;
+		doormen.equals( parse( "v:123.5" ) , {v:123.5} ) ;
+		doormen.equals( parse( "v:123.e5" ) , {v:"123.e5"} ) ;
+	} ) ;
+	
+	it( "constant and string ambiguity" , function() {
+		doormen.equals( parse( "v:true" ) , {v:true} ) ;
+		doormen.equals( parse( "v:true or false" ) , {v:"true or false"} ) ;
+	} ) ;
+	
 	it( "parse a basic file" , function() {
 		
 		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/simple.kfg' , 'utf8' ) ) ;
