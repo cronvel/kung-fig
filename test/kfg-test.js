@@ -284,6 +284,10 @@ describe( "KFG parse" , function() {
 		doormen.equals( parse( "v:true or false" ) , {v:"true or false"} ) ;
 	} ) ;
 	
+	it( "key ambiguity" , function() {
+		doormen.equals( parse( "first-name:Joe" ) , {"first-name":"Joe"} ) ;
+	} ) ;
+	
 	it( "parse a basic file" , function() {
 		
 		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/simple.kfg' , 'utf8' ) ) ;

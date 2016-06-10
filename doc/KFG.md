@@ -7,8 +7,32 @@ Once you start using it, you won't use anything else!
 **KFG** is primarily a **human-friendly format for describing data**
 (i.e. a [data serialization language](https://en.wikipedia.org/wiki/Serialization)).
 
-But it also features **operations** and **tree operations** (like sub-tree merge), **file inclusion**, and even **tag** to serve
-as the basis of a scripting language.
+But it also features **custom classes/constructors**, **operations** and **tree operations** (like sub-tree merge),
+**file inclusion**, and even **tag** to serve as the basis of a scripting language.
+
+**This documentation is still a Work In Progress.**
+
+
+
+## Getting started
+
+
+```
+first-name: Joe
+last-name: Doe
+```
+
+... is parsed into `{ "first-name": "Joe" , "last-name": "Doe" }`.
+
+
+```
+fruits:
+	- banana
+	- apple
+	- pear
+```
+
+... is parsed into `{ "fruits": [ "banana" , "apple" , "pear" ] }`.
 
 
 
@@ -21,7 +45,7 @@ It ends up being like JSON without braces, bracket and comma, optional double-qu
 data representation, very close to YAML (also it was done *before* knowing the existence of YAML), and a simple syntax
 to perform operation.
 
-The addition of **tags** appears in 2016 to support creation of simple scripting language.
+The addition of **custom classes/constructors** and **tags** appears in 2016 to support creation of simple scripting language.
 
 
 
