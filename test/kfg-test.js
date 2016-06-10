@@ -46,8 +46,9 @@ var fs = require( 'fs' ) ;
 
 describe( "KFG stringify" , function() {
 	
-	it.skip( "undefined value" , function() {
-		doormen.equals( stringify( {v:undefined} ) , '<object>\n' ) ;
+	it( "undefined value" , function() {
+		doormen.equals( stringify( {a:{},b:undefined,c:{d:undefined}} ) , 'a: <Object>\nc: <Object>\n' ) ;
+		doormen.equals( stringify( [{},undefined,{d:undefined}] ) , '- <Object>\n- null\n- <Object>\n' ) ;
 	} ) ;
 	
 	it( "stringify a basic object" , function() {
@@ -574,12 +575,43 @@ describe( "ClassicTag" , function() {
 		*/
 	} ) ;
 	
-	it.skip( "ClassicTag stringify" , function() {
+	it( "ClassicTag stringify" , function() {
 		var o = new TagContainer( [
 			new ClassicTag( { width: 1280, height: 1024, src: '/css/main.css', active: true } ) 
 		] ) ;
 		
+		//console.log( o ) ;
+		
 		doormen.equals( stringify( o ) , '[ClassicTag width=1280 height=1024 src="/css/main.css" active]\n' ) ;
+		
+		o = new TagContainer( [
+			new ClassicTag( { width: 1280, height: 1024, src: '/css/main.css', active: true } ) ,
+			new ClassicTag( { fullscreen: true } ) 
+		] ) ;
+		
+		//console.log( o ) ;
+		
+		doormen.equals(
+			stringify( o ) ,
+			'[ClassicTag width=1280 height=1024 src="/css/main.css" active]\n' +
+			'[ClassicTag fullscreen]\n'
+		) ;
+		
+		//console.log( parse( stringify( o ) ) ) ;
+		
+		o = new TagContainer( [
+			new ClassicTag( { width: 1280, height: 1024, src: '/css/main.css', active: true } , { hello: "world!" } ) ,
+			new ClassicTag( { fullscreen: true } ) 
+		] ) ;
+		
+		//console.log( o ) ;
+		
+		doormen.equals(
+			stringify( o ) ,
+			'[ClassicTag width=1280 height=1024 src="/css/main.css" active]\n' +
+			'\thello: world!\n' +
+			'[ClassicTag fullscreen]\n'
+		) ;
 	} ) ;
 } ) ;
 

@@ -13,6 +13,13 @@
  
 <a name="kfg-stringify"></a>
 # KFG stringify
+undefined value.
+
+```js
+doormen.equals( stringify( {a:{},b:undefined,c:{d:undefined}} ) , 'a: <Object>\nc: <Object>\n' ) ;
+doormen.equals( stringify( [{},undefined,{d:undefined}] ) , '- <Object>\n- null\n- <Object>\n' ) ;
+```
+
 stringify a basic object.
 
 ```js
@@ -139,6 +146,46 @@ delete o.bin ;
 delete o2.bin ;
 
 doormen.equals( o2 , o ) ;
+```
+
+stringify an object with special custom instances.
+
+```js
+function Simple( value )
+{
+	var self = Object.create( Simple.prototype ) ;
+	self.str = value ;
+	return self ;
+}
+
+function Complex( value )
+{
+	var self = Object.create( Complex.prototype ) ;
+	self.str = value.str ;
+	self.int = value.int ;
+	return self ;
+}
+
+var stringifier = new Map() ;
+
+stringifier.set( Simple.prototype , function Simple( v ) {
+	return v.str ;
+} ) ;
+
+stringifier.set( Complex.prototype , function Complex( v ) {
+	return { str: v.str , int: v.int } ;
+} ) ;
+
+var o = {
+	simple: Simple( "abc" ) ,
+	complex: Complex( { str: "hello", int: 6 } )
+} ;
+
+//console.log( stringify( o , { classes: stringifier } ) ) ;
+doormen.equals(
+	stringify( o , { classes: stringifier } ) ,
+	"simple: <Simple> abc\ncomplex: <Complex>\n\tstr: hello\n\tint: 6\n"
+) ;
 ```
 
 stringify an object with tags.
@@ -512,6 +559,47 @@ doormen.equals( o , {
 	] 
 } ) ;
 */
+```
+
+ClassicTag stringify.
+
+```js
+var o = new TagContainer( [
+	new ClassicTag( { width: 1280, height: 1024, src: '/css/main.css', active: true } ) 
+] ) ;
+
+//console.log( o ) ;
+
+doormen.equals( stringify( o ) , '[ClassicTag width=1280 height=1024 src="/css/main.css" active]\n' ) ;
+
+o = new TagContainer( [
+	new ClassicTag( { width: 1280, height: 1024, src: '/css/main.css', active: true } ) ,
+	new ClassicTag( { fullscreen: true } ) 
+] ) ;
+
+//console.log( o ) ;
+
+doormen.equals(
+	stringify( o ) ,
+	'[ClassicTag width=1280 height=1024 src="/css/main.css" active]\n' +
+	'[ClassicTag fullscreen]\n'
+) ;
+
+//console.log( parse( stringify( o ) ) ) ;
+
+o = new TagContainer( [
+	new ClassicTag( { width: 1280, height: 1024, src: '/css/main.css', active: true } , { hello: "world!" } ) ,
+	new ClassicTag( { fullscreen: true } ) 
+] ) ;
+
+//console.log( o ) ;
+
+doormen.equals(
+	stringify( o ) ,
+	'[ClassicTag width=1280 height=1024 src="/css/main.css" active]\n' +
+	'\thello: world!\n' +
+	'[ClassicTag fullscreen]\n'
+) ;
 ```
 
 <a name="loading-a-config"></a>
