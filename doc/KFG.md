@@ -1,23 +1,27 @@
 
 # The Wonderful KFG format
 
-KFG is the Kung-Fig format, and it does wonders for all your config file. It's like .cfg on steroid!
+The **KFG** format is the **Kung-Fig** file format, and it does wonders for all your config files. It's like .cfg on steroid!
 Once you start using it, you won't use anything else!
 
-KFG is primarily a human-friendly format for describing data
+**KFG** is primarily a **human-friendly format for describing data**
 (i.e. a [data serialization language](https://en.wikipedia.org/wiki/Serialization)).
 
-But it also features **operations** and **tree operations** (like subtree merge), **file inclusion**, and even **tag** to serve
+But it also features **operations** and **tree operations** (like sub-tree merge), **file inclusion**, and even **tag** to serve
 as the basis of a scripting language.
 
 
 
 ## History
 
-It all started back in 2009, when Cédric Ronvel was bored by the fact that JSON would be great language to write config file
-if it had comment support and be less nitpicking with comma. It ends up being like JSON without braces, bracket and comma, 
-optional double-quote, relying on indentation for hierarchical data representation, very close to YAML (also it was done
-*before* knowing the existence of YAML), and a simple syntax to perform operation.
+It all started back in 2009, when Cédric Ronvel was bored by the fact that JSON would be a great language to write config file
+if it had comments support and be less nitpicking with comma.
+
+It ends up being like JSON without braces, bracket and comma, optional double-quote, relying on indentation for hierarchical
+data representation, very close to YAML (also it was done *before* knowing the existence of YAML), and a simple syntax
+to perform operation.
+
+The addition of **tags** appears in 2016 to support creation of simple scripting language.
 
 
 
