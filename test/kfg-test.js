@@ -172,6 +172,45 @@ describe( "KFG stringify" , function() {
 		doormen.equals( o2 , o ) ;
 	} ) ;
 	
+	it( "stringify an object with special custom instances" , function() {
+		
+		function Simple( value )
+		{
+			var self = Object.create( Simple.prototype ) ;
+			self.str = value ;
+			return self ;
+		}
+		
+		function Complex( value )
+		{
+			var self = Object.create( Complex.prototype ) ;
+			self.str = value.str ;
+			self.int = value.int ;
+			return self ;
+		}
+		
+		var stringifier = new Map() ;
+		
+		stringifier.set( Simple.prototype , function Simple( v ) {
+			return v.str ;
+		} ) ;
+		
+		stringifier.set( Complex.prototype , function Complex( v ) {
+			return { str: v.str , int: v.int } ;
+		} ) ;
+		
+		var o = {
+			simple: Simple( "abc" ) ,
+			complex: Complex( { str: "hello", int: 6 } )
+		} ;
+		
+		//console.log( stringify( o , { classes: stringifier } ) ) ;
+		doormen.equals(
+			stringify( o , { classes: stringifier } ) ,
+			"simple: <Simple> abc\ncomplex: <Complex>\n\tstr: hello\n\tint: 6\n"
+		) ;
+	} ) ;
+	
 	it( "stringify an object with tags" , function() {
 		var o = new TagContainer( [
 			new Tag( 'if' , 'something > constant' , new TagContainer( [
