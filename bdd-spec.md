@@ -1,6 +1,7 @@
 # TOC
    - [KFG stringify](#kfg-stringify)
    - [KFG parse](#kfg-parse)
+   - [ClassicTag](#classictag)
    - [Loading a config](#loading-a-config)
    - [Saving a config](#saving-a-config)
    - [JS modules](#js-modules)
@@ -258,6 +259,12 @@ doormen.equals( parse( "v:true" ) , {v:true} ) ;
 doormen.equals( parse( "v:true or false" ) , {v:"true or false"} ) ;
 ```
 
+key ambiguity.
+
+```js
+doormen.equals( parse( "first-name:Joe" ) , {"first-name":"Joe"} ) ;
+```
+
 parse a basic file.
 
 ```js
@@ -432,6 +439,79 @@ var o = parse( fs.readFileSync( __dirname + '/sample/kfg/tag.kfg' , 'utf8' ) , {
 //console.log( string.escape.control( JSON.stringify( o ) ) ) ;
 
 doormen.equals( JSON.stringify( o ) , '{"children":[{"name":"tag","attributes":"id1","content":{"some":"value","another":"one"}},{"name":"tag","attributes":"id2","content":{"some":"other value","nested":{"a":1,"b":2,"c":{"children":[{"name":"if","attributes":{"left":"something","operator":">","right":"constant"},"content":{"children":[{"name":"do","attributes":"","content":"some work"}]}},{"name":"else","attributes":"","content":{"children":[{"name":"do","attributes":"","content":"something else"}]}}]}}}},{"name":"container","attributes":"","content":{"children":[{"name":"tag","attributes":""},{"name":"anothertag","attributes":""},{"name":"complex","attributes":"tag hello=\\"<world]]]\\\\\\"!\\" some[3].path[6]"}]}}]}' ) ;
+```
+
+<a name="classictag"></a>
+# ClassicTag
+classic attributes parse.
+
+```js
+doormen.equals(
+	classicAttributes.parse( 'width=1280 height=1024 src="/css/main.css" active' ) ,
+	{ width: 1280, height: 1024, src: '/css/main.css', active: true }
+) ;
+
+doormen.equals(
+	classicAttributes.parse( 'active width=1280 height=1024 src="/css/main.css"' ) ,
+	{ width: 1280, height: 1024, src: '/css/main.css', active: true }
+) ;
+
+doormen.equals(
+	classicAttributes.parse( '  width=1280  height = 1024  src="/css/main.css" active ' ) ,
+	{ width: 1280, height: 1024, src: '/css/main.css', active: true }
+) ;
+
+doormen.equals(
+	classicAttributes.parse( 'width=1280 height=1024 src="/css/main.css" active empty=""' ) ,
+	{ width: 1280, height: 1024, src: '/css/main.css', active: true , empty: '' }
+) ;
+
+doormen.equals(
+	classicAttributes.parse( 'width:1280 height:1024 src:"/css/main.css" active' , ':' ) ,
+	{ width: 1280, height: 1024, src: '/css/main.css', active: true }
+) ;
+```
+
+classic attributes stringify.
+
+```js
+//console.log( classicAttributes.stringify( { width: 1280, height: 1024, src: '/css/main.css', active: true } ) ) ;
+
+doormen.equals(
+	classicAttributes.stringify( { width: 1280, height: 1024, src: '/css/main.css', active: true } ) ,
+	'width=1280 height=1024 src="/css/main.css" active' 
+) ;
+```
+
+ClassicTag parse.
+
+```js
+var o = parse( '[ClassicTag width=1280 height=1024 src="/css/main.css" active]' , { tags: { ClassicTag: ClassicTag } } ) ;
+
+//console.log( "parsed:" , o ) ;
+
+// Doormen fails with constructors ATM
+doormen.equals( JSON.parse( JSON.stringify( o ) ) , {
+	children: [
+		{
+			name: 'ClassicTag' ,
+			attributes: { width: 1280, height: 1024, src: '/css/main.css', active: true } ,
+			content: undefined
+		}
+	] 
+} ) ;
+
+/*
+doormen.equals( o , {
+	children: [
+		{
+			name: 'ClassicTag' ,
+			attributes: { width: 1280, height: 1024, src: '/css/main.css', active: true } ,
+			content: undefined
+		}
+	] 
+} ) ;
+*/
 ```
 
 <a name="loading-a-config"></a>

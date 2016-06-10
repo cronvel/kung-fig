@@ -10,7 +10,7 @@ Once you start using it, you won't use anything else!
 But it also features **custom classes/constructors**, **operations** and **tree operations** (like sub-tree merge),
 **file inclusion**, and even **tag** to serve as the basis of a scripting language.
 
-**This documentation is still a Work In Progress.**
+**This documentation is still a work in progress.**
 
 
 
@@ -45,11 +45,18 @@ It ends up being like JSON without braces, bracket and comma, optional double-qu
 data representation, very close to YAML (also it was done *before* knowing the existence of YAML), and a simple syntax
 to perform operation.
 
-The addition of **custom classes/constructors** and **tags** appears in 2016 to support creation of simple scripting language.
+The addition of **custom classes/constructors** in 2015.
+The addition of **tags** appears in 2016 to support creation of simple scripting language.
 
 
 
-## Constants:
+## Language References
+
+**This section is still a work in progress.**
+
+
+
+### Constants
 
 * `null`: represent the `null` value.
 * `true`, `yes`, `on`: they are all representing the boolean `true` value.
@@ -60,7 +67,7 @@ The addition of **custom classes/constructors** and **tags** appears in 2016 to 
 
 
 
-## Built-in class/constructor:
+### Built-in class/constructor
 
 * `<Object>`, `<object>`: Object constructor. Object are implicit in KFG, there is only one case where this constructor is needed:
   when we want to create an empty object.

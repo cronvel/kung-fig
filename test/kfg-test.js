@@ -46,6 +46,10 @@ var fs = require( 'fs' ) ;
 
 describe( "KFG stringify" , function() {
 	
+	it.skip( "undefined value" , function() {
+		doormen.equals( stringify( {v:undefined} ) , '<object>\n' ) ;
+	} ) ;
+	
 	it( "stringify a basic object" , function() {
 		var o = {
 			a: 1 ,
@@ -459,5 +463,85 @@ describe( "KFG parse" , function() {
 	} ) ;
 } ) ;
 
+
+
+describe( "ClassicTag" , function() {
+	
+	var classicAttributes = kungFig.classicAttributes ;
+	var ClassicTag = kungFig.ClassicTag ;
+	
+	it( "classic attributes parse" , function() {
+		doormen.equals(
+			classicAttributes.parse( 'width=1280 height=1024 src="/css/main.css" active' ) ,
+			{ width: 1280, height: 1024, src: '/css/main.css', active: true }
+		) ;
+		
+		doormen.equals(
+			classicAttributes.parse( 'active width=1280 height=1024 src="/css/main.css"' ) ,
+			{ width: 1280, height: 1024, src: '/css/main.css', active: true }
+		) ;
+		
+		doormen.equals(
+			classicAttributes.parse( '  width=1280  height = 1024  src="/css/main.css" active ' ) ,
+			{ width: 1280, height: 1024, src: '/css/main.css', active: true }
+		) ;
+		
+		doormen.equals(
+			classicAttributes.parse( 'width=1280 height=1024 src="/css/main.css" active empty=""' ) ,
+			{ width: 1280, height: 1024, src: '/css/main.css', active: true , empty: '' }
+		) ;
+		
+		doormen.equals(
+			classicAttributes.parse( 'width:1280 height:1024 src:"/css/main.css" active' , ':' ) ,
+			{ width: 1280, height: 1024, src: '/css/main.css', active: true }
+		) ;
+	} ) ;
+	
+	it( "classic attributes stringify" , function() {
+		//console.log( classicAttributes.stringify( { width: 1280, height: 1024, src: '/css/main.css', active: true } ) ) ;
+		
+		doormen.equals(
+			classicAttributes.stringify( { width: 1280, height: 1024, src: '/css/main.css', active: true } ) ,
+			'width=1280 height=1024 src="/css/main.css" active' 
+		) ;
+	} ) ;
+	
+	it( "ClassicTag parse" , function() {
+		var o = parse( '[ClassicTag width=1280 height=1024 src="/css/main.css" active]' , { tags: { ClassicTag: ClassicTag } } ) ;
+		
+		//console.log( "parsed:" , o ) ;
+		
+		// Doormen fails with constructors ATM
+		doormen.equals( JSON.parse( JSON.stringify( o ) ) , {
+			children: [
+				{
+					name: 'ClassicTag' ,
+					attributes: { width: 1280, height: 1024, src: '/css/main.css', active: true } ,
+					content: undefined
+				}
+			] 
+		} ) ;
+		
+		/*
+		doormen.equals( o , {
+			children: [
+				{
+					name: 'ClassicTag' ,
+					attributes: { width: 1280, height: 1024, src: '/css/main.css', active: true } ,
+					content: undefined
+				}
+			] 
+		} ) ;
+		*/
+	} ) ;
+	
+	it.skip( "ClassicTag stringify" , function() {
+		var o = new TagContainer( [
+			new ClassicTag( { width: 1280, height: 1024, src: '/css/main.css', active: true } ) 
+		] ) ;
+		
+		doormen.equals( stringify( o ) , '[ClassicTag width=1280 height=1024 src="/css/main.css" active]\n' ) ;
+	} ) ;
+} ) ;
 
 
