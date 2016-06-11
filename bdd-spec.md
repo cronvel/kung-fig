@@ -13,18 +13,42 @@
  
 <a name="kfg-stringify"></a>
 # KFG stringify
-stringify scalar.
+stringify string.
 
 ```js
-doormen.equals( stringify( "Hello World!" ) , '"Hello World!"\n' ) ;
+doormen.equals( stringify( "Hello World!" ) , 'Hello World!\n' ) ;
 doormen.equals( stringify( "a:1" ) , '"a:1"\n' ) ;
+doormen.equals( stringify( "Hello: World!" ) , '"Hello: World!"\n' ) ;
+doormen.equals( stringify( "[Hello World!]" ) , '"[Hello World!]"\n' ) ;
+doormen.equals( stringify( "<hello>" ) , '"<hello>"\n' ) ;
+doormen.equals( stringify( "(hello)" ) , '"(hello)"\n' ) ;
+doormen.equals( stringify( "   Hello World!" ) , '"   Hello World!"\n' ) ;
+doormen.equals( stringify( "Hello World!   " ) , '"Hello World!   "\n' ) ;
+```
+
+stringify multi-line string.
+
+```js
+doormen.equals( stringify( "Hello\nWorld!" ) , '"Hello\\nWorld!"\n' ) ;
+```
+
+stringify non-string scalar.
+
+```js
 doormen.equals( stringify( undefined ) , "null\n" ) ;
 doormen.equals( stringify( null ) , "null\n" ) ;
 doormen.equals( stringify( true ) , "true\n" ) ;
 doormen.equals( stringify( false ) , "false\n" ) ;
 doormen.equals( stringify( 123 ) , "123\n" ) ;
 doormen.equals( stringify( 123.456 ) , "123.456\n" ) ;
-return ;
+```
+
+stringify empty object/array.
+
+```js
+doormen.equals( stringify( [] ) , '<Array>\n' ) ;
+doormen.equals( stringify( {} ) , '<Object>\n' ) ;
+doormen.equals( stringify( new TagContainer() ) , '<TagContainer>\n' ) ;
 ```
 
 undefined value.
@@ -218,7 +242,6 @@ var o = new TagContainer( [
 	] ) )
 ] ) ;
 
-
 var s = stringify( o ) ;
 
 //console.log( s ) ;
@@ -303,12 +326,27 @@ doormen.equals( o2 , o ) ;
 
 <a name="kfg-parse"></a>
 # KFG parse
-parse scalar at top-level.
+parse string at top-level.
 
 ```js
 doormen.equals( parse( '"Hello World!"' ) , "Hello World!" ) ;
 doormen.equals( parse( '> Hello World!' ) , "Hello World!" ) ;
+doormen.equals( parse( '>   Hello World!' ) , "  Hello World!" ) ;
+doormen.equals( parse( '>   Hello World!  ' ) , "  Hello World!  " ) ;
 doormen.equals( parse( 'Hello World!' ) , "Hello World!" ) ;
+doormen.equals( parse( '  Hello World!  ' ) , "Hello World!" ) ;
+```
+
+parse multi-line string at top-level.
+
+```js
+doormen.equals( parse( '> Hello\n> World!' ) , "Hello\nWorld!" ) ;
+//doormen.equals( parse( 'Hello\nWorld!' ) , "Hello\nWorld!" ) ;
+```
+
+parse non-string scalar at top-level.
+
+```js
 doormen.equals( parse( 'null' ) , null ) ;
 doormen.equals( parse( 'true' ) , true ) ;
 doormen.equals( parse( 'false' ) , false ) ;

@@ -46,16 +46,34 @@ var fs = require( 'fs' ) ;
 
 describe( "KFG stringify" , function() {
 	
-	it( "stringify scalar" , function() {
-		doormen.equals( stringify( "Hello World!" ) , '"Hello World!"\n' ) ;
+	it( "stringify string" , function() {
+		doormen.equals( stringify( "Hello World!" ) , 'Hello World!\n' ) ;
 		doormen.equals( stringify( "a:1" ) , '"a:1"\n' ) ;
+		doormen.equals( stringify( "Hello: World!" ) , '"Hello: World!"\n' ) ;
+		doormen.equals( stringify( "[Hello World!]" ) , '"[Hello World!]"\n' ) ;
+		doormen.equals( stringify( "<hello>" ) , '"<hello>"\n' ) ;
+		doormen.equals( stringify( "(hello)" ) , '"(hello)"\n' ) ;
+		doormen.equals( stringify( "   Hello World!" ) , '"   Hello World!"\n' ) ;
+		doormen.equals( stringify( "Hello World!   " ) , '"Hello World!   "\n' ) ;
+	} ) ;
+		
+	it( "stringify multi-line string" , function() {
+		doormen.equals( stringify( "Hello\nWorld!" ) , '"Hello\\nWorld!"\n' ) ;
+	} ) ;
+	
+	it( "stringify non-string scalar" , function() {
 		doormen.equals( stringify( undefined ) , "null\n" ) ;
 		doormen.equals( stringify( null ) , "null\n" ) ;
 		doormen.equals( stringify( true ) , "true\n" ) ;
 		doormen.equals( stringify( false ) , "false\n" ) ;
 		doormen.equals( stringify( 123 ) , "123\n" ) ;
 		doormen.equals( stringify( 123.456 ) , "123.456\n" ) ;
-		return ;
+	} ) ;
+	
+	it( "stringify empty object/array" , function() {
+		doormen.equals( stringify( [] ) , '<Array>\n' ) ;
+		doormen.equals( stringify( {} ) , '<Object>\n' ) ;
+		doormen.equals( stringify( new TagContainer() ) , '<TagContainer>\n' ) ;
 	} ) ;
 	
 	it( "undefined value" , function() {
@@ -238,7 +256,6 @@ describe( "KFG stringify" , function() {
 			] ) )
 		] ) ;
 		
-		
 		var s = stringify( o ) ;
 		
 		//console.log( s ) ;
@@ -325,10 +342,21 @@ describe( "KFG stringify" , function() {
 
 describe( "KFG parse" , function() {
 	
-	it( "parse scalar at top-level" , function() {
+	it( "parse string at top-level" , function() {
 		doormen.equals( parse( '"Hello World!"' ) , "Hello World!" ) ;
 		doormen.equals( parse( '> Hello World!' ) , "Hello World!" ) ;
+		doormen.equals( parse( '>   Hello World!' ) , "  Hello World!" ) ;
+		doormen.equals( parse( '>   Hello World!  ' ) , "  Hello World!  " ) ;
 		doormen.equals( parse( 'Hello World!' ) , "Hello World!" ) ;
+		doormen.equals( parse( '  Hello World!  ' ) , "Hello World!" ) ;
+	} ) ;
+	
+	it( "parse multi-line string at top-level" , function() {
+		doormen.equals( parse( '> Hello\n> World!' ) , "Hello\nWorld!" ) ;
+		//doormen.equals( parse( 'Hello\nWorld!' ) , "Hello\nWorld!" ) ;
+	} ) ;
+	
+	it( "parse non-string scalar at top-level" , function() {
 		doormen.equals( parse( 'null' ) , null ) ;
 		doormen.equals( parse( 'true' ) , true ) ;
 		doormen.equals( parse( 'false' ) , false ) ;
