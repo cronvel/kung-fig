@@ -313,7 +313,18 @@ describe( "KFG stringify" , function() {
 
 describe( "KFG parse" , function() {
 	
-	it( "parse scalar at top-level" ) ;
+	it( "parse scalar at top-level" , function() {
+		doormen.equals( parse( '"Hello World!"' ) , "Hello World!" ) ;
+		doormen.equals( parse( '> Hello World!' ) , "Hello World!" ) ;
+		doormen.equals( parse( 'Hello World!' ) , "Hello World!" ) ;
+		//console.log( ">>>>>>>>>>>>>>>>", parse( 'undefined' ) ) ;
+		//doormen.equals( parse( 'undefined' ) , null ) ;
+		doormen.equals( parse( 'null' ) , null ) ;
+		doormen.equals( parse( 'true' ) , true ) ;
+		doormen.equals( parse( 'false' ) , false ) ;
+		doormen.equals( parse( '123' ) , 123 ) ;
+		doormen.equals( parse( '123.456' ) , 123.456 ) ;
+	} ) ;
 	
 	it( "numbers and string ambiguity" , function() {
 		doormen.equals( parse( "v:1" ) , {v:1} ) ;

@@ -289,6 +289,21 @@ doormen.equals( o2 , o ) ;
 
 <a name="kfg-parse"></a>
 # KFG parse
+parse scalar at top-level.
+
+```js
+doormen.equals( parse( '"Hello World!"' ) , "Hello World!" ) ;
+doormen.equals( parse( '> Hello World!' ) , "Hello World!" ) ;
+doormen.equals( parse( 'Hello World!' ) , "Hello World!" ) ;
+//console.log( ">>>>>>>>>>>>>>>>", parse( 'undefined' ) ) ;
+//doormen.equals( parse( 'undefined' ) , null ) ;
+doormen.equals( parse( 'null' ) , null ) ;
+doormen.equals( parse( 'true' ) , true ) ;
+doormen.equals( parse( 'false' ) , false ) ;
+doormen.equals( parse( '123' ) , 123 ) ;
+doormen.equals( parse( '123.456' ) , 123.456 ) ;
+```
+
 numbers and string ambiguity.
 
 ```js
