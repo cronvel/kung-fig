@@ -17,19 +17,38 @@ stringify string.
 
 ```js
 doormen.equals( stringify( "Hello World!" ) , 'Hello World!\n' ) ;
-doormen.equals( stringify( "a:1" ) , '"a:1"\n' ) ;
-doormen.equals( stringify( "Hello: World!" ) , '"Hello: World!"\n' ) ;
-doormen.equals( stringify( "[Hello World!]" ) , '"[Hello World!]"\n' ) ;
-doormen.equals( stringify( "<hello>" ) , '"<hello>"\n' ) ;
-doormen.equals( stringify( "(hello)" ) , '"(hello)"\n' ) ;
-doormen.equals( stringify( "   Hello World!" ) , '"   Hello World!"\n' ) ;
-doormen.equals( stringify( "Hello World!   " ) , '"Hello World!   "\n' ) ;
+doormen.equals( stringify( "a:1" ) , '> a:1\n' ) ;
+doormen.equals( stringify( "123" ) , '> 123\n' ) ;
+doormen.equals( stringify( "123.45" ) , '> 123.45\n' ) ;
+doormen.equals( stringify( "Hello: World!" ) , '> Hello: World!\n' ) ;
+doormen.equals( stringify( "[Hello World!]" ) , '> [Hello World!]\n' ) ;
+doormen.equals( stringify( "<hello>" ) , '> <hello>\n' ) ;
+doormen.equals( stringify( "(hello)" ) , '> (hello)\n' ) ;
+doormen.equals( stringify( "   Hello World!" ) , '>    Hello World!\n' ) ;
+doormen.equals( stringify( "Hello World!   " ) , '> Hello World!   \n' ) ;
+
+doormen.equals( stringify( "Hello\nWorld!" ) , '> Hello\n> World!\n' ) ;
+doormen.equals( stringify( "One...\nTwo...\n\nThree!" ) , '> One...\n> Two...\n> \n> Three!\n' ) ;
+doormen.equals( stringify( "One...\n\tTwo...\n\nThree!" ) , '> One...\n> \tTwo...\n> \n> Three!\n' ) ;
 ```
 
-stringify multi-line string.
+stringify string with option 'preferQuotes'.
 
 ```js
-doormen.equals( stringify( "Hello\nWorld!" ) , '"Hello\\nWorld!"\n' ) ;
+doormen.equals( stringify( "Hello World!" , { preferQuotes: true } ) , 'Hello World!\n' ) ;
+doormen.equals( stringify( "a:1" , { preferQuotes: true } ) , '"a:1"\n' ) ;
+doormen.equals( stringify( "123" , { preferQuotes: true } ) , '"123"\n' ) ;
+doormen.equals( stringify( "123.45" , { preferQuotes: true } ) , '"123.45"\n' ) ;
+doormen.equals( stringify( "Hello: World!" , { preferQuotes: true } ) , '"Hello: World!"\n' ) ;
+doormen.equals( stringify( "[Hello World!]" , { preferQuotes: true } ) , '"[Hello World!]"\n' ) ;
+doormen.equals( stringify( "<hello>" , { preferQuotes: true } ) , '"<hello>"\n' ) ;
+doormen.equals( stringify( "(hello)" , { preferQuotes: true } ) , '"(hello)"\n' ) ;
+doormen.equals( stringify( "   Hello World!" , { preferQuotes: true } ) , '"   Hello World!"\n' ) ;
+doormen.equals( stringify( "Hello World!   " , { preferQuotes: true } ) , '"Hello World!   "\n' ) ;
+
+doormen.equals( stringify( "Hello\nWorld!" , { preferQuotes: true } ) , '"Hello\\nWorld!"\n' ) ;
+doormen.equals( stringify( "One...\nTwo...\n\nThree!" , { preferQuotes: true } ) , '"One...\\nTwo...\\n\\nThree!"\n' ) ;
+doormen.equals( stringify( "One...\n\tTwo...\n\nThree!" , { preferQuotes: true } ) , '"One...\\n\\tTwo...\\n\\nThree!"\n' ) ;
 ```
 
 stringify non-string scalar.
@@ -333,8 +352,14 @@ doormen.equals( parse( '"Hello World!"' ) , "Hello World!" ) ;
 doormen.equals( parse( '> Hello World!' ) , "Hello World!" ) ;
 doormen.equals( parse( '>   Hello World!' ) , "  Hello World!" ) ;
 doormen.equals( parse( '>   Hello World!  ' ) , "  Hello World!  " ) ;
+doormen.equals( parse( '> \tHello World!' ) , "\tHello World!" ) ;
+doormen.equals( parse( '> \t\t\tHello\t\tWorld!' ) , "\t\t\tHello\t\tWorld!" ) ;
 doormen.equals( parse( 'Hello World!' ) , "Hello World!" ) ;
 doormen.equals( parse( '  Hello World!  ' ) , "Hello World!" ) ;
+doormen.equals( parse( '"123"' ) , "123" ) ;
+doormen.equals( parse( '"123.45"' ) , "123.45" ) ;
+doormen.equals( parse( '> 123' ) , "123" ) ;
+doormen.equals( parse( '> 123.45' ) , "123.45" ) ;
 ```
 
 parse multi-line string at top-level.

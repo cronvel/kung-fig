@@ -48,21 +48,38 @@ describe( "KFG stringify" , function() {
 	
 	it( "stringify string" , function() {
 		doormen.equals( stringify( "Hello World!" ) , 'Hello World!\n' ) ;
-		doormen.equals( stringify( "a:1" ) , '"a:1"\n' ) ;
-		doormen.equals( stringify( "123" ) , '"123"\n' ) ;
-		doormen.equals( stringify( "123.45" ) , '"123.45"\n' ) ;
-		doormen.equals( stringify( "Hello: World!" ) , '"Hello: World!"\n' ) ;
-		doormen.equals( stringify( "[Hello World!]" ) , '"[Hello World!]"\n' ) ;
-		doormen.equals( stringify( "<hello>" ) , '"<hello>"\n' ) ;
-		doormen.equals( stringify( "(hello)" ) , '"(hello)"\n' ) ;
-		doormen.equals( stringify( "   Hello World!" ) , '"   Hello World!"\n' ) ;
-		doormen.equals( stringify( "Hello World!   " ) , '"Hello World!   "\n' ) ;
+		doormen.equals( stringify( "a:1" ) , '> a:1\n' ) ;
+		doormen.equals( stringify( "123" ) , '> 123\n' ) ;
+		doormen.equals( stringify( "123.45" ) , '> 123.45\n' ) ;
+		doormen.equals( stringify( "Hello: World!" ) , '> Hello: World!\n' ) ;
+		doormen.equals( stringify( "[Hello World!]" ) , '> [Hello World!]\n' ) ;
+		doormen.equals( stringify( "<hello>" ) , '> <hello>\n' ) ;
+		doormen.equals( stringify( "(hello)" ) , '> (hello)\n' ) ;
+		doormen.equals( stringify( "   Hello World!" ) , '>    Hello World!\n' ) ;
+		doormen.equals( stringify( "Hello World!   " ) , '> Hello World!   \n' ) ;
+		
+		doormen.equals( stringify( "Hello\nWorld!" ) , '> Hello\n> World!\n' ) ;
+		doormen.equals( stringify( "One...\nTwo...\n\nThree!" ) , '> One...\n> Two...\n> \n> Three!\n' ) ;
+		doormen.equals( stringify( "One...\n\tTwo...\n\nThree!" ) , '> One...\n> \tTwo...\n> \n> Three!\n' ) ;
 	} ) ;
 		
-	it( "stringify multi-line string" , function() {
-		doormen.equals( stringify( "Hello\nWorld!" ) , '"Hello\\nWorld!"\n' ) ;
+	it( "stringify string with option 'preferQuotes'" , function() {
+		doormen.equals( stringify( "Hello World!" , { preferQuotes: true } ) , 'Hello World!\n' ) ;
+		doormen.equals( stringify( "a:1" , { preferQuotes: true } ) , '"a:1"\n' ) ;
+		doormen.equals( stringify( "123" , { preferQuotes: true } ) , '"123"\n' ) ;
+		doormen.equals( stringify( "123.45" , { preferQuotes: true } ) , '"123.45"\n' ) ;
+		doormen.equals( stringify( "Hello: World!" , { preferQuotes: true } ) , '"Hello: World!"\n' ) ;
+		doormen.equals( stringify( "[Hello World!]" , { preferQuotes: true } ) , '"[Hello World!]"\n' ) ;
+		doormen.equals( stringify( "<hello>" , { preferQuotes: true } ) , '"<hello>"\n' ) ;
+		doormen.equals( stringify( "(hello)" , { preferQuotes: true } ) , '"(hello)"\n' ) ;
+		doormen.equals( stringify( "   Hello World!" , { preferQuotes: true } ) , '"   Hello World!"\n' ) ;
+		doormen.equals( stringify( "Hello World!   " , { preferQuotes: true } ) , '"Hello World!   "\n' ) ;
+		
+		doormen.equals( stringify( "Hello\nWorld!" , { preferQuotes: true } ) , '"Hello\\nWorld!"\n' ) ;
+		doormen.equals( stringify( "One...\nTwo...\n\nThree!" , { preferQuotes: true } ) , '"One...\\nTwo...\\n\\nThree!"\n' ) ;
+		doormen.equals( stringify( "One...\n\tTwo...\n\nThree!" , { preferQuotes: true } ) , '"One...\\n\\tTwo...\\n\\nThree!"\n' ) ;
 	} ) ;
-	
+		
 	it( "stringify non-string scalar" , function() {
 		doormen.equals( stringify( undefined ) , "null\n" ) ;
 		doormen.equals( stringify( null ) , "null\n" ) ;
@@ -349,6 +366,8 @@ describe( "KFG parse" , function() {
 		doormen.equals( parse( '> Hello World!' ) , "Hello World!" ) ;
 		doormen.equals( parse( '>   Hello World!' ) , "  Hello World!" ) ;
 		doormen.equals( parse( '>   Hello World!  ' ) , "  Hello World!  " ) ;
+		doormen.equals( parse( '> \tHello World!' ) , "\tHello World!" ) ;
+		doormen.equals( parse( '> \t\t\tHello\t\tWorld!' ) , "\t\t\tHello\t\tWorld!" ) ;
 		doormen.equals( parse( 'Hello World!' ) , "Hello World!" ) ;
 		doormen.equals( parse( '  Hello World!  ' ) , "Hello World!" ) ;
 		doormen.equals( parse( '"123"' ) , "123" ) ;
