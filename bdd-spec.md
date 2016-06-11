@@ -13,6 +13,20 @@
  
 <a name="kfg-stringify"></a>
 # KFG stringify
+stringify scalar.
+
+```js
+doormen.equals( stringify( "Hello World!" ) , '"Hello World!"\n' ) ;
+doormen.equals( stringify( "a:1" ) , '"a:1"\n' ) ;
+doormen.equals( stringify( undefined ) , "null\n" ) ;
+doormen.equals( stringify( null ) , "null\n" ) ;
+doormen.equals( stringify( true ) , "true\n" ) ;
+doormen.equals( stringify( false ) , "false\n" ) ;
+doormen.equals( stringify( 123 ) , "123\n" ) ;
+doormen.equals( stringify( 123.456 ) , "123.456\n" ) ;
+return ;
+```
+
 undefined value.
 
 ```js
@@ -295,8 +309,6 @@ parse scalar at top-level.
 doormen.equals( parse( '"Hello World!"' ) , "Hello World!" ) ;
 doormen.equals( parse( '> Hello World!' ) , "Hello World!" ) ;
 doormen.equals( parse( 'Hello World!' ) , "Hello World!" ) ;
-//console.log( ">>>>>>>>>>>>>>>>", parse( 'undefined' ) ) ;
-//doormen.equals( parse( 'undefined' ) , null ) ;
 doormen.equals( parse( 'null' ) , null ) ;
 doormen.equals( parse( 'true' ) , true ) ;
 doormen.equals( parse( 'false' ) , false ) ;
