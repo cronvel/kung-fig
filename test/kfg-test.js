@@ -49,6 +49,8 @@ describe( "KFG stringify" , function() {
 	it( "stringify string" , function() {
 		doormen.equals( stringify( "Hello World!" ) , 'Hello World!\n' ) ;
 		doormen.equals( stringify( "a:1" ) , '"a:1"\n' ) ;
+		doormen.equals( stringify( "123" ) , '"123"\n' ) ;
+		doormen.equals( stringify( "123.45" ) , '"123.45"\n' ) ;
 		doormen.equals( stringify( "Hello: World!" ) , '"Hello: World!"\n' ) ;
 		doormen.equals( stringify( "[Hello World!]" ) , '"[Hello World!]"\n' ) ;
 		doormen.equals( stringify( "<hello>" ) , '"<hello>"\n' ) ;
@@ -349,6 +351,10 @@ describe( "KFG parse" , function() {
 		doormen.equals( parse( '>   Hello World!  ' ) , "  Hello World!  " ) ;
 		doormen.equals( parse( 'Hello World!' ) , "Hello World!" ) ;
 		doormen.equals( parse( '  Hello World!  ' ) , "Hello World!" ) ;
+		doormen.equals( parse( '"123"' ) , "123" ) ;
+		doormen.equals( parse( '"123.45"' ) , "123.45" ) ;
+		doormen.equals( parse( '> 123' ) , "123" ) ;
+		doormen.equals( parse( '> 123.45' ) , "123.45" ) ;
 	} ) ;
 	
 	it( "parse multi-line string at top-level" , function() {
