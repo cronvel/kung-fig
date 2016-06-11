@@ -301,7 +301,7 @@ describe( "KFG stringify" , function() {
 		IfTag.prototype = Object.create( Tag.prototype ) ;
 		IfTag.prototype.constructor = IfTag ;
 		
-		IfTag.create = function createIfTag( attributes , content ) {
+		IfTag.create = function createIfTag( tag , attributes , content ) {
 			var self = Object.create( IfTag.prototype ) ;
 			Tag.call( self , 'if' , attributes , content ) ;
 			return self ;
@@ -315,14 +315,14 @@ describe( "KFG stringify" , function() {
 				operator: splitted[ 1 ] ,
 				right: splitted[ 2 ]
 			} ;
-		}
+		} ;
 		
 		IfTag.prototype.stringifyAttributes = function stringifyAttributes() {
 			return this.attributes.left + ' ' + this.attributes.operator + ' ' + this.attributes.right ;
 		} ;
 		
 		var o = new TagContainer( [
-			IfTag.create( 'something > constant' , new TagContainer( [
+			IfTag.create( 'if' , 'something > constant' , new TagContainer( [
 				new Tag( 'do' , '' , 'some tasks' ) ,
 				new Tag( 'do' , '' , 'some other tasks' )
 			] ) ) ,
@@ -546,7 +546,7 @@ describe( "KFG parse" , function() {
 		IfTag.prototype = Object.create( Tag.prototype ) ;
 		IfTag.prototype.constructor = IfTag ;
 		
-		IfTag.create = function createIfTag( attributes , content ) {
+		IfTag.create = function createIfTag( tag , attributes , content ) {
 			var self = Object.create( IfTag.prototype ) ;
 			Tag.call( self , 'if' , attributes , content ) ;
 			return self ;
@@ -651,7 +651,7 @@ describe( "ClassicTag" , function() {
 	
 	it( "ClassicTag stringify" , function() {
 		var o = new TagContainer( [
-			new ClassicTag( { width: 1280, height: 1024, src: '/css/main.css', active: true } ) 
+			new ClassicTag( 'ClassicTag' , { width: 1280, height: 1024, src: '/css/main.css', active: true } ) 
 		] ) ;
 		
 		//console.log( o ) ;
@@ -659,8 +659,8 @@ describe( "ClassicTag" , function() {
 		doormen.equals( stringify( o ) , '[ClassicTag width=1280 height=1024 src="/css/main.css" active]\n' ) ;
 		
 		o = new TagContainer( [
-			new ClassicTag( { width: 1280, height: 1024, src: '/css/main.css', active: true } ) ,
-			new ClassicTag( { fullscreen: true } ) 
+			new ClassicTag( 'ClassicTag' , { width: 1280, height: 1024, src: '/css/main.css', active: true } ) ,
+			new ClassicTag( 'ClassicTag' , { fullscreen: true } ) 
 		] ) ;
 		
 		//console.log( o ) ;
@@ -674,8 +674,8 @@ describe( "ClassicTag" , function() {
 		//console.log( parse( stringify( o ) ) ) ;
 		
 		o = new TagContainer( [
-			new ClassicTag( { width: 1280, height: 1024, src: '/css/main.css', active: true } , { hello: "world!" } ) ,
-			new ClassicTag( { fullscreen: true } ) 
+			new ClassicTag( 'ClassicTag' , { width: 1280, height: 1024, src: '/css/main.css', active: true } , { hello: "world!" } ) ,
+			new ClassicTag( 'ClassicTag' , { fullscreen: true } ) 
 		] ) ;
 		
 		//console.log( o ) ;
