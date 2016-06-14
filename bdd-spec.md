@@ -1,6 +1,7 @@
 # TOC
    - [KFG stringify](#kfg-stringify)
    - [KFG parse](#kfg-parse)
+   - [LabelTag](#labeltag)
    - [ClassicTag](#classictag)
    - [Loading a config](#loading-a-config)
    - [Saving a config](#saving-a-config)
@@ -234,8 +235,8 @@ stringifier.set( Complex.prototype , function Complex( v ) {
 } ) ;
 
 var o = {
-	simple: Simple( "abc" ) ,
-	complex: Complex( { str: "hello", int: 6 } )
+	simple: Simple( "abc" ) ,	// jshint ignore:line
+	complex: Complex( { str: "hello", int: 6 } )	// jshint ignore:line
 } ;
 
 //console.log( stringify( o , { classes: stringifier } ) ) ;
@@ -250,13 +251,13 @@ stringify an object with tags.
 ```js
 var o = new TagContainer( [
 	new Tag( 'if' , 'something > constant' , new TagContainer( [
-		new Tag( 'do' , '' , 'some tasks' ) ,
-		new Tag( 'do' , '' , 'some other tasks' )
+		new Tag( 'do' , null , 'some tasks' ) ,
+		new Tag( 'do' , null , 'some other tasks' )
 	] ) ) ,
-	new Tag( 'else' , undefined , new TagContainer( [
-		new Tag( 'do' , undefined , new TagContainer( [
-			new Tag( 'do' , '' , [ 'one' , 'two' , 'three' ] ) ,
-			new Tag( 'do' , '' , { a: 1 , b: 2 } )
+	new Tag( 'else' , null , new TagContainer( [
+		new Tag( 'do' , null , new TagContainer( [
+			new Tag( 'do' , null , [ 'one' , 'two' , 'three' ] ) ,
+			new Tag( 'do' , null , { a: 1 , b: 2 } )
 		] ) )
 	] ) )
 ] ) ;
@@ -284,13 +285,13 @@ doormen.equals( o2 , o ) ;
 stringify an object with tags, featuring custom tags prototype.
 
 ```js
-function IfTag() {} ;
+function IfTag() {}
 IfTag.prototype = Object.create( Tag.prototype ) ;
 IfTag.prototype.constructor = IfTag ;
 
-IfTag.create = function createIfTag( tag , attributes , content ) {
+IfTag.create = function createIfTag( tag , attributes , content , shouldParse ) {
 	var self = Object.create( IfTag.prototype ) ;
-	Tag.call( self , 'if' , attributes , content ) ;
+	Tag.call( self , 'if' , attributes , content , shouldParse ) ;
 	return self ;
 } ;
 
@@ -310,13 +311,13 @@ IfTag.prototype.stringifyAttributes = function stringifyAttributes() {
 
 var o = new TagContainer( [
 	IfTag.create( 'if' , 'something > constant' , new TagContainer( [
-		new Tag( 'do' , '' , 'some tasks' ) ,
-		new Tag( 'do' , '' , 'some other tasks' )
-	] ) ) ,
-	new Tag( 'else' , undefined , new TagContainer( [
-		new Tag( 'do' , undefined , new TagContainer( [
-			new Tag( 'do' , '' , [ 'one' , 'two' , 'three' ] ) ,
-			new Tag( 'do' , '' , { a: 1 , b: 2 } )
+		new Tag( 'do' , null , 'some tasks' ) ,
+		new Tag( 'do' , null , 'some other tasks' )
+	] ) , true ) ,
+	new Tag( 'else' , null , new TagContainer( [
+		new Tag( 'do' , null , new TagContainer( [
+			new Tag( 'do' , null , [ 'one' , 'two' , 'three' ] ) ,
+			new Tag( 'do' , null , { a: 1 , b: 2 } )
 		] ) )
 	] ) )
 ] ) ;
@@ -538,19 +539,19 @@ var o = parse( fs.readFileSync( __dirname + '/sample/kfg/tag.kfg' , 'utf8' ) ) ;
 //console.log( string.inspect( { style: 'color' , depth: 15 } , o ) ) ;
 //console.log( string.escape.control( JSON.stringify( o ) ) ) ;
 
-doormen.equals( JSON.stringify( o ) , '{"children":[{"name":"tag","attributes":"id1","content":{"some":"value","another":"one"}},{"name":"tag","attributes":"id2","content":{"some":"other value","nested":{"a":1,"b":2,"c":{"children":[{"name":"if","attributes":"something > constant","content":{"children":[{"name":"do","attributes":"","content":"some work"}]}},{"name":"else","attributes":"","content":{"children":[{"name":"do","attributes":"","content":"something else"}]}}]}}}},{"name":"container","attributes":"","content":{"children":[{"name":"tag","attributes":""},{"name":"anothertag","attributes":""},{"name":"complex","attributes":"tag hello=\\"<world]]]\\\\\\"!\\" some[3].path[6]"}]}}]}' ) ;
+doormen.equals( JSON.stringify( o ) , '{"children":[{"name":"tag","attributes":"id1","content":{"some":"value","another":"one"}},{"name":"tag","attributes":"id2","content":{"some":"other value","nested":{"a":1,"b":2,"c":{"children":[{"name":"if","attributes":"something > constant","content":{"children":[{"name":"do","attributes":null,"content":"some work"}]}},{"name":"else","attributes":null,"content":{"children":[{"name":"do","attributes":null,"content":"something else"}]}}]}}}},{"name":"container","attributes":null,"content":{"children":[{"name":"tag","attributes":null},{"name":"anothertag","attributes":null},{"name":"complex","attributes":"tag hello=\\"<world]]]\\\\\\"!\\" some[3].path[6]"}]}}]}' ) ;
 ```
 
 parse a file containing tags, with custom tags prototypes.
 
 ```js
-function IfTag() {} ;
+function IfTag() {}
 IfTag.prototype = Object.create( Tag.prototype ) ;
 IfTag.prototype.constructor = IfTag ;
 
-IfTag.create = function createIfTag( tag , attributes , content ) {
+IfTag.create = function createIfTag( tag , attributes , content , shouldParse ) {
 	var self = Object.create( IfTag.prototype ) ;
-	Tag.call( self , 'if' , attributes , content ) ;
+	Tag.call( self , 'if' , attributes , content , shouldParse ) ;
 	return self ;
 } ;
 
@@ -562,7 +563,7 @@ IfTag.prototype.parseAttributes = function parseAttributes( attributes )
 		operator: splitted[ 1 ] ,
 		right: splitted[ 2 ]
 	} ;
-}
+} ;
 
 IfTag.prototype.stringifyAttributes = function stringifyAttributes() {
 	return this.attributes.left + ' ' + this.attributes.operator + ' ' + this.attributes.right ;
@@ -575,7 +576,37 @@ var o = parse( fs.readFileSync( __dirname + '/sample/kfg/tag.kfg' , 'utf8' ) , {
 //console.log( string.inspect( { style: 'color' , depth: 15 } , o ) ) ;
 //console.log( string.escape.control( JSON.stringify( o ) ) ) ;
 
-doormen.equals( JSON.stringify( o ) , '{"children":[{"name":"tag","attributes":"id1","content":{"some":"value","another":"one"}},{"name":"tag","attributes":"id2","content":{"some":"other value","nested":{"a":1,"b":2,"c":{"children":[{"name":"if","attributes":{"left":"something","operator":">","right":"constant"},"content":{"children":[{"name":"do","attributes":"","content":"some work"}]}},{"name":"else","attributes":"","content":{"children":[{"name":"do","attributes":"","content":"something else"}]}}]}}}},{"name":"container","attributes":"","content":{"children":[{"name":"tag","attributes":""},{"name":"anothertag","attributes":""},{"name":"complex","attributes":"tag hello=\\"<world]]]\\\\\\"!\\" some[3].path[6]"}]}}]}' ) ;
+doormen.equals( JSON.stringify( o ) , '{"children":[{"name":"tag","attributes":"id1","content":{"some":"value","another":"one"}},{"name":"tag","attributes":"id2","content":{"some":"other value","nested":{"a":1,"b":2,"c":{"children":[{"name":"if","attributes":{"left":"something","operator":">","right":"constant"},"content":{"children":[{"name":"do","attributes":null,"content":"some work"}]}},{"name":"else","attributes":null,"content":{"children":[{"name":"do","attributes":null,"content":"something else"}]}}]}}}},{"name":"container","attributes":null,"content":{"children":[{"name":"tag","attributes":null},{"name":"anothertag","attributes":null},{"name":"complex","attributes":"tag hello=\\"<world]]]\\\\\\"!\\" some[3].path[6]"}]}}]}' ) ;
+```
+
+<a name="labeltag"></a>
+# LabelTag
+label attributes parse.
+
+```js
+doormen.equals(
+	LabelTag.parseAttributes( 'label' ) ,
+	'label'
+) ;
+
+doormen.equals(
+	LabelTag.parseAttributes( '' ) ,
+	''
+) ;
+```
+
+label attributes stringify.
+
+```js
+doormen.equals(
+	LabelTag.stringifyAttributes( 'label' ) ,
+	'label'
+) ;
+
+doormen.equals(
+	LabelTag.stringifyAttributes( 'label[]' ) ,
+	'"label[]"'
+) ;
 ```
 
 <a name="classictag"></a>
@@ -584,27 +615,27 @@ classic attributes parse.
 
 ```js
 doormen.equals(
-	classicAttributes.parse( 'width=1280 height=1024 src="/css/main.css" active' ) ,
+	ClassicTag.parseAttributes( 'width=1280 height=1024 src="/css/main.css" active' ) ,
 	{ width: 1280, height: 1024, src: '/css/main.css', active: true }
 ) ;
 
 doormen.equals(
-	classicAttributes.parse( 'active width=1280 height=1024 src="/css/main.css"' ) ,
+	ClassicTag.parseAttributes( 'active width=1280 height=1024 src="/css/main.css"' ) ,
 	{ width: 1280, height: 1024, src: '/css/main.css', active: true }
 ) ;
 
 doormen.equals(
-	classicAttributes.parse( '  width=1280  height = 1024  src="/css/main.css" active ' ) ,
+	ClassicTag.parseAttributes( '  width=1280  height = 1024  src="/css/main.css" active ' ) ,
 	{ width: 1280, height: 1024, src: '/css/main.css', active: true }
 ) ;
 
 doormen.equals(
-	classicAttributes.parse( 'width=1280 height=1024 src="/css/main.css" active empty=""' ) ,
+	ClassicTag.parseAttributes( 'width=1280 height=1024 src="/css/main.css" active empty=""' ) ,
 	{ width: 1280, height: 1024, src: '/css/main.css', active: true , empty: '' }
 ) ;
 
 doormen.equals(
-	classicAttributes.parse( 'width:1280 height:1024 src:"/css/main.css" active' , ':' ) ,
+	ClassicTag.parseAttributes( 'width:1280 height:1024 src:"/css/main.css" active' , ':' ) ,
 	{ width: 1280, height: 1024, src: '/css/main.css', active: true }
 ) ;
 ```
@@ -612,10 +643,10 @@ doormen.equals(
 classic attributes stringify.
 
 ```js
-//console.log( classicAttributes.stringify( { width: 1280, height: 1024, src: '/css/main.css', active: true } ) ) ;
+//console.log( ClassicTag.stringifyAttributes( { width: 1280, height: 1024, src: '/css/main.css', active: true } ) ) ;
 
 doormen.equals(
-	classicAttributes.stringify( { width: 1280, height: 1024, src: '/css/main.css', active: true } ) ,
+	ClassicTag.stringifyAttributes( { width: 1280, height: 1024, src: '/css/main.css', active: true } ) ,
 	'width=1280 height=1024 src="/css/main.css" active' 
 ) ;
 ```
