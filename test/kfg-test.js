@@ -453,6 +453,55 @@ describe( "KFG parse" , function() {
 		} ) ;
 	} ) ;
 	
+	it( "templates" , function() {
+		var o ;
+		
+		// console.log( o.tpl ) ;
+		// console.log( o.tpl.toString() ) ;
+		// console.log( o.tpl.toString( { name: "Bob" } ) ) ;
+		
+		o = parse( "tpl: $> Hello ${name}!" ) ;
+		doormen.equals( o.tpl.toString() , 'Hello (undefined)!' ) ;
+		doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello Bob!' ) ;
+		
+		o = parse( "tpl: $> Hello ${name}!" , { meta: { templateData: { name: "Bill" } } } ) ;
+		doormen.equals( o.tpl.toString() , 'Hello Bill!' ) ;
+		doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello Bob!' ) ;
+		
+		o = parse( "tpl:\n\t$> Hello ${name}!" ) ;
+		doormen.equals( o.tpl.toString() , 'Hello (undefined)!' ) ;
+		doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello Bob!' ) ;
+		
+		o = parse( "tpl:\n\t$> Hello ${name}!\n\t$> How are you ${name}?" ) ;
+		doormen.equals( o.tpl.toString() , 'Hello (undefined)!\nHow are you (undefined)?' ) ;
+		doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello Bob!\nHow are you Bob?' ) ;
+		
+		o = parse( "tpl:\n\t$> Hello ${name}!\n\t$> How are you ${name}?" , { meta: { templateData: { name: "Bill" } } } ) ;
+		doormen.equals( o.tpl.toString() , 'Hello Bill!\nHow are you Bill?' ) ;
+		doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello Bob!\nHow are you Bob?' ) ;
+		
+		o = parse( 'tpl: $"Hello ${name}!"' ) ;
+		doormen.equals( o.tpl.toString() , 'Hello (undefined)!' ) ;
+		doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello Bob!' ) ;
+		
+		o = parse( 'tpl: $"Hello ${name}!"' , { meta: { templateData: { name: "Bill" } } } ) ;
+		doormen.equals( o.tpl.toString() , 'Hello Bill!' ) ;
+		doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello Bob!' ) ;
+		
+		// Top-level templates
+		o = parse( '$"Hello ${name}!"' ) ;
+		doormen.equals( o.toString() , 'Hello (undefined)!' ) ;
+		doormen.equals( o.toString( { name: "Bob" } ) , 'Hello Bob!' ) ;
+		
+		o = parse( '$> Hello ${name}!' ) ;
+		doormen.equals( o.toString() , 'Hello (undefined)!' ) ;
+		doormen.equals( o.toString( { name: "Bob" } ) , 'Hello Bob!' ) ;
+		
+		o = parse( '$> Hey!\n$> Hello ${name}!' ) ;
+		doormen.equals( o.toString() , 'Hey!\nHello (undefined)!' ) ;
+		doormen.equals( o.toString( { name: "Bob" } ) , 'Hey!\nHello Bob!' ) ;
+	} ) ;
+	
 	it( "parse a file with operators" , function() {
 		
 		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/ops.kfg' , 'utf8' ) ) ;
