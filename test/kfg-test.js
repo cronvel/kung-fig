@@ -34,6 +34,7 @@
 var kungFig = require( '../lib/kungFig.js' ) ;
 var stringify = kungFig.stringify ;
 var parse = kungFig.parse ;
+var Template = kungFig.Template ;
 var Tag = kungFig.Tag ;
 var TagContainer = kungFig.TagContainer ;
 
@@ -147,6 +148,21 @@ describe( "KFG stringify" , function() {
 		// Check that the original object and the stringified/parsed object are equals:
 		doormen.equals( o , parse( s ) ) ;
 		//require( 'expect.js' )( o ).to.eql( parse( s ) ) ;
+	} ) ;
+	
+	it( "stringify templates" , function() {
+		doormen.equals( stringify( { tpl: Template.create( 'Hello ${name}!' ) } ) , 'tpl: $> Hello ${name}!\n' ) ;
+		doormen.equals( stringify( { tpl: Template.create( 'Hey!\nHello ${name}!' ) } ) , 'tpl: $> Hey!\n\t$> Hello ${name}!\n' ) ;
+		doormen.equals( stringify( { tpl: Template.create( 'Hello ${name}!' ) } , { preferQuotes: true } ) , 'tpl: $"Hello ${name}!"\n' ) ;
+		doormen.equals( stringify( { tpl: Template.create( 'Hey!\nHello ${name}!' ) } , { preferQuotes: true } ) , 'tpl: $"Hey!\\nHello ${name}!"\n' ) ;
+		
+		doormen.equals( stringify( Template.create( 'Hello ${name}!' ) ) , '$> Hello ${name}!\n' ) ;
+		doormen.equals( stringify( Template.create( 'Hey!\nHello ${name}!' ) ) , '$> Hey!\n$> Hello ${name}!\n' ) ;
+		doormen.equals( stringify( Template.create( 'Hello ${name}!' ) , { preferQuotes: true } ) , '$"Hello ${name}!"\n' ) ;
+		doormen.equals( stringify( Template.create( 'Hey!\nHello ${name}!' ) , { preferQuotes: true } ) , '$"Hey!\\nHello ${name}!"\n' ) ;
+		
+		doormen.equals( stringify( { tpl: Template.create( '' ) } ) , 'tpl: <Template>\n' ) ;
+		doormen.equals( stringify( Template.create( '' ) ) , '<Template>\n' ) ;
 	} ) ;
 	
 	it( "stringify an object with operators" , function() {
@@ -453,12 +469,15 @@ describe( "KFG parse" , function() {
 		} ) ;
 	} ) ;
 	
-	it( "templates" , function() {
+	it( "parse templates" , function() {
 		var o ;
 		
 		// console.log( o.tpl ) ;
 		// console.log( o.tpl.toString() ) ;
 		// console.log( o.tpl.toString( { name: "Bob" } ) ) ;
+		
+		o = parse( "tpl: <Template>" ) ;
+		doormen.equals( o.tpl.toString() , '' ) ;
 		
 		o = parse( "tpl: $> Hello ${name}!" ) ;
 		doormen.equals( o.tpl.toString() , 'Hello (undefined)!' ) ;
@@ -489,6 +508,13 @@ describe( "KFG parse" , function() {
 		doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello Bob!' ) ;
 		
 		// Top-level templates
+		o = parse( "<Template>" ) ;
+		doormen.equals( o.toString() , '' ) ;
+		
+		//o = parse( "<Template>\n\t$> Hello" ) ;
+		o = parse( "<Bin16>\ntoto: 22" ) ;
+		doormen.equals( o.toString() , 'Hello' ) ;
+		
 		o = parse( '$"Hello ${name}!"' ) ;
 		doormen.equals( o.toString() , 'Hello (undefined)!' ) ;
 		doormen.equals( o.toString( { name: "Bob" } ) , 'Hello Bob!' ) ;
