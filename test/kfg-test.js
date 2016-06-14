@@ -405,9 +405,13 @@ describe( "KFG parse" , function() {
 		doormen.equals( parse( '123.456' ) , 123.456 ) ;
 	} ) ;
 	
-	it.skip( "parse instance at top-level" , function() {
+	it( "zzz parse instance at top-level" , function() {
+		var o ;
 		//o = parse( "<Template>\n\t$> Hello" ) ;
-		o = parse( "<Bin16>\ntoto: 22" ) ;
+		//o = parse( "<Bin16>\ntoto: 22" ) ;
+		//o = parse( "titi: <Bin16>\n\ttoto: 22" ) ;
+		o = parse( "<Bin16>\n> 22" ) ;
+		console.log( "result:" , o ) ;
 	} ) ;
 		
 	it( "numbers and string ambiguity" , function() {
@@ -513,8 +517,8 @@ describe( "KFG parse" , function() {
 		doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello Bob!' ) ;
 		
 		// Top-level templates
-		o = parse( "<Template>" ) ;
-		doormen.equals( o.toString() , '' ) ;
+		//o = parse( "<Template>" ) ;
+		//doormen.equals( o.toString() , '' ) ;
 		
 		o = parse( '$"Hello ${name}!"' ) ;
 		doormen.equals( o.toString() , 'Hello (undefined)!' ) ;
