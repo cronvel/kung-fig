@@ -412,9 +412,11 @@ describe( "KFG parse" , function() {
 		doormen.equals( parse( '123.456' ) , 123.456 ) ;
 	} ) ;
 	
-	it.skip( "parse instance at top-level" , function() {
-		//o = parse( "<Template>\n\t$> Hello" ) ;
-		o = parse( "<Bin16>\ntoto: 22" ) ;
+	it( "parse instance at top-level" , function() {
+		doormen.equals( JSON.stringify( parse( "<Bin16> 22" ) ) , '{"type":"Buffer","data":[34]}' ) ;
+		doormen.equals( JSON.stringify( parse( "<Object>" ) ) , '{}' ) ;
+		doormen.equals( JSON.stringify( parse( "<Object>\na: 1" ) ) , '{"a":1}' ) ;
+		doormen.equals( parse( "<Template> :string" ).toString() , ':string' ) ;
 	} ) ;
 		
 	it( "numbers and string ambiguity" , function() {
