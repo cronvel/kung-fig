@@ -92,3 +92,18 @@ The addition of **tags** appears in 2016 to support creation of simple scripting
 * `<Regex>`, `<regex>`, `<RegExp>`, `<Regexp>`, `<regexp>`: construct a RegExp object from a string of the form `/<regexp>/<flag>`
   E.g.: `<RegExp> /hello/i`
 
+
+
+### Tag proxies
+
+Proxy mode:
+
+* `parent`: the tag use the same proxy than its closest parent tag
+* `local`: the tag has its own proxy
+* `parentLink`: the tag has its own proxy, but the `__parent` property on its proxy is a reference to its closest parent tag
+* `inherit`: the tag has its own proxy, but it inherit from its closest parent tag
+
+
+
+
+

@@ -491,7 +491,7 @@ o = parse( "tpl: $> Hello ${name}!" ) ;
 doormen.equals( o.tpl.toString() , 'Hello (undefined)!' ) ;
 doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello Bob!' ) ;
 
-o = parse( "tpl: $> Hello ${name}!" , { meta: { templateData: { name: "Bill" } } } ) ;
+o = parse( "tpl: $> Hello ${name}!" , { proxy: { templateData: { name: "Bill" } } } ) ;
 doormen.equals( o.tpl.toString() , 'Hello Bill!' ) ;
 doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello Bob!' ) ;
 
@@ -503,7 +503,7 @@ o = parse( "tpl:\n\t$> Hello ${name}!\n\t$> How are you ${name}?" ) ;
 doormen.equals( o.tpl.toString() , 'Hello (undefined)!\nHow are you (undefined)?' ) ;
 doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello Bob!\nHow are you Bob?' ) ;
 
-o = parse( "tpl:\n\t$> Hello ${name}!\n\t$> How are you ${name}?" , { meta: { templateData: { name: "Bill" } } } ) ;
+o = parse( "tpl:\n\t$> Hello ${name}!\n\t$> How are you ${name}?" , { proxy: { templateData: { name: "Bill" } } } ) ;
 doormen.equals( o.tpl.toString() , 'Hello Bill!\nHow are you Bill?' ) ;
 doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello Bob!\nHow are you Bob?' ) ;
 
@@ -511,7 +511,7 @@ o = parse( 'tpl: $"Hello ${name}!"' ) ;
 doormen.equals( o.tpl.toString() , 'Hello (undefined)!' ) ;
 doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello Bob!' ) ;
 
-o = parse( 'tpl: $"Hello ${name}!"' , { meta: { templateData: { name: "Bill" } } } ) ;
+o = parse( 'tpl: $"Hello ${name}!"' , { proxy: { templateData: { name: "Bill" } } } ) ;
 doormen.equals( o.tpl.toString() , 'Hello Bill!' ) ;
 doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello Bob!' ) ;
 
@@ -669,6 +669,72 @@ var o = parse( fs.readFileSync( __dirname + '/sample/kfg/tag.kfg' , 'utf8' ) , {
 //console.log( string.escape.control( JSON.stringify( o ) ) ) ;
 
 doormen.equals( JSON.stringify( o ) , '{"children":[{"name":"tag","attributes":"id1","content":{"some":"value","another":"one"}},{"name":"tag","attributes":"id2","content":{"some":"other value","nested":{"a":1,"b":2,"c":{"children":[{"name":"if","attributes":{"left":"something","operator":">","right":"constant"},"content":{"children":[{"name":"do","attributes":null,"content":"some work"}]}},{"name":"else","attributes":null,"content":{"children":[{"name":"do","attributes":null,"content":"something else"}]}}]}}}},{"name":"container","attributes":null,"content":{"children":[{"name":"tag","attributes":null},{"name":"anothertag","attributes":null},{"name":"complex","attributes":"tag hello=\\"<world]]]\\\\\\"!\\" some[3].path[6]"}]}}]}' ) ;
+```
+
+tag proxy.
+
+```js
+var o , proxy ;
+
+function LocalTag() {}
+LocalTag.prototype = Object.create( Tag.prototype ) ;
+LocalTag.prototype.constructor = LocalTag ;
+
+LocalTag.create = function( tag , attributes , content , shouldParse ) {
+	var self = Object.create( LocalTag.prototype ) ;
+	Tag.call( self , tag , attributes , content , shouldParse ) ;
+	return self ;
+} ;
+LocalTag.create.proxyMode = 'local' ;
+
+proxy = { templateData: { name: "Bill" } } ;
+o = parse( '[tag] $"Hello ${name}!"' , { proxy: proxy , tags: { local: LocalTag.create } } ) ;
+doormen.equals( o.children[0].content.toString() , 'Hello Bill!' ) ;
+proxy.templateData.name = "Jack" ;
+doormen.equals( o.children[0].content.toString() , 'Hello Jack!' ) ;
+
+proxy = { templateData: { name: "Bill" } } ;
+o = parse( '[local] $"Hello ${name}!"' , { proxy: proxy , tags: { local: LocalTag.create } } ) ;
+doormen.equals( o.children[0].proxy !== proxy , true ) ;
+doormen.equals( Object.getPrototypeOf( o.children[0].proxy ) !== proxy , true ) ;
+//console.log( o.children[0].proxy ) ;
+doormen.equals( o.children[0].content.toString() , 'Hello (undefined)!' ) ;
+proxy.templateData.name = "Jack" ;
+doormen.equals( o.children[0].content.toString() , 'Hello (undefined)!' ) ;
+o.children[0].proxy.templateData.name = "Jenny" ;
+doormen.equals( o.children[0].content.toString() , 'Hello Jenny!' ) ;
+
+LocalTag.create.proxyMode = 'inherit' ;
+proxy = { templateData: { name: "Bill" } } ;
+o = parse( '[local] $"Hello ${name}!"' , { proxy: proxy , tags: { local: LocalTag.create } } ) ;
+doormen.equals( o.children[0].proxy !== proxy , true ) ;
+doormen.equals( Object.getPrototypeOf( o.children[0].proxy ) === proxy , true ) ;
+doormen.equals( o.children[0].proxy.templateData !== proxy.templateData , true ) ;
+doormen.equals( Object.getPrototypeOf( o.children[0].proxy.templateData ) === proxy.templateData , true ) ;
+//console.log( o.children[0].proxy ) ;
+doormen.equals( o.children[0].content.toString() , 'Hello Bill!' ) ;
+proxy.templateData.name = "Jack" ;
+doormen.equals( o.children[0].content.toString() , 'Hello Jack!' ) ;
+o.children[0].proxy.templateData.name = "Jenny" ;
+doormen.equals( o.children[0].content.toString() , 'Hello Jenny!' ) ;
+proxy.templateData.name = "Jack" ;
+doormen.equals( o.children[0].content.toString() , 'Hello Jenny!' ) ;
+
+LocalTag.create.proxyMode = 'parentLink' ;
+proxy = { templateData: { name: "Bill" } } ;
+o = parse( '[local] $"Hello ${name} and ${__parent.name}!"' , { proxy: proxy , tags: { local: LocalTag.create } } ) ;
+doormen.equals( o.children[0].proxy !== proxy , true ) ;
+doormen.equals( Object.getPrototypeOf( o.children[0].proxy ) !== proxy , true ) ;
+doormen.equals( o.children[0].proxy.__parent === proxy , true ) ;
+doormen.equals( o.children[0].proxy.templateData.__parent === proxy.templateData , true ) ;
+//console.log( o.children[0].proxy ) ;
+doormen.equals( o.children[0].content.toString() , 'Hello (undefined) and Bill!' ) ;
+proxy.templateData.name = "Jack" ;
+doormen.equals( o.children[0].content.toString() , 'Hello (undefined) and Jack!' ) ;
+o.children[0].proxy.templateData.name = "Jenny" ;
+doormen.equals( o.children[0].content.toString() , 'Hello Jenny and Jack!' ) ;
+proxy.templateData.name = "Jim" ;
+doormen.equals( o.children[0].content.toString() , 'Hello Jenny and Jim!' ) ;
 ```
 
 <a name="labeltag"></a>
