@@ -397,6 +397,15 @@ doormen.equals( parse( '123' ) , 123 ) ;
 doormen.equals( parse( '123.456' ) , 123.456 ) ;
 ```
 
+parse instance at top-level.
+
+```js
+doormen.equals( JSON.stringify( parse( "<Bin16> 22" ) ) , '{"type":"Buffer","data":[34]}' ) ;
+doormen.equals( JSON.stringify( parse( "<Object>" ) ) , '{}' ) ;
+doormen.equals( JSON.stringify( parse( "<Object>\na: 1" ) ) , '{"a":1}' ) ;
+doormen.equals( parse( "<Template> :string" ).toString() , ':string' ) ;
+```
+
 numbers and string ambiguity.
 
 ```js
@@ -424,8 +433,6 @@ parse a basic file.
 
 ```js
 var o = parse( fs.readFileSync( __dirname + '/sample/kfg/simple.kfg' , 'utf8' ) ) ;
-
-//console.log( require( 'util' ).inspect( o , { depth: 10 } ) ) ;
 
 doormen.equals( o , {
 	a: 1,
@@ -530,8 +537,6 @@ parse a file with operators.
 ```js
 var o = parse( fs.readFileSync( __dirname + '/sample/kfg/ops.kfg' , 'utf8' ) ) ;
 
-//console.log( require( 'util' ).inspect( o , { depth: 10 } ) ) ;
-
 doormen.equals( o , {
 	'+attack': 2,
 	'+defense': -1,
@@ -556,7 +561,6 @@ parse a file with special instances (json, bin, date, regex).
 ```js
 var o = parse( fs.readFileSync( __dirname + '/sample/kfg/instances.kfg' , 'utf8' ) ) ;
 
-//console.log( require( 'util' ).inspect( o , { depth: 10 } ) ) ;
 //console.log( JSON.stringify( o ) ) ;
 
 doormen.equals(
@@ -602,6 +606,20 @@ var o = parse( fs.readFileSync( __dirname + '/sample/kfg/custom-instances.kfg' ,
 
 //console.log( o ) ;
 doormen.equals( JSON.stringify( o ) , '{"simple":{"str":"abc"},"complex":{"str":"hello","int":6}}' ) ;
+```
+
+parse tags.
+
+```js
+doormen.equals( JSON.stringify( parse( '[tag]' ) ) , '{"children":[{"name":"tag","attributes":null}]}' ) ;
+doormen.equals( JSON.stringify( parse( '[tag] text' ) ) , '{"children":[{"name":"tag","attributes":null,"content":"text"}]}' ) ;
+doormen.equals( JSON.stringify( parse( '[tag] "text"' ) ) , '{"children":[{"name":"tag","attributes":null,"content":"text"}]}' ) ;
+doormen.equals( JSON.stringify( parse( '[tag] > text' ) ) , '{"children":[{"name":"tag","attributes":null,"content":"text"}]}' ) ;
+doormen.equals( JSON.stringify( parse( '[tag]\n\t> text' ) ) , '{"children":[{"name":"tag","attributes":null,"content":"text"}]}' ) ;
+doormen.equals( JSON.stringify( parse( '[tag] true' ) ) , '{"children":[{"name":"tag","attributes":null,"content":true}]}' ) ;
+doormen.equals( JSON.stringify( parse( '[tag] 123' ) ) , '{"children":[{"name":"tag","attributes":null,"content":123}]}' ) ;
+doormen.equals( JSON.stringify( parse( '[tag] <Object>' ) ) , '{"children":[{"name":"tag","attributes":null,"content":{}}]}' ) ;
+doormen.equals( JSON.stringify( parse( '[tag] <Object>\n\ta: 1\n\tb: 2' ) ) , '{"children":[{"name":"tag","attributes":null,"content":{"a":1,"b":2}}]}' ) ;
 ```
 
 parse a file containing tags.
