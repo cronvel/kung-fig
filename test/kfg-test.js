@@ -45,6 +45,13 @@ var fs = require( 'fs' ) ;
 
 
 
+function deb( v )
+{
+	console.log( string.inspect( { style: 'color' , depth: 15 } , v ) ) ;
+}
+
+
+
 describe( "KFG stringify" , function() {
 	
 	it( "stringify string" , function() {
@@ -405,9 +412,11 @@ describe( "KFG parse" , function() {
 		doormen.equals( parse( '123.456' ) , 123.456 ) ;
 	} ) ;
 	
-	it.skip( "parse instance at top-level" , function() {
-		//o = parse( "<Template>\n\t$> Hello" ) ;
-		o = parse( "<Bin16>\ntoto: 22" ) ;
+	it( "parse instance at top-level" , function() {
+		doormen.equals( JSON.stringify( parse( "<Bin16> 22" ) ) , '{"type":"Buffer","data":[34]}' ) ;
+		doormen.equals( JSON.stringify( parse( "<Object>" ) ) , '{}' ) ;
+		doormen.equals( JSON.stringify( parse( "<Object>\na: 1" ) ) , '{"a":1}' ) ;
+		doormen.equals( parse( "<Template> :string" ).toString() , ':string' ) ;
 	} ) ;
 		
 	it( "numbers and string ambiguity" , function() {
@@ -430,8 +439,6 @@ describe( "KFG parse" , function() {
 	it( "parse a basic file" , function() {
 		
 		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/simple.kfg' , 'utf8' ) ) ;
-		
-		//console.log( require( 'util' ).inspect( o , { depth: 10 } ) ) ;
 		
 		doormen.equals( o , {
 			a: 1,
@@ -533,8 +540,6 @@ describe( "KFG parse" , function() {
 		
 		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/ops.kfg' , 'utf8' ) ) ;
 		
-		//console.log( require( 'util' ).inspect( o , { depth: 10 } ) ) ;
-		
 		doormen.equals( o , {
 			'+attack': 2,
 			'+defense': -1,
@@ -558,7 +563,6 @@ describe( "KFG parse" , function() {
 		
 		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/instances.kfg' , 'utf8' ) ) ;
 		
-		//console.log( require( 'util' ).inspect( o , { depth: 10 } ) ) ;
 		//console.log( JSON.stringify( o ) ) ;
 		
 		doormen.equals(
@@ -603,6 +607,19 @@ describe( "KFG parse" , function() {
 		
 		//console.log( o ) ;
 		doormen.equals( JSON.stringify( o ) , '{"simple":{"str":"abc"},"complex":{"str":"hello","int":6}}' ) ;
+	} ) ;
+	
+	it( "parse tags" , function() {
+		
+		doormen.equals( JSON.stringify( parse( '[tag]' ) ) , '{"children":[{"name":"tag","attributes":null}]}' ) ;
+		doormen.equals( JSON.stringify( parse( '[tag] text' ) ) , '{"children":[{"name":"tag","attributes":null,"content":"text"}]}' ) ;
+		doormen.equals( JSON.stringify( parse( '[tag] "text"' ) ) , '{"children":[{"name":"tag","attributes":null,"content":"text"}]}' ) ;
+		doormen.equals( JSON.stringify( parse( '[tag] > text' ) ) , '{"children":[{"name":"tag","attributes":null,"content":"text"}]}' ) ;
+		doormen.equals( JSON.stringify( parse( '[tag]\n\t> text' ) ) , '{"children":[{"name":"tag","attributes":null,"content":"text"}]}' ) ;
+		doormen.equals( JSON.stringify( parse( '[tag] true' ) ) , '{"children":[{"name":"tag","attributes":null,"content":true}]}' ) ;
+		doormen.equals( JSON.stringify( parse( '[tag] 123' ) ) , '{"children":[{"name":"tag","attributes":null,"content":123}]}' ) ;
+		doormen.equals( JSON.stringify( parse( '[tag] <Object>' ) ) , '{"children":[{"name":"tag","attributes":null,"content":{}}]}' ) ;
+		doormen.equals( JSON.stringify( parse( '[tag] <Object>\n\ta: 1\n\tb: 2' ) ) , '{"children":[{"name":"tag","attributes":null,"content":{"a":1,"b":2}}]}' ) ;
 	} ) ;
 	
 	it( "parse a file containing tags" , function() {
