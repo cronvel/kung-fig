@@ -718,11 +718,11 @@ describe( "KFG parse" , function() {
 		
 		LocalTag.create.proxyMode = 'parentLink' ;
 		proxy = { data: { name: "Bill" } } ;
-		o = parse( '[local] $"Hello ${name} and ${__parent.name}!"' , { proxy: proxy , tags: { local: LocalTag.create } } ) ;
+		o = parse( '[local] $"Hello ${name} and ${.name}!"' , { proxy: proxy , tags: { local: LocalTag.create } } ) ;
 		doormen.equals( o.children[0].proxy !== proxy , true ) ;
 		doormen.equals( Object.getPrototypeOf( o.children[0].proxy ) !== proxy , true ) ;
 		doormen.equals( o.children[0].proxy.__parent === proxy , true ) ;
-		doormen.equals( o.children[0].proxy.data.__parent === proxy.data , true ) ;
+		doormen.equals( o.children[0].proxy.data[''] === proxy.data , true ) ;
 		//console.log( o.children[0].proxy ) ;
 		doormen.equals( o.children[0].content.toString() , 'Hello (undefined) and Bill!' ) ;
 		proxy.data.name = "Jack" ;
@@ -738,7 +738,7 @@ describe( "KFG parse" , function() {
 		doormen.equals( o.children[0].proxy !== proxy , true ) ;
 		doormen.equals( Object.getPrototypeOf( o.children[0].proxy ) !== proxy , true ) ;
 		doormen.equals( o.children[0].proxy.__parent === proxy , true ) ;
-		doormen.equals( o.children[0].proxy.data.__parent === proxy.data , true ) ;
+		doormen.equals( o.children[0].proxy.data[''] === proxy.data , true ) ;
 		//console.log( o.children[0].proxy ) ;
 		doormen.equals( o.children[0].content.toString() , 'Hello (undefined) and Bill!' ) ;
 		proxy.data.name = "Jack" ;
@@ -747,7 +747,20 @@ describe( "KFG parse" , function() {
 		doormen.equals( o.children[0].content.toString() , 'Hello Jenny and Jack!' ) ;
 		proxy.data.name = "Jim" ;
 		doormen.equals( o.children[0].content.toString() , 'Hello Jenny and Jim!' ) ;
+		
+		LocalTag.create.proxyMode = 'parentLink' ;
+		proxy = { data: { name: "Bill" } } ;
+		o = parse( '[local] $"Hello ${name} and ${%.name}!"' , { proxy: proxy , tags: { local: LocalTag.create } } ) ;
+		doormen.equals( o.children[0].content.toString() , 'Hello (undefined) and Bill!' ) ;
+		proxy.data.name = "Jack" ;
+		doormen.equals( o.children[0].content.toString() , 'Hello (undefined) and Jack!' ) ;
+		o.children[0].proxy.data.name = "Jenny" ;
+		doormen.equals( o.children[0].content.toString() , 'Hello Jenny and Jack!' ) ;
+		proxy.data.name = "Jim" ;
+		doormen.equals( o.children[0].content.toString() , 'Hello Jenny and Jim!' ) ;
 	} ) ;
+	
+	it( "tag proxy: more test with the root mark '%' needed" ) ;
 } ) ;
 
 
