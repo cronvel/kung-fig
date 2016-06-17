@@ -668,29 +668,34 @@ describe( "KFG parse" , function() {
 		
 		doormen.equals( JSON.stringify( o ) , '{"children":[{"name":"tag","attributes":"id1","content":{"some":"value","another":"one"}},{"name":"tag","attributes":"id2","content":{"some":"other value","nested":{"a":1,"b":2,"c":{"children":[{"name":"if","attributes":{"left":"something","operator":">","right":"constant"},"content":{"children":[{"name":"do","attributes":null,"content":"some work"}]}},{"name":"else","attributes":null,"content":{"children":[{"name":"do","attributes":null,"content":"something else"}]}}]}}}},{"name":"container","attributes":null,"content":{"children":[{"name":"tag","attributes":null},{"name":"anothertag","attributes":null},{"name":"complex","attributes":"tag hello=\\"<world]]]\\\\\\"!\\" some[3].path[6]"}]}}]}' ) ;
 	} ) ;
+} ) ;
 	
-	it( "tag proxy" , function() {
+
+
+describe( "Tag proxy" , function() {
+	
+	it( "tag proxy basic test" , function() {
 		var o , proxy ;
 		
-		function LocalTag() {}
-		LocalTag.prototype = Object.create( Tag.prototype ) ;
-		LocalTag.prototype.constructor = LocalTag ;
+		function CustomTag() {}
+		CustomTag.prototype = Object.create( Tag.prototype ) ;
+		CustomTag.prototype.constructor = CustomTag ;
 		
-		LocalTag.create = function( tag , attributes , content , shouldParse ) {
-			var self = Object.create( LocalTag.prototype ) ;
+		CustomTag.create = function( tag , attributes , content , shouldParse ) {
+			var self = Object.create( CustomTag.prototype ) ;
 			Tag.call( self , tag , attributes , content , shouldParse ) ;
 			return self ;
 		} ;
-		LocalTag.create.proxyMode = 'local' ;
+		CustomTag.create.proxyMode = 'local' ;
 		
 		proxy = { data: { name: "Bill" } } ;
-		o = parse( '[tag] $"Hello ${name}!"' , { proxy: proxy , tags: { local: LocalTag.create } } ) ;
+		o = parse( '[tag] $"Hello ${name}!"' , { proxy: proxy , tags: { custom: CustomTag.create } } ) ;
 		doormen.equals( o.children[0].content.toString() , 'Hello Bill!' ) ;
 		proxy.data.name = "Jack" ;
 		doormen.equals( o.children[0].content.toString() , 'Hello Jack!' ) ;
 		
 		proxy = { data: { name: "Bill" } } ;
-		o = parse( '[local] $"Hello ${name}!"' , { proxy: proxy , tags: { local: LocalTag.create } } ) ;
+		o = parse( '[custom] $"Hello ${name}!"' , { proxy: proxy , tags: { custom: CustomTag.create } } ) ;
 		doormen.equals( o.children[0].proxy !== proxy , true ) ;
 		doormen.equals( Object.getPrototypeOf( o.children[0].proxy ) !== proxy , true ) ;
 		//console.log( o.children[0].proxy ) ;
@@ -700,9 +705,9 @@ describe( "KFG parse" , function() {
 		o.children[0].proxy.data.name = "Jenny" ;
 		doormen.equals( o.children[0].content.toString() , 'Hello Jenny!' ) ;
 		
-		LocalTag.create.proxyMode = 'inherit' ;
+		CustomTag.create.proxyMode = 'inherit' ;
 		proxy = { data: { name: "Bill" } } ;
-		o = parse( '[local] $"Hello ${name}!"' , { proxy: proxy , tags: { local: LocalTag.create } } ) ;
+		o = parse( '[custom] $"Hello ${name}!"' , { proxy: proxy , tags: { custom: CustomTag.create } } ) ;
 		doormen.equals( o.children[0].proxy !== proxy , true ) ;
 		doormen.equals( Object.getPrototypeOf( o.children[0].proxy ) === proxy , true ) ;
 		doormen.equals( o.children[0].proxy.data !== proxy.data , true ) ;
@@ -716,9 +721,9 @@ describe( "KFG parse" , function() {
 		proxy.data.name = "Jack" ;
 		doormen.equals( o.children[0].content.toString() , 'Hello Jenny!' ) ;
 		
-		LocalTag.create.proxyMode = 'parentLink' ;
+		CustomTag.create.proxyMode = 'parentLink' ;
 		proxy = { data: { name: "Bill" } } ;
-		o = parse( '[local] $"Hello ${name} and ${.name}!"' , { proxy: proxy , tags: { local: LocalTag.create } } ) ;
+		o = parse( '[custom] $"Hello ${name} and ${.name}!"' , { proxy: proxy , tags: { custom: CustomTag.create } } ) ;
 		doormen.equals( o.children[0].proxy !== proxy , true ) ;
 		doormen.equals( Object.getPrototypeOf( o.children[0].proxy ) !== proxy , true ) ;
 		doormen.equals( o.children[0].proxy.__parent === proxy , true ) ;
@@ -732,25 +737,9 @@ describe( "KFG parse" , function() {
 		proxy.data.name = "Jim" ;
 		doormen.equals( o.children[0].content.toString() , 'Hello Jenny and Jim!' ) ;
 		
-		LocalTag.create.proxyMode = 'parentLink' ;
+		CustomTag.create.proxyMode = 'parentLink' ;
 		proxy = { data: { name: "Bill" } } ;
-		o = parse( '[local] $"Hello ${name} and ${.name}!"' , { proxy: proxy , tags: { local: LocalTag.create } } ) ;
-		doormen.equals( o.children[0].proxy !== proxy , true ) ;
-		doormen.equals( Object.getPrototypeOf( o.children[0].proxy ) !== proxy , true ) ;
-		doormen.equals( o.children[0].proxy.__parent === proxy , true ) ;
-		doormen.equals( o.children[0].proxy.data[''] === proxy.data , true ) ;
-		//console.log( o.children[0].proxy ) ;
-		doormen.equals( o.children[0].content.toString() , 'Hello (undefined) and Bill!' ) ;
-		proxy.data.name = "Jack" ;
-		doormen.equals( o.children[0].content.toString() , 'Hello (undefined) and Jack!' ) ;
-		o.children[0].proxy.data.name = "Jenny" ;
-		doormen.equals( o.children[0].content.toString() , 'Hello Jenny and Jack!' ) ;
-		proxy.data.name = "Jim" ;
-		doormen.equals( o.children[0].content.toString() , 'Hello Jenny and Jim!' ) ;
-		
-		LocalTag.create.proxyMode = 'parentLink' ;
-		proxy = { data: { name: "Bill" } } ;
-		o = parse( '[local] $"Hello ${name} and ${%.name}!"' , { proxy: proxy , tags: { local: LocalTag.create } } ) ;
+		o = parse( '[custom] $"Hello ${name} and ${%.name}!"' , { proxy: proxy , tags: { custom: CustomTag.create } } ) ;
 		doormen.equals( o.children[0].content.toString() , 'Hello (undefined) and Bill!' ) ;
 		proxy.data.name = "Jack" ;
 		doormen.equals( o.children[0].content.toString() , 'Hello (undefined) and Jack!' ) ;
