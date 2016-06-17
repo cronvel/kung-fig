@@ -723,7 +723,7 @@ doormen.equals( o.children[0].content.toString() , 'Hello Jenny!' ) ;
 proxy.data.name = "Jack" ;
 doormen.equals( o.children[0].content.toString() , 'Hello Jenny!' ) ;
 
-CustomTag.create.proxyMode = 'parentLink' ;
+CustomTag.create.proxyMode = 'links' ;
 proxy = { data: { name: "Bill" } } ;
 o = parse( '[custom] $"Hello ${name} and ${.name}!"' , { proxy: proxy , tags: { custom: CustomTag.create } } ) ;
 doormen.equals( o.children[0].proxy !== proxy , true ) ;
@@ -739,7 +739,7 @@ doormen.equals( o.children[0].content.toString() , 'Hello Jenny and Jack!' ) ;
 proxy.data.name = "Jim" ;
 doormen.equals( o.children[0].content.toString() , 'Hello Jenny and Jim!' ) ;
 
-CustomTag.create.proxyMode = 'parentLink' ;
+CustomTag.create.proxyMode = 'links' ;
 proxy = { data: { name: "Bill" } } ;
 o = parse( '[custom] $"Hello ${name} and ${%.name}!"' , { proxy: proxy , tags: { custom: CustomTag.create } } ) ;
 doormen.equals( o.children[0].content.toString() , 'Hello (undefined) and Bill!' ) ;
