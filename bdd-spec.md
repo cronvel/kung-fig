@@ -1,6 +1,7 @@
 # TOC
    - [KFG stringify](#kfg-stringify)
    - [KFG parse](#kfg-parse)
+   - [Meta-Tag](#meta-tag)
    - [Tag proxy](#tag-proxy)
    - [LabelTag](#labeltag)
    - [ClassicTag](#classictag)
@@ -670,6 +671,36 @@ var o = parse( fs.readFileSync( __dirname + '/sample/kfg/tag.kfg' , 'utf8' ) , {
 //console.log( string.escape.control( JSON.stringify( o ) ) ) ;
 
 doormen.equals( JSON.stringify( o ) , '{"children":[{"name":"tag","attributes":"id1","content":{"some":"value","another":"one"}},{"name":"tag","attributes":"id2","content":{"some":"other value","nested":{"a":1,"b":2,"c":{"children":[{"name":"if","attributes":{"left":"something","operator":">","right":"constant"},"content":{"children":[{"name":"do","attributes":null,"content":"some work"}]}},{"name":"else","attributes":null,"content":{"children":[{"name":"do","attributes":null,"content":"something else"}]}}]}}}},{"name":"container","attributes":null,"content":{"children":[{"name":"tag","attributes":null},{"name":"anothertag","attributes":null},{"name":"complex","attributes":"tag hello=\\"<world]]]\\\\\\"!\\" some[3].path[6]"}]}}]}' ) ;
+```
+
+<a name="meta-tag"></a>
+# Meta-Tag
+parse meta-tag.
+
+```js
+var o ;
+o = parse( '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\nsome: data' ) ;
+/*
+console.log( o ) ;
+console.log( kungFig.getMeta( o ) ) ;
+console.log( kungFig.getMeta( o ).getTags( 'meta' )[ 0 ] ) ;
+*/
+doormen.equals( o , { some: "data" } ) ;
+doormen.equals( kungFig.getMeta( o ).getTags( 'meta' )[ 0 ].content , { author: "Joe Doe" , copyright: 2016 } ) ;
+
+//console.log( stringify( o ) ) ;
+doormen.equals( stringify( o ) , '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\n\nsome: data\n' ) ;
+```
+
+stringify meta-tag.
+
+```js
+var o ;
+o = { some: "data" } ;
+kungFig.setMeta( o , [ new Tag( 'meta' , undefined , { author: "Joe Doe" , copyright: 2016 } ) ] ) ;
+
+//console.log( stringify( o ) ) ;
+doormen.equals( stringify( o ) , '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\n\nsome: data\n' ) ;
 ```
 
 <a name="tag-proxy"></a>

@@ -684,9 +684,19 @@ describe( "Meta-Tag" , function() {
 		*/
 		doormen.equals( o , { some: "data" } ) ;
 		doormen.equals( kungFig.getMeta( o ).getTags( 'meta' )[ 0 ].content , { author: "Joe Doe" , copyright: 2016 } ) ;
+		
+		//console.log( stringify( o ) ) ;
+		doormen.equals( stringify( o ) , '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\n\nsome: data\n' ) ;
 	} ) ;
 	
-	it( "stringify meta-tag" ) ;
+	it( "stringify meta-tag" , function() {
+		var o ;
+		o = { some: "data" } ;
+		kungFig.setMeta( o , [ new Tag( 'meta' , undefined , { author: "Joe Doe" , copyright: 2016 } ) ] ) ;
+		
+		//console.log( stringify( o ) ) ;
+		doormen.equals( stringify( o ) , '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\n\nsome: data\n' ) ;
+	} ) ;
 } ) ;
 
 
