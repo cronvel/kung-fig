@@ -697,6 +697,39 @@ describe( "Meta-Tag" , function() {
 		//console.log( stringify( o ) ) ;
 		doormen.equals( stringify( o ) , '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\n\nsome: data\n' ) ;
 	} ) ;
+	
+	it( "parse meta-tag, with meta hook" , function() {
+		var o , hookTriggered = 0 ;
+		
+		var options = {
+			metaHook: function( meta ) {
+				//console.log( "Received meta: " , meta.getTags( 'meta' )[ 0 ].content ) ;
+				doormen.equals( meta.getTags( 'meta' )[ 0 ].content , { author: "Joe Doe" , copyright: 2016 } ) ;
+				hookTriggered ++ ;
+			}
+		} ;
+		
+		o = parse( '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\nsome: data' , options ) ;
+		
+		/*
+		console.log( o ) ;
+		console.log( kungFig.getMeta( o ) ) ;
+		console.log( kungFig.getMeta( o ).getTags( 'meta' )[ 0 ] ) ;
+		*/
+		
+		doormen.equals( hookTriggered , 1 ) ;
+		doormen.equals( o , { some: "data" } ) ;
+		doormen.equals( kungFig.getMeta( o ).getTags( 'meta' )[ 0 ].content , { author: "Joe Doe" , copyright: 2016 } ) ;
+		
+		//console.log( stringify( o ) ) ;
+		doormen.equals( stringify( o ) , '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\n\nsome: data\n' ) ;
+	} ) ;
+	
+	it( "meta tag after body started should throw" , function() {
+		doormen.shouldThrow( function() {
+			parse( '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\nsome: data\n[[meta]]' , options ) ;
+		} ) ;
+	} ) ;
 } ) ;
 
 

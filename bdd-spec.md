@@ -703,6 +703,43 @@ kungFig.setMeta( o , [ new Tag( 'meta' , undefined , { author: "Joe Doe" , copyr
 doormen.equals( stringify( o ) , '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\n\nsome: data\n' ) ;
 ```
 
+parse meta-tag, with meta hook.
+
+```js
+var o , hookTriggered = 0 ;
+
+var options = {
+	metaHook: function( meta ) {
+		//console.log( "Received meta: " , meta.getTags( 'meta' )[ 0 ].content ) ;
+		doormen.equals( meta.getTags( 'meta' )[ 0 ].content , { author: "Joe Doe" , copyright: 2016 } ) ;
+		hookTriggered ++ ;
+	}
+} ;
+
+o = parse( '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\nsome: data' , options ) ;
+
+/*
+console.log( o ) ;
+console.log( kungFig.getMeta( o ) ) ;
+console.log( kungFig.getMeta( o ).getTags( 'meta' )[ 0 ] ) ;
+*/
+
+doormen.equals( hookTriggered , 1 ) ;
+doormen.equals( o , { some: "data" } ) ;
+doormen.equals( kungFig.getMeta( o ).getTags( 'meta' )[ 0 ].content , { author: "Joe Doe" , copyright: 2016 } ) ;
+
+//console.log( stringify( o ) ) ;
+doormen.equals( stringify( o ) , '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\n\nsome: data\n' ) ;
+```
+
+meta tag after body started should throw.
+
+```js
+doormen.shouldThrow( function() {
+	parse( '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\nsome: data\n[[meta]]' , options ) ;
+} ) ;
+```
+
 <a name="tag-proxy"></a>
 # Tag proxy
 tag proxy basic test.
