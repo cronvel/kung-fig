@@ -672,6 +672,25 @@ describe( "KFG parse" , function() {
 	
 
 
+describe( "Meta-Tag" , function() {
+	
+	it( "parse meta-tag" , function() {
+		var o ;
+		o = parse( '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\nsome: data' ) ;
+		/*
+		console.log( o ) ;
+		console.log( kungFig.getMeta( o ) ) ;
+		console.log( kungFig.getMeta( o ).getTags( 'meta' )[ 0 ] ) ;
+		*/
+		doormen.equals( o , { some: "data" } ) ;
+		doormen.equals( kungFig.getMeta( o ).getTags( 'meta' )[ 0 ].content , { author: "Joe Doe" , copyright: 2016 } ) ;
+	} ) ;
+	
+	it( "stringify meta-tag" ) ;
+} ) ;
+
+
+
 describe( "Tag proxy" , function() {
 	
 	it( "tag proxy basic test" , function() {
