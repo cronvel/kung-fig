@@ -484,6 +484,10 @@ describe( "KFG parse" , function() {
 		doormen.equals( kungFig.getMeta( o ).getFirstTag( 'meta' ).content , { content: "test" } ) ;
 	} ) ;
 	
+	it( "parse ref" , function() {
+		throw new Error( 'Coding is not finished yet' ) ;
+	} ) ;
+	
 	it( "parse templates" , function() {
 		var o ;
 		
