@@ -780,6 +780,7 @@ CustomTag.prototype = Object.create( Tag.prototype ) ;
 CustomTag.prototype.constructor = CustomTag ;
 
 CustomTag.create = function( tag , attributes , content , shouldParse ) {
+	//console.log( ">>> Custom Tag constructor" ) ;
 	var self = Object.create( CustomTag.prototype ) ;
 	Tag.call( self , tag , attributes , content , shouldParse ) ;
 	return self ;
@@ -847,10 +848,47 @@ proxy.data.name = "Jim" ;
 doormen.equals( o.children[0].content.toString() , 'Hello Jenny and Jim!' ) ;
 ```
 
-tag proxy & loading (include, ...).
+tag & proxy & loading (include, ...).
 
 ```js
+var o , proxy = { one: 1 } ;
+o = kungFig.load( __dirname + '/sample/kfg/proxy.kfg' , { proxy: proxy } ) ;
+//deb( o ) ;
 
+doormen.equals( o.children[ 0 ].proxy === proxy , true ) ;
+doormen.equals( o.children[ 0 ].content.children[ 0 ].proxy === proxy , true ) ;
+
+doormen.equals( o.children[ 1 ].proxy === proxy , true ) ;
+doormen.equals( o.children[ 1 ].content.children[ 0 ].proxy === proxy , true ) ;
+```
+
+tag & proxy & loading with custom tags (include, ...).
+
+```js
+var o , proxy = { one: 1 } ;
+
+function ChildTag() {}
+ChildTag.prototype = Object.create( Tag.prototype ) ;
+ChildTag.prototype.constructor = ChildTag ;
+
+ChildTag.create = function( tag , attributes , content , shouldParse ) {
+	//console.log( ">>> \nchild tag constructor" ) ;
+	var self = Object.create( ChildTag.prototype ) ;
+	Tag.call( self , tag , attributes , content , shouldParse ) ;
+	return self ;
+} ;
+ChildTag.create.proxyMode = 'links' ;
+
+o = kungFig.load( __dirname + '/sample/kfg/proxy.kfg' , { proxy: proxy , tags: { child: ChildTag.create } } ) ;
+//deb( o ) ;
+
+doormen.equals( o.children[ 0 ].proxy === proxy , true ) ;
+doormen.equals( o.children[ 0 ].content.children[ 0 ].proxy !== proxy , true ) ;
+doormen.equals( o.children[ 0 ].content.children[ 0 ].proxy.__parent === proxy , true ) ;
+
+doormen.equals( o.children[ 1 ].proxy === proxy , true ) ;
+doormen.equals( o.children[ 1 ].content.children[ 0 ].proxy !== proxy , true ) ;
+doormen.equals( o.children[ 1 ].content.children[ 0 ].proxy.__parent === proxy , true ) ;
 ```
 
 <a name="labeltag"></a>

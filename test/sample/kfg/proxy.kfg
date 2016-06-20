@@ -1,0 +1,5 @@
+[parent]
+	[child]
+
+[parent] @@proxy-include.kfg
+

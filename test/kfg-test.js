@@ -762,6 +762,10 @@ describe( "Meta-Tag" , function() {
 
 describe( "Tag proxy" , function() {
 	
+	beforeEach( function() {
+		kungFig.clearCache() ;
+	} ) ;
+	
 	it( "tag proxy basic test" , function() {
 		var o , proxy ;
 		
@@ -770,6 +774,7 @@ describe( "Tag proxy" , function() {
 		CustomTag.prototype.constructor = CustomTag ;
 		
 		CustomTag.create = function( tag , attributes , content , shouldParse ) {
+			//console.log( ">>> Custom Tag constructor" ) ;
 			var self = Object.create( CustomTag.prototype ) ;
 			Tag.call( self , tag , attributes , content , shouldParse ) ;
 			return self ;
@@ -839,9 +844,46 @@ describe( "Tag proxy" , function() {
 	
 	it( "tag proxy: more test with the root mark '%' needed" ) ;
 	
-	it( "tag proxy & loading (include, ...)" , function() {
+	it( "tag & proxy & loading (include, ...)" , function() {
+		var o , proxy = { one: 1 } ;
+		o = kungFig.load( __dirname + '/sample/kfg/proxy.kfg' , { proxy: proxy } ) ;
+		//deb( o ) ;
 		
+		doormen.equals( o.children[ 0 ].proxy === proxy , true ) ;
+		doormen.equals( o.children[ 0 ].content.children[ 0 ].proxy === proxy , true ) ;
+		
+		doormen.equals( o.children[ 1 ].proxy === proxy , true ) ;
+		doormen.equals( o.children[ 1 ].content.children[ 0 ].proxy === proxy , true ) ;
 	} ) ;
+	
+	it( "tag & proxy & loading with custom tags (include, ...)" , function() {
+		var o , proxy = { one: 1 } ;
+		
+		function ChildTag() {}
+		ChildTag.prototype = Object.create( Tag.prototype ) ;
+		ChildTag.prototype.constructor = ChildTag ;
+		
+		ChildTag.create = function( tag , attributes , content , shouldParse ) {
+			//console.log( ">>> \nchild tag constructor" ) ;
+			var self = Object.create( ChildTag.prototype ) ;
+			Tag.call( self , tag , attributes , content , shouldParse ) ;
+			return self ;
+		} ;
+		ChildTag.create.proxyMode = 'links' ;
+		
+		o = kungFig.load( __dirname + '/sample/kfg/proxy.kfg' , { proxy: proxy , tags: { child: ChildTag.create } } ) ;
+		//deb( o ) ;
+		
+		doormen.equals( o.children[ 0 ].proxy === proxy , true ) ;
+		doormen.equals( o.children[ 0 ].content.children[ 0 ].proxy !== proxy , true ) ;
+		doormen.equals( o.children[ 0 ].content.children[ 0 ].proxy.__parent === proxy , true ) ;
+		
+		doormen.equals( o.children[ 1 ].proxy === proxy , true ) ;
+		doormen.equals( o.children[ 1 ].content.children[ 0 ].proxy !== proxy , true ) ;
+		doormen.equals( o.children[ 1 ].content.children[ 0 ].proxy.__parent === proxy , true ) ;
+	} ) ;
+	
+	it( "tags and proxy in partial include" ) ;
 } ) ;
 
 
