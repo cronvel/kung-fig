@@ -479,6 +479,9 @@ describe( "KFG parse" , function() {
 				[ 'four', 'five' ],
 				[ 'six', 'seven' ] ] ]
 		} ) ;
+		
+		//console.log( kungFig.getMeta( o ).getFirstTag( 'meta' ).content ) ;
+		doormen.equals( kungFig.getMeta( o ).getFirstTag( 'meta' ).content , { content: "test" } ) ;
 	} ) ;
 	
 	it( "parse templates" , function() {
@@ -727,8 +730,31 @@ describe( "Meta-Tag" , function() {
 	
 	it( "meta tag after body started should throw" , function() {
 		doormen.shouldThrow( function() {
-			parse( '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\nsome: data\n[[meta]]' , options ) ;
+			parse( '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\nsome: data\n[[meta]]' ) ;
 		} ) ;
+	} ) ;
+	
+	it( "meta hook & loading (include, ...)" , function() {
+		var o , hookTriggered = 0 ;
+		
+		var options = {
+			metaHook: function( meta ) {
+				//if ( meta ) { console.log( "Received meta: " , meta , "\n>>>" , meta.getFirstTag( 'meta' ).content ) ; }
+				//else { console.log( "No meta" ) ; }
+				
+				//doormen.equals( meta.getTags( 'meta' )[ 0 ].content , { author: "Joe Doe" , copyright: 2016 } ) ;
+				hookTriggered ++ ;
+			}
+		} ;
+		
+		o = kungFig.load( __dirname + '/sample/kfg/meta-hook.kfg' , options ) ;
+		
+		//console.log( "data:" , o ) ;
+		//console.log( "meta:" , kungFig.getMeta( o ) , "\n###" , kungFig.getMeta( o ).getFirstTag( 'meta' ).content ) ;
+		
+		doormen.equals( hookTriggered , 1 ) ;
+		doormen.equals( o , { include: { some: { more: "content"  } } , some: "content" } ) ;
+		doormen.equals( kungFig.getMeta( o ).getFirstTag( 'meta' ).content , "master" ) ;
 	} ) ;
 } ) ;
 
@@ -812,6 +838,10 @@ describe( "Tag proxy" , function() {
 	} ) ;
 	
 	it( "tag proxy: more test with the root mark '%' needed" ) ;
+	
+	it( "tag proxy & loading (include, ...)" , function() {
+		
+	} ) ;
 } ) ;
 
 

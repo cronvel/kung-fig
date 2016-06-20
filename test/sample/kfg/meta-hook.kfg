@@ -1,0 +1,5 @@
+[[meta]] > master
+
+some: content
+include: @@meta-hook-include.kfg
+

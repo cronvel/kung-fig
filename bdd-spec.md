@@ -475,6 +475,9 @@ doormen.equals( o , {
 		[ 'four', 'five' ],
 		[ 'six', 'seven' ] ] ]
 } ) ;
+
+//console.log( kungFig.getMeta( o ).getFirstTag( 'meta' ).content ) ;
+doormen.equals( kungFig.getMeta( o ).getFirstTag( 'meta' ).content , { content: "test" } ) ;
 ```
 
 parse templates.
@@ -736,8 +739,33 @@ meta tag after body started should throw.
 
 ```js
 doormen.shouldThrow( function() {
-	parse( '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\nsome: data\n[[meta]]' , options ) ;
+	parse( '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\nsome: data\n[[meta]]' ) ;
 } ) ;
+```
+
+meta hook & loading (include, ...).
+
+```js
+var o , hookTriggered = 0 ;
+
+var options = {
+	metaHook: function( meta ) {
+		//if ( meta ) { console.log( "Received meta: " , meta , "\n>>>" , meta.getFirstTag( 'meta' ).content ) ; }
+		//else { console.log( "No meta" ) ; }
+		
+		//doormen.equals( meta.getTags( 'meta' )[ 0 ].content , { author: "Joe Doe" , copyright: 2016 } ) ;
+		hookTriggered ++ ;
+	}
+} ;
+
+o = kungFig.load( __dirname + '/sample/kfg/meta-hook.kfg' , options ) ;
+
+//console.log( "data:" , o ) ;
+//console.log( "meta:" , kungFig.getMeta( o ) , "\n###" , kungFig.getMeta( o ).getFirstTag( 'meta' ).content ) ;
+
+doormen.equals( hookTriggered , 1 ) ;
+doormen.equals( o , { include: { some: { more: "content"  } } , some: "content" } ) ;
+doormen.equals( kungFig.getMeta( o ).getFirstTag( 'meta' ).content , "master" ) ;
 ```
 
 <a name="tag-proxy"></a>
@@ -817,6 +845,12 @@ o.children[0].proxy.data.name = "Jenny" ;
 doormen.equals( o.children[0].content.toString() , 'Hello Jenny and Jack!' ) ;
 proxy.data.name = "Jim" ;
 doormen.equals( o.children[0].content.toString() , 'Hello Jenny and Jim!' ) ;
+```
+
+tag proxy & loading (include, ...).
+
+```js
+
 ```
 
 <a name="labeltag"></a>
