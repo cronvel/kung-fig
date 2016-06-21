@@ -131,11 +131,18 @@ doormen.equals( o , parse( s ) ) ;
 //require( 'expect.js' )( o ).to.eql( parse( s ) ) ;
 ```
 
+stringify ref.
+
+```js
+doormen.equals( stringify( { ref: Ref.create() } ) , 'ref: <Ref>\n' ) ;
+doormen.equals( stringify( { ref1: Ref.create( 'name' ) , ref2: new Ref( 'bob.age' ) } ) , 'ref1: $name\nref2: $bob.age\n' ) ;
+```
+
 stringify templates.
 
 ```js
 doormen.equals( stringify( { tpl: Template.create( 'Hello ${name}!' ) } ) , 'tpl: $> Hello ${name}!\n' ) ;
-doormen.equals( stringify( { tpl: Template.create( 'Hey!\nHello ${name}!' ) } ) , 'tpl: $> Hey!\n\t$> Hello ${name}!\n' ) ;
+doormen.equals( stringify( { tpl: new Template( 'Hey!\nHello ${name}!' ) } ) , 'tpl: $> Hey!\n\t$> Hello ${name}!\n' ) ;
 doormen.equals( stringify( { tpl: Template.create( 'Hello ${name}!' ) } , { preferQuotes: true } ) , 'tpl: $"Hello ${name}!"\n' ) ;
 doormen.equals( stringify( { tpl: Template.create( 'Hey!\nHello ${name}!' ) } , { preferQuotes: true } ) , 'tpl: $"Hey!\\nHello ${name}!"\n' ) ;
 
@@ -478,6 +485,25 @@ doormen.equals( o , {
 
 //console.log( kungFig.getMeta( o ).getFirstTag( 'meta' ).content ) ;
 doormen.equals( kungFig.getMeta( o ).getFirstTag( 'meta' ).content , { content: "test" } ) ;
+```
+
+parse ref.
+
+```js
+var o ;
+var proxy = { data: { name: "Bob" , bob: { age: 43 } } } ;
+
+o = parse( "ref: <Ref>" ) ;
+doormen.equals( o.ref.get() , undefined ) ;
+
+o = parse( "ref: $name" ) ;
+doormen.equals( o.ref.get() , undefined ) ;
+
+o = parse( "ref: $name\nref2: $bob.age" , { proxy: proxy } ) ;
+doormen.equals( o.ref.get() , "Bob" ) ;
+doormen.equals( o.ref.toString() , "Bob" ) ;
+doormen.equals( o.ref2.get() , 43 ) ;
+doormen.equals( o.ref2.toString() , "43" ) ;
 ```
 
 parse templates.

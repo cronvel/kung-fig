@@ -34,6 +34,7 @@
 var kungFig = require( '../lib/kungFig.js' ) ;
 var stringify = kungFig.stringify ;
 var parse = kungFig.parse ;
+var Ref = kungFig.Ref ;
 var Template = kungFig.Template ;
 var Tag = kungFig.Tag ;
 var TagContainer = kungFig.TagContainer ;
@@ -48,6 +49,11 @@ var fs = require( 'fs' ) ;
 function deb( v )
 {
 	console.log( string.inspect( { style: 'color' , depth: 15 } , v ) ) ;
+}
+
+function debfn( v )
+{
+	console.log( string.inspect( { style: 'color' , depth: 5 , proto: true , funcDetails: true } , v ) ) ;
 }
 
 
@@ -157,9 +163,14 @@ describe( "KFG stringify" , function() {
 		//require( 'expect.js' )( o ).to.eql( parse( s ) ) ;
 	} ) ;
 	
+	it( "stringify ref" , function() {
+		doormen.equals( stringify( { ref: Ref.create() } ) , 'ref: <Ref>\n' ) ;
+		doormen.equals( stringify( { ref1: Ref.create( 'name' ) , ref2: new Ref( 'bob.age' ) } ) , 'ref1: $name\nref2: $bob.age\n' ) ;
+	} ) ;
+	
 	it( "stringify templates" , function() {
 		doormen.equals( stringify( { tpl: Template.create( 'Hello ${name}!' ) } ) , 'tpl: $> Hello ${name}!\n' ) ;
-		doormen.equals( stringify( { tpl: Template.create( 'Hey!\nHello ${name}!' ) } ) , 'tpl: $> Hey!\n\t$> Hello ${name}!\n' ) ;
+		doormen.equals( stringify( { tpl: new Template( 'Hey!\nHello ${name}!' ) } ) , 'tpl: $> Hey!\n\t$> Hello ${name}!\n' ) ;
 		doormen.equals( stringify( { tpl: Template.create( 'Hello ${name}!' ) } , { preferQuotes: true } ) , 'tpl: $"Hello ${name}!"\n' ) ;
 		doormen.equals( stringify( { tpl: Template.create( 'Hey!\nHello ${name}!' ) } , { preferQuotes: true } ) , 'tpl: $"Hey!\\nHello ${name}!"\n' ) ;
 		
@@ -485,7 +496,20 @@ describe( "KFG parse" , function() {
 	} ) ;
 	
 	it( "parse ref" , function() {
-		throw new Error( 'Coding is not finished yet' ) ;
+		var o ;
+		var proxy = { data: { name: "Bob" , bob: { age: 43 } } } ;
+		
+		o = parse( "ref: <Ref>" ) ;
+		doormen.equals( o.ref.get() , undefined ) ;
+		
+		o = parse( "ref: $name" ) ;
+		doormen.equals( o.ref.get() , undefined ) ;
+		
+		o = parse( "ref: $name\nref2: $bob.age" , { proxy: proxy } ) ;
+		doormen.equals( o.ref.get() , "Bob" ) ;
+		doormen.equals( o.ref.toString() , "Bob" ) ;
+		doormen.equals( o.ref2.get() , 43 ) ;
+		doormen.equals( o.ref2.toString() , "43" ) ;
 	} ) ;
 	
 	it( "parse templates" , function() {
