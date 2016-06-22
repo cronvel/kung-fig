@@ -1,0 +1,58 @@
+[[doctype spellbook]]
+
+[prologue]
+	[chant]
+		$> ^M^/The Art of Kung Fig Book.
+		
+# Spells
+[spell install]
+	[summon]
+		- package.json
+	[scroll]
+		- > npm install --production
+
+[spell install-dev]
+	[summon]
+		- package.json
+	[scroll]
+		- > npm install
+
+[spell test]
+	[summon]
+		- lib/*
+		- test/*
+	[scroll]
+		- > tea-time
+
+[spell lint]
+	[summon]
+		- lib/*
+		- test/*
+	[scroll]
+		- > jshint --verbose lib/*.js
+
+[spell doc]
+	[summon]
+		- README.md
+
+[spell clean]
+	[scroll]
+		> rm -rf log/*.log README.md bdd-spec.md node_modules
+
+
+# Summonings
+[summoning README.md]
+	[summon]
+		- documentation.md
+		#- bdd-spec.md
+	[scroll]
+		- > cat documentation.md > README.md
+
+[summoning bdd-spec.md]
+	[summon]
+		- lib/*.js
+		- test/*.js
+	[scroll]
+		- $> mocha test/*.js -R markdown > bdd-spec.md
+
+
