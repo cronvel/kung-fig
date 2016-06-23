@@ -482,6 +482,21 @@ describe( "Saving a config" , function() {
 
 
 	
+describe( "Load meta" , function() {
+	
+	it( "should only load meta" , function() {
+		var meta ;
+		
+		meta = kungFig.loadMeta( __dirname + '/sample/kfg/meta-hook.kfg' ) ;
+		doormen.equals( meta.getFirstTag( 'meta' ).content , "master" ) ;
+		
+		meta = kungFig.loadMeta( __dirname + '/sample/kfg/katana.kfg' ) ;
+		doormen.equals( meta , null ) ;
+	} ) ;
+} ) ;
+
+
+
 describe( "JS modules" , function() {
 	
 	it( "should load a JS module" , function() {

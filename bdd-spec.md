@@ -7,6 +7,7 @@
    - [ClassicTag](#classictag)
    - [Loading a config](#loading-a-config)
    - [Saving a config](#saving-a-config)
+   - [Load meta](#load-meta)
    - [JS modules](#js-modules)
    - [Array references](#array-references)
    - [Operator behaviours](#operator-behaviours)
@@ -1517,6 +1518,20 @@ str = fs.readFileSync( __dirname + '/output.kfg' ).toString() ;
 //console.log( str ) ;
 doormen.equals( str , "hello: world!\ncircularOne:\n\tsome: data\n\ttoBe: @@#circularTwo\ncircularTwo:\n\tmore: data\n\ttoA: @@#circularOne\n" ) ;
 fs.unlinkSync( __dirname + '/output.kfg' ) ;
+```
+
+<a name="load-meta"></a>
+# Load meta
+should only load meta.
+
+```js
+var meta ;
+
+meta = kungFig.loadMeta( __dirname + '/sample/kfg/meta-hook.kfg' ) ;
+doormen.equals( meta.getFirstTag( 'meta' ).content , "master" ) ;
+
+meta = kungFig.loadMeta( __dirname + '/sample/kfg/katana.kfg' ) ;
+doormen.equals( meta , null ) ;
 ```
 
 <a name="js-modules"></a>
