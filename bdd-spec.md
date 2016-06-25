@@ -10,6 +10,8 @@
    - [Load meta](#load-meta)
    - [JS modules](#js-modules)
    - [Array references](#array-references)
+   - [Ref](#ref)
+   - [Template](#template)
    - [Operator behaviours](#operator-behaviours)
    - [Complex, deeper test](#complex-deeper-test)
    - [Operator extensions](#operator-extensions)
@@ -1691,6 +1693,48 @@ str = kungFig.saveJson( o ) ;
 //console.log( str ) ;
 //console.log( str.replace( /\n/g , () => '\\n' ) ) ;
 doormen.equals( str , '[\n  "world!",\n  [\n    "data",\n    {\n      "@@": "#[2]"\n    }\n  ],\n  [\n    "data",\n    {\n      "@@": "#[1]"\n    }\n  ]\n]' ) ;
+```
+
+<a name="ref"></a>
+# Ref
+Ref#getFinalValue().
+
+```js
+var data = { a: 42 } ;
+var proxy = { data: data } ;
+data.b = Ref.create( 'a' , proxy ) ;
+data.c = Ref.create( 'b' , proxy ) ;
+data.d = Ref.create( 'c' , proxy ) ;
+doormen.equals( data.b.getFinalValue() , 42 ) ;
+doormen.equals( data.c.getFinalValue() , 42 ) ;
+doormen.equals( data.d.getFinalValue() , 42 ) ;
+```
+
+Ref#toString().
+
+```js
+var data = { a: 42 } ;
+var proxy = { data: data } ;
+data.b = Ref.create( 'a' , proxy ) ;
+data.c = Ref.create( 'b' , proxy ) ;
+data.d = Ref.create( 'c' , proxy ) ;
+doormen.equals( data.b.toString() , "42" ) ;
+doormen.equals( data.c.toString() , "42" ) ;
+doormen.equals( data.d.toString() , "42" ) ;
+```
+
+<a name="template"></a>
+# Template
+Template#getFinalValue().
+
+```js
+var data = { a: 42 } ;
+var proxy = { data: data } ;
+data.b = Ref.create( 'a' , proxy ) ;
+data.c = Template.create( "Hello, I'm ${a}." , proxy ) ;
+data.d = Template.create( "Hello, I'm ${b}." , proxy ) ;
+doormen.equals( data.c.getFinalValue() , "Hello, I'm 42." ) ;
+doormen.equals( data.d.getFinalValue() , "Hello, I'm 42." ) ;
 ```
 
 <a name="operator-behaviours"></a>
