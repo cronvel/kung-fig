@@ -34,6 +34,7 @@
 var kungFig = require( '../lib/kungFig.js' ) ;
 var Ref = kungFig.Ref ;
 var Template = kungFig.Template ;
+var Expression = kungFig.Expression ;
 
 var doormen = require( 'doormen' ) ;
 var expect = require( 'expect.js' ) ;
@@ -89,6 +90,18 @@ describe( "Template" , function() {
 		data.d = Template.create( "Hello, I'm ${b}." , proxy ) ;
 		doormen.equals( data.c.getFinalValue() , "Hello, I'm 42." ) ;
 		doormen.equals( data.d.getFinalValue() , "Hello, I'm 42." ) ;
+	} ) ;
+} ) ;
+
+
+
+describe( "Expression" , function() {
+	
+	it( "Expression" , function() {
+		var data = { a: 42 } ;
+		var proxy = { data: data } ;
+		var expression = Expression.create( '$a' , proxy ) ;
+		console.log( expression ) ;
 	} ) ;
 } ) ;
 
