@@ -34,6 +34,7 @@
 var kungFig = require( '../lib/kungFig.js' ) ;
 var Expression = kungFig.Expression ;
 
+var string = require( 'string-kit' ) ;
 var doormen = require( 'doormen' ) ;
 var expect = require( 'expect.js' ) ;
 
@@ -53,11 +54,27 @@ function debfn( v )
 
 describe( "Expression" , function() {
 	
-	it( "parse expression" , function() {
-		//console.log( "kfgParse:" , kungFig.parse ) ;
+	it( "parse a simple expression" , function() {
 		var parsed ;
 		parsed = Expression.parse( '1 + 2' ) ;
-		console.log( parsed ) ;
+		//deb( parsed ) ;
+		doormen.equals( parsed.getFinalValue() , 3 ) ;
+	} ) ;
+	
+	it( "parse a simple expression of expression" , function() {
+		var parsed ;
+		
+		parsed = Expression.parse( '1 + ( 2 + 3 )' ) ;
+		deb( parsed ) ;
+		doormen.equals( parsed.getFinalValue() , 6 ) ;
+		
+		parsed = Expression.parse( '( 2 + 3 ) + 1' ) ;
+		deb( parsed ) ;
+		doormen.equals( parsed.getFinalValue() , 6 ) ;
+		
+		parsed = Expression.parse( '( ( 5 + 1 ) + 6 ) + ( 2 + ( 3 + 4 ) )' ) ;
+		deb( parsed ) ;
+		doormen.equals( parsed.getFinalValue() , 21 ) ;
 	} ) ;
 } ) ;
 

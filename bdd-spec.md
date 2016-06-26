@@ -1,4 +1,83 @@
+[35mExpression[0m [3m[90mobject[0m {
+    [32mfnOperator[0m: [35mFunction[0m [3m[35madd[0m[3m[90m(1)[0m [3m[90mfunction[0m [3m[90m-conf[0m
+    [32margs[0m: [35mArray[0m[3m[90m(2)[0m [3m[90mobject[0m [3m[90m-conf[0m {
+        [[34m0[0m] [36m1[0m [3m[90mnumber[0m
+        [[34m1[0m] [35mExpression[0m [3m[90mobject[0m {
+            [32mfnOperator[0m: [35mFunction[0m [3m[35madd[0m[3m[90m(1)[0m [3m[90mfunction[0m [3m[90m-conf[0m
+            [32margs[0m: [35mArray[0m[3m[90m(2)[0m [3m[90mobject[0m [3m[90m-conf[0m {
+                [[34m0[0m] [36m2[0m [3m[90mnumber[0m
+                [[34m1[0m] [36m3[0m [3m[90mnumber[0m
+                [32mlength[0m: [36m2[0m [3m[90mnumber[0m [3m[90m-conf -enum[0m
+            }
+            [32mproxy[0m: [36mundefined[0m [3m[90m-conf -enum -w[0m
+        }
+        [32mlength[0m: [36m2[0m [3m[90mnumber[0m [3m[90m-conf -enum[0m
+    }
+    [32mproxy[0m: [36mundefined[0m [3m[90m-conf -enum -w[0m
+}
+
+[35mExpression[0m [3m[90mobject[0m {
+    [32mfnOperator[0m: [35mFunction[0m [3m[35madd[0m[3m[90m(1)[0m [3m[90mfunction[0m [3m[90m-conf[0m
+    [32margs[0m: [35mArray[0m[3m[90m(2)[0m [3m[90mobject[0m [3m[90m-conf[0m {
+        [[34m0[0m] [35mExpression[0m [3m[90mobject[0m {
+            [32mfnOperator[0m: [35mFunction[0m [3m[35madd[0m[3m[90m(1)[0m [3m[90mfunction[0m [3m[90m-conf[0m
+            [32margs[0m: [35mArray[0m[3m[90m(2)[0m [3m[90mobject[0m [3m[90m-conf[0m {
+                [[34m0[0m] [36m2[0m [3m[90mnumber[0m
+                [[34m1[0m] [36m3[0m [3m[90mnumber[0m
+                [32mlength[0m: [36m2[0m [3m[90mnumber[0m [3m[90m-conf -enum[0m
+            }
+            [32mproxy[0m: [36mundefined[0m [3m[90m-conf -enum -w[0m
+        }
+        [[34m1[0m] [36m1[0m [3m[90mnumber[0m
+        [32mlength[0m: [36m2[0m [3m[90mnumber[0m [3m[90m-conf -enum[0m
+    }
+    [32mproxy[0m: [36mundefined[0m [3m[90m-conf -enum -w[0m
+}
+
+[35mExpression[0m [3m[90mobject[0m {
+    [32mfnOperator[0m: [35mFunction[0m [3m[35madd[0m[3m[90m(1)[0m [3m[90mfunction[0m [3m[90m-conf[0m
+    [32margs[0m: [35mArray[0m[3m[90m(2)[0m [3m[90mobject[0m [3m[90m-conf[0m {
+        [[34m0[0m] [35mExpression[0m [3m[90mobject[0m {
+            [32mfnOperator[0m: [35mFunction[0m [3m[35madd[0m[3m[90m(1)[0m [3m[90mfunction[0m [3m[90m-conf[0m
+            [32margs[0m: [35mArray[0m[3m[90m(2)[0m [3m[90mobject[0m [3m[90m-conf[0m {
+                [[34m0[0m] [35mExpression[0m [3m[90mobject[0m {
+                    [32mfnOperator[0m: [35mFunction[0m [3m[35madd[0m[3m[90m(1)[0m [3m[90mfunction[0m [3m[90m-conf[0m
+                    [32margs[0m: [35mArray[0m[3m[90m(2)[0m [3m[90mobject[0m [3m[90m-conf[0m {
+                        [[34m0[0m] [36m5[0m [3m[90mnumber[0m
+                        [[34m1[0m] [36m1[0m [3m[90mnumber[0m
+                        [32mlength[0m: [36m2[0m [3m[90mnumber[0m [3m[90m-conf -enum[0m
+                    }
+                    [32mproxy[0m: [36mundefined[0m [3m[90m-conf -enum -w[0m
+                }
+                [[34m1[0m] [36m6[0m [3m[90mnumber[0m
+                [32mlength[0m: [36m2[0m [3m[90mnumber[0m [3m[90m-conf -enum[0m
+            }
+            [32mproxy[0m: [36mundefined[0m [3m[90m-conf -enum -w[0m
+        }
+        [[34m1[0m] [35mExpression[0m [3m[90mobject[0m {
+            [32mfnOperator[0m: [35mFunction[0m [3m[35madd[0m[3m[90m(1)[0m [3m[90mfunction[0m [3m[90m-conf[0m
+            [32margs[0m: [35mArray[0m[3m[90m(2)[0m [3m[90mobject[0m [3m[90m-conf[0m {
+                [[34m0[0m] [36m2[0m [3m[90mnumber[0m
+                [[34m1[0m] [35mExpression[0m [3m[90mobject[0m {
+                    [32mfnOperator[0m: [35mFunction[0m [3m[35madd[0m[3m[90m(1)[0m [3m[90mfunction[0m [3m[90m-conf[0m
+                    [32margs[0m: [35mArray[0m[3m[90m(2)[0m [3m[90mobject[0m [3m[90m-conf[0m {
+                        [[34m0[0m] [36m3[0m [3m[90mnumber[0m
+                        [[34m1[0m] [36m4[0m [3m[90mnumber[0m
+                        [32mlength[0m: [36m2[0m [3m[90mnumber[0m [3m[90m-conf -enum[0m
+                    }
+                    [32mproxy[0m: [36mundefined[0m [3m[90m-conf -enum -w[0m
+                }
+                [32mlength[0m: [36m2[0m [3m[90mnumber[0m [3m[90m-conf -enum[0m
+            }
+            [32mproxy[0m: [36mundefined[0m [3m[90m-conf -enum -w[0m
+        }
+        [32mlength[0m: [36m2[0m [3m[90mnumber[0m [3m[90m-conf -enum[0m
+    }
+    [32mproxy[0m: [36mundefined[0m [3m[90m-conf -enum -w[0m
+}
+
 # TOC
+   - [Expression](#expression)
    - [KFG stringify](#kfg-stringify)
    - [KFG parse](#kfg-parse)
    - [Meta-Tag](#meta-tag)
@@ -17,6 +96,35 @@
    - [Operator extensions](#operator-extensions)
 <a name=""></a>
  
+<a name="expression"></a>
+# Expression
+parse a simple expression.
+
+```js
+var parsed ;
+parsed = Expression.parse( '1 + 2' ) ;
+//deb( parsed ) ;
+doormen.equals( parsed.getFinalValue() , 3 ) ;
+```
+
+parse a simple expression of expression.
+
+```js
+var parsed ;
+
+parsed = Expression.parse( '1 + ( 2 + 3 )' ) ;
+deb( parsed ) ;
+doormen.equals( parsed.getFinalValue() , 6 ) ;
+
+parsed = Expression.parse( '( 2 + 3 ) + 1' ) ;
+deb( parsed ) ;
+doormen.equals( parsed.getFinalValue() , 6 ) ;
+
+parsed = Expression.parse( '( ( 5 + 1 ) + 6 ) + ( 2 + ( 3 + 4 ) )' ) ;
+deb( parsed ) ;
+doormen.equals( parsed.getFinalValue() , 21 ) ;
+```
+
 <a name="kfg-stringify"></a>
 # KFG stringify
 stringify string.
@@ -507,6 +615,64 @@ doormen.equals( o.ref.get() , "Bob" ) ;
 doormen.equals( o.ref.toString() , "Bob" ) ;
 doormen.equals( o.ref2.get() , 43 ) ;
 doormen.equals( o.ref2.toString() , "43" ) ;
+```
+
+parse expression.
+
+```js
+var o ;
+var proxy = { data: { name: "Bob" , bob: { age: 43 } , bill: { age: 37 } } } ;
+
+//o = parse( "exp: <Expression>" ) ;
+//doormen.equals( o.exp , undefined ) ;
+
+o = parse( "exp: $= $name" , { proxy: proxy } ) ;
+doormen.equals( o.exp.getFinalValue() , "Bob" ) ;
+
+o = parse( "exp: $= $bob.age" , { proxy: proxy } ) ;
+doormen.equals( o.exp.getFinalValue() , 43 ) ;
+
+o = parse( "exp: $= $bob.age + 2" , { proxy: proxy } ) ;
+doormen.equals( o.exp.getFinalValue() , 45 ) ;
+
+o = parse( "exp: $= 5 + $bob.age" , { proxy: proxy } ) ;
+doormen.equals( o.exp.getFinalValue() , 48 ) ;
+
+o = parse( "exp: $=5 + $bob.age" , { proxy: proxy } ) ;
+doormen.equals( o.exp.getFinalValue() , 48 ) ;
+
+o = parse( "exp: $= $bob.age - $bill.age" , { proxy: proxy } ) ;
+doormen.equals( o.exp.getFinalValue() , 6 ) ;
+
+o = parse( "exp: $= - $bill.age" , { proxy: proxy } ) ;
+doormen.equals( o.exp.getFinalValue() , -37 ) ;
+
+o = parse( "exp: $= ( $bill.age + 3 ) / 10" , { proxy: proxy } ) ;
+doormen.equals( o.exp.getFinalValue() , 4 ) ;
+
+o = parse( "exp: $= $bill.age < $bob.age" , { proxy: proxy } ) ;
+doormen.equals( o.exp.getFinalValue() , true ) ;
+
+o = parse( "exp: $= $bill.age > $bob.age" , { proxy: proxy } ) ;
+doormen.equals( o.exp.getFinalValue() , false ) ;
+
+o = parse( "exp: $= $bill.age == $bob.age" , { proxy: proxy } ) ;
+doormen.equals( o.exp.getFinalValue() , false ) ;
+
+o = parse( "exp: $= ( $bill.age + 6 ) == $bob.age" , { proxy: proxy } ) ;
+doormen.equals( o.exp.getFinalValue() , true ) ;
+
+o = parse( "exp: $= $bill.age != $bob.age" , { proxy: proxy } ) ;
+doormen.equals( o.exp.getFinalValue() , true ) ;
+
+o = parse( "exp: $= ( $bill.age + 6 ) != $bob.age" , { proxy: proxy } ) ;
+doormen.equals( o.exp.getFinalValue() , false ) ;
+
+o = parse( "exp: $= ! ( $bill.age == $bob.age )" , { proxy: proxy } ) ;
+doormen.equals( o.exp.getFinalValue() , true ) ;
+
+o = parse( "exp: $= ! ( ( $bill.age + 6 ) == $bob.age )" , { proxy: proxy } ) ;
+doormen.equals( o.exp.getFinalValue() , false ) ;
 ```
 
 parse templates.

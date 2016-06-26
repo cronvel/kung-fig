@@ -168,6 +168,10 @@ describe( "KFG stringify" , function() {
 		doormen.equals( stringify( { ref1: Ref.create( 'name' ) , ref2: new Ref( 'bob.age' ) } ) , 'ref1: $name\nref2: $bob.age\n' ) ;
 	} ) ;
 	
+	it.skip( "stringify expression" , function() {
+		throw new Error( "Not coded" ) ;
+	} ) ;
+	
 	it( "stringify templates" , function() {
 		doormen.equals( stringify( { tpl: Template.create( 'Hello ${name}!' ) } ) , 'tpl: $> Hello ${name}!\n' ) ;
 		doormen.equals( stringify( { tpl: new Template( 'Hey!\nHello ${name}!' ) } ) , 'tpl: $> Hey!\n\t$> Hello ${name}!\n' ) ;
@@ -510,6 +514,62 @@ describe( "KFG parse" , function() {
 		doormen.equals( o.ref.toString() , "Bob" ) ;
 		doormen.equals( o.ref2.get() , 43 ) ;
 		doormen.equals( o.ref2.toString() , "43" ) ;
+	} ) ;
+	
+	it( "parse expression" , function() {
+		var o ;
+		var proxy = { data: { name: "Bob" , bob: { age: 43 } , bill: { age: 37 } } } ;
+		
+		//o = parse( "exp: <Expression>" ) ;
+		//doormen.equals( o.exp , undefined ) ;
+		
+		o = parse( "exp: $= $name" , { proxy: proxy } ) ;
+		doormen.equals( o.exp.getFinalValue() , "Bob" ) ;
+		
+		o = parse( "exp: $= $bob.age" , { proxy: proxy } ) ;
+		doormen.equals( o.exp.getFinalValue() , 43 ) ;
+		
+		o = parse( "exp: $= $bob.age + 2" , { proxy: proxy } ) ;
+		doormen.equals( o.exp.getFinalValue() , 45 ) ;
+		
+		o = parse( "exp: $= 5 + $bob.age" , { proxy: proxy } ) ;
+		doormen.equals( o.exp.getFinalValue() , 48 ) ;
+		
+		o = parse( "exp: $=5 + $bob.age" , { proxy: proxy } ) ;
+		doormen.equals( o.exp.getFinalValue() , 48 ) ;
+		
+		o = parse( "exp: $= $bob.age - $bill.age" , { proxy: proxy } ) ;
+		doormen.equals( o.exp.getFinalValue() , 6 ) ;
+		
+		o = parse( "exp: $= - $bill.age" , { proxy: proxy } ) ;
+		doormen.equals( o.exp.getFinalValue() , -37 ) ;
+		
+		o = parse( "exp: $= ( $bill.age + 3 ) / 10" , { proxy: proxy } ) ;
+		doormen.equals( o.exp.getFinalValue() , 4 ) ;
+		
+		o = parse( "exp: $= $bill.age < $bob.age" , { proxy: proxy } ) ;
+		doormen.equals( o.exp.getFinalValue() , true ) ;
+		
+		o = parse( "exp: $= $bill.age > $bob.age" , { proxy: proxy } ) ;
+		doormen.equals( o.exp.getFinalValue() , false ) ;
+		
+		o = parse( "exp: $= $bill.age == $bob.age" , { proxy: proxy } ) ;
+		doormen.equals( o.exp.getFinalValue() , false ) ;
+		
+		o = parse( "exp: $= ( $bill.age + 6 ) == $bob.age" , { proxy: proxy } ) ;
+		doormen.equals( o.exp.getFinalValue() , true ) ;
+		
+		o = parse( "exp: $= $bill.age != $bob.age" , { proxy: proxy } ) ;
+		doormen.equals( o.exp.getFinalValue() , true ) ;
+		
+		o = parse( "exp: $= ( $bill.age + 6 ) != $bob.age" , { proxy: proxy } ) ;
+		doormen.equals( o.exp.getFinalValue() , false ) ;
+		
+		o = parse( "exp: $= ! ( $bill.age == $bob.age )" , { proxy: proxy } ) ;
+		doormen.equals( o.exp.getFinalValue() , true ) ;
+		
+		o = parse( "exp: $= ! ( ( $bill.age + 6 ) == $bob.age )" , { proxy: proxy } ) ;
+		doormen.equals( o.exp.getFinalValue() , false ) ;
 	} ) ;
 	
 	it( "parse templates" , function() {
