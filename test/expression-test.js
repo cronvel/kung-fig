@@ -32,8 +32,7 @@
 
 
 var kungFig = require( '../lib/kungFig.js' ) ;
-var Ref = kungFig.Ref ;
-var Template = kungFig.Template ;
+var Expression = kungFig.Expression ;
 
 var doormen = require( 'doormen' ) ;
 var expect = require( 'expect.js' ) ;
@@ -52,43 +51,13 @@ function debfn( v )
 
 
 
-describe( "Ref" , function() {
+describe( "Expression" , function() {
 	
-	it( "Ref#getFinalValue()" , function() {
-		var data = { a: 42 } ;
-		var proxy = { data: data } ;
-		data.b = Ref.create( 'a' , proxy ) ;
-		data.c = Ref.create( 'b' , proxy ) ;
-		data.d = Ref.create( 'c' , proxy ) ;
-		doormen.equals( data.b.getFinalValue() , 42 ) ;
-		doormen.equals( data.c.getFinalValue() , 42 ) ;
-		doormen.equals( data.d.getFinalValue() , 42 ) ;
-	} ) ;
-	
-	it( "Ref#toString()" , function() {
-		var data = { a: 42 } ;
-		var proxy = { data: data } ;
-		data.b = Ref.create( 'a' , proxy ) ;
-		data.c = Ref.create( 'b' , proxy ) ;
-		data.d = Ref.create( 'c' , proxy ) ;
-		doormen.equals( data.b.toString() , "42" ) ;
-		doormen.equals( data.c.toString() , "42" ) ;
-		doormen.equals( data.d.toString() , "42" ) ;
-	} ) ;
-} ) ;
-
-
-
-describe( "Template" , function() {
-	
-	it( "Template#getFinalValue()" , function() {
-		var data = { a: 42 } ;
-		var proxy = { data: data } ;
-		data.b = Ref.create( 'a' , proxy ) ;
-		data.c = Template.create( "Hello, I'm ${a}." , proxy ) ;
-		data.d = Template.create( "Hello, I'm ${b}." , proxy ) ;
-		doormen.equals( data.c.getFinalValue() , "Hello, I'm 42." ) ;
-		doormen.equals( data.d.getFinalValue() , "Hello, I'm 42." ) ;
+	it( "parse expression" , function() {
+		//console.log( "kfgParse:" , kungFig.parse ) ;
+		var parsed ;
+		parsed = Expression.parse( '1 + 2' ) ;
+		console.log( parsed ) ;
 	} ) ;
 } ) ;
 
