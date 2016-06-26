@@ -83,7 +83,9 @@
    - [Meta-Tag](#meta-tag)
    - [Tag proxy](#tag-proxy)
    - [LabelTag](#labeltag)
+   - [VarTag](#vartag)
    - [ClassicTag](#classictag)
+   - [ExpressionTag](#expressiontag)
    - [Loading a config](#loading-a-config)
    - [Saving a config](#saving-a-config)
    - [Load meta](#load-meta)
@@ -426,9 +428,9 @@ function IfTag() {}
 IfTag.prototype = Object.create( Tag.prototype ) ;
 IfTag.prototype.constructor = IfTag ;
 
-IfTag.create = function createIfTag( tag , attributes , content , shouldParse ) {
+IfTag.create = function createIfTag( tag , attributes , content , proxy , shouldParse ) {
 	var self = Object.create( IfTag.prototype ) ;
-	Tag.call( self , 'if' , attributes , content , shouldParse ) ;
+	Tag.call( self , 'if' , attributes , content , proxy , shouldParse ) ;
 	return self ;
 } ;
 
@@ -450,7 +452,7 @@ var o = new TagContainer( [
 	IfTag.create( 'if' , 'something > constant' , new TagContainer( [
 		new Tag( 'do' , null , 'some tasks' ) ,
 		new Tag( 'do' , null , 'some other tasks' )
-	] ) , true ) ,
+	] ) , null , true ) ,
 	new Tag( 'else' , null , new TagContainer( [
 		new Tag( 'do' , null , new TagContainer( [
 			new Tag( 'do' , null , [ 'one' , 'two' , 'three' ] ) ,
@@ -841,9 +843,9 @@ function IfTag() {}
 IfTag.prototype = Object.create( Tag.prototype ) ;
 IfTag.prototype.constructor = IfTag ;
 
-IfTag.create = function createIfTag( tag , attributes , content , shouldParse ) {
+IfTag.create = function createIfTag( tag , attributes , content , proxy , shouldParse ) {
 	var self = Object.create( IfTag.prototype ) ;
-	Tag.call( self , 'if' , attributes , content , shouldParse ) ;
+	Tag.call( self , 'if' , attributes , content , proxy , shouldParse ) ;
 	return self ;
 } ;
 
@@ -974,10 +976,10 @@ function CustomTag() {}
 CustomTag.prototype = Object.create( Tag.prototype ) ;
 CustomTag.prototype.constructor = CustomTag ;
 
-CustomTag.create = function( tag , attributes , content , shouldParse ) {
+CustomTag.create = function( tag , attributes , content , proxy , shouldParse ) {
 	//console.log( ">>> Custom Tag constructor" ) ;
 	var self = Object.create( CustomTag.prototype ) ;
-	Tag.call( self , tag , attributes , content , shouldParse ) ;
+	Tag.call( self , tag , attributes , content , proxy , shouldParse ) ;
 	return self ;
 } ;
 CustomTag.create.proxyMode = 'local' ;
@@ -1066,10 +1068,10 @@ function ChildTag() {}
 ChildTag.prototype = Object.create( Tag.prototype ) ;
 ChildTag.prototype.constructor = ChildTag ;
 
-ChildTag.create = function( tag , attributes , content , shouldParse ) {
+ChildTag.create = function( tag , attributes , content , proxy , shouldParse ) {
 	//console.log( ">>> \nchild tag constructor" ) ;
 	var self = Object.create( ChildTag.prototype ) ;
-	Tag.call( self , tag , attributes , content , shouldParse ) ;
+	Tag.call( self , tag , attributes , content , proxy , shouldParse ) ;
 	return self ;
 } ;
 ChildTag.create.proxyMode = 'links' ;
@@ -1116,6 +1118,27 @@ doormen.equals(
 ) ;
 ```
 
+LabelTag parse.
+
+```js
+var o = parse( '[LabelTag my-label]' , { tags: { LabelTag: LabelTag } } ) ;
+
+//console.log( "parsed:" , o ) ;
+
+// Doormen fails with constructors ATM
+doormen.equals( JSON.parse( JSON.stringify( o ) ) , {
+	children: [
+		{
+			name: 'LabelTag' ,
+			attributes: 'my-label' ,
+			content: undefined
+		}
+	] 
+} ) ;
+```
+
+<a name="vartag"></a>
+# VarTag
 <a name="classictag"></a>
 # ClassicTag
 classic attributes parse.
@@ -1228,6 +1251,34 @@ doormen.equals(
 	'\thello: world!\n' +
 	'[ClassicTag fullscreen]\n'
 ) ;
+```
+
+<a name="expressiontag"></a>
+# ExpressionTag
+ExpressionTag parse.
+
+```js
+var o = parse( '[ExpressionTag $a > 3]' , { tags: { ExpressionTag: ExpressionTag } } ) ;
+
+//console.log( "parsed:" , o ) ;
+
+// Doormen fails with constructors ATM
+doormen.equals( JSON.parse( JSON.stringify( o ) ) , {
+	children: [
+		{
+			name: 'ExpressionTag' ,
+			attributes: {
+				args: [
+					{ ref: "a" } ,
+					3
+				]
+			} ,
+			content: undefined
+		}
+	] 
+} ) ;
+
+doormen.equals( typeof o.children[ 0 ].attributes.fnOperator === 'function' , true ) ;
 ```
 
 <a name="loading-a-config"></a>

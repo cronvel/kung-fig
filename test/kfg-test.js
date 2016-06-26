@@ -339,9 +339,9 @@ describe( "KFG stringify" , function() {
 		IfTag.prototype = Object.create( Tag.prototype ) ;
 		IfTag.prototype.constructor = IfTag ;
 		
-		IfTag.create = function createIfTag( tag , attributes , content , shouldParse ) {
+		IfTag.create = function createIfTag( tag , attributes , content , proxy , shouldParse ) {
 			var self = Object.create( IfTag.prototype ) ;
-			Tag.call( self , 'if' , attributes , content , shouldParse ) ;
+			Tag.call( self , 'if' , attributes , content , proxy , shouldParse ) ;
 			return self ;
 		} ;
 		
@@ -363,7 +363,7 @@ describe( "KFG stringify" , function() {
 			IfTag.create( 'if' , 'something > constant' , new TagContainer( [
 				new Tag( 'do' , null , 'some tasks' ) ,
 				new Tag( 'do' , null , 'some other tasks' )
-			] ) , true ) ,
+			] ) , null , true ) ,
 			new Tag( 'else' , null , new TagContainer( [
 				new Tag( 'do' , null , new TagContainer( [
 					new Tag( 'do' , null , [ 'one' , 'two' , 'three' ] ) ,
@@ -730,9 +730,9 @@ describe( "KFG parse" , function() {
 		IfTag.prototype = Object.create( Tag.prototype ) ;
 		IfTag.prototype.constructor = IfTag ;
 		
-		IfTag.create = function createIfTag( tag , attributes , content , shouldParse ) {
+		IfTag.create = function createIfTag( tag , attributes , content , proxy , shouldParse ) {
 			var self = Object.create( IfTag.prototype ) ;
-			Tag.call( self , 'if' , attributes , content , shouldParse ) ;
+			Tag.call( self , 'if' , attributes , content , proxy , shouldParse ) ;
 			return self ;
 		} ;
 		
@@ -861,10 +861,10 @@ describe( "Tag proxy" , function() {
 		CustomTag.prototype = Object.create( Tag.prototype ) ;
 		CustomTag.prototype.constructor = CustomTag ;
 		
-		CustomTag.create = function( tag , attributes , content , shouldParse ) {
+		CustomTag.create = function( tag , attributes , content , proxy , shouldParse ) {
 			//console.log( ">>> Custom Tag constructor" ) ;
 			var self = Object.create( CustomTag.prototype ) ;
-			Tag.call( self , tag , attributes , content , shouldParse ) ;
+			Tag.call( self , tag , attributes , content , proxy , shouldParse ) ;
 			return self ;
 		} ;
 		CustomTag.create.proxyMode = 'local' ;
@@ -951,10 +951,10 @@ describe( "Tag proxy" , function() {
 		ChildTag.prototype = Object.create( Tag.prototype ) ;
 		ChildTag.prototype.constructor = ChildTag ;
 		
-		ChildTag.create = function( tag , attributes , content , shouldParse ) {
+		ChildTag.create = function( tag , attributes , content , proxy , shouldParse ) {
 			//console.log( ">>> \nchild tag constructor" ) ;
 			var self = Object.create( ChildTag.prototype ) ;
-			Tag.call( self , tag , attributes , content , shouldParse ) ;
+			Tag.call( self , tag , attributes , content , proxy , shouldParse ) ;
 			return self ;
 		} ;
 		ChildTag.create.proxyMode = 'links' ;
@@ -1005,7 +1005,7 @@ describe( "LabelTag" , function() {
 	} ) ;
 	
 	
-	it.skip( "LabelTag parse" , function() {
+	it( "LabelTag parse" , function() {
 		var o = parse( '[LabelTag my-label]' , { tags: { LabelTag: LabelTag } } ) ;
 		
 		//console.log( "parsed:" , o ) ;
@@ -1020,58 +1020,19 @@ describe( "LabelTag" , function() {
 				}
 			] 
 		} ) ;
-		
-		/*
-		doormen.equals( o , {
-			children: [
-				{
-					name: 'LabelTag' ,
-					attributes: { width: 1280, height: 1024, src: '/css/main.css', active: true } ,
-					content: undefined
-				}
-			] 
-		} ) ;
-		*/
 	} ) ;
 	
-	it.skip( "LabelTag stringify" , function() {
-		var o = new TagContainer( [
-			new LabelTag( 'LabelTag' , { width: 1280, height: 1024, src: '/css/main.css', active: true } ) 
-		] ) ;
-		
-		//console.log( o ) ;
-		
-		doormen.equals( stringify( o ) , '[LabelTag width=1280 height=1024 src="/css/main.css" active]\n' ) ;
-		
-		o = new TagContainer( [
-			new LabelTag( 'LabelTag' , { width: 1280, height: 1024, src: '/css/main.css', active: true } ) ,
-			new LabelTag( 'LabelTag' , { fullscreen: true } ) 
-		] ) ;
-		
-		//console.log( o ) ;
-		
-		doormen.equals(
-			stringify( o ) ,
-			'[LabelTag width=1280 height=1024 src="/css/main.css" active]\n' +
-			'[LabelTag fullscreen]\n'
-		) ;
-		
-		//console.log( parse( stringify( o ) ) ) ;
-		
-		o = new TagContainer( [
-			new LabelTag( 'LabelTag' , { width: 1280, height: 1024, src: '/css/main.css', active: true } , { hello: "world!" } ) ,
-			new LabelTag( 'LabelTag' , { fullscreen: true } ) 
-		] ) ;
-		
-		//console.log( o ) ;
-		
-		doormen.equals(
-			stringify( o ) ,
-			'[LabelTag width=1280 height=1024 src="/css/main.css" active]\n' +
-			'\thello: world!\n' +
-			'[LabelTag fullscreen]\n'
-		) ;
-	} ) ;
+	it( "LabelTag stringify" ) ;
+} ) ;
+
+
+
+describe( "VarTag" , function() {
+	
+	var LabelTag = kungFig.LabelTag ;
+	
+	it( "VarTag parse" ) ;
+	it( "VarTag stringify" ) ;
 } ) ;
 
 
@@ -1183,6 +1144,39 @@ describe( "ClassicTag" , function() {
 			'[ClassicTag fullscreen]\n'
 		) ;
 	} ) ;
+} ) ;
+
+
+
+describe( "ExpressionTag" , function() {
+	
+	var ExpressionTag = kungFig.ExpressionTag ;
+	
+	it( "ExpressionTag parse" , function () {
+		var o = parse( '[ExpressionTag $a > 3]' , { tags: { ExpressionTag: ExpressionTag } } ) ;
+		
+		//console.log( "parsed:" , o ) ;
+		
+		// Doormen fails with constructors ATM
+		doormen.equals( JSON.parse( JSON.stringify( o ) ) , {
+			children: [
+				{
+					name: 'ExpressionTag' ,
+					attributes: {
+						args: [
+							{ ref: "a" } ,
+							3
+						]
+					} ,
+					content: undefined
+				}
+			] 
+		} ) ;
+		
+		doormen.equals( typeof o.children[ 0 ].attributes.fnOperator === 'function' , true ) ;
+	} ) ;
+	
+	it( "ExpressionTag stringify" ) ;
 } ) ;
 
 
