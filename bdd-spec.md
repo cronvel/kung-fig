@@ -814,14 +814,14 @@ parse tags.
 
 ```js
 doormen.equals( JSON.stringify( parse( '[tag]' ) ) , '{"children":[{"name":"tag","attributes":null}]}' ) ;
-doormen.equals( JSON.stringify( parse( '[tag] text' ) ) , '{"children":[{"name":"tag","attributes":null,"content":"text"}]}' ) ;
-doormen.equals( JSON.stringify( parse( '[tag] "text"' ) ) , '{"children":[{"name":"tag","attributes":null,"content":"text"}]}' ) ;
-doormen.equals( JSON.stringify( parse( '[tag] > text' ) ) , '{"children":[{"name":"tag","attributes":null,"content":"text"}]}' ) ;
-doormen.equals( JSON.stringify( parse( '[tag]\n\t> text' ) ) , '{"children":[{"name":"tag","attributes":null,"content":"text"}]}' ) ;
-doormen.equals( JSON.stringify( parse( '[tag] true' ) ) , '{"children":[{"name":"tag","attributes":null,"content":true}]}' ) ;
-doormen.equals( JSON.stringify( parse( '[tag] 123' ) ) , '{"children":[{"name":"tag","attributes":null,"content":123}]}' ) ;
-doormen.equals( JSON.stringify( parse( '[tag] <Object>' ) ) , '{"children":[{"name":"tag","attributes":null,"content":{}}]}' ) ;
-doormen.equals( JSON.stringify( parse( '[tag] <Object>\n\ta: 1\n\tb: 2' ) ) , '{"children":[{"name":"tag","attributes":null,"content":{"a":1,"b":2}}]}' ) ;
+doormen.equals( JSON.stringify( parse( '[tag] text' ) ) , '{"children":[{"name":"tag","content":"text","attributes":null}]}' ) ;
+doormen.equals( JSON.stringify( parse( '[tag] "text"' ) ) , '{"children":[{"name":"tag","content":"text","attributes":null}]}' ) ;
+doormen.equals( JSON.stringify( parse( '[tag] > text' ) ) , '{"children":[{"name":"tag","content":"text","attributes":null}]}' ) ;
+doormen.equals( JSON.stringify( parse( '[tag]\n\t> text' ) ) , '{"children":[{"name":"tag","content":"text","attributes":null}]}' ) ;
+doormen.equals( JSON.stringify( parse( '[tag] true' ) ) , '{"children":[{"name":"tag","content":true,"attributes":null}]}' ) ;
+doormen.equals( JSON.stringify( parse( '[tag] 123' ) ) , '{"children":[{"name":"tag","content":123,"attributes":null}]}' ) ;
+doormen.equals( JSON.stringify( parse( '[tag] <Object>' ) ) , '{"children":[{"name":"tag","content":{},"attributes":null}]}' ) ;
+doormen.equals( JSON.stringify( parse( '[tag] <Object>\n\ta: 1\n\tb: 2' ) ) , '{"children":[{"name":"tag","content":{"a":1,"b":2},"attributes":null}]}' ) ;
 ```
 
 parse a file containing tags.
@@ -832,8 +832,9 @@ var o = parse( fs.readFileSync( __dirname + '/sample/kfg/tag.kfg' , 'utf8' ) ) ;
 //console.log( o ) ;
 //console.log( string.inspect( { style: 'color' , depth: 15 } , o ) ) ;
 //console.log( string.escape.control( JSON.stringify( o ) ) ) ;
+//console.log( JSON.stringify( o ) ) ;
 
-doormen.equals( JSON.stringify( o ) , '{"children":[{"name":"tag","attributes":"id1","content":{"some":"value","another":"one"}},{"name":"tag","attributes":"id2","content":{"some":"other value","nested":{"a":1,"b":2,"c":{"children":[{"name":"if","attributes":"something > constant","content":{"children":[{"name":"do","attributes":null,"content":"some work"}]}},{"name":"else","attributes":null,"content":{"children":[{"name":"do","attributes":null,"content":"something else"}]}}]}}}},{"name":"container","attributes":null,"content":{"children":[{"name":"tag","attributes":null},{"name":"anothertag","attributes":null},{"name":"complex","attributes":"tag hello=\\"<world]]]\\\\\\"!\\" some[3].path[6]"}]}}]}' ) ;
+doormen.equals( JSON.stringify( o ) , '{"children":[{"name":"tag","content":{"some":"value","another":"one"},"attributes":"id1"},{"name":"tag","content":{"some":"other value","nested":{"a":1,"b":2,"c":{"children":[{"name":"if","content":{"children":[{"name":"do","content":"some work","attributes":null}]},"attributes":"something > constant"},{"name":"else","content":{"children":[{"name":"do","content":"something else","attributes":null}]},"attributes":null}]}}},"attributes":"id2"},{"name":"container","content":{"children":[{"name":"tag","attributes":null},{"name":"anothertag","attributes":null},{"name":"complex","attributes":"tag hello=\\"<world]]]\\\\\\"!\\" some[3].path[6]"}]},"attributes":null}]}' ) ;
 ```
 
 parse a file containing tags, with custom tags prototypes.
@@ -870,7 +871,7 @@ var o = parse( fs.readFileSync( __dirname + '/sample/kfg/tag.kfg' , 'utf8' ) , {
 //console.log( string.inspect( { style: 'color' , depth: 15 } , o ) ) ;
 //console.log( string.escape.control( JSON.stringify( o ) ) ) ;
 
-doormen.equals( JSON.stringify( o ) , '{"children":[{"name":"tag","attributes":"id1","content":{"some":"value","another":"one"}},{"name":"tag","attributes":"id2","content":{"some":"other value","nested":{"a":1,"b":2,"c":{"children":[{"name":"if","attributes":{"left":"something","operator":">","right":"constant"},"content":{"children":[{"name":"do","attributes":null,"content":"some work"}]}},{"name":"else","attributes":null,"content":{"children":[{"name":"do","attributes":null,"content":"something else"}]}}]}}}},{"name":"container","attributes":null,"content":{"children":[{"name":"tag","attributes":null},{"name":"anothertag","attributes":null},{"name":"complex","attributes":"tag hello=\\"<world]]]\\\\\\"!\\" some[3].path[6]"}]}}]}' ) ;
+doormen.equals( JSON.stringify( o ) , '{"children":[{"name":"tag","content":{"some":"value","another":"one"},"attributes":"id1"},{"name":"tag","content":{"some":"other value","nested":{"a":1,"b":2,"c":{"children":[{"name":"if","content":{"children":[{"name":"do","content":"some work","attributes":null}]},"attributes":{"left":"something","operator":">","right":"constant"}},{"name":"else","content":{"children":[{"name":"do","content":"something else","attributes":null}]},"attributes":null}]}}},"attributes":"id2"},{"name":"container","content":{"children":[{"name":"tag","attributes":null},{"name":"anothertag","attributes":null},{"name":"complex","attributes":"tag hello=\\"<world]]]\\\\\\"!\\" some[3].path[6]"}]},"attributes":null}]}' ) ;
 ```
 
 <a name="meta-tag"></a>
@@ -1258,7 +1259,8 @@ doormen.equals(
 ExpressionTag parse.
 
 ```js
-var o = parse( '[ExpressionTag $a > 3]' , { tags: { ExpressionTag: ExpressionTag } } ) ;
+var data = { a: 4 , b: 1 } ;
+var o = parse( '[ExpressionTag $a > 3]' , { tags: { ExpressionTag: ExpressionTag } , proxy: { data: data } } ) ;
 
 //console.log( "parsed:" , o ) ;
 
@@ -1279,6 +1281,9 @@ doormen.equals( JSON.parse( JSON.stringify( o ) ) , {
 } ) ;
 
 doormen.equals( typeof o.children[ 0 ].attributes.fnOperator === 'function' , true ) ;
+doormen.equals( o.children[0].attributes.getFinalValue() , true ) ;
+data.a = 2 ;
+doormen.equals( o.children[0].attributes.getFinalValue() , false ) ;
 ```
 
 <a name="loading-a-config"></a>
