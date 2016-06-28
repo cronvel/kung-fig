@@ -76,6 +76,48 @@
     [32mproxy[0m: [36mundefined[0m [3m[90m-conf -enum -w[0m
 }
 
+delimiter: /
+escDelimiter: \/
+partRegex: /^\/((?:\\\/|[^\/])+)(?:\/((?:\\\/|[^\/])+))?\/([a-z])*$/
+fixDelimiterRegex: /\\(\/)/g
+match: [ '/abc/', 'abc', undefined, undefined, index: 0, input: '/abc/' ]
+regex: abc
+replacement: undefined
+delimiter: /
+escDelimiter: \/
+partRegex: /^\/((?:\\\/|[^\/])+)(?:\/((?:\\\/|[^\/])+))?\/([a-z])*$/
+fixDelimiterRegex: /\\(\/)/g
+match: [ '/abc/gi', 'abc', undefined, 'i', index: 0, input: '/abc/gi' ]
+regex: abc
+replacement: undefined
+delimiter: /
+escDelimiter: \/
+partRegex: /^\/((?:\\\/|[^\/])+)(?:\/((?:\\\/|[^\/])+))?\/([a-z])*$/
+fixDelimiterRegex: /\\(\/)/g
+match: [ '/abc/gi', 'abc', undefined, 'i', index: 0, input: '/abc/gi' ]
+regex: abc
+replacement: undefined
+delimiter: /
+escDelimiter: \/
+partRegex: /^\/((?:\\\/|[^\/])+)(?:\/((?:\\\/|[^\/])+))?\/([a-z])*$/
+fixDelimiterRegex: /\\(\/)/g
+match: [ '/abc/gi', 'abc', undefined, 'i', index: 0, input: '/abc/gi' ]
+regex: abc
+replacement: undefined
+delimiter: /
+escDelimiter: \/
+partRegex: /^\/((?:\\\/|[^\/])+)(?:\/((?:\\\/|[^\/])+))?\/([a-z])*$/
+fixDelimiterRegex: /\\(\/)/g
+match: [ '/abc/', 'abc', undefined, undefined, index: 0, input: '/abc/' ]
+regex: abc
+replacement: undefined
+delimiter: /
+escDelimiter: \/
+partRegex: /^\/((?:\\\/|[^\/])+)(?:\/((?:\\\/|[^\/])+))?\/([a-z])*$/
+fixDelimiterRegex: /\\(\/)/g
+match: [ '/abc/m', 'abc', undefined, 'm', index: 0, input: '/abc/m' ]
+regex: abc
+replacement: undefined
 # TOC
    - [Expression](#expression)
    - [KFG stringify](#kfg-stringify)
