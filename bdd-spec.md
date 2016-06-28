@@ -1,123 +1,3 @@
-[35mExpression[0m [3m[90mobject[0m {
-    [32mfnOperator[0m: [35mFunction[0m [3m[35madd[0m[3m[90m(1)[0m [3m[90mfunction[0m [3m[90m-conf[0m
-    [32margs[0m: [35mArray[0m[3m[90m(2)[0m [3m[90mobject[0m [3m[90m-conf[0m {
-        [[34m0[0m] [36m1[0m [3m[90mnumber[0m
-        [[34m1[0m] [35mExpression[0m [3m[90mobject[0m {
-            [32mfnOperator[0m: [35mFunction[0m [3m[35madd[0m[3m[90m(1)[0m [3m[90mfunction[0m [3m[90m-conf[0m
-            [32margs[0m: [35mArray[0m[3m[90m(2)[0m [3m[90mobject[0m [3m[90m-conf[0m {
-                [[34m0[0m] [36m2[0m [3m[90mnumber[0m
-                [[34m1[0m] [36m3[0m [3m[90mnumber[0m
-                [32mlength[0m: [36m2[0m [3m[90mnumber[0m [3m[90m-conf -enum[0m
-            }
-            [32mproxy[0m: [36mundefined[0m [3m[90m-conf -enum -w[0m
-        }
-        [32mlength[0m: [36m2[0m [3m[90mnumber[0m [3m[90m-conf -enum[0m
-    }
-    [32mproxy[0m: [36mundefined[0m [3m[90m-conf -enum -w[0m
-}
-
-[35mExpression[0m [3m[90mobject[0m {
-    [32mfnOperator[0m: [35mFunction[0m [3m[35madd[0m[3m[90m(1)[0m [3m[90mfunction[0m [3m[90m-conf[0m
-    [32margs[0m: [35mArray[0m[3m[90m(2)[0m [3m[90mobject[0m [3m[90m-conf[0m {
-        [[34m0[0m] [35mExpression[0m [3m[90mobject[0m {
-            [32mfnOperator[0m: [35mFunction[0m [3m[35madd[0m[3m[90m(1)[0m [3m[90mfunction[0m [3m[90m-conf[0m
-            [32margs[0m: [35mArray[0m[3m[90m(2)[0m [3m[90mobject[0m [3m[90m-conf[0m {
-                [[34m0[0m] [36m2[0m [3m[90mnumber[0m
-                [[34m1[0m] [36m3[0m [3m[90mnumber[0m
-                [32mlength[0m: [36m2[0m [3m[90mnumber[0m [3m[90m-conf -enum[0m
-            }
-            [32mproxy[0m: [36mundefined[0m [3m[90m-conf -enum -w[0m
-        }
-        [[34m1[0m] [36m1[0m [3m[90mnumber[0m
-        [32mlength[0m: [36m2[0m [3m[90mnumber[0m [3m[90m-conf -enum[0m
-    }
-    [32mproxy[0m: [36mundefined[0m [3m[90m-conf -enum -w[0m
-}
-
-[35mExpression[0m [3m[90mobject[0m {
-    [32mfnOperator[0m: [35mFunction[0m [3m[35madd[0m[3m[90m(1)[0m [3m[90mfunction[0m [3m[90m-conf[0m
-    [32margs[0m: [35mArray[0m[3m[90m(2)[0m [3m[90mobject[0m [3m[90m-conf[0m {
-        [[34m0[0m] [35mExpression[0m [3m[90mobject[0m {
-            [32mfnOperator[0m: [35mFunction[0m [3m[35madd[0m[3m[90m(1)[0m [3m[90mfunction[0m [3m[90m-conf[0m
-            [32margs[0m: [35mArray[0m[3m[90m(2)[0m [3m[90mobject[0m [3m[90m-conf[0m {
-                [[34m0[0m] [35mExpression[0m [3m[90mobject[0m {
-                    [32mfnOperator[0m: [35mFunction[0m [3m[35madd[0m[3m[90m(1)[0m [3m[90mfunction[0m [3m[90m-conf[0m
-                    [32margs[0m: [35mArray[0m[3m[90m(2)[0m [3m[90mobject[0m [3m[90m-conf[0m {
-                        [[34m0[0m] [36m5[0m [3m[90mnumber[0m
-                        [[34m1[0m] [36m1[0m [3m[90mnumber[0m
-                        [32mlength[0m: [36m2[0m [3m[90mnumber[0m [3m[90m-conf -enum[0m
-                    }
-                    [32mproxy[0m: [36mundefined[0m [3m[90m-conf -enum -w[0m
-                }
-                [[34m1[0m] [36m6[0m [3m[90mnumber[0m
-                [32mlength[0m: [36m2[0m [3m[90mnumber[0m [3m[90m-conf -enum[0m
-            }
-            [32mproxy[0m: [36mundefined[0m [3m[90m-conf -enum -w[0m
-        }
-        [[34m1[0m] [35mExpression[0m [3m[90mobject[0m {
-            [32mfnOperator[0m: [35mFunction[0m [3m[35madd[0m[3m[90m(1)[0m [3m[90mfunction[0m [3m[90m-conf[0m
-            [32margs[0m: [35mArray[0m[3m[90m(2)[0m [3m[90mobject[0m [3m[90m-conf[0m {
-                [[34m0[0m] [36m2[0m [3m[90mnumber[0m
-                [[34m1[0m] [35mExpression[0m [3m[90mobject[0m {
-                    [32mfnOperator[0m: [35mFunction[0m [3m[35madd[0m[3m[90m(1)[0m [3m[90mfunction[0m [3m[90m-conf[0m
-                    [32margs[0m: [35mArray[0m[3m[90m(2)[0m [3m[90mobject[0m [3m[90m-conf[0m {
-                        [[34m0[0m] [36m3[0m [3m[90mnumber[0m
-                        [[34m1[0m] [36m4[0m [3m[90mnumber[0m
-                        [32mlength[0m: [36m2[0m [3m[90mnumber[0m [3m[90m-conf -enum[0m
-                    }
-                    [32mproxy[0m: [36mundefined[0m [3m[90m-conf -enum -w[0m
-                }
-                [32mlength[0m: [36m2[0m [3m[90mnumber[0m [3m[90m-conf -enum[0m
-            }
-            [32mproxy[0m: [36mundefined[0m [3m[90m-conf -enum -w[0m
-        }
-        [32mlength[0m: [36m2[0m [3m[90mnumber[0m [3m[90m-conf -enum[0m
-    }
-    [32mproxy[0m: [36mundefined[0m [3m[90m-conf -enum -w[0m
-}
-
-delimiter: /
-escDelimiter: \/
-partRegex: /^\/((?:\\\/|[^\/])+)(?:\/((?:\\\/|[^\/])+))?\/([a-z])*$/
-fixDelimiterRegex: /\\(\/)/g
-match: [ '/abc/', 'abc', undefined, undefined, index: 0, input: '/abc/' ]
-regex: abc
-replacement: undefined
-delimiter: /
-escDelimiter: \/
-partRegex: /^\/((?:\\\/|[^\/])+)(?:\/((?:\\\/|[^\/])+))?\/([a-z])*$/
-fixDelimiterRegex: /\\(\/)/g
-match: [ '/abc/gi', 'abc', undefined, 'i', index: 0, input: '/abc/gi' ]
-regex: abc
-replacement: undefined
-delimiter: /
-escDelimiter: \/
-partRegex: /^\/((?:\\\/|[^\/])+)(?:\/((?:\\\/|[^\/])+))?\/([a-z])*$/
-fixDelimiterRegex: /\\(\/)/g
-match: [ '/abc/gi', 'abc', undefined, 'i', index: 0, input: '/abc/gi' ]
-regex: abc
-replacement: undefined
-delimiter: /
-escDelimiter: \/
-partRegex: /^\/((?:\\\/|[^\/])+)(?:\/((?:\\\/|[^\/])+))?\/([a-z])*$/
-fixDelimiterRegex: /\\(\/)/g
-match: [ '/abc/gi', 'abc', undefined, 'i', index: 0, input: '/abc/gi' ]
-regex: abc
-replacement: undefined
-delimiter: /
-escDelimiter: \/
-partRegex: /^\/((?:\\\/|[^\/])+)(?:\/((?:\\\/|[^\/])+))?\/([a-z])*$/
-fixDelimiterRegex: /\\(\/)/g
-match: [ '/abc/', 'abc', undefined, undefined, index: 0, input: '/abc/' ]
-regex: abc
-replacement: undefined
-delimiter: /
-escDelimiter: \/
-partRegex: /^\/((?:\\\/|[^\/])+)(?:\/((?:\\\/|[^\/])+))?\/([a-z])*$/
-fixDelimiterRegex: /\\(\/)/g
-match: [ '/abc/m', 'abc', undefined, 'm', index: 0, input: '/abc/m' ]
-regex: abc
-replacement: undefined
 # TOC
    - [Expression](#expression)
    - [KFG stringify](#kfg-stringify)
@@ -157,15 +37,15 @@ parse a simple expression of expression.
 var parsed ;
 
 parsed = Expression.parse( '1 + ( 2 + 3 )' ) ;
-deb( parsed ) ;
+//deb( parsed ) ;
 doormen.equals( parsed.getFinalValue() , 6 ) ;
 
 parsed = Expression.parse( '( 2 + 3 ) + 1' ) ;
-deb( parsed ) ;
+//deb( parsed ) ;
 doormen.equals( parsed.getFinalValue() , 6 ) ;
 
 parsed = Expression.parse( '( ( 5 + 1 ) + 6 ) + ( 2 + ( 3 + 4 ) )' ) ;
-deb( parsed ) ;
+//deb( parsed ) ;
 doormen.equals( parsed.getFinalValue() , 21 ) ;
 ```
 

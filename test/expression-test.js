@@ -65,15 +65,15 @@ describe( "Expression" , function() {
 		var parsed ;
 		
 		parsed = Expression.parse( '1 + ( 2 + 3 )' ) ;
-		deb( parsed ) ;
+		//deb( parsed ) ;
 		doormen.equals( parsed.getFinalValue() , 6 ) ;
 		
 		parsed = Expression.parse( '( 2 + 3 ) + 1' ) ;
-		deb( parsed ) ;
+		//deb( parsed ) ;
 		doormen.equals( parsed.getFinalValue() , 6 ) ;
 		
 		parsed = Expression.parse( '( ( 5 + 1 ) + 6 ) + ( 2 + ( 3 + 4 ) )' ) ;
-		deb( parsed ) ;
+		//deb( parsed ) ;
 		doormen.equals( parsed.getFinalValue() , 21 ) ;
 	} ) ;
 } ) ;
