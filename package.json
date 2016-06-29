@@ -1,6 +1,6 @@
 {
   "name": "kung-fig",
-  "version": "0.22.3",
+  "version": "0.22.4",
   "engines": {
     "node": ">=4.0.0"
   },
@@ -10,11 +10,11 @@
     "test": "test"
   },
   "dependencies": {
-    "async-kit": "^2.1.1",
-    "babel-tower": "^0.6.11",
+    "async-kit": "^2.1.2",
+    "babel-tower": "^0.6.12",
     "glob": "^7.0.5",
     "osenv": "^0.1.3",
-    "tree-kit": "^0.5.22"
+    "tree-kit": "^0.5.24"
   },
   "devDependencies": {
     "doormen": "^0.4.24",
