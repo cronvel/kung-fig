@@ -49,6 +49,20 @@ parsed = Expression.parse( '( ( 5 + 1 ) + 6 ) + ( 2 + ( 3 + 4 ) )' ) ;
 doormen.equals( parsed.getFinalValue() , 21 ) ;
 ```
 
+parse ternary operator.
+
+```js
+var parsed ;
+
+parsed = Expression.parse( '( 2 > 3 ) ? 4 5' ) ;
+//deb( parsed ) ;
+doormen.equals( parsed.getFinalValue() , 5 ) ;
+
+parsed = Expression.parse( '( 2 < 3 ) ? 4 5' ) ;
+//deb( parsed ) ;
+doormen.equals( parsed.getFinalValue() , 4 ) ;
+```
+
 <a name="kfg-stringify"></a>
 # KFG stringify
 stringify string.

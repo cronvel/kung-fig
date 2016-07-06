@@ -76,6 +76,20 @@ describe( "Expression" , function() {
 		//deb( parsed ) ;
 		doormen.equals( parsed.getFinalValue() , 21 ) ;
 	} ) ;
+	
+	it( "parse ternary operator" , function() {
+		var parsed ;
+		
+		parsed = Expression.parse( '( 2 > 3 ) ? 4 5' ) ;
+		//deb( parsed ) ;
+		doormen.equals( parsed.getFinalValue() , 5 ) ;
+		
+		parsed = Expression.parse( '( 2 < 3 ) ? 4 5' ) ;
+		//deb( parsed ) ;
+		doormen.equals( parsed.getFinalValue() , 4 ) ;
+	} ) ;
+	
+	it( "more expression tests..." ) ;
 } ) ;
 
 
