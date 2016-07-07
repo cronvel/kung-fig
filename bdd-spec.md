@@ -95,12 +95,22 @@ kungFig.parse.builtin.regex.toSubstitution( regexp , 'hi' ) ;
 
 proxy = { data: {
 	str: 'hello world!' ,
-	regexp: regexp
+	regexp: regexp ,
+	array: [
+		'hi' ,
+		'hello' ,
+		'hi there!' ,
+		'hello world!'
+	]
 } } ;
 
 parsed = Expression.parse( '$regexp.substitute -> $str' , proxy ) ;
 //deb( parsed ) ;
 doormen.equals( parsed.getFinalValue() , 'hi world!' ) ;
+
+parsed = Expression.parse( '$regexp.filter -> $array' , proxy ) ;
+//deb( parsed ) ;
+doormen.equals( parsed.getFinalValue() , [ 'hello' , 'hello world!' ] ) ;
 ```
 
 <a name="kfg-stringify"></a>
