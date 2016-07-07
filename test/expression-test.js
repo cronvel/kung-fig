@@ -54,14 +54,14 @@ function debfn( v )
 
 describe( "Expression" , function() {
 	
-	it( "parse a simple expression" , function() {
+	it( "parse/exec a simple expression" , function() {
 		var parsed ;
 		parsed = Expression.parse( '1 + 2' ) ;
 		//deb( parsed ) ;
 		doormen.equals( parsed.getFinalValue() , 3 ) ;
 	} ) ;
 	
-	it( "parse a simple expression of expression" , function() {
+	it( "parse/exec a simple expression of expression" , function() {
 		var parsed ;
 		
 		parsed = Expression.parse( '1 + ( 2 + 3 )' ) ;
@@ -77,7 +77,7 @@ describe( "Expression" , function() {
 		doormen.equals( parsed.getFinalValue() , 21 ) ;
 	} ) ;
 	
-	it( "parse ternary operator" , function() {
+	it( "parse/exec ternary operator" , function() {
 		var parsed ;
 		
 		parsed = Expression.parse( '( 2 > 3 ) ? 4 5' ) ;
@@ -87,6 +87,42 @@ describe( "Expression" , function() {
 		parsed = Expression.parse( '( 2 < 3 ) ? 4 5' ) ;
 		//deb( parsed ) ;
 		doormen.equals( parsed.getFinalValue() , 4 ) ;
+	} ) ;
+	
+	it( "parse/exec apply operator" , function() {
+		var parsed , proxy , object ;
+		
+		object = { a: 3 , b: 5 } ;
+		object.fn = function( v ) { return this.a * v + this.b ; }
+		
+		proxy = { data: {
+			fn: function( v ) { return v * 2 + 1 ; } ,
+			object: object
+		} } ;
+		
+		parsed = Expression.parse( '$fn -> 3' , proxy ) ;
+		//deb( parsed ) ;
+		doormen.equals( parsed.getFinalValue() , 7 ) ;
+		
+		parsed = Expression.parse( '$object.fn -> 3' , proxy ) ;
+		//deb( parsed ) ;
+		doormen.equals( parsed.getFinalValue() , 14 ) ;
+	} ) ;
+	
+	it( "parse/exec apply operator and substitution regexp" , function() {
+		var parsed , proxy , regexp ;
+		
+		regexp = /hello/ ;
+		kungFig.parse.builtin.regex.toSubstitution( regexp , 'hi' ) ;
+		
+		proxy = { data: {
+			str: 'hello world!' ,
+			regexp: regexp
+		} } ;
+		
+		parsed = Expression.parse( '$regexp.substitute -> $str' , proxy ) ;
+		//deb( parsed ) ;
+		doormen.equals( parsed.getFinalValue() , 'hi world!' ) ;
 	} ) ;
 	
 	it( "more expression tests..." ) ;

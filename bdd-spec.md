@@ -22,7 +22,7 @@
  
 <a name="expression"></a>
 # Expression
-parse a simple expression.
+parse/exec a simple expression.
 
 ```js
 var parsed ;
@@ -31,7 +31,7 @@ parsed = Expression.parse( '1 + 2' ) ;
 doormen.equals( parsed.getFinalValue() , 3 ) ;
 ```
 
-parse a simple expression of expression.
+parse/exec a simple expression of expression.
 
 ```js
 var parsed ;
@@ -49,7 +49,7 @@ parsed = Expression.parse( '( ( 5 + 1 ) + 6 ) + ( 2 + ( 3 + 4 ) )' ) ;
 doormen.equals( parsed.getFinalValue() , 21 ) ;
 ```
 
-parse ternary operator.
+parse/exec ternary operator.
 
 ```js
 var parsed ;
@@ -61,6 +61,46 @@ doormen.equals( parsed.getFinalValue() , 5 ) ;
 parsed = Expression.parse( '( 2 < 3 ) ? 4 5' ) ;
 //deb( parsed ) ;
 doormen.equals( parsed.getFinalValue() , 4 ) ;
+```
+
+parse/exec apply operator.
+
+```js
+var parsed , proxy , object ;
+
+object = { a: 3 , b: 5 } ;
+object.fn = function( v ) { return this.a * v + this.b ; }
+
+proxy = { data: {
+	fn: function( v ) { return v * 2 + 1 ; } ,
+	object: object
+} } ;
+
+parsed = Expression.parse( '$fn -> 3' , proxy ) ;
+//deb( parsed ) ;
+doormen.equals( parsed.getFinalValue() , 7 ) ;
+
+parsed = Expression.parse( '$object.fn -> 3' , proxy ) ;
+//deb( parsed ) ;
+doormen.equals( parsed.getFinalValue() , 14 ) ;
+```
+
+parse/exec apply operator and substitution regexp.
+
+```js
+var parsed , proxy , regexp ;
+
+regexp = /hello/ ;
+kungFig.parse.builtin.regex.toSubstitution( regexp , 'hi' ) ;
+
+proxy = { data: {
+	str: 'hello world!' ,
+	regexp: regexp
+} } ;
+
+parsed = Expression.parse( '$regexp.substitute -> $str' , proxy ) ;
+//deb( parsed ) ;
+doormen.equals( parsed.getFinalValue() , 'hi world!' ) ;
 ```
 
 <a name="kfg-stringify"></a>
