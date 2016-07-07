@@ -91,7 +91,7 @@ parse/exec apply operator and substitution regexp.
 var parsed , proxy , regexp ;
 
 regexp = /hello/ ;
-kungFig.parse.builtin.regex.toSubstitution( regexp , 'hi' ) ;
+kungFig.parse.builtin.regex.toExtended( regexp ) ;
 
 proxy = { data: {
 	str: 'hello world!' ,
@@ -104,13 +104,15 @@ proxy = { data: {
 	]
 } } ;
 
-parsed = Expression.parse( '$regexp.substitute -> $str' , proxy ) ;
-//deb( parsed ) ;
-doormen.equals( parsed.getFinalValue() , 'hi world!' ) ;
-
 parsed = Expression.parse( '$regexp.filter -> $array' , proxy ) ;
 //deb( parsed ) ;
 doormen.equals( parsed.getFinalValue() , [ 'hello' , 'hello world!' ] ) ;
+
+kungFig.parse.builtin.regex.toSubstitution( regexp , 'hi' ) ;
+
+parsed = Expression.parse( '$regexp.substitute -> $str' , proxy ) ;
+//deb( parsed ) ;
+doormen.equals( parsed.getFinalValue() , 'hi world!' ) ;
 ```
 
 <a name="kfg-stringify"></a>
