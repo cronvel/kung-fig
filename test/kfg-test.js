@@ -702,32 +702,18 @@ describe( "KFG parse" , function() {
 	
 	it( "parse tags" , function() {
 		
-		doormen.equals( JSON.stringify( parse( '[tag]' ) ) , '{"tag":null,"next":0,"children":[{"name":"tag","attributes":null}]}' ) ;
-		doormen.equals( JSON.stringify( parse( '[tag] text' ) ) , '{"tag":null,"next":0,"children":[{"name":"tag","content":"text","attributes":null}]}' ) ;
-		doormen.equals( JSON.stringify( parse( '[tag] "text"' ) ) , '{"tag":null,"next":0,"children":[{"name":"tag","content":"text","attributes":null}]}' ) ;
-		doormen.equals( JSON.stringify( parse( '[tag] > text' ) ) , '{"tag":null,"next":0,"children":[{"name":"tag","content":"text","attributes":null}]}' ) ;
-		doormen.equals( JSON.stringify( parse( '[tag]\n\t> text' ) ) , '{"tag":null,"next":0,"children":[{"name":"tag","content":"text","attributes":null}]}' ) ;
-		doormen.equals( JSON.stringify( parse( '[tag] true' ) ) , '{"tag":null,"next":0,"children":[{"name":"tag","content":true,"attributes":null}]}' ) ;
-		doormen.equals( JSON.stringify( parse( '[tag] 123' ) ) , '{"tag":null,"next":0,"children":[{"name":"tag","content":123,"attributes":null}]}' ) ;
-		doormen.equals( JSON.stringify( parse( '[tag] <Object>' ) ) , '{"tag":null,"next":0,"children":[{"name":"tag","content":{},"attributes":null}]}' ) ;
-		doormen.equals( JSON.stringify( parse( '[tag] <Object>\n\ta: 1\n\tb: 2' ) ) , '{"tag":null,"next":0,"children":[{"name":"tag","content":{"a":1,"b":2},"attributes":null}]}' ) ;
+		doormen.equals( JSON.stringify( parse( '[tag]' ) ) , '{"children":[{"name":"tag","attributes":null}]}' ) ;
+		doormen.equals( JSON.stringify( parse( '[tag] text' ) ) , '{"children":[{"name":"tag","content":"text","attributes":null}]}' ) ;
+		doormen.equals( JSON.stringify( parse( '[tag] "text"' ) ) , '{"children":[{"name":"tag","content":"text","attributes":null}]}' ) ;
+		doormen.equals( JSON.stringify( parse( '[tag] > text' ) ) , '{"children":[{"name":"tag","content":"text","attributes":null}]}' ) ;
+		doormen.equals( JSON.stringify( parse( '[tag]\n\t> text' ) ) , '{"children":[{"name":"tag","content":"text","attributes":null}]}' ) ;
+		doormen.equals( JSON.stringify( parse( '[tag] true' ) ) , '{"children":[{"name":"tag","content":true,"attributes":null}]}' ) ;
+		doormen.equals( JSON.stringify( parse( '[tag] 123' ) ) , '{"children":[{"name":"tag","content":123,"attributes":null}]}' ) ;
+		doormen.equals( JSON.stringify( parse( '[tag] <Object>' ) ) , '{"children":[{"name":"tag","content":{},"attributes":null}]}' ) ;
+		doormen.equals( JSON.stringify( parse( '[tag] <Object>\n\ta: 1\n\tb: 2' ) ) , '{"children":[{"name":"tag","content":{"a":1,"b":2},"attributes":null}]}' ) ;
 	} ) ;
 	
 	it( "zzz parse a file containing tags" , function() {
-		
-		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/simple-tag.kfg' , 'utf8' ) ) ;
-		
-		//console.log( o ) ;
-		//console.log( string.inspect( { style: 'color' , depth: 15 } , o ) ) ;
-		//console.log( string.escape.control( JSON.stringify( o ) ) ) ;
-		//console.log( JSON.stringify( o ) ) ;
-		
-		console.log( o.children[ 0 ].content ) ;
-		//doormen.equals( JSON.stringify( o ) , '{"children":[{"name":"tag","content":{"some":"value","another":"one"},"attributes":"id1"},{"name":"tag","content":{"some":"other value","nested":{"a":1,"b":2,"c":{"children":[{"name":"if","content":{"children":[{"name":"do","content":"some work","attributes":null}]},"attributes":"something > constant"},{"name":"else","content":{"children":[{"name":"do","content":"something else","attributes":null}]},"attributes":null}]}}},"attributes":"id2"},{"name":"container","content":{"children":[{"name":"tag","attributes":null},{"name":"anothertag","attributes":null},{"name":"complex","attributes":"tag hello=\\"<world]]]\\\\\\"!\\" some[3].path[6]"}]},"attributes":null}]}' ) ;
-		//doormen.equals( JSON.stringify( o ) , '{"tag":null,"next":0,"children":[{"name":"tag","content":{"some":"value","another":"one"},"attributes":"id1"},{"name":"tag","content":{"some":"other value","nested":{"a":1,"b":2,"c":{"tag":null,"next":0,"children":[{"name":"if","content":{"tag":null,"next":0,"children":[{"name":"do","content":"some work","attributes":null}]},"attributes":"something > constant"},{"name":"else","content":{"tag":null,"next":0,"children":[{"name":"do","content":"something else","attributes":null}]},"attributes":null}]}}},"attributes":"id2"},{"name":"container","content":{"tag":null,"next":0,"children":[{"name":"tag","attributes":null},{"name":"anothertag","attributes":null},{"name":"complex","attributes":"tag hello=\\"<world]]]\\\\\\"!\\" some[3].path[6]"}]},"attributes":null}]}' ) ;
-	} ) ;
-	
-	it( "parse a file containing tags" , function() {
 		
 		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/tag.kfg' , 'utf8' ) ) ;
 		
@@ -736,9 +722,12 @@ describe( "KFG parse" , function() {
 		//console.log( string.escape.control( JSON.stringify( o ) ) ) ;
 		//console.log( JSON.stringify( o ) ) ;
 		
-		console.log( o.children[ 2 ] ) ;
-		//doormen.equals( JSON.stringify( o ) , '{"children":[{"name":"tag","content":{"some":"value","another":"one"},"attributes":"id1"},{"name":"tag","content":{"some":"other value","nested":{"a":1,"b":2,"c":{"children":[{"name":"if","content":{"children":[{"name":"do","content":"some work","attributes":null}]},"attributes":"something > constant"},{"name":"else","content":{"children":[{"name":"do","content":"something else","attributes":null}]},"attributes":null}]}}},"attributes":"id2"},{"name":"container","content":{"children":[{"name":"tag","attributes":null},{"name":"anothertag","attributes":null},{"name":"complex","attributes":"tag hello=\\"<world]]]\\\\\\"!\\" some[3].path[6]"}]},"attributes":null}]}' ) ;
-		doormen.equals( JSON.stringify( o ) , '{"tag":null,"next":0,"children":[{"name":"tag","content":{"some":"value","another":"one"},"attributes":"id1"},{"name":"tag","content":{"some":"other value","nested":{"a":1,"b":2,"c":{"tag":null,"next":0,"children":[{"name":"if","content":{"tag":null,"next":0,"children":[{"name":"do","content":"some work","attributes":null}]},"attributes":"something > constant"},{"name":"else","content":{"tag":null,"next":0,"children":[{"name":"do","content":"something else","attributes":null}]},"attributes":null}]}}},"attributes":"id2"},{"name":"container","content":{"tag":null,"next":0,"children":[{"name":"tag","attributes":null},{"name":"anothertag","attributes":null},{"name":"complex","attributes":"tag hello=\\"<world]]]\\\\\\"!\\" some[3].path[6]"}]},"attributes":null}]}' ) ;
+		doormen.equals( JSON.stringify( o ) , '{"children":[{"name":"tag","content":{"some":"value","another":"one"},"attributes":"id1"},{"name":"tag","content":{"some":"other value","nested":{"a":1,"b":2,"c":{"children":[{"name":"if","content":{"children":[{"name":"do","content":"some work","attributes":null}]},"attributes":"something > constant"},{"name":"else","content":{"children":[{"name":"do","content":"something else","attributes":null}]},"attributes":null}]}}},"attributes":"id2"},{"name":"container","content":{"children":[{"name":"tag","attributes":null},{"name":"anothertag","attributes":null},{"name":"complex","attributes":"tag hello=\\"<world]]]\\\\\\"!\\" some[3].path[6]"}]},"attributes":null}]}' ) ;
+		
+		//console.log( o.children[ 2 ].content.children[ 0 ].parent ) ;
+		//console.log( o.children[ 2 ].content.children[ 0 ].getParentTag() ) ;
+		doormen.equals( o.children[ 2 ].getParentTag() , null ) ;
+		doormen.equals( o.children[ 2 ] === o.children[ 2 ].content.children[ 0 ].getParentTag() , true ) ;
 	} ) ;
 	
 	it( "parse a file containing tags, with custom tags prototypes" , function() {
@@ -774,8 +763,7 @@ describe( "KFG parse" , function() {
 		//console.log( string.inspect( { style: 'color' , depth: 15 } , o ) ) ;
 		//console.log( string.escape.control( JSON.stringify( o ) ) ) ;
 		
-		//doormen.equals( JSON.stringify( o ) , '{"children":[{"name":"tag","content":{"some":"value","another":"one"},"attributes":"id1"},{"name":"tag","content":{"some":"other value","nested":{"a":1,"b":2,"c":{"children":[{"name":"if","content":{"children":[{"name":"do","content":"some work","attributes":null}]},"attributes":{"left":"something","operator":">","right":"constant"}},{"name":"else","content":{"children":[{"name":"do","content":"something else","attributes":null}]},"attributes":null}]}}},"attributes":"id2"},{"name":"container","content":{"children":[{"name":"tag","attributes":null},{"name":"anothertag","attributes":null},{"name":"complex","attributes":"tag hello=\\"<world]]]\\\\\\"!\\" some[3].path[6]"}]},"attributes":null}]}' ) ;
-		doormen.equals( JSON.stringify( o ) , '{"tag":null,"next":0,"children":[{"name":"tag","content":{"some":"value","another":"one"},"attributes":"id1"},{"name":"tag","content":{"some":"other value","nested":{"a":1,"b":2,"c":{"tag":null,"next":0,"children":[{"name":"if","content":{"tag":null,"next":0,"children":[{"name":"do","content":"some work","attributes":null}]},"attributes":{"left":"something","operator":">","right":"constant"}},{"name":"else","content":{"tag":null,"next":0,"children":[{"name":"do","content":"something else","attributes":null}]},"attributes":null}]}}},"attributes":"id2"},{"name":"container","content":{"tag":null,"next":0,"children":[{"name":"tag","attributes":null},{"name":"anothertag","attributes":null},{"name":"complex","attributes":"tag hello=\\"<world]]]\\\\\\"!\\" some[3].path[6]"}]},"attributes":null}]}' ) ;
+		doormen.equals( JSON.stringify( o ) , '{"children":[{"name":"tag","content":{"some":"value","another":"one"},"attributes":"id1"},{"name":"tag","content":{"some":"other value","nested":{"a":1,"b":2,"c":{"children":[{"name":"if","content":{"children":[{"name":"do","content":"some work","attributes":null}]},"attributes":{"left":"something","operator":">","right":"constant"}},{"name":"else","content":{"children":[{"name":"do","content":"something else","attributes":null}]},"attributes":null}]}}},"attributes":"id2"},{"name":"container","content":{"children":[{"name":"tag","attributes":null},{"name":"anothertag","attributes":null},{"name":"complex","attributes":"tag hello=\\"<world]]]\\\\\\"!\\" some[3].path[6]"}]},"attributes":null}]}' ) ;
 	} ) ;
 } ) ;
 	
@@ -1030,8 +1018,6 @@ describe( "LabelTag" , function() {
 		
 		// Doormen fails with constructors ATM
 		doormen.equals( JSON.parse( JSON.stringify( o ) ) , {
-			tag: null ,
-			next: 0 ,
 			children: [
 				{
 					name: 'LabelTag' ,

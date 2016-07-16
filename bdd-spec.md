@@ -812,7 +812,7 @@ doormen.equals( JSON.stringify( parse( '[tag] <Object>' ) ) , '{"children":[{"na
 doormen.equals( JSON.stringify( parse( '[tag] <Object>\n\ta: 1\n\tb: 2' ) ) , '{"children":[{"name":"tag","content":{"a":1,"b":2},"attributes":null}]}' ) ;
 ```
 
-parse a file containing tags.
+zzz parse a file containing tags.
 
 ```js
 var o = parse( fs.readFileSync( __dirname + '/sample/kfg/tag.kfg' , 'utf8' ) ) ;
@@ -823,6 +823,11 @@ var o = parse( fs.readFileSync( __dirname + '/sample/kfg/tag.kfg' , 'utf8' ) ) ;
 //console.log( JSON.stringify( o ) ) ;
 
 doormen.equals( JSON.stringify( o ) , '{"children":[{"name":"tag","content":{"some":"value","another":"one"},"attributes":"id1"},{"name":"tag","content":{"some":"other value","nested":{"a":1,"b":2,"c":{"children":[{"name":"if","content":{"children":[{"name":"do","content":"some work","attributes":null}]},"attributes":"something > constant"},{"name":"else","content":{"children":[{"name":"do","content":"something else","attributes":null}]},"attributes":null}]}}},"attributes":"id2"},{"name":"container","content":{"children":[{"name":"tag","attributes":null},{"name":"anothertag","attributes":null},{"name":"complex","attributes":"tag hello=\\"<world]]]\\\\\\"!\\" some[3].path[6]"}]},"attributes":null}]}' ) ;
+
+//console.log( o.children[ 2 ].content.children[ 0 ].parent ) ;
+//console.log( o.children[ 2 ].content.children[ 0 ].getParentTag() ) ;
+doormen.equals( o.children[ 2 ].getParentTag() , null ) ;
+doormen.equals( o.children[ 2 ] === o.children[ 2 ].content.children[ 0 ].getParentTag() , true ) ;
 ```
 
 parse a file containing tags, with custom tags prototypes.
