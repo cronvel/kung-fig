@@ -1,0 +1,6 @@
+Things that does not stringify (not coded ATM)
+
+expression
+ExpressionTag
+VarTag
+LabelTag
