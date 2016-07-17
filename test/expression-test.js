@@ -109,6 +109,32 @@ describe( "Expression" , function() {
 		doormen.equals( parsed.getFinalValue() , 14 ) ;
 	} ) ;
 	
+	it( "parse/exec custom operator" , function() {
+		var parsed , proxy , operators , object , v ;
+		
+		object = { a: 3 , b: 5 } ;
+		object.fn = function( v ) { return this.a * v + this.b ; }
+		
+		proxy = { data: {
+			fn: function( v ) { return v * 2 + 1 ; } ,
+			object: object
+		} } ;
+		
+		operators = {
+			D: function( args ) {
+				var sum = 0 , n = args[ 0 ] , faces = args[ 1 ] ;
+				for ( ; n > 0 ; n -- ) { sum += 1 + Math.floor( Math.random() * faces ) ; }
+				return sum ;
+			}
+		} ;
+		
+		parsed = Expression.parse( '3 D 6' , proxy , operators ) ;
+		//deb( parsed ) ;
+		v = parsed.getFinalValue() ;
+		//deb( v ) ;
+		doormen.equals( v >= 1 && v <= 18 , true ) ;
+	} ) ;
+	
 	it( "parse/exec apply operator and substitution regexp" , function() {
 		var parsed , proxy , regexp ;
 		

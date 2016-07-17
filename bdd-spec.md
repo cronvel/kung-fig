@@ -85,6 +85,34 @@ parsed = Expression.parse( '$object.fn -> 3' , proxy ) ;
 doormen.equals( parsed.getFinalValue() , 14 ) ;
 ```
 
+parse/exec custom operator.
+
+```js
+var parsed , proxy , operators , object , v ;
+
+object = { a: 3 , b: 5 } ;
+object.fn = function( v ) { return this.a * v + this.b ; }
+
+proxy = { data: {
+	fn: function( v ) { return v * 2 + 1 ; } ,
+	object: object
+} } ;
+
+operators = {
+	D: function( args ) {
+		var sum = 0 , n = args[ 0 ] , faces = args[ 1 ] ;
+		for ( ; n > 0 ; n -- ) { sum += 1 + Math.floor( Math.random() * faces ) ; }
+		return sum ;
+	}
+} ;
+
+parsed = Expression.parse( '3 D 6' , proxy , operators ) ;
+//deb( parsed ) ;
+v = parsed.getFinalValue() ;
+//deb( v ) ;
+doormen.equals( v >= 1 && v <= 18 , true ) ;
+```
+
 parse/exec apply operator and substitution regexp.
 
 ```js
@@ -812,7 +840,7 @@ doormen.equals( JSON.stringify( parse( '[tag] <Object>' ) ) , '{"children":[{"na
 doormen.equals( JSON.stringify( parse( '[tag] <Object>\n\ta: 1\n\tb: 2' ) ) , '{"children":[{"name":"tag","content":{"a":1,"b":2},"attributes":null}]}' ) ;
 ```
 
-zzz parse a file containing tags.
+parse a file containing tags.
 
 ```js
 var o = parse( fs.readFileSync( __dirname + '/sample/kfg/tag.kfg' , 'utf8' ) ) ;

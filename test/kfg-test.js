@@ -713,7 +713,7 @@ describe( "KFG parse" , function() {
 		doormen.equals( JSON.stringify( parse( '[tag] <Object>\n\ta: 1\n\tb: 2' ) ) , '{"children":[{"name":"tag","content":{"a":1,"b":2},"attributes":null}]}' ) ;
 	} ) ;
 	
-	it( "zzz parse a file containing tags" , function() {
+	it( "parse a file containing tags" , function() {
 		
 		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/tag.kfg' , 'utf8' ) ) ;
 		
