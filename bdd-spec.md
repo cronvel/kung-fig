@@ -567,6 +567,20 @@ key ambiguity.
 doormen.equals( parse( "first-name:Joe" ) , {"first-name":"Joe"} ) ;
 ```
 
+unquoted tabs should not be parsed as string but as undefined.
+
+```js
+var o ;
+
+o = parse( "object:\t\t\t\n\ta: 1" ) ;
+//console.log( o ) ;
+doormen.equals( o , { object: { a: 1 } } ) ;
+
+o = parse( "[tag]\t\t\t\n\ta: 1" ) ;
+//console.log( o ) ; console.log( JSON.stringify( o ) ) ;
+doormen.equals( JSON.stringify( o ) , '{"children":[{"name":"tag","content":{"a":1},"attributes":null}]}' ) ;
+```
+
 parse a basic file.
 
 ```js

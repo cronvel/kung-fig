@@ -451,6 +451,18 @@ describe( "KFG parse" , function() {
 		doormen.equals( parse( "first-name:Joe" ) , {"first-name":"Joe"} ) ;
 	} ) ;
 	
+	it( "unquoted tabs should not be parsed as string but as undefined" , function() {
+		var o ;
+		
+		o = parse( "object:\t\t\t\n\ta: 1" ) ;
+		//console.log( o ) ;
+		doormen.equals( o , { object: { a: 1 } } ) ;
+		
+		o = parse( "[tag]\t\t\t\n\ta: 1" ) ;
+		//console.log( o ) ; console.log( JSON.stringify( o ) ) ;
+		doormen.equals( JSON.stringify( o ) , '{"children":[{"name":"tag","content":{"a":1},"attributes":null}]}' ) ;
+	} ) ;
+	
 	it( "parse a basic file" , function() {
 		
 		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/simple.kfg' , 'utf8' ) ) ;
