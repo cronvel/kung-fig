@@ -65,6 +65,16 @@ describe( "Ref" , function() {
 		doormen.equals( data.d.getFinalValue() , 42 ) ;
 	} ) ;
 	
+	it( "Ref#getRecursiveFinalValue()" , function() {
+		var data = { a: 42 , container: {} } ;
+		var proxy = { data: data } ;
+		data.container.b = Ref.create( 'a' , proxy ) ;
+		data.container.c = Ref.create( 'container.b' , proxy ) ;
+		data.container.d = Ref.create( 'container.c' , proxy ) ;
+		data.refContainer = Ref.create( 'container' , proxy ) ;
+		doormen.equals( data.refContainer.getRecursiveFinalValue() , { b:42 , c:42 , d:42 } ) ;
+	} ) ;
+	
 	it( "Ref#toString()" , function() {
 		var data = { a: 42 } ;
 		var proxy = { data: data } ;
