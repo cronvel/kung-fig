@@ -339,9 +339,9 @@ describe( "KFG stringify" , function() {
 		IfTag.prototype = Object.create( Tag.prototype ) ;
 		IfTag.prototype.constructor = IfTag ;
 		
-		IfTag.create = function createIfTag( tag , attributes , content , proxy , shouldParse ) {
+		IfTag.create = function createIfTag( tag , attributes , content , shouldParse ) {
 			var self = Object.create( IfTag.prototype ) ;
-			Tag.call( self , 'if' , attributes , content , proxy , shouldParse ) ;
+			Tag.call( self , 'if' , attributes , content , shouldParse ) ;
 			return self ;
 		} ;
 		
@@ -363,7 +363,7 @@ describe( "KFG stringify" , function() {
 			IfTag.create( 'if' , 'something > constant' , new TagContainer( [
 				new Tag( 'do' , null , 'some tasks' ) ,
 				new Tag( 'do' , null , 'some other tasks' )
-			] ) , null , true ) ,
+			] ) , true ) ,
 			new Tag( 'else' , null , new TagContainer( [
 				new Tag( 'do' , null , new TagContainer( [
 					new Tag( 'do' , null , [ 'one' , 'two' , 'three' ] ) ,
@@ -513,7 +513,7 @@ describe( "KFG parse" , function() {
 	
 	it( "parse ref" , function() {
 		var o ;
-		var proxy = { data: { name: "Bob" , bob: { age: 43 } } } ;
+		var ctx = { name: "Bob" , bob: { age: 43 } } ;
 		
 		o = parse( "ref: <Ref>" ) ;
 		doormen.equals( o.ref.get() , undefined ) ;
@@ -521,85 +521,67 @@ describe( "KFG parse" , function() {
 		o = parse( "ref: $name" ) ;
 		doormen.equals( o.ref.get() , undefined ) ;
 		
-		o = parse( "ref: $name\nref2: $bob.age" , { proxy: proxy } ) ;
-		doormen.equals( o.ref.get() , "Bob" ) ;
-		doormen.equals( o.ref.toString() , "Bob" ) ;
-		doormen.equals( o.ref2.get() , 43 ) ;
-		doormen.equals( o.ref2.toString() , "43" ) ;
-	} ) ;
-	
-	it( "Ref and this context" , function() {
-		var o ;
-		var proxy = { data: { name: "Bob" , bob: { age: 43 } , this: { name: 'Jack' } } } ;
-		
-		o = parse( "ref: $this.name" , { proxy: proxy } ) ;
-		doormen.equals( o.ref.get() , 'Jack' ) ;
-		doormen.equals( o.ref.get( { name: 'Joe' } ) , 'Joe' ) ;
+		o = parse( "ref: $name\nref2: $bob.age" ) ;
+		doormen.equals( o.ref.get( ctx ) , "Bob" ) ;
+		doormen.equals( o.ref.toString( ctx ) , "Bob" ) ;
+		doormen.equals( o.ref2.get( ctx ) , 43 ) ;
+		doormen.equals( o.ref2.toString( ctx ) , "43" ) ;
 	} ) ;
 	
 	it( "parse expression" , function() {
 		var o ;
-		var proxy = { data: { name: "Bob" , bob: { age: 43 } , bill: { age: 37 } } } ;
+		var ctx = { name: "Bob" , bob: { age: 43 } , bill: { age: 37 } } ;
 		
 		//o = parse( "exp: <Expression>" ) ;
 		//doormen.equals( o.exp , undefined ) ;
 		
-		o = parse( "exp: $= $name" , { proxy: proxy } ) ;
-		doormen.equals( o.exp.getFinalValue() , "Bob" ) ;
+		o = parse( "exp: $= $name" ) ;
+		doormen.equals( o.exp.getFinalValue( ctx ) , "Bob" ) ;
 		
-		o = parse( "exp: $= $bob.age" , { proxy: proxy } ) ;
-		doormen.equals( o.exp.getFinalValue() , 43 ) ;
+		o = parse( "exp: $= $bob.age" ) ;
+		doormen.equals( o.exp.getFinalValue( ctx ) , 43 ) ;
 		
-		o = parse( "exp: $= $bob.age + 2" , { proxy: proxy } ) ;
-		doormen.equals( o.exp.getFinalValue() , 45 ) ;
+		o = parse( "exp: $= $bob.age + 2" ) ;
+		doormen.equals( o.exp.getFinalValue( ctx ) , 45 ) ;
 		
-		o = parse( "exp: $= 5 + $bob.age" , { proxy: proxy } ) ;
-		doormen.equals( o.exp.getFinalValue() , 48 ) ;
+		o = parse( "exp: $= 5 + $bob.age" ) ;
+		doormen.equals( o.exp.getFinalValue( ctx ) , 48 ) ;
 		
-		o = parse( "exp: $=5 + $bob.age" , { proxy: proxy } ) ;
-		doormen.equals( o.exp.getFinalValue() , 48 ) ;
+		o = parse( "exp: $=5 + $bob.age" ) ;
+		doormen.equals( o.exp.getFinalValue( ctx ) , 48 ) ;
 		
-		o = parse( "exp: $= $bob.age - $bill.age" , { proxy: proxy } ) ;
-		doormen.equals( o.exp.getFinalValue() , 6 ) ;
+		o = parse( "exp: $= $bob.age - $bill.age" ) ;
+		doormen.equals( o.exp.getFinalValue( ctx ) , 6 ) ;
 		
-		o = parse( "exp: $= - $bill.age" , { proxy: proxy } ) ;
-		doormen.equals( o.exp.getFinalValue() , -37 ) ;
+		o = parse( "exp: $= - $bill.age" ) ;
+		doormen.equals( o.exp.getFinalValue( ctx ) , -37 ) ;
 		
-		o = parse( "exp: $= ( $bill.age + 3 ) / 10" , { proxy: proxy } ) ;
-		doormen.equals( o.exp.getFinalValue() , 4 ) ;
+		o = parse( "exp: $= ( $bill.age + 3 ) / 10" ) ;
+		doormen.equals( o.exp.getFinalValue( ctx ) , 4 ) ;
 		
-		o = parse( "exp: $= $bill.age < $bob.age" , { proxy: proxy } ) ;
-		doormen.equals( o.exp.getFinalValue() , true ) ;
+		o = parse( "exp: $= $bill.age < $bob.age" ) ;
+		doormen.equals( o.exp.getFinalValue( ctx ) , true ) ;
 		
-		o = parse( "exp: $= $bill.age > $bob.age" , { proxy: proxy } ) ;
-		doormen.equals( o.exp.getFinalValue() , false ) ;
+		o = parse( "exp: $= $bill.age > $bob.age" ) ;
+		doormen.equals( o.exp.getFinalValue( ctx ) , false ) ;
 		
-		o = parse( "exp: $= $bill.age == $bob.age" , { proxy: proxy } ) ;
-		doormen.equals( o.exp.getFinalValue() , false ) ;
+		o = parse( "exp: $= $bill.age == $bob.age" ) ;
+		doormen.equals( o.exp.getFinalValue( ctx ) , false ) ;
 		
-		o = parse( "exp: $= ( $bill.age + 6 ) == $bob.age" , { proxy: proxy } ) ;
-		doormen.equals( o.exp.getFinalValue() , true ) ;
+		o = parse( "exp: $= ( $bill.age + 6 ) == $bob.age" ) ;
+		doormen.equals( o.exp.getFinalValue( ctx ) , true ) ;
 		
-		o = parse( "exp: $= $bill.age != $bob.age" , { proxy: proxy } ) ;
-		doormen.equals( o.exp.getFinalValue() , true ) ;
+		o = parse( "exp: $= $bill.age != $bob.age" ) ;
+		doormen.equals( o.exp.getFinalValue( ctx ) , true ) ;
 		
-		o = parse( "exp: $= ( $bill.age + 6 ) != $bob.age" , { proxy: proxy } ) ;
-		doormen.equals( o.exp.getFinalValue() , false ) ;
+		o = parse( "exp: $= ( $bill.age + 6 ) != $bob.age" ) ;
+		doormen.equals( o.exp.getFinalValue( ctx ) , false ) ;
 		
-		o = parse( "exp: $= ! ( $bill.age == $bob.age )" , { proxy: proxy } ) ;
-		doormen.equals( o.exp.getFinalValue() , true ) ;
+		o = parse( "exp: $= ! ( $bill.age == $bob.age )" ) ;
+		doormen.equals( o.exp.getFinalValue( ctx ) , true ) ;
 		
-		o = parse( "exp: $= ! ( ( $bill.age + 6 ) == $bob.age )" , { proxy: proxy } ) ;
-		doormen.equals( o.exp.getFinalValue() , false ) ;
-	} ) ;
-	
-	it( "parse expression and this context" , function() {
-		var o ;
-		var proxy = { data: { name: "Bob" , bob: { age: 43 } , bill: { age: 37 } } } ;
-		
-		o = parse( "exp: $= $this.age + 2" , { proxy: proxy } ) ;
-		doormen.equals( o.exp.getFinalValue() , NaN ) ;
-		doormen.equals( o.exp.getFinalValue( { age: 12 } ) , 14 ) ;
+		o = parse( "exp: $= ! ( ( $bill.age + 6 ) == $bob.age )" ) ;
+		doormen.equals( o.exp.getFinalValue( ctx ) , false ) ;
 	} ) ;
 	
 	it( "parse templates" , function() {
@@ -616,10 +598,6 @@ describe( "KFG parse" , function() {
 		doormen.equals( o.tpl.toString() , 'Hello (undefined)!' ) ;
 		doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello Bob!' ) ;
 		
-		o = parse( "tpl: $> Hello ${name}!" , { proxy: { data: { name: "Bill" } } } ) ;
-		doormen.equals( o.tpl.toString() , 'Hello Bill!' ) ;
-		doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello Bob!' ) ;
-		
 		o = parse( "tpl:\n\t$> Hello ${name}!" ) ;
 		doormen.equals( o.tpl.toString() , 'Hello (undefined)!' ) ;
 		doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello Bob!' ) ;
@@ -628,16 +606,8 @@ describe( "KFG parse" , function() {
 		doormen.equals( o.tpl.toString() , 'Hello (undefined)!\nHow are you (undefined)?' ) ;
 		doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello Bob!\nHow are you Bob?' ) ;
 		
-		o = parse( "tpl:\n\t$> Hello ${name}!\n\t$> How are you ${name}?" , { proxy: { data: { name: "Bill" } } } ) ;
-		doormen.equals( o.tpl.toString() , 'Hello Bill!\nHow are you Bill?' ) ;
-		doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello Bob!\nHow are you Bob?' ) ;
-		
 		o = parse( 'tpl: $"Hello ${name}!"' ) ;
 		doormen.equals( o.tpl.toString() , 'Hello (undefined)!' ) ;
-		doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello Bob!' ) ;
-		
-		o = parse( 'tpl: $"Hello ${name}!"' , { proxy: { data: { name: "Bill" } } } ) ;
-		doormen.equals( o.tpl.toString() , 'Hello Bill!' ) ;
 		doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello Bob!' ) ;
 		
 		// Top-level templates
@@ -655,17 +625,6 @@ describe( "KFG parse" , function() {
 		o = parse( '$> Hey!\n$> Hello ${name}!' ) ;
 		doormen.equals( o.toString() , 'Hey!\nHello (undefined)!' ) ;
 		doormen.equals( o.toString( { name: "Bob" } ) , 'Hey!\nHello Bob!' ) ;
-	} ) ;
-	
-	it( "parse templates and this context" , function() {
-		var o ;
-		
-		o = parse( 'tpl: $"Hello ${this.name}!"' ) ;
-		doormen.equals( o.tpl.toString() , 'Hello (undefined)!' ) ;
-		doormen.equals( o.tpl.toString( undefined , { name: "Bob" } ) , 'Hello Bob!' ) ;
-		
-		o = parse( 'tpl: $"Hello ${name} and ${this.name}!"' ) ;
-		doormen.equals( o.tpl.toString( { name: 'Jack' } , { name: "Bob" } ) , 'Hello Jack and Bob!' ) ;
 	} ) ;
 	
 	it( "parse a file with operators" , function() {
@@ -777,9 +736,9 @@ describe( "KFG parse" , function() {
 		IfTag.prototype = Object.create( Tag.prototype ) ;
 		IfTag.prototype.constructor = IfTag ;
 		
-		IfTag.create = function createIfTag( tag , attributes , content , proxy , shouldParse ) {
+		IfTag.create = function createIfTag( tag , attributes , content , shouldParse ) {
 			var self = Object.create( IfTag.prototype ) ;
-			Tag.call( self , 'if' , attributes , content , proxy , shouldParse ) ;
+			Tag.call( self , 'if' , attributes , content , shouldParse ) ;
 			return self ;
 		} ;
 		
@@ -891,134 +850,6 @@ describe( "Meta-Tag" , function() {
 		doormen.equals( o , { include: { some: { more: "content"  } } , some: "content" } ) ;
 		doormen.equals( kungFig.getMeta( o ).getFirstTag( 'meta' ).content , "master" ) ;
 	} ) ;
-} ) ;
-
-
-
-describe( "Tag proxy" , function() {
-	
-	beforeEach( function() {
-		kungFig.clearCache() ;
-	} ) ;
-	
-	it( "tag proxy basic test" , function() {
-		var o , proxy ;
-		
-		function CustomTag() {}
-		CustomTag.prototype = Object.create( Tag.prototype ) ;
-		CustomTag.prototype.constructor = CustomTag ;
-		
-		CustomTag.create = function( tag , attributes , content , proxy , shouldParse ) {
-			//console.log( ">>> Custom Tag constructor" ) ;
-			var self = Object.create( CustomTag.prototype ) ;
-			Tag.call( self , tag , attributes , content , proxy , shouldParse ) ;
-			return self ;
-		} ;
-		CustomTag.create.proxyMode = 'local' ;
-		
-		proxy = { data: { name: "Bill" } } ;
-		o = parse( '[tag] $"Hello ${name}!"' , { proxy: proxy , tags: { custom: CustomTag.create } } ) ;
-		doormen.equals( o.children[0].content.toString() , 'Hello Bill!' ) ;
-		proxy.data.name = "Jack" ;
-		doormen.equals( o.children[0].content.toString() , 'Hello Jack!' ) ;
-		
-		proxy = { data: { name: "Bill" } } ;
-		o = parse( '[custom] $"Hello ${name}!"' , { proxy: proxy , tags: { custom: CustomTag.create } } ) ;
-		doormen.equals( o.children[0].proxy !== proxy , true ) ;
-		doormen.equals( Object.getPrototypeOf( o.children[0].proxy ) !== proxy , true ) ;
-		//console.log( o.children[0].proxy ) ;
-		doormen.equals( o.children[0].content.toString() , 'Hello (undefined)!' ) ;
-		proxy.data.name = "Jack" ;
-		doormen.equals( o.children[0].content.toString() , 'Hello (undefined)!' ) ;
-		o.children[0].proxy.data.name = "Jenny" ;
-		doormen.equals( o.children[0].content.toString() , 'Hello Jenny!' ) ;
-		
-		CustomTag.create.proxyMode = 'inherit' ;
-		proxy = { data: { name: "Bill" } } ;
-		o = parse( '[custom] $"Hello ${name}!"' , { proxy: proxy , tags: { custom: CustomTag.create } } ) ;
-		doormen.equals( o.children[0].proxy !== proxy , true ) ;
-		doormen.equals( Object.getPrototypeOf( o.children[0].proxy ) === proxy , true ) ;
-		doormen.equals( o.children[0].proxy.data !== proxy.data , true ) ;
-		doormen.equals( Object.getPrototypeOf( o.children[0].proxy.data ) === proxy.data , true ) ;
-		//console.log( o.children[0].proxy ) ;
-		doormen.equals( o.children[0].content.toString() , 'Hello Bill!' ) ;
-		proxy.data.name = "Jack" ;
-		doormen.equals( o.children[0].content.toString() , 'Hello Jack!' ) ;
-		o.children[0].proxy.data.name = "Jenny" ;
-		doormen.equals( o.children[0].content.toString() , 'Hello Jenny!' ) ;
-		proxy.data.name = "Jack" ;
-		doormen.equals( o.children[0].content.toString() , 'Hello Jenny!' ) ;
-		
-		CustomTag.create.proxyMode = 'links' ;
-		proxy = { data: { name: "Bill" } } ;
-		o = parse( '[custom] $"Hello ${name} and ${.name}!"' , { proxy: proxy , tags: { custom: CustomTag.create } } ) ;
-		doormen.equals( o.children[0].proxy !== proxy , true ) ;
-		doormen.equals( Object.getPrototypeOf( o.children[0].proxy ) !== proxy , true ) ;
-		doormen.equals( o.children[0].proxy.__parent === proxy , true ) ;
-		doormen.equals( o.children[0].proxy.data[''] === proxy.data , true ) ;
-		//console.log( o.children[0].proxy ) ;
-		doormen.equals( o.children[0].content.toString() , 'Hello (undefined) and Bill!' ) ;
-		proxy.data.name = "Jack" ;
-		doormen.equals( o.children[0].content.toString() , 'Hello (undefined) and Jack!' ) ;
-		o.children[0].proxy.data.name = "Jenny" ;
-		doormen.equals( o.children[0].content.toString() , 'Hello Jenny and Jack!' ) ;
-		proxy.data.name = "Jim" ;
-		doormen.equals( o.children[0].content.toString() , 'Hello Jenny and Jim!' ) ;
-		
-		CustomTag.create.proxyMode = 'links' ;
-		proxy = { data: { name: "Bill" } } ;
-		o = parse( '[custom] $"Hello ${name} and ${%.name}!"' , { proxy: proxy , tags: { custom: CustomTag.create } } ) ;
-		doormen.equals( o.children[0].content.toString() , 'Hello (undefined) and Bill!' ) ;
-		proxy.data.name = "Jack" ;
-		doormen.equals( o.children[0].content.toString() , 'Hello (undefined) and Jack!' ) ;
-		o.children[0].proxy.data.name = "Jenny" ;
-		doormen.equals( o.children[0].content.toString() , 'Hello Jenny and Jack!' ) ;
-		proxy.data.name = "Jim" ;
-		doormen.equals( o.children[0].content.toString() , 'Hello Jenny and Jim!' ) ;
-	} ) ;
-	
-	it( "tag proxy: more test with the root mark '%' needed" ) ;
-	
-	it( "tag & proxy & loading (include, ...)" , function() {
-		var o , proxy = { one: 1 } ;
-		o = kungFig.load( __dirname + '/sample/kfg/proxy.kfg' , { proxy: proxy } ) ;
-		//deb( o ) ;
-		
-		doormen.equals( o.children[ 0 ].proxy === proxy , true ) ;
-		doormen.equals( o.children[ 0 ].content.children[ 0 ].proxy === proxy , true ) ;
-		
-		doormen.equals( o.children[ 1 ].proxy === proxy , true ) ;
-		doormen.equals( o.children[ 1 ].content.children[ 0 ].proxy === proxy , true ) ;
-	} ) ;
-	
-	it( "tag & proxy & loading with custom tags (include, ...)" , function() {
-		var o , proxy = { one: 1 } ;
-		
-		function ChildTag() {}
-		ChildTag.prototype = Object.create( Tag.prototype ) ;
-		ChildTag.prototype.constructor = ChildTag ;
-		
-		ChildTag.create = function( tag , attributes , content , proxy , shouldParse ) {
-			//console.log( ">>> \nchild tag constructor" ) ;
-			var self = Object.create( ChildTag.prototype ) ;
-			Tag.call( self , tag , attributes , content , proxy , shouldParse ) ;
-			return self ;
-		} ;
-		ChildTag.create.proxyMode = 'links' ;
-		
-		o = kungFig.load( __dirname + '/sample/kfg/proxy.kfg' , { proxy: proxy , tags: { child: ChildTag.create } } ) ;
-		//deb( o ) ;
-		
-		doormen.equals( o.children[ 0 ].proxy === proxy , true ) ;
-		doormen.equals( o.children[ 0 ].content.children[ 0 ].proxy !== proxy , true ) ;
-		doormen.equals( o.children[ 0 ].content.children[ 0 ].proxy.__parent === proxy , true ) ;
-		
-		doormen.equals( o.children[ 1 ].proxy === proxy , true ) ;
-		doormen.equals( o.children[ 1 ].content.children[ 0 ].proxy !== proxy , true ) ;
-		doormen.equals( o.children[ 1 ].content.children[ 0 ].proxy.__parent === proxy , true ) ;
-	} ) ;
-	
-	it( "tags and proxy in partial include" ) ;
 } ) ;
 
 
@@ -1200,8 +1031,8 @@ describe( "ExpressionTag" , function() {
 	var ExpressionTag = kungFig.ExpressionTag ;
 	
 	it( "ExpressionTag parse" , function () {
-		var data = { a: 4 , b: 1 } ;
-		var o = parse( '[ExpressionTag $a > 3]' , { tags: { ExpressionTag: ExpressionTag } , proxy: { data: data } } ) ;
+		var ctx = { a: 4 , b: 1 } ;
+		var o = parse( '[ExpressionTag $a > 3]' , { tags: { ExpressionTag: ExpressionTag } } ) ;
 		
 		//console.log( "parsed:" , o ) ;
 		
@@ -1222,9 +1053,9 @@ describe( "ExpressionTag" , function() {
 		} ) ;
 		
 		doormen.equals( typeof o.children[ 0 ].attributes.fnOperator === 'function' , true ) ;
-		doormen.equals( o.children[0].attributes.getFinalValue() , true ) ;
-		data.a = 2 ;
-		doormen.equals( o.children[0].attributes.getFinalValue() , false ) ;
+		doormen.equals( o.children[0].attributes.getFinalValue( ctx ) , true ) ;
+		ctx.a = 2 ;
+		doormen.equals( o.children[0].attributes.getFinalValue( ctx ) , false ) ;
 	} ) ;
 	
 	it( "ExpressionTag stringify" ) ;

@@ -55,35 +55,32 @@ function debfn( v )
 describe( "Ref" , function() {
 	
 	it( "Ref#getFinalValue()" , function() {
-		var data = { a: 42 } ;
-		var proxy = { data: data } ;
-		data.b = Ref.create( 'a' , proxy ) ;
-		data.c = Ref.create( 'b' , proxy ) ;
-		data.d = Ref.create( 'c' , proxy ) ;
-		doormen.equals( data.b.getFinalValue() , 42 ) ;
-		doormen.equals( data.c.getFinalValue() , 42 ) ;
-		doormen.equals( data.d.getFinalValue() , 42 ) ;
+		var ctx = { a: 42 } ;
+		ctx.b = Ref.create( 'a' ) ;
+		ctx.c = Ref.create( 'b' ) ;
+		ctx.d = Ref.create( 'c' ) ;
+		doormen.equals( ctx.b.getFinalValue( ctx ) , 42 ) ;
+		doormen.equals( ctx.c.getFinalValue( ctx ) , 42 ) ;
+		doormen.equals( ctx.d.getFinalValue( ctx ) , 42 ) ;
 	} ) ;
 	
 	it( "Ref#getRecursiveFinalValue()" , function() {
-		var data = { a: 42 , container: {} } ;
-		var proxy = { data: data } ;
-		data.container.b = Ref.create( 'a' , proxy ) ;
-		data.container.c = Ref.create( 'container.b' , proxy ) ;
-		data.container.d = Ref.create( 'container.c' , proxy ) ;
-		data.refContainer = Ref.create( 'container' , proxy ) ;
-		doormen.equals( data.refContainer.getRecursiveFinalValue() , { b:42 , c:42 , d:42 } ) ;
+		var ctx = { a: 42 , container: {} } ;
+		ctx.container.b = Ref.create( 'a' ) ;
+		ctx.container.c = Ref.create( 'container.b' ) ;
+		ctx.container.d = Ref.create( 'container.c' ) ;
+		ctx.refContainer = Ref.create( 'container' ) ;
+		doormen.equals( ctx.refContainer.getRecursiveFinalValue( ctx ) , { b:42 , c:42 , d:42 } ) ;
 	} ) ;
 	
 	it( "Ref#toString()" , function() {
-		var data = { a: 42 } ;
-		var proxy = { data: data } ;
-		data.b = Ref.create( 'a' , proxy ) ;
-		data.c = Ref.create( 'b' , proxy ) ;
-		data.d = Ref.create( 'c' , proxy ) ;
-		doormen.equals( data.b.toString() , "42" ) ;
-		doormen.equals( data.c.toString() , "42" ) ;
-		doormen.equals( data.d.toString() , "42" ) ;
+		var ctx = { a: 42 } ;
+		ctx.b = Ref.create( 'a' ) ;
+		ctx.c = Ref.create( 'b' ) ;
+		ctx.d = Ref.create( 'c' ) ;
+		doormen.equals( ctx.b.toString( ctx ) , "42" ) ;
+		doormen.equals( ctx.c.toString( ctx ) , "42" ) ;
+		doormen.equals( ctx.d.toString( ctx ) , "42" ) ;
 	} ) ;
 } ) ;
 
@@ -92,13 +89,12 @@ describe( "Ref" , function() {
 describe( "Template" , function() {
 	
 	it( "Template#getFinalValue()" , function() {
-		var data = { a: 42 } ;
-		var proxy = { data: data } ;
-		data.b = Ref.create( 'a' , proxy ) ;
-		data.c = Template.create( "Hello, I'm ${a}." , proxy ) ;
-		data.d = Template.create( "Hello, I'm ${b}." , proxy ) ;
-		doormen.equals( data.c.getFinalValue() , "Hello, I'm 42." ) ;
-		doormen.equals( data.d.getFinalValue() , "Hello, I'm 42." ) ;
+		var ctx = { a: 42 } ;
+		ctx.b = Ref.create( 'a' ) ;
+		ctx.c = Template.create( "Hello, I'm ${a}." ) ;
+		ctx.d = Template.create( "Hello, I'm ${b}." ) ;
+		doormen.equals( ctx.c.getFinalValue( ctx ) , "Hello, I'm 42." ) ;
+		doormen.equals( ctx.d.getFinalValue( ctx ) , "Hello, I'm 42." ) ;
 	} ) ;
 } ) ;
 

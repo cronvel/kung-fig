@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "async-kit": "^2.1.6",
-    "babel-tower": "^0.8.0",
+    "babel-tower": "^0.9.3",
     "glob": "^7.0.5",
     "osenv": "^0.1.3",
     "tree-kit": "^0.5.26"

@@ -90,35 +90,35 @@ describe( "Expression" , function() {
 	} ) ;
 	
 	it( "parse/exec apply operator" , function() {
-		var parsed , proxy , object ;
+		var parsed , ctx , object ;
 		
 		object = { a: 3 , b: 5 } ;
 		object.fn = function( v ) { return this.a * v + this.b ; }
 		
-		proxy = { data: {
+		ctx = {
 			fn: function( v ) { return v * 2 + 1 ; } ,
 			object: object
-		} } ;
+		} ;
 		
-		parsed = Expression.parse( '$fn -> 3' , proxy ) ;
+		parsed = Expression.parse( '$fn -> 3' ) ;
 		//deb( parsed ) ;
-		doormen.equals( parsed.getFinalValue() , 7 ) ;
+		doormen.equals( parsed.getFinalValue( ctx ) , 7 ) ;
 		
-		parsed = Expression.parse( '$object.fn -> 3' , proxy ) ;
+		parsed = Expression.parse( '$object.fn -> 3' ) ;
 		//deb( parsed ) ;
-		doormen.equals( parsed.getFinalValue() , 14 ) ;
+		doormen.equals( parsed.getFinalValue( ctx ) , 14 ) ;
 	} ) ;
 	
 	it( "parse/exec custom operator" , function() {
-		var parsed , proxy , operators , object , v ;
+		var parsed , ctx , operators , object , v ;
 		
 		object = { a: 3 , b: 5 } ;
 		object.fn = function( v ) { return this.a * v + this.b ; }
 		
-		proxy = { data: {
+		ctx = {
 			fn: function( v ) { return v * 2 + 1 ; } ,
 			object: object
-		} } ;
+		} ;
 		
 		operators = {
 			D: function( args ) {
@@ -128,20 +128,20 @@ describe( "Expression" , function() {
 			}
 		} ;
 		
-		parsed = Expression.parse( '3 D 6' , proxy , operators ) ;
+		parsed = Expression.parse( '3 D 6' , operators ) ;
 		//deb( parsed ) ;
-		v = parsed.getFinalValue() ;
+		v = parsed.getFinalValue( ctx ) ;
 		//deb( v ) ;
 		doormen.equals( v >= 1 && v <= 18 , true ) ;
 	} ) ;
 	
 	it( "parse/exec apply operator and substitution regexp" , function() {
-		var parsed , proxy , regexp ;
+		var parsed , ctx , regexp ;
 		
 		regexp = /hello/ ;
 		kungFig.parse.builtin.regex.toExtended( regexp ) ;
 		
-		proxy = { data: {
+		ctx = {
 			str: 'hello world!' ,
 			regexp: regexp ,
 			array: [
@@ -150,17 +150,17 @@ describe( "Expression" , function() {
 				'hi there!' ,
 				'hello world!'
 			]
-		} } ;
+		} ;
 		
-		parsed = Expression.parse( '$regexp.filter -> $array' , proxy ) ;
+		parsed = Expression.parse( '$regexp.filter -> $array' ) ;
 		//deb( parsed ) ;
-		doormen.equals( parsed.getFinalValue() , [ 'hello' , 'hello world!' ] ) ;
+		doormen.equals( parsed.getFinalValue( ctx ) , [ 'hello' , 'hello world!' ] ) ;
 		
 		kungFig.parse.builtin.regex.toSubstitution( regexp , 'hi' ) ;
 		
-		parsed = Expression.parse( '$regexp.substitute -> $str' , proxy ) ;
+		parsed = Expression.parse( '$regexp.substitute -> $str' ) ;
 		//deb( parsed ) ;
-		doormen.equals( parsed.getFinalValue() , 'hi world!' ) ;
+		doormen.equals( parsed.getFinalValue( ctx ) , 'hi world!' ) ;
 	} ) ;
 	
 	it( "more expression tests..." ) ;
