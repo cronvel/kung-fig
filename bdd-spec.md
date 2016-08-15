@@ -649,6 +649,17 @@ doormen.equals( o.ref2.get() , 43 ) ;
 doormen.equals( o.ref2.toString() , "43" ) ;
 ```
 
+Ref and this context.
+
+```js
+var o ;
+var proxy = { data: { name: "Bob" , bob: { age: 43 } , this: { name: 'Jack' } } } ;
+
+o = parse( "ref: $this.name" , { proxy: proxy } ) ;
+doormen.equals( o.ref.get() , 'Jack' ) ;
+doormen.equals( o.ref.get( { name: 'Joe' } ) , 'Joe' ) ;
+```
+
 parse expression.
 
 ```js
@@ -707,6 +718,17 @@ o = parse( "exp: $= ! ( ( $bill.age + 6 ) == $bob.age )" , { proxy: proxy } ) ;
 doormen.equals( o.exp.getFinalValue() , false ) ;
 ```
 
+parse expression and this context.
+
+```js
+var o ;
+var proxy = { data: { name: "Bob" , bob: { age: 43 } , bill: { age: 37 } } } ;
+
+o = parse( "exp: $= $this.age + 2" , { proxy: proxy } ) ;
+doormen.equals( o.exp.getFinalValue() , NaN ) ;
+doormen.equals( o.exp.getFinalValue( { age: 12 } ) , 14 ) ;
+```
+
 parse templates.
 
 ```js
@@ -762,6 +784,19 @@ doormen.equals( o.toString( { name: "Bob" } ) , 'Hello Bob!' ) ;
 o = parse( '$> Hey!\n$> Hello ${name}!' ) ;
 doormen.equals( o.toString() , 'Hey!\nHello (undefined)!' ) ;
 doormen.equals( o.toString( { name: "Bob" } ) , 'Hey!\nHello Bob!' ) ;
+```
+
+parse templates and this context.
+
+```js
+var o ;
+
+o = parse( 'tpl: $"Hello ${this.name}!"' ) ;
+doormen.equals( o.tpl.toString() , 'Hello (undefined)!' ) ;
+doormen.equals( o.tpl.toString( undefined , { name: "Bob" } ) , 'Hello Bob!' ) ;
+
+o = parse( 'tpl: $"Hello ${name} and ${this.name}!"' ) ;
+doormen.equals( o.tpl.toString( { name: 'Jack' } , { name: "Bob" } ) , 'Hello Jack and Bob!' ) ;
 ```
 
 parse a file with operators.

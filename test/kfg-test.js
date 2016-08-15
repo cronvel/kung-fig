@@ -593,7 +593,7 @@ describe( "KFG parse" , function() {
 		doormen.equals( o.exp.getFinalValue() , false ) ;
 	} ) ;
 	
-	it( "zzz parse expression and this context" , function() {
+	it( "parse expression and this context" , function() {
 		var o ;
 		var proxy = { data: { name: "Bob" , bob: { age: 43 } , bill: { age: 37 } } } ;
 		
@@ -655,6 +655,17 @@ describe( "KFG parse" , function() {
 		o = parse( '$> Hey!\n$> Hello ${name}!' ) ;
 		doormen.equals( o.toString() , 'Hey!\nHello (undefined)!' ) ;
 		doormen.equals( o.toString( { name: "Bob" } ) , 'Hey!\nHello Bob!' ) ;
+	} ) ;
+	
+	it( "parse templates and this context" , function() {
+		var o ;
+		
+		o = parse( 'tpl: $"Hello ${this.name}!"' ) ;
+		doormen.equals( o.tpl.toString() , 'Hello (undefined)!' ) ;
+		doormen.equals( o.tpl.toString( undefined , { name: "Bob" } ) , 'Hello Bob!' ) ;
+		
+		o = parse( 'tpl: $"Hello ${name} and ${this.name}!"' ) ;
+		doormen.equals( o.tpl.toString( { name: 'Jack' } , { name: "Bob" } ) , 'Hello Jack and Bob!' ) ;
 	} ) ;
 	
 	it( "parse a file with operators" , function() {
