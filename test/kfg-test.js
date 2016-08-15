@@ -528,6 +528,15 @@ describe( "KFG parse" , function() {
 		doormen.equals( o.ref2.toString() , "43" ) ;
 	} ) ;
 	
+	it( "Ref and this context" , function() {
+		var o ;
+		var proxy = { data: { name: "Bob" , bob: { age: 43 } , this: { name: 'Jack' } } } ;
+		
+		o = parse( "ref: $this.name" , { proxy: proxy } ) ;
+		doormen.equals( o.ref.get() , 'Jack' ) ;
+		doormen.equals( o.ref.get( { name: 'Joe' } ) , 'Joe' ) ;
+	} ) ;
+	
 	it( "parse expression" , function() {
 		var o ;
 		var proxy = { data: { name: "Bob" , bob: { age: 43 } , bill: { age: 37 } } } ;
@@ -582,6 +591,15 @@ describe( "KFG parse" , function() {
 		
 		o = parse( "exp: $= ! ( ( $bill.age + 6 ) == $bob.age )" , { proxy: proxy } ) ;
 		doormen.equals( o.exp.getFinalValue() , false ) ;
+	} ) ;
+	
+	it( "zzz parse expression and this context" , function() {
+		var o ;
+		var proxy = { data: { name: "Bob" , bob: { age: 43 } , bill: { age: 37 } } } ;
+		
+		o = parse( "exp: $= $this.age + 2" , { proxy: proxy } ) ;
+		doormen.equals( o.exp.getFinalValue() , NaN ) ;
+		doormen.equals( o.exp.getFinalValue( { age: 12 } ) , 14 ) ;
 	} ) ;
 	
 	it( "parse templates" , function() {
