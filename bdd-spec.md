@@ -14,6 +14,7 @@
    - [Array references](#array-references)
    - [Ref](#ref)
    - [Template](#template)
+   - [Dynamic.getRecursiveFinalValue()](#dynamicgetrecursivefinalvalue)
    - [Operator behaviours](#operator-behaviours)
    - [Complex, deeper test](#complex-deeper-test)
    - [Operator extensions](#operator-extensions)
@@ -1864,6 +1865,31 @@ ctx.c = Template.create( "Hello, I'm ${a}." ) ;
 ctx.d = Template.create( "Hello, I'm ${b}." ) ;
 doormen.equals( ctx.c.getFinalValue( ctx ) , "Hello, I'm 42." ) ;
 doormen.equals( ctx.d.getFinalValue( ctx ) , "Hello, I'm 42." ) ;
+```
+
+<a name="dynamicgetrecursivefinalvalue"></a>
+# Dynamic.getRecursiveFinalValue()
+Historical non-cloning bug.
+
+```js
+var ref1 , tpl1 , tpl2 ;
+
+var ctx = { a: 42 } ;
+
+ctx.b = ref1 = Ref.create( 'a' ) ;
+ctx.c = tpl1 = Template.create( "Hello, I'm ${a}." ) ;
+ctx.d = tpl2 = Template.create( "Hello, I'm ${b}." ) ;
+
+doormen.equals( Dynamic.getRecursiveFinalValue( ctx , ctx ) , {
+	a: 42 ,
+	b: 42 ,
+	c: "Hello, I'm 42." ,
+	d: "Hello, I'm 42."
+} ) ;
+
+doormen.equals( ctx.b === ref1 , true ) ;
+doormen.equals( ctx.c === tpl1 , true ) ;
+doormen.equals( ctx.d === tpl2 , true ) ;
 ```
 
 <a name="operator-behaviours"></a>
