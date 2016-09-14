@@ -882,6 +882,67 @@ describe( "Complex, deeper test" , function() {
 
 
 
+describe( "To regular object" , function() {
+	
+	it( "simple tree-ops object" , function() {
+		
+		var creature = {
+			hp: 8 ,
+			attack: 5 ,
+			"*attack": 1.2 ,
+			defense: 3 ,
+			move: 1 ,
+			"+defense": 3
+		} ;
+		
+		doormen.equals(
+			kungFig.toObject( creature ) ,
+			{
+				hp: 8 ,
+				attack: 5 ,
+				defense: 3 ,
+				move: 1 ,
+			}
+		) ;
+		
+		doormen.equals(
+			kungFig.reduceToObject( creature ) ,
+			{
+				hp: 8 ,
+				attack: 6 ,
+				defense: 6 ,
+				move: 1
+			}
+		) ;
+	} ) ;
+	
+	it( "edge cases" , function() {
+		
+		var o = {
+			"()*.kfg": "*.gz" ,
+			"()*/*.jpeg": "*/*.jpg"
+		} ;
+		
+		doormen.equals(
+			kungFig.toObject( o ) ,
+			{
+				"*.kfg": "*.gz" ,
+				"*/*.jpeg": "*/*.jpg"
+			}
+		) ;
+		
+		doormen.equals(
+			kungFig.reduceToObject( o ) ,
+			{
+				"*.kfg": "*.gz" ,
+				"*/*.jpeg": "*/*.jpg"
+			}
+		) ;
+	} ) ;
+} ) ;
+
+
+
 describe( "Operator extensions" , function() {
 	
 	it( "simple operator extension" , function() {

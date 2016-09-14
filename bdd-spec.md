@@ -17,6 +17,7 @@
    - [Dynamic.getRecursiveFinalValue()](#dynamicgetrecursivefinalvalue)
    - [Operator behaviours](#operator-behaviours)
    - [Complex, deeper test](#complex-deeper-test)
+   - [To regular object](#to-regular-object)
    - [Operator extensions](#operator-extensions)
 <a name=""></a>
  
@@ -2744,6 +2745,66 @@ doormen.equals(
 				}
 			}
 		} ,
+	}
+) ;
+```
+
+<a name="to-regular-object"></a>
+# To regular object
+simple tree-ops object.
+
+```js
+var creature = {
+	hp: 8 ,
+	attack: 5 ,
+	"*attack": 1.2 ,
+	defense: 3 ,
+	move: 1 ,
+	"+defense": 3
+} ;
+
+doormen.equals(
+	kungFig.toObject( creature ) ,
+	{
+		hp: 8 ,
+		attack: 5 ,
+		defense: 3 ,
+		move: 1 ,
+	}
+) ;
+
+doormen.equals(
+	kungFig.reduceToObject( creature ) ,
+	{
+		hp: 8 ,
+		attack: 6 ,
+		defense: 6 ,
+		move: 1
+	}
+) ;
+```
+
+edge cases.
+
+```js
+var o = {
+	"()*.kfg": "*.gz" ,
+	"()*/*.jpeg": "*/*.jpg"
+} ;
+
+doormen.equals(
+	kungFig.toObject( o ) ,
+	{
+		"*.kfg": "*.gz" ,
+		"*/*.jpeg": "*/*.jpg"
+	}
+) ;
+
+doormen.equals(
+	kungFig.reduceToObject( o ) ,
+	{
+		"*.kfg": "*.gz" ,
+		"*/*.jpeg": "*/*.jpg"
 	}
 ) ;
 ```
