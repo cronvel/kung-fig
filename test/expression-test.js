@@ -89,6 +89,28 @@ describe( "Expression" , function() {
 		doormen.equals( parsed.getFinalValue() , 4 ) ;
 	} ) ;
 	
+	it( "parse/exec round/floor/ceil operator" , function() {
+		var parsed ;
+		
+		parsed = Expression.parse( 'round 4.3' ) ;
+		doormen.equals( parsed.getFinalValue() , 4 ) ;
+		
+		parsed = Expression.parse( 'floor 4.3' ) ;
+		doormen.equals( parsed.getFinalValue() , 4 ) ;
+		
+		parsed = Expression.parse( 'ceil 4.3' ) ;
+		doormen.equals( parsed.getFinalValue() , 5 ) ;
+		
+		parsed = Expression.parse( 'round 4.7' ) ;
+		doormen.equals( parsed.getFinalValue() , 5 ) ;
+		
+		parsed = Expression.parse( 'floor 4.7' ) ;
+		doormen.equals( parsed.getFinalValue() , 4 ) ;
+		
+		parsed = Expression.parse( 'ceil 4.7' ) ;
+		doormen.equals( parsed.getFinalValue() , 5 ) ;
+	} ) ;
+	
 	it( "parse/exec apply operator" , function() {
 		var parsed , ctx , object ;
 		
