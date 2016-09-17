@@ -674,6 +674,20 @@ doormen.equals( o.ref2.get( ctx ) , 43 ) ;
 doormen.equals( o.ref2.toString( ctx ) , "43" ) ;
 ```
 
+parse applicable ref.
+
+```js
+var o ;
+var ctx = { name: "Bob" , bob: { age: 43 } } ;
+
+o = parse( "ref: $$name\nref2: $$bob.age" ) ;
+doormen.equals( o.ref.get( ctx ) , o.ref ) ;
+doormen.equals( o.ref2.get( ctx ) , o.ref2 ) ;
+
+doormen.equals( o.ref.apply( ctx ) , "Bob" ) ;
+doormen.equals( o.ref2.apply( ctx ) , 43 ) ;
+```
+
 parse expression.
 
 ```js
@@ -732,6 +746,17 @@ o = parse( "exp: $= ! ( ( $bill.age + 6 ) == $bob.age )" ) ;
 doormen.equals( o.exp.getFinalValue( ctx ) , false ) ;
 ```
 
+parse expression.
+
+```js
+var o ;
+var ctx = { name: "Bob" , bob: { age: 43 } , bill: { age: 37 } } ;
+
+o = parse( "exp: $$= $bob.age + 2" ) ;
+doormen.equals( o.exp.getFinalValue( ctx ) , o.exp ) ;
+doormen.equals( o.exp.apply( ctx ) , 45 ) ;
+```
+
 parse templates.
 
 ```js
@@ -775,6 +800,24 @@ doormen.equals( o.toString( { name: "Bob" } ) , 'Hello Bob!' ) ;
 o = parse( '$> Hey!\n$> Hello ${name}!' ) ;
 doormen.equals( o.toString() , 'Hey!\nHello (undefined)!' ) ;
 doormen.equals( o.toString( { name: "Bob" } ) , 'Hey!\nHello Bob!' ) ;
+```
+
+parse applicable templates.
+
+```js
+var o ;
+
+o = parse( "tpl: $$> Hello ${name}!" ) ;
+doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello ${name}!' ) ;
+doormen.equals( o.tpl.apply( { name: "Bob" } ) , 'Hello Bob!' ) ;
+
+o = parse( "tpl:\n\t$$> Hello ${name}!" ) ;
+doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello ${name}!' ) ;
+doormen.equals( o.tpl.apply( { name: "Bob" } ) , 'Hello Bob!' ) ;
+
+o = parse( 'tpl: $$"Hello ${name}!"' ) ;
+doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello ${name}!' ) ;
+doormen.equals( o.tpl.apply( { name: "Bob" } ) , 'Hello Bob!' ) ;
 ```
 
 parse a file with operators.
@@ -1208,6 +1251,19 @@ doormen.equals( JSON.parse( JSON.stringify( o ) ) , {
 doormen.equals( typeof o.children[ 0 ].attributes.fnOperator === 'function' , true ) ;
 doormen.equals( o.children[0].attributes.getFinalValue( ctx ) , true ) ;
 ctx.a = 2 ;
+doormen.equals( o.children[0].attributes.getFinalValue( ctx ) , false ) ;
+
+
+o = parse( '[ExpressionTag 3 <= ( round 3.3 )]' , { tags: { ExpressionTag: ExpressionTag } } ) ;
+doormen.equals( o.children[0].attributes.getFinalValue( ctx ) , true ) ;
+
+o = parse( '[ExpressionTag 4 < ( round 3.3 )]' , { tags: { ExpressionTag: ExpressionTag } } ) ;
+doormen.equals( o.children[0].attributes.getFinalValue( ctx ) , false ) ;
+
+o = parse( '[ExpressionTag ( round 3.3 ) >= 3]' , { tags: { ExpressionTag: ExpressionTag } } ) ;
+doormen.equals( o.children[0].attributes.getFinalValue( ctx ) , true ) ;
+
+o = parse( '[ExpressionTag ( round 3.3 ) >= 4]' , { tags: { ExpressionTag: ExpressionTag } } ) ;
 doormen.equals( o.children[0].attributes.getFinalValue( ctx ) , false ) ;
 ```
 

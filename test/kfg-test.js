@@ -168,7 +168,13 @@ describe( "KFG stringify" , function() {
 		doormen.equals( stringify( { ref1: Ref.create( 'name' ) , ref2: new Ref( 'bob.age' ) } ) , 'ref1: $name\nref2: $bob.age\n' ) ;
 	} ) ;
 	
+	it( "stringify applicable ref" ) ;
+	
 	it.skip( "stringify expression" , function() {
+		throw new Error( "Not coded" ) ;
+	} ) ;
+	
+	it.skip( "stringify applicable expression" , function() {
 		throw new Error( "Not coded" ) ;
 	} ) ;
 	
@@ -186,6 +192,8 @@ describe( "KFG stringify" , function() {
 		doormen.equals( stringify( { tpl: Template.create( '' ) } ) , 'tpl: <Template>\n' ) ;
 		doormen.equals( stringify( Template.create( '' ) ) , '<Template>\n' ) ;
 	} ) ;
+	
+	it( "stringify applicable templates" ) ;
 	
 	it( "stringify an object with operators" , function() {
 		var o = {
@@ -528,6 +536,18 @@ describe( "KFG parse" , function() {
 		doormen.equals( o.ref2.toString( ctx ) , "43" ) ;
 	} ) ;
 	
+	it( "parse applicable ref" , function() {
+		var o ;
+		var ctx = { name: "Bob" , bob: { age: 43 } } ;
+		
+		o = parse( "ref: $$name\nref2: $$bob.age" ) ;
+		doormen.equals( o.ref.get( ctx ) , o.ref ) ;
+		doormen.equals( o.ref2.get( ctx ) , o.ref2 ) ;
+		
+		doormen.equals( o.ref.apply( ctx ) , "Bob" ) ;
+		doormen.equals( o.ref2.apply( ctx ) , 43 ) ;
+	} ) ;
+	
 	it( "parse expression" , function() {
 		var o ;
 		var ctx = { name: "Bob" , bob: { age: 43 } , bill: { age: 37 } } ;
@@ -584,6 +604,15 @@ describe( "KFG parse" , function() {
 		doormen.equals( o.exp.getFinalValue( ctx ) , false ) ;
 	} ) ;
 	
+	it( "parse expression" , function() {
+		var o ;
+		var ctx = { name: "Bob" , bob: { age: 43 } , bill: { age: 37 } } ;
+		
+		o = parse( "exp: $$= $bob.age + 2" ) ;
+		doormen.equals( o.exp.getFinalValue( ctx ) , o.exp ) ;
+		doormen.equals( o.exp.apply( ctx ) , 45 ) ;
+	} ) ;
+	
 	it( "parse templates" , function() {
 		var o ;
 		
@@ -625,6 +654,22 @@ describe( "KFG parse" , function() {
 		o = parse( '$> Hey!\n$> Hello ${name}!' ) ;
 		doormen.equals( o.toString() , 'Hey!\nHello (undefined)!' ) ;
 		doormen.equals( o.toString( { name: "Bob" } ) , 'Hey!\nHello Bob!' ) ;
+	} ) ;
+	
+	it( "parse applicable templates" , function() {
+		var o ;
+		
+		o = parse( "tpl: $$> Hello ${name}!" ) ;
+		doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello ${name}!' ) ;
+		doormen.equals( o.tpl.apply( { name: "Bob" } ) , 'Hello Bob!' ) ;
+		
+		o = parse( "tpl:\n\t$$> Hello ${name}!" ) ;
+		doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello ${name}!' ) ;
+		doormen.equals( o.tpl.apply( { name: "Bob" } ) , 'Hello Bob!' ) ;
+		
+		o = parse( 'tpl: $$"Hello ${name}!"' ) ;
+		doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello ${name}!' ) ;
+		doormen.equals( o.tpl.apply( { name: "Bob" } ) , 'Hello Bob!' ) ;
 	} ) ;
 	
 	it( "parse a file with operators" , function() {
@@ -1055,6 +1100,19 @@ describe( "ExpressionTag" , function() {
 		doormen.equals( typeof o.children[ 0 ].attributes.fnOperator === 'function' , true ) ;
 		doormen.equals( o.children[0].attributes.getFinalValue( ctx ) , true ) ;
 		ctx.a = 2 ;
+		doormen.equals( o.children[0].attributes.getFinalValue( ctx ) , false ) ;
+		
+		
+		o = parse( '[ExpressionTag 3 <= ( round 3.3 )]' , { tags: { ExpressionTag: ExpressionTag } } ) ;
+		doormen.equals( o.children[0].attributes.getFinalValue( ctx ) , true ) ;
+		
+		o = parse( '[ExpressionTag 4 < ( round 3.3 )]' , { tags: { ExpressionTag: ExpressionTag } } ) ;
+		doormen.equals( o.children[0].attributes.getFinalValue( ctx ) , false ) ;
+		
+		o = parse( '[ExpressionTag ( round 3.3 ) >= 3]' , { tags: { ExpressionTag: ExpressionTag } } ) ;
+		doormen.equals( o.children[0].attributes.getFinalValue( ctx ) , true ) ;
+		
+		o = parse( '[ExpressionTag ( round 3.3 ) >= 4]' , { tags: { ExpressionTag: ExpressionTag } } ) ;
 		doormen.equals( o.children[0].attributes.getFinalValue( ctx ) , false ) ;
 	} ) ;
 	
