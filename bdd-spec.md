@@ -1267,6 +1267,22 @@ o = parse( '[ExpressionTag ( round 3.3 ) >= 4]' , { tags: { ExpressionTag: Expre
 doormen.equals( o.children[0].attributes.getFinalValue( ctx ) , false ) ;
 ```
 
+ExpressionTag parse with custom operators.
+
+```js
+var ctx = { a: 4 , b: 1 } ;
+
+var operators = {
+	triple: function( args ) { return args[ 0 ] * 3 ; }
+} ;
+
+var o = parse( '[ExpressionTag triple $a]' , { tags: { ExpressionTag: ExpressionTag } , operators: operators } ) ;
+
+doormen.equals( o.children[0].attributes.getFinalValue( ctx ) , 12 ) ;
+ctx.a = 2 ;
+doormen.equals( o.children[0].attributes.getFinalValue( ctx ) , 6 ) ;
+```
+
 <a name="loading-a-config"></a>
 # Loading a config
 when trying to load an unexistant file, it should throw.

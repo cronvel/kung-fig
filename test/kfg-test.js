@@ -1116,6 +1116,20 @@ describe( "ExpressionTag" , function() {
 		doormen.equals( o.children[0].attributes.getFinalValue( ctx ) , false ) ;
 	} ) ;
 	
+	it( "ExpressionTag parse with custom operators" , function () {
+		var ctx = { a: 4 , b: 1 } ;
+		
+		var operators = {
+			triple: function( args ) { return args[ 0 ] * 3 ; }
+		} ;
+		
+		var o = parse( '[ExpressionTag triple $a]' , { tags: { ExpressionTag: ExpressionTag } , operators: operators } ) ;
+		
+		doormen.equals( o.children[0].attributes.getFinalValue( ctx ) , 12 ) ;
+		ctx.a = 2 ;
+		doormen.equals( o.children[0].attributes.getFinalValue( ctx ) , 6 ) ;
+	} ) ;
+	
 	it( "ExpressionTag stringify" ) ;
 } ) ;
 
