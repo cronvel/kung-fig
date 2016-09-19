@@ -53,45 +53,11 @@ function debfn( v )
 
 
 
-describe( "Ref" , function() {
-	
-	it( "Ref#getFinalValue()" , function() {
-		var ctx = { a: 42 } ;
-		ctx.b = Ref.create( 'a' ) ;
-		ctx.c = Ref.create( 'b' ) ;
-		ctx.d = Ref.create( 'c' ) ;
-		doormen.equals( ctx.b.getFinalValue( ctx ) , 42 ) ;
-		doormen.equals( ctx.c.getFinalValue( ctx ) , 42 ) ;
-		doormen.equals( ctx.d.getFinalValue( ctx ) , 42 ) ;
-	} ) ;
-	
-	it( "Ref#getRecursiveFinalValue()" , function() {
-		var ctx = { a: 42 , container: {} } ;
-		ctx.container.b = Ref.create( 'a' ) ;
-		ctx.container.c = Ref.create( 'container.b' ) ;
-		ctx.container.d = Ref.create( 'container.c' ) ;
-		ctx.refContainer = Ref.create( 'container' ) ;
-		doormen.equals( ctx.refContainer.getRecursiveFinalValue( ctx ) , { b:42 , c:42 , d:42 } ) ;
-	} ) ;
-	
-	it( "Ref#toString()" , function() {
-		var ctx = { a: 42 } ;
-		ctx.b = Ref.create( 'a' ) ;
-		ctx.c = Ref.create( 'b' ) ;
-		ctx.d = Ref.create( 'c' ) ;
-		doormen.equals( ctx.b.toString( ctx ) , "42" ) ;
-		doormen.equals( ctx.c.toString( ctx ) , "42" ) ;
-		doormen.equals( ctx.d.toString( ctx ) , "42" ) ;
-	} ) ;
-} ) ;
-
-
-
 describe( "Template" , function() {
 	
 	it( "Template#getFinalValue()" , function() {
 		var ctx = { a: 42 } ;
-		ctx.b = Ref.create( 'a' ) ;
+		ctx.b = Ref.create( '$a' ) ;
 		ctx.c = Template.create( "Hello, I'm ${a}." ) ;
 		ctx.d = Template.create( "Hello, I'm ${b}." ) ;
 		doormen.equals( ctx.c.getFinalValue( ctx ) , "Hello, I'm 42." ) ;
@@ -108,7 +74,7 @@ describe( "Dynamic.getRecursiveFinalValue()" , function() {
 		
 		var ctx = { a: 42 } ;
 		
-		ctx.b = ref1 = Ref.create( 'a' ) ;
+		ctx.b = ref1 = Ref.create( '$a' ) ;
 		ctx.c = tpl1 = Template.create( "Hello, I'm ${a}." ) ;
 		ctx.d = tpl2 = Template.create( "Hello, I'm ${b}." ) ;
 		

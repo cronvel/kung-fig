@@ -12,9 +12,13 @@
    - [Load meta](#load-meta)
    - [JS modules](#js-modules)
    - [Array references](#array-references)
-   - [Ref](#ref)
    - [Template](#template)
    - [Dynamic.getRecursiveFinalValue()](#dynamicgetrecursivefinalvalue)
+   - [Ref](#ref)
+     - [Get](#ref-get)
+     - [Set](#ref-set)
+     - [Misc](#ref-misc)
+     - [Parser edge cases](#ref-parser-edge-cases)
    - [Operator behaviours](#operator-behaviours)
    - [Complex, deeper test](#complex-deeper-test)
    - [To regular object](#to-regular-object)
@@ -102,7 +106,6 @@ ctx = {
 } ;
 
 parsed = Expression.parse( '$fn -> 3' ) ;
-//deb( parsed ) ;
 doormen.equals( parsed.getFinalValue( ctx ) , 7 ) ;
 
 parsed = Expression.parse( '$object.fn -> 3' ) ;
@@ -283,13 +286,6 @@ var s = stringify( o ) ;
 // Check that the original object and the stringified/parsed object are equals:
 doormen.equals( o , parse( s ) ) ;
 //require( 'expect.js' )( o ).to.eql( parse( s ) ) ;
-```
-
-stringify ref.
-
-```js
-doormen.equals( stringify( { ref: Ref.create() } ) , 'ref: <Ref>\n' ) ;
-doormen.equals( stringify( { ref1: Ref.create( 'name' ) , ref2: new Ref( 'bob.age' ) } ) , 'ref1: $name\nref2: $bob.age\n' ) ;
 ```
 
 stringify templates.
@@ -1239,7 +1235,7 @@ doormen.equals( JSON.parse( JSON.stringify( o ) ) , {
 			name: 'ExpressionTag' ,
 			attributes: {
 				args: [
-					{ ref: "a" } ,
+					{ refParts: [ 'a' ] } ,
 					3
 				]
 			} ,
@@ -1914,50 +1910,13 @@ str = kungFig.saveJson( o ) ;
 doormen.equals( str , '[\n  "world!",\n  [\n    "data",\n    {\n      "@@": "#[2]"\n    }\n  ],\n  [\n    "data",\n    {\n      "@@": "#[1]"\n    }\n  ]\n]' ) ;
 ```
 
-<a name="ref"></a>
-# Ref
-Ref#getFinalValue().
-
-```js
-var ctx = { a: 42 } ;
-ctx.b = Ref.create( 'a' ) ;
-ctx.c = Ref.create( 'b' ) ;
-ctx.d = Ref.create( 'c' ) ;
-doormen.equals( ctx.b.getFinalValue( ctx ) , 42 ) ;
-doormen.equals( ctx.c.getFinalValue( ctx ) , 42 ) ;
-doormen.equals( ctx.d.getFinalValue( ctx ) , 42 ) ;
-```
-
-Ref#getRecursiveFinalValue().
-
-```js
-var ctx = { a: 42 , container: {} } ;
-ctx.container.b = Ref.create( 'a' ) ;
-ctx.container.c = Ref.create( 'container.b' ) ;
-ctx.container.d = Ref.create( 'container.c' ) ;
-ctx.refContainer = Ref.create( 'container' ) ;
-doormen.equals( ctx.refContainer.getRecursiveFinalValue( ctx ) , { b:42 , c:42 , d:42 } ) ;
-```
-
-Ref#toString().
-
-```js
-var ctx = { a: 42 } ;
-ctx.b = Ref.create( 'a' ) ;
-ctx.c = Ref.create( 'b' ) ;
-ctx.d = Ref.create( 'c' ) ;
-doormen.equals( ctx.b.toString( ctx ) , "42" ) ;
-doormen.equals( ctx.c.toString( ctx ) , "42" ) ;
-doormen.equals( ctx.d.toString( ctx ) , "42" ) ;
-```
-
 <a name="template"></a>
 # Template
 Template#getFinalValue().
 
 ```js
 var ctx = { a: 42 } ;
-ctx.b = Ref.create( 'a' ) ;
+ctx.b = Ref.create( '$a' ) ;
 ctx.c = Template.create( "Hello, I'm ${a}." ) ;
 ctx.d = Template.create( "Hello, I'm ${b}." ) ;
 doormen.equals( ctx.c.getFinalValue( ctx ) , "Hello, I'm 42." ) ;
@@ -1973,7 +1932,7 @@ var ref1 , tpl1 , tpl2 ;
 
 var ctx = { a: 42 } ;
 
-ctx.b = ref1 = Ref.create( 'a' ) ;
+ctx.b = ref1 = Ref.create( '$a' ) ;
 ctx.c = tpl1 = Template.create( "Hello, I'm ${a}." ) ;
 ctx.d = tpl2 = Template.create( "Hello, I'm ${b}." ) ;
 
@@ -1987,6 +1946,379 @@ doormen.equals( Dynamic.getRecursiveFinalValue( ctx , ctx ) , {
 doormen.equals( ctx.b === ref1 , true ) ;
 doormen.equals( ctx.c === tpl1 , true ) ;
 doormen.equals( ctx.d === tpl2 , true ) ;
+```
+
+<a name="ref"></a>
+# Ref
+<a name="ref-get"></a>
+## Get
+parse and get a simple ref.
+
+```js
+var ref_ ;
+
+var ctx = {
+	a: 1 ,
+	b: 2 ,
+	sub: {
+		c: 3 ,
+		sub: {
+			d: 4
+		}
+	}
+} ;
+
+ref_ = Ref.parse( '$x' ) ;
+doormen.equals( ref_.get( ctx ) , undefined ) ;
+
+ref_ = Ref.parse( '$x.y.z' ) ;
+doormen.equals( ref_.get( ctx ) , undefined ) ;
+
+ref_ = Ref.parse( '$a' ) ;
+doormen.equals( ref_.get( ctx ) , 1 ) ;
+
+ref_ = Ref.parse( '$b' ) ;
+doormen.equals( ref_.get( ctx ) , 2 ) ;
+
+ref_ = Ref.parse( '$sub' ) ;
+doormen.equals( ref_.get( ctx ) , ctx.sub ) ;
+
+ref_ = Ref.parse( '$sub.c' ) ;
+doormen.equals( ref_.get( ctx ) , 3 ) ;
+
+ref_ = Ref.parse( '$sub.sub' ) ;
+doormen.equals( ref_.get( ctx ) , ctx.sub.sub ) ;
+
+ref_ = Ref.parse( '$sub.sub.d' ) ;
+doormen.equals( ref_.get( ctx ) , 4 ) ;
+
+ref_ = Ref.parse( '$e' ) ;
+doormen.equals( ref_.get( ctx ) , undefined ) ;
+
+ref_ = Ref.parse( '$e.f.g' ) ;
+doormen.equals( ref_.get( ctx ) , undefined ) ;
+```
+
+parse and get a ref on a context having arrays.
+
+```js
+var ref_ ;
+
+var ctx = {
+	a: 1 ,
+	array: [ 'one' , 'two' , [ 'three' , 'four' , [ 'five' , 'six' ] ] , { array: [ 'seven' , 'eight' ] } ]
+} ;
+
+ref_ = Ref.parse( '$array' ) ;
+doormen.equals( ref_.get( ctx ) , ctx.array ) ;
+
+ref_ = Ref.parse( '$array[0]' ) ;
+doormen.equals( ref_.get( ctx ) , 'one' ) ;
+
+ref_ = Ref.parse( '$array[10]' ) ;
+doormen.equals( ref_.get( ctx ) , undefined ) ;
+
+ref_ = Ref.parse( '$array[10][10]' ) ;
+doormen.equals( ref_.get( ctx ) , undefined ) ;
+
+ref_ = Ref.parse( '$array[2][1]' ) ;
+doormen.equals( ref_.get( ctx ) , 'four' ) ;
+
+ref_ = Ref.parse( '$array[3]' ) ;
+doormen.equals( ref_.get( ctx ) , ctx.array[3] ) ;
+
+ref_ = Ref.parse( '$array[3].array' ) ;
+doormen.equals( ref_.get( ctx ) , ctx.array[3].array ) ;
+
+ref_ = Ref.parse( '$array[3].array[1]' ) ;
+doormen.equals( ref_.get( ctx ) , 'eight' ) ;
+
+ref_ = Ref.parse( '$[1]' ) ;
+doormen.equals( ref_.get( ctx.array ) , 'two' ) ;
+
+ref_ = Ref.parse( '$[2][1]' ) ;
+doormen.equals( ref_.get( ctx.array ) , 'four' ) ;
+
+ref_ = Ref.parse( '$[3].array[1]' ) ;
+doormen.equals( ref_.get( ctx.array ) , 'eight' ) ;
+```
+
+parse and get a ref with quoted keys.
+
+```js
+var ref_ ;
+
+var ctx = {
+	key: 'value' ,
+	"a key with spaces": {
+		"another one": 'sure'
+	}
+} ;
+
+ref_ = Ref.parse( '$key' ) ;
+doormen.equals( ref_.get( ctx ) , 'value' ) ;
+
+ref_ = Ref.parse( '$["key"]' ) ;
+doormen.equals( ref_.get( ctx ) , 'value' ) ;
+
+ref_ = Ref.parse( '$["a key with spaces"]' ) ;
+doormen.equals( ref_.get( ctx ) , ctx["a key with spaces"] ) ;
+
+ref_ = Ref.parse( '$["a key with spaces"]["another one"]' ) ;
+doormen.equals( ref_.get( ctx ) , 'sure' ) ;
+```
+
+parse and get a complex ref (ref having refs).
+
+```js
+var ref_ ;
+
+var ctx = {
+	a: 1 ,
+	b: 3 ,
+	c: 0 ,
+	k1: 'someKey' ,
+	k2: 'anotherKey' ,
+	array: [ 'one' , 'two' , [ 'three' , 'four' , [ 'five' , 'six' ] ] ] ,
+	object: {
+		someKey: 'value' ,
+		anotherKey: 'another value'
+	}
+} ;
+
+ref_ = Ref.parse( '$array[$a]' ) ;
+doormen.equals( ref_.get( ctx ) , 'two' ) ;
+
+ref_ = Ref.parse( '$array[$b]' ) ;
+doormen.equals( ref_.get( ctx ) , ctx.array[3] ) ;
+
+ref_ = Ref.parse( '$array[$c]' ) ;
+doormen.equals( ref_.get( ctx ) , 'one' ) ;
+
+ref_ = Ref.parse( '$object[$k1]' ) ;
+doormen.equals( ref_.get( ctx ) , 'value' ) ;
+
+ref_ = Ref.parse( '$object[$k2]' ) ;
+doormen.equals( ref_.get( ctx ) , 'another value' ) ;
+```
+
+function in context.
+
+```js
+var ref_ ;
+
+var ctx = {
+	fn: function myFunc() {}
+} ;
+
+ctx.fn.prop = 'val' ;
+
+ref_ = Ref.parse( '$fn' ) ;
+doormen.equals( ref_.get( ctx ) , ctx.fn ) ;
+
+ref_ = Ref.parse( '$fn.name' ) ;
+doormen.equals( ref_.get( ctx ) , 'myFunc' ) ;
+
+ref_ = Ref.parse( '$fn.prop' ) ;
+doormen.equals( ref_.get( ctx ) , 'val' ) ;
+```
+
+<a name="ref-set"></a>
+## Set
+set a simple ref.
+
+```js
+var ref_ ;
+
+var ctx = {
+	a: 1 ,
+	b: 2 ,
+	sub: {
+		c: 3 ,
+		sub: {
+			d: 4
+		}
+	}
+} ;
+
+ref_ = Ref.parse( '$a' ) ;
+ref_.set( ctx , 7 ) ;
+doormen.equals( ctx.a , 7 ) ;
+
+ref_ = Ref.parse( '$sub.c' ) ;
+ref_.set( ctx , 22 ) ;
+doormen.equals( ctx.sub.c , 22 ) ;
+
+ref_ = Ref.parse( '$sub.sub' ) ;
+ref_.set( ctx , 'hello' ) ;
+doormen.equals( ctx.sub.sub , 'hello' ) ;
+
+doormen.equals( ctx , {
+	a: 7 ,
+	b: 2 ,
+	sub: {
+		c: 22 ,
+		sub: 'hello'
+	}
+} ) ;
+```
+
+set a ref on a context having arrays.
+
+```js
+var ref_ ;
+
+var ctx = {
+	a: 1 ,
+	array: [ 'one' , 'two' , [ 'three' , 'four' , [ 'five' , 'six' ] ] , { array: [ 'seven' , 'eight' ] } ]
+} ;
+
+ref_ = Ref.parse( '$array[0]' ) ;
+ref_.set( ctx , 'ONE' ) ;
+doormen.equals( ctx.array[0] , 'ONE' ) ;
+
+ref_ = Ref.parse( '$array[3][1]' ) ;
+ref_.set( ctx , 4 ) ;
+doormen.equals( ctx.array[3][1] , 4 ) ;
+```
+
+set a complex ref (ref having refs).
+
+```js
+var ref_ ;
+
+var ctx = {
+	a: 1 ,
+	b: 3 ,
+	c: 0 ,
+	k1: 'someKey' ,
+	k2: 'anotherKey' ,
+	array: [ 'one' , 'two' , [ 'three' , 'four' , [ 'five' , 'six' ] ] ] ,
+	object: {
+		someKey: 'value' ,
+		anotherKey: 'another value'
+	}
+} ;
+
+ref_ = Ref.parse( '$array[$a]' ) ;
+ref_.set( ctx , 2 ) ;
+doormen.equals( ctx.array[1] , 2 ) ;
+
+ref_ = Ref.parse( '$object[$k1]' ) ;
+ref_.set( ctx , 'my value' ) ;
+doormen.equals( ctx.object.someKey , 'my value' ) ;
+
+ref_ = Ref.parse( '$object[$k2]' ) ;
+ref_.set( ctx , 'my other value' ) ;
+doormen.equals( ctx.object.anotherKey , 'my other value' ) ;
+```
+
+set and the auto-creation feature.
+
+```js
+var ref_ ;
+
+var ctx = {} ;
+
+ref_ = Ref.parse( '$a.b' ) ;
+ref_.set( ctx , 7 ) ;
+
+doormen.equals( ctx , {
+	a: { b: 7 }
+} ) ;
+
+ref_ = Ref.parse( '$c.d.e.f' ) ;
+ref_.set( ctx , 'Gee!' ) ;
+
+doormen.equals( ctx , {
+	a: { b: 7 } ,
+	c: { d: { e: { f: 'Gee!' } } }
+} ) ;
+
+ref_ = Ref.parse( '$arr[1]' ) ;
+ref_.set( ctx , 'one' ) ;
+
+doormen.equals( ctx , {
+	a: { b: 7 } ,
+	c: { d: { e: { f: 'Gee!' } } } ,
+	arr: [ undefined , 'one' ]
+} ) ;
+
+ref_ = Ref.parse( '$arr2[3][2][1]' ) ;
+ref_.set( ctx , 'nested' ) ;
+
+doormen.equals( ctx , {
+	a: { b: 7 } ,
+	c: { d: { e: { f: 'Gee!' } } } ,
+	arr: [ undefined , 'one' ] ,
+	arr2: [ undefined , undefined , undefined , [ undefined , undefined , [ undefined , 'nested' ] ] ]
+} ) ;
+```
+
+function in context.
+
+```js
+var ref_ ;
+
+var ctx = {
+	fn: function myFunc() {}
+} ;
+
+ctx.fn.prop = 'val' ;
+
+ref_ = Ref.parse( '$fn.prop' ) ;
+ref_.set( ctx , true ) ;
+doormen.equals( ctx.fn.prop , true ) ;
+
+ref_ = Ref.parse( '$fn.prop2' ) ;
+ref_.set( ctx , 'plop' ) ;
+doormen.equals( ctx.fn.prop2 , 'plop' ) ;
+```
+
+<a name="ref-misc"></a>
+## Misc
+Ref#getFinalValue().
+
+```js
+var ctx = { a: 42 } ;
+ctx.b = Ref.create( '$a' ) ;
+ctx.c = Ref.create( '$b' ) ;
+ctx.d = Ref.create( '$c' ) ;
+doormen.equals( ctx.b.getFinalValue( ctx ) , 42 ) ;
+doormen.equals( ctx.c.getFinalValue( ctx ) , 42 ) ;
+doormen.equals( ctx.d.getFinalValue( ctx ) , 42 ) ;
+```
+
+Ref#getRecursiveFinalValue().
+
+```js
+var ctx = { a: 42 , container: {} } ;
+ctx.container.b = Ref.create( '$a' ) ;
+ctx.container.c = Ref.create( '$container.b' ) ;
+ctx.container.d = Ref.create( '$container.c' ) ;
+ctx.refContainer = Ref.create( '$container' ) ;
+doormen.equals( ctx.refContainer.getRecursiveFinalValue( ctx ) , { b:42 , c:42 , d:42 } ) ;
+```
+
+Ref#toString().
+
+```js
+var ctx = { a: 42 } ;
+ctx.b = Ref.create( '$a' ) ;
+ctx.c = Ref.create( '$b' ) ;
+ctx.d = Ref.create( '$c' ) ;
+doormen.equals( ctx.b.toString( ctx ) , "42" ) ;
+doormen.equals( ctx.c.toString( ctx ) , "42" ) ;
+doormen.equals( ctx.d.toString( ctx ) , "42" ) ;
+```
+
+<a name="ref-parser-edge-cases"></a>
+## Parser edge cases
+Should stop parsing at first non-enclosed space.
+
+```js
+var ref_ = Ref.parse( '$x y z' ) ;
+doormen.equals( ref_.refParts , [ 'x' ] ) ;
 ```
 
 <a name="operator-behaviours"></a>

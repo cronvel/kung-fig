@@ -123,7 +123,6 @@ describe( "Expression" , function() {
 		} ;
 		
 		parsed = Expression.parse( '$fn -> 3' ) ;
-		//deb( parsed ) ;
 		doormen.equals( parsed.getFinalValue( ctx ) , 7 ) ;
 		
 		parsed = Expression.parse( '$object.fn -> 3' ) ;

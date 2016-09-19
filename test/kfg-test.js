@@ -163,9 +163,8 @@ describe( "KFG stringify" , function() {
 		//require( 'expect.js' )( o ).to.eql( parse( s ) ) ;
 	} ) ;
 	
-	it( "stringify ref" , function() {
-		doormen.equals( stringify( { ref: Ref.create() } ) , 'ref: <Ref>\n' ) ;
-		doormen.equals( stringify( { ref1: Ref.create( 'name' ) , ref2: new Ref( 'bob.age' ) } ) , 'ref1: $name\nref2: $bob.age\n' ) ;
+	it.skip( "stringify ref" , function() {
+		throw new Error( "Not coded" ) ;
 	} ) ;
 	
 	it( "stringify applicable ref" ) ;
@@ -1088,7 +1087,7 @@ describe( "ExpressionTag" , function() {
 					name: 'ExpressionTag' ,
 					attributes: {
 						args: [
-							{ ref: "a" } ,
+							{ refParts: [ 'a' ] } ,
 							3
 						]
 					} ,
