@@ -518,6 +518,12 @@ describe( "KFG parse" , function() {
 		doormen.equals( kungFig.getMeta( o ).getFirstTag( 'meta' ).content , { content: "test" } ) ;
 	} ) ;
 	
+	it( "zzz parse file with include on the root tag container" , function() {
+		
+		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/tag-container-master.kfg' , 'utf8' ) ) ;
+		console.log( o ) ;
+	} ) ;
+	
 	it( "parse ref" , function() {
 		var o ;
 		var ctx = { name: "Bob" , bob: { age: 43 } } ;
