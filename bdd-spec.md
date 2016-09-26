@@ -92,6 +92,48 @@ parsed = Expression.parse( 'ceil 4.7' ) ;
 doormen.equals( parsed.getFinalValue() , 5 ) ;
 ```
 
+parse/exec is-set? operators.
+
+```js
+var parsed ;
+
+parsed = Expression.parse( '$unknown is-set?' ) ;
+doormen.equals( parsed.getFinalValue() , false ) ;
+
+parsed = Expression.parse( '0 is-set?' ) ;
+doormen.equals( parsed.getFinalValue() , true ) ;
+
+parsed = Expression.parse( '1 is-set?' ) ;
+doormen.equals( parsed.getFinalValue() , true ) ;
+```
+
+parse/exec is-real? operators.
+
+```js
+var parsed ;
+
+parsed = Expression.parse( '0 is-real?' ) ;
+doormen.equals( parsed.getFinalValue() , true ) ;
+
+parsed = Expression.parse( '1 is-real?' ) ;
+doormen.equals( parsed.getFinalValue() , true ) ;
+
+parsed = Expression.parse( '1.5 is-real?' ) ;
+doormen.equals( parsed.getFinalValue() , true ) ;
+
+parsed = Expression.parse( '-1.5 is-real?' ) ;
+doormen.equals( parsed.getFinalValue() , true ) ;
+
+parsed = Expression.parse( '-1.5 is-real?' ) ;
+doormen.equals( parsed.getFinalValue() , true ) ;
+
+parsed = Expression.parse( '( 1 / 0 ) is-real?' ) ;
+doormen.equals( parsed.getFinalValue() , false ) ;
+
+parsed = Expression.parse( 'Infinity is-real?' ) ;
+doormen.equals( parsed.getFinalValue() , false ) ;
+```
+
 parse/exec apply operator.
 
 ```js
