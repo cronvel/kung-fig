@@ -77,16 +77,14 @@ describe( "Expression" , function() {
 		doormen.equals( parsed.getFinalValue() , 21 ) ;
 	} ) ;
 	
-	it( "parse/exec ternary operator" , function() {
+	it( "parse/exec hypot operator" , function() {
 		var parsed ;
 		
-		parsed = Expression.parse( '( 2 > 3 ) ? 4 5' ) ;
-		//deb( parsed ) ;
+		parsed = Expression.parse( 'hypot 3 4' ) ;
 		doormen.equals( parsed.getFinalValue() , 5 ) ;
 		
-		parsed = Expression.parse( '( 2 < 3 ) ? 4 5' ) ;
-		//deb( parsed ) ;
-		doormen.equals( parsed.getFinalValue() , 4 ) ;
+		parsed = Expression.parse( 'hypot 3 4 5' ) ;
+		doormen.equals( parsed.getFinalValue() , 7.0710678118654755 ) ;
 	} ) ;
 	
 	it( "parse/exec round/floor/ceil operator" , function() {
