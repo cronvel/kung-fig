@@ -2318,7 +2318,7 @@ doormen.equals( ctx.fn.prop2 , 'plop' ) ;
 
 <a name="ref-calling-a-function"></a>
 ## Calling a function
-parse and get a simple ref.
+parse and call a function pointed by a ref.
 
 ```js
 var ref_ ;
