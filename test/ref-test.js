@@ -358,9 +358,9 @@ describe( "Ref" , function() {
 		} ) ;
 	} ) ;
 	
-	describe( "Calling a function" , function() {
+	describe( "Calling a functions" , function() {
 		
-		it( "parse and get a simple ref" , function() {
+		it( "parse and call a function pointed by a ref" , function() {
 			var ref_ ;
 			
 			var ctx = {
