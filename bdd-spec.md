@@ -17,6 +17,7 @@
    - [Ref](#ref)
      - [Get](#ref-get)
      - [Set](#ref-set)
+     - [Calling a function](#ref-calling-a-function)
      - [Misc](#ref-misc)
      - [Parser edge cases](#ref-parser-edge-cases)
    - [Operator behaviours](#operator-behaviours)
@@ -2313,6 +2314,43 @@ doormen.equals( ctx.fn.prop , true ) ;
 ref_ = Ref.parse( '$fn.prop2' ) ;
 ref_.set( ctx , 'plop' ) ;
 doormen.equals( ctx.fn.prop2 , 'plop' ) ;
+```
+
+<a name="ref-calling-a-function"></a>
+## Calling a function
+parse and get a simple ref.
+
+```js
+var ref_ ;
+
+var ctx = {
+	a: 1 ,
+	b: 2 ,
+	fn: function( a , b , c ) {
+		return a + b + c + this.a + this.b + this.sub.c ;
+	} ,
+	sub: {
+		c: 3 ,
+		fn: function( a ) {
+			return a + this.c + this.sub.d ;
+		} ,
+		sub: {
+			d: 4 ,
+			fn: function( a ) {
+				return a + this.d ;
+			}
+		}
+	}
+} ;
+
+ref_ = Ref.parse( '$fn' ) ;
+doormen.equals( ref_.callFn( ctx , 4 , 5 , 6 ) , 21 ) ;
+
+ref_ = Ref.parse( '$sub.fn' ) ;
+doormen.equals( ref_.callFn( ctx , 10 ) , 17 ) ;
+
+ref_ = Ref.parse( '$sub.sub.fn' ) ;
+doormen.equals( ref_.callFn( ctx , -5 ) , -1 ) ;
 ```
 
 <a name="ref-misc"></a>
