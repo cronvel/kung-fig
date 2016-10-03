@@ -57,7 +57,6 @@ describe( "Expression" , function() {
 	it( "parse/exec a simple expression" , function() {
 		var parsed ;
 		parsed = Expression.parse( '1 + 2' ) ;
-		//deb( parsed ) ;
 		doormen.equals( parsed.getFinalValue() , 3 ) ;
 	} ) ;
 	
@@ -65,15 +64,12 @@ describe( "Expression" , function() {
 		var parsed ;
 		
 		parsed = Expression.parse( '1 + ( 2 + 3 )' ) ;
-		//deb( parsed ) ;
 		doormen.equals( parsed.getFinalValue() , 6 ) ;
 		
 		parsed = Expression.parse( '( 2 + 3 ) + 1' ) ;
-		//deb( parsed ) ;
 		doormen.equals( parsed.getFinalValue() , 6 ) ;
 		
 		parsed = Expression.parse( '( ( 5 + 1 ) + 6 ) + ( 2 + ( 3 + 4 ) )' ) ;
-		//deb( parsed ) ;
 		doormen.equals( parsed.getFinalValue() , 21 ) ;
 	} ) ;
 	
@@ -85,6 +81,19 @@ describe( "Expression" , function() {
 		
 		parsed = Expression.parse( 'hypot 3 4 5' ) ;
 		doormen.equals( parsed.getFinalValue() , 7.0710678118654755 ) ;
+	} ) ;
+	
+	it( "parse/exec three-way" , function() {
+		var parsed ;
+		
+		parsed = Expression.parse( '1 ??? 4 5 6' ) ;
+		doormen.equals( parsed.getFinalValue() , 6 ) ;
+		
+		parsed = Expression.parse( '-1 ??? 4 5 6' ) ;
+		doormen.equals( parsed.getFinalValue() , 4 ) ;
+		
+		parsed = Expression.parse( '0 ??? 4 5 6' ) ;
+		doormen.equals( parsed.getFinalValue() , 5 ) ;
 	} ) ;
 	
 	it( "parse/exec round/floor/ceil operator" , function() {

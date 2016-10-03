@@ -33,7 +33,6 @@ parse/exec a simple expression.
 ```js
 var parsed ;
 parsed = Expression.parse( '1 + 2' ) ;
-//deb( parsed ) ;
 doormen.equals( parsed.getFinalValue() , 3 ) ;
 ```
 
@@ -43,15 +42,12 @@ parse/exec a simple expression of expression.
 var parsed ;
 
 parsed = Expression.parse( '1 + ( 2 + 3 )' ) ;
-//deb( parsed ) ;
 doormen.equals( parsed.getFinalValue() , 6 ) ;
 
 parsed = Expression.parse( '( 2 + 3 ) + 1' ) ;
-//deb( parsed ) ;
 doormen.equals( parsed.getFinalValue() , 6 ) ;
 
 parsed = Expression.parse( '( ( 5 + 1 ) + 6 ) + ( 2 + ( 3 + 4 ) )' ) ;
-//deb( parsed ) ;
 doormen.equals( parsed.getFinalValue() , 21 ) ;
 ```
 
@@ -65,6 +61,21 @@ doormen.equals( parsed.getFinalValue() , 5 ) ;
 
 parsed = Expression.parse( 'hypot 3 4 5' ) ;
 doormen.equals( parsed.getFinalValue() , 7.0710678118654755 ) ;
+```
+
+parse/exec three-way.
+
+```js
+var parsed ;
+
+parsed = Expression.parse( '1 ??? 4 5 6' ) ;
+doormen.equals( parsed.getFinalValue() , 6 ) ;
+
+parsed = Expression.parse( '-1 ??? 4 5 6' ) ;
+doormen.equals( parsed.getFinalValue() , 4 ) ;
+
+parsed = Expression.parse( '0 ??? 4 5 6' ) ;
+doormen.equals( parsed.getFinalValue() , 5 ) ;
 ```
 
 parse/exec round/floor/ceil operator.
