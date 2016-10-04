@@ -86,11 +86,18 @@ describe( "Expression" , function() {
 	it( "parse/exec avg" , function() {
 		var parsed ;
 		
+		var ctx = {
+			array: [ 2 , 3 , 7 ]
+		} ;
+		
 		parsed = Expression.parse( 'avg 3 5 7' ) ;
 		doormen.equals( parsed.getFinalValue() , 5 ) ;
 		
 		parsed = Expression.parse( 'avg -4  10 27 3' ) ;
 		doormen.equals( parsed.getFinalValue() , 9 ) ;
+		
+		parsed = Expression.parse( 'avg $array' ) ;
+		doormen.equals( parsed.getFinalValue( ctx ) , 4 ) ;
 	} ) ;
 	
 	it( "parse/exec three-way" , function() {
