@@ -135,6 +135,71 @@ parsed = Expression.parse( 'ceil 4.7' ) ;
 doormen.equals( parsed.getFinalValue() , 5 ) ;
 ```
 
+parse/exec round/floor/ceil operator with precision.
+
+```js
+var parsed ;
+
+parsed = Expression.parse( 'round 4.3 1' ) ;
+doormen.equals( parsed.getFinalValue() , 4 ) ;
+
+parsed = Expression.parse( 'round 4.2 0.5' ) ;
+doormen.equals( parsed.getFinalValue() , 4 ) ;
+
+parsed = Expression.parse( 'round 4.3 0.5' ) ;
+doormen.equals( parsed.getFinalValue() , 4.5 ) ;
+
+parsed = Expression.parse( 'round 4.3 2' ) ;
+doormen.equals( parsed.getFinalValue() , 4 ) ;
+
+parsed = Expression.parse( 'round 5 2' ) ;
+doormen.equals( parsed.getFinalValue() , 6 ) ;
+
+
+parsed = Expression.parse( 'floor 4.3 1' ) ;
+doormen.equals( parsed.getFinalValue() , 4 ) ;
+
+parsed = Expression.parse( 'floor 4.2 0.5' ) ;
+doormen.equals( parsed.getFinalValue() , 4 ) ;
+
+parsed = Expression.parse( 'floor 4.3 0.5' ) ;
+doormen.equals( parsed.getFinalValue() , 4 ) ;
+
+parsed = Expression.parse( 'floor 4.8 0.5' ) ;
+doormen.equals( parsed.getFinalValue() , 4.5 ) ;
+
+parsed = Expression.parse( 'floor 4.3 2' ) ;
+doormen.equals( parsed.getFinalValue() , 4 ) ;
+
+parsed = Expression.parse( 'floor 5 2' ) ;
+doormen.equals( parsed.getFinalValue() , 4 ) ;
+
+parsed = Expression.parse( 'floor 5.5 2' ) ;
+doormen.equals( parsed.getFinalValue() , 4 ) ;
+
+
+parsed = Expression.parse( 'ceil 4.3 1' ) ;
+doormen.equals( parsed.getFinalValue() , 5 ) ;
+
+parsed = Expression.parse( 'ceil 4.2 0.5' ) ;
+doormen.equals( parsed.getFinalValue() , 4.5 ) ;
+
+parsed = Expression.parse( 'ceil 4.3 0.5' ) ;
+doormen.equals( parsed.getFinalValue() , 4.5 ) ;
+
+parsed = Expression.parse( 'ceil 4.6 0.5' ) ;
+doormen.equals( parsed.getFinalValue() , 5 ) ;
+
+parsed = Expression.parse( 'ceil 4.3 2' ) ;
+doormen.equals( parsed.getFinalValue() , 6 ) ;
+
+parsed = Expression.parse( 'ceil 5 2' ) ;
+doormen.equals( parsed.getFinalValue() , 6 ) ;
+
+parsed = Expression.parse( 'ceil 6.1 2' ) ;
+doormen.equals( parsed.getFinalValue() , 8 ) ;
+```
+
 parse/exec is-set? operators.
 
 ```js
