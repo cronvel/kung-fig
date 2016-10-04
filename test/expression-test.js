@@ -73,6 +73,18 @@ describe( "Expression" , function() {
 		doormen.equals( parsed.getFinalValue() , 21 ) ;
 	} ) ;
 	
+	it( "parse/exec an expression with operator repetition" , function() {
+		var parsed ;
+		
+		parsed = Expression.parse( '1 + 2 + 3' ) ;
+		doormen.equals( parsed.args , [ 1 , 2 , 3 ] ) ;
+		doormen.equals( parsed.getFinalValue() , 6 ) ;
+		
+		parsed = Expression.parse( '1 + 2 + 3 + -4' ) ;
+		doormen.equals( parsed.args , [ 1 , 2 , 3 , -4 ] ) ;
+		doormen.equals( parsed.getFinalValue() , 2 ) ;
+	} ) ;
+	
 	it( "parse/exec hypot operator" , function() {
 		var parsed ;
 		

@@ -51,6 +51,20 @@ parsed = Expression.parse( '( ( 5 + 1 ) + 6 ) + ( 2 + ( 3 + 4 ) )' ) ;
 doormen.equals( parsed.getFinalValue() , 21 ) ;
 ```
 
+parse/exec an expression with operator repetition.
+
+```js
+var parsed ;
+
+parsed = Expression.parse( '1 + 2 + 3' ) ;
+doormen.equals( parsed.args , [ 1 , 2 , 3 ] ) ;
+doormen.equals( parsed.getFinalValue() , 6 ) ;
+
+parsed = Expression.parse( '1 + 2 + 3 + -4' ) ;
+doormen.equals( parsed.args , [ 1 , 2 , 3 , -4 ] ) ;
+doormen.equals( parsed.getFinalValue() , 2 ) ;
+```
+
 parse/exec hypot operator.
 
 ```js
@@ -68,11 +82,18 @@ parse/exec avg.
 ```js
 var parsed ;
 
+var ctx = {
+	array: [ 2 , 3 , 7 ]
+} ;
+
 parsed = Expression.parse( 'avg 3 5 7' ) ;
 doormen.equals( parsed.getFinalValue() , 5 ) ;
 
 parsed = Expression.parse( 'avg -4  10 27 3' ) ;
 doormen.equals( parsed.getFinalValue() , 9 ) ;
+
+parsed = Expression.parse( 'avg $array' ) ;
+doormen.equals( parsed.getFinalValue( ctx ) , 4 ) ;
 ```
 
 parse/exec three-way.
