@@ -83,6 +83,16 @@ describe( "Expression" , function() {
 		doormen.equals( parsed.getFinalValue() , 7.0710678118654755 ) ;
 	} ) ;
 	
+	it( "parse/exec avg" , function() {
+		var parsed ;
+		
+		parsed = Expression.parse( 'avg 3 5 7' ) ;
+		doormen.equals( parsed.getFinalValue() , 5 ) ;
+		
+		parsed = Expression.parse( 'avg -4  10 27 3' ) ;
+		doormen.equals( parsed.getFinalValue() , 9 ) ;
+	} ) ;
+	
 	it( "parse/exec three-way" , function() {
 		var parsed ;
 		
