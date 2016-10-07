@@ -1,5 +1,7 @@
 # TOC
    - [Expression](#expression)
+     - [Syntax](#expression-syntax)
+     - [Operators](#expression-operators)
    - [KFG stringify](#kfg-stringify)
    - [KFG parse](#kfg-parse)
    - [Meta-Tag](#meta-tag)
@@ -28,6 +30,8 @@
  
 <a name="expression"></a>
 # Expression
+<a name="expression-syntax"></a>
+## Syntax
 parse/exec a simple expression.
 
 ```js
@@ -65,6 +69,72 @@ doormen.equals( parsed.args , [ 1 , 2 , 3 , -4 ] ) ;
 doormen.equals( parsed.getFinalValue() , 2 ) ;
 ```
 
+parse/exec an expression with implicit array creation.
+
+```js
+var parsed ;
+
+parsed = Expression.parse( '1 2 3' ) ;
+doormen.equals( parsed , [ 1 , 2 , 3 ]  ) ;
+
+parsed = Expression.parse( '1 , 2 , 3' ) ;
+doormen.equals( parsed , [ 1 , 2 , 3 ]  ) ;
+```
+
+parse/exec an expression with explicit array creation.
+
+```js
+var parsed ;
+
+parsed = Expression.parse( 'array' ) ;
+doormen.equals( parsed.args , [] ) ;
+doormen.equals( parsed.getFinalValue() , []  ) ;
+
+parsed = Expression.parse( 'array 1' ) ;
+doormen.equals( parsed.args , [ 1 ] ) ;
+doormen.equals( parsed.getFinalValue() , [ 1 ]  ) ;
+
+parsed = Expression.parse( 'array 1 2 3' ) ;
+doormen.equals( parsed.args , [ 1 , 2 , 3 ] ) ;
+doormen.equals( parsed.getFinalValue() , [ 1 , 2 , 3 ]  ) ;
+
+parsed = Expression.parse( 'array 1 , 2 , 3' ) ;
+doormen.equals( parsed.args , [ 1 , 2 , 3 ] ) ;
+doormen.equals( parsed.getFinalValue() , [ 1 , 2 , 3 ]  ) ;
+```
+
+parse/exec an expression featuring the comma separator syntax.
+
+```js
+var parsed ;
+
+parsed = Expression.parse( 'add 1 , 2 , 3' ) ;
+doormen.equals( parsed.getFinalValue() , 6 ) ;
+
+parsed = Expression.parse( 'add 2 * 4 , 3' ) ;
+doormen.equals( parsed.getFinalValue() , 11 ) ;
+
+parsed = Expression.parse( 'add 2 , 4 * 2 , 3' ) ;
+doormen.equals( parsed.getFinalValue() , 13 ) ;
+
+parsed = Expression.parse( 'add 2 , 4 , 3 * 2' ) ;
+doormen.equals( parsed.getFinalValue() , 12 ) ;
+
+parsed = Expression.parse( 'add 2 * 4 , 3 * 5 , 2' ) ;
+doormen.equals( parsed.getFinalValue() , 25 ) ;
+
+parsed = Expression.parse( 'add 2 * 4 , 3 * 5' ) ;
+doormen.equals( parsed.getFinalValue() , 23 ) ;
+
+parsed = Expression.parse( 'add 1 , 2 * 4 , 3' ) ;
+doormen.equals( parsed.getFinalValue() , 12 ) ;
+
+parsed = Expression.parse( 'add 1 + 3 , 2 * 4 , 3 ^ 2' ) ;
+doormen.equals( parsed.getFinalValue() , 21 ) ;
+```
+
+<a name="expression-operators"></a>
+## Operators
 parse/exec hypot operator.
 
 ```js

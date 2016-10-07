@@ -54,274 +54,338 @@ function debfn( v )
 
 describe( "Expression" , function() {
 	
-	it( "parse/exec a simple expression" , function() {
-		var parsed ;
-		parsed = Expression.parse( '1 + 2' ) ;
-		doormen.equals( parsed.getFinalValue() , 3 ) ;
+	describe( "Syntax" , function() {
+		
+		it( "parse/exec a simple expression" , function() {
+			var parsed ;
+			parsed = Expression.parse( '1 + 2' ) ;
+			doormen.equals( parsed.getFinalValue() , 3 ) ;
+		} ) ;
+		
+		it( "parse/exec a simple expression of expression" , function() {
+			var parsed ;
+			
+			parsed = Expression.parse( '1 + ( 2 + 3 )' ) ;
+			doormen.equals( parsed.getFinalValue() , 6 ) ;
+			
+			parsed = Expression.parse( '( 2 + 3 ) + 1' ) ;
+			doormen.equals( parsed.getFinalValue() , 6 ) ;
+			
+			parsed = Expression.parse( '( ( 5 + 1 ) + 6 ) + ( 2 + ( 3 + 4 ) )' ) ;
+			doormen.equals( parsed.getFinalValue() , 21 ) ;
+		} ) ;
+		
+		it( "parse/exec an expression with operator repetition" , function() {
+			var parsed ;
+			
+			parsed = Expression.parse( '1 + 2 + 3' ) ;
+			doormen.equals( parsed.args , [ 1 , 2 , 3 ] ) ;
+			doormen.equals( parsed.getFinalValue() , 6 ) ;
+			
+			parsed = Expression.parse( '1 + 2 + 3 + -4' ) ;
+			doormen.equals( parsed.args , [ 1 , 2 , 3 , -4 ] ) ;
+			doormen.equals( parsed.getFinalValue() , 2 ) ;
+		} ) ;
+		
+		it( "parse/exec an expression with implicit array creation" , function() {
+			var parsed ;
+			
+			parsed = Expression.parse( '1 2 3' ) ;
+			doormen.equals( parsed , [ 1 , 2 , 3 ]  ) ;
+			
+			parsed = Expression.parse( '1 , 2 , 3' ) ;
+			doormen.equals( parsed , [ 1 , 2 , 3 ]  ) ;
+		} ) ;
+		
+		it( "parse/exec an expression with explicit array creation" , function() {
+			var parsed ;
+			
+			parsed = Expression.parse( 'array' ) ;
+			doormen.equals( parsed.args , [] ) ;
+			doormen.equals( parsed.getFinalValue() , []  ) ;
+			
+			parsed = Expression.parse( 'array 1' ) ;
+			doormen.equals( parsed.args , [ 1 ] ) ;
+			doormen.equals( parsed.getFinalValue() , [ 1 ]  ) ;
+			
+			parsed = Expression.parse( 'array 1 2 3' ) ;
+			doormen.equals( parsed.args , [ 1 , 2 , 3 ] ) ;
+			doormen.equals( parsed.getFinalValue() , [ 1 , 2 , 3 ]  ) ;
+			
+			parsed = Expression.parse( 'array 1 , 2 , 3' ) ;
+			doormen.equals( parsed.args , [ 1 , 2 , 3 ] ) ;
+			doormen.equals( parsed.getFinalValue() , [ 1 , 2 , 3 ]  ) ;
+		} ) ;
+		
+		it( "parse/exec an expression featuring the comma separator syntax" , function() {
+			var parsed ;
+			
+			parsed = Expression.parse( 'add 1 , 2 , 3' ) ;
+			doormen.equals( parsed.getFinalValue() , 6 ) ;
+			
+			parsed = Expression.parse( 'add 2 * 4 , 3' ) ;
+			doormen.equals( parsed.getFinalValue() , 11 ) ;
+			
+			parsed = Expression.parse( 'add 2 , 4 * 2 , 3' ) ;
+			doormen.equals( parsed.getFinalValue() , 13 ) ;
+			
+			parsed = Expression.parse( 'add 2 , 4 , 3 * 2' ) ;
+			doormen.equals( parsed.getFinalValue() , 12 ) ;
+			
+			parsed = Expression.parse( 'add 2 * 4 , 3 * 5 , 2' ) ;
+			doormen.equals( parsed.getFinalValue() , 25 ) ;
+			
+			parsed = Expression.parse( 'add 2 * 4 , 3 * 5' ) ;
+			doormen.equals( parsed.getFinalValue() , 23 ) ;
+			
+			parsed = Expression.parse( 'add 1 , 2 * 4 , 3' ) ;
+			doormen.equals( parsed.getFinalValue() , 12 ) ;
+			
+			parsed = Expression.parse( 'add 1 + 3 , 2 * 4 , 3 ^ 2' ) ;
+			doormen.equals( parsed.getFinalValue() , 21 ) ;
+		} ) ;
 	} ) ;
+		
 	
-	it( "parse/exec a simple expression of expression" , function() {
-		var parsed ;
+	
+	describe( "Operators" , function() {
 		
-		parsed = Expression.parse( '1 + ( 2 + 3 )' ) ;
-		doormen.equals( parsed.getFinalValue() , 6 ) ;
+		it( "parse/exec hypot operator" , function() {
+			var parsed ;
+			
+			parsed = Expression.parse( 'hypot 3 4' ) ;
+			doormen.equals( parsed.getFinalValue() , 5 ) ;
+			
+			parsed = Expression.parse( 'hypot 3 4 5' ) ;
+			doormen.equals( parsed.getFinalValue() , 7.0710678118654755 ) ;
+		} ) ;
 		
-		parsed = Expression.parse( '( 2 + 3 ) + 1' ) ;
-		doormen.equals( parsed.getFinalValue() , 6 ) ;
+		it( "parse/exec avg" , function() {
+			var parsed ;
+			
+			var ctx = {
+				array: [ 2 , 3 , 7 ]
+			} ;
+			
+			parsed = Expression.parse( 'avg 3 5 7' ) ;
+			doormen.equals( parsed.getFinalValue() , 5 ) ;
+			
+			parsed = Expression.parse( 'avg -4  10 27 3' ) ;
+			doormen.equals( parsed.getFinalValue() , 9 ) ;
+			
+			parsed = Expression.parse( 'avg $array' ) ;
+			doormen.equals( parsed.getFinalValue( ctx ) , 4 ) ;
+		} ) ;
 		
-		parsed = Expression.parse( '( ( 5 + 1 ) + 6 ) + ( 2 + ( 3 + 4 ) )' ) ;
-		doormen.equals( parsed.getFinalValue() , 21 ) ;
+		it( "parse/exec three-way" , function() {
+			var parsed ;
+			
+			parsed = Expression.parse( '1 ??? 4 5 6' ) ;
+			doormen.equals( parsed.getFinalValue() , 6 ) ;
+			
+			parsed = Expression.parse( '-1 ??? 4 5 6' ) ;
+			doormen.equals( parsed.getFinalValue() , 4 ) ;
+			
+			parsed = Expression.parse( '0 ??? 4 5 6' ) ;
+			doormen.equals( parsed.getFinalValue() , 5 ) ;
+		} ) ;
+		
+		it( "parse/exec round/floor/ceil operator" , function() {
+			var parsed ;
+			
+			parsed = Expression.parse( 'round 4.3' ) ;
+			doormen.equals( parsed.getFinalValue() , 4 ) ;
+			
+			parsed = Expression.parse( 'floor 4.3' ) ;
+			doormen.equals( parsed.getFinalValue() , 4 ) ;
+			
+			parsed = Expression.parse( 'ceil 4.3' ) ;
+			doormen.equals( parsed.getFinalValue() , 5 ) ;
+			
+			parsed = Expression.parse( 'round 4.7' ) ;
+			doormen.equals( parsed.getFinalValue() , 5 ) ;
+			
+			parsed = Expression.parse( 'floor 4.7' ) ;
+			doormen.equals( parsed.getFinalValue() , 4 ) ;
+			
+			parsed = Expression.parse( 'ceil 4.7' ) ;
+			doormen.equals( parsed.getFinalValue() , 5 ) ;
+		} ) ;
+		
+		it( "parse/exec round/floor/ceil operator with precision" , function() {
+			var parsed ;
+			
+			parsed = Expression.parse( 'round 4.3 1' ) ;
+			doormen.equals( parsed.getFinalValue() , 4 ) ;
+			
+			parsed = Expression.parse( 'round 4.2 0.5' ) ;
+			doormen.equals( parsed.getFinalValue() , 4 ) ;
+			
+			parsed = Expression.parse( 'round 4.3 0.5' ) ;
+			doormen.equals( parsed.getFinalValue() , 4.5 ) ;
+			
+			parsed = Expression.parse( 'round 4.3 2' ) ;
+			doormen.equals( parsed.getFinalValue() , 4 ) ;
+			
+			parsed = Expression.parse( 'round 5 2' ) ;
+			doormen.equals( parsed.getFinalValue() , 6 ) ;
+			
+			
+			parsed = Expression.parse( 'floor 4.3 1' ) ;
+			doormen.equals( parsed.getFinalValue() , 4 ) ;
+			
+			parsed = Expression.parse( 'floor 4.2 0.5' ) ;
+			doormen.equals( parsed.getFinalValue() , 4 ) ;
+			
+			parsed = Expression.parse( 'floor 4.3 0.5' ) ;
+			doormen.equals( parsed.getFinalValue() , 4 ) ;
+			
+			parsed = Expression.parse( 'floor 4.8 0.5' ) ;
+			doormen.equals( parsed.getFinalValue() , 4.5 ) ;
+			
+			parsed = Expression.parse( 'floor 4.3 2' ) ;
+			doormen.equals( parsed.getFinalValue() , 4 ) ;
+			
+			parsed = Expression.parse( 'floor 5 2' ) ;
+			doormen.equals( parsed.getFinalValue() , 4 ) ;
+			
+			parsed = Expression.parse( 'floor 5.5 2' ) ;
+			doormen.equals( parsed.getFinalValue() , 4 ) ;
+			
+			
+			parsed = Expression.parse( 'ceil 4.3 1' ) ;
+			doormen.equals( parsed.getFinalValue() , 5 ) ;
+			
+			parsed = Expression.parse( 'ceil 4.2 0.5' ) ;
+			doormen.equals( parsed.getFinalValue() , 4.5 ) ;
+			
+			parsed = Expression.parse( 'ceil 4.3 0.5' ) ;
+			doormen.equals( parsed.getFinalValue() , 4.5 ) ;
+			
+			parsed = Expression.parse( 'ceil 4.6 0.5' ) ;
+			doormen.equals( parsed.getFinalValue() , 5 ) ;
+			
+			parsed = Expression.parse( 'ceil 4.3 2' ) ;
+			doormen.equals( parsed.getFinalValue() , 6 ) ;
+			
+			parsed = Expression.parse( 'ceil 5 2' ) ;
+			doormen.equals( parsed.getFinalValue() , 6 ) ;
+			
+			parsed = Expression.parse( 'ceil 6.1 2' ) ;
+			doormen.equals( parsed.getFinalValue() , 8 ) ;
+		} ) ;
+		
+		it( "parse/exec is-set? operators" , function() {
+			var parsed ;
+			
+			parsed = Expression.parse( '$unknown is-set?' ) ;
+			doormen.equals( parsed.getFinalValue() , false ) ;
+			
+			parsed = Expression.parse( '0 is-set?' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			
+			parsed = Expression.parse( '1 is-set?' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+		} ) ;
+		
+		it( "parse/exec is-real? operators" , function() {
+			var parsed ;
+			
+			parsed = Expression.parse( '0 is-real?' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			
+			parsed = Expression.parse( '1 is-real?' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			
+			parsed = Expression.parse( '1.5 is-real?' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			
+			parsed = Expression.parse( '-1.5 is-real?' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			
+			parsed = Expression.parse( '-1.5 is-real?' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			
+			parsed = Expression.parse( '( 1 / 0 ) is-real?' ) ;
+			doormen.equals( parsed.getFinalValue() , false ) ;
+			
+			parsed = Expression.parse( 'Infinity is-real?' ) ;
+			doormen.equals( parsed.getFinalValue() , false ) ;
+		} ) ;
+		
+		it( "parse/exec apply operator" , function() {
+			var parsed , ctx , object ;
+			
+			object = { a: 3 , b: 5 } ;
+			object.fn = function( v ) { return this.a * v + this.b ; }
+			
+			ctx = {
+				fn: function( v ) { return v * 2 + 1 ; } ,
+				object: object
+			} ;
+			
+			parsed = Expression.parse( '$fn -> 3' ) ;
+			doormen.equals( parsed.getFinalValue( ctx ) , 7 ) ;
+			
+			parsed = Expression.parse( '$object.fn -> 3' ) ;
+			//deb( parsed ) ;
+			doormen.equals( parsed.getFinalValue( ctx ) , 14 ) ;
+		} ) ;
+		
+		it( "parse/exec custom operator" , function() {
+			var parsed , ctx , operators , object , v ;
+			
+			object = { a: 3 , b: 5 } ;
+			object.fn = function( v ) { return this.a * v + this.b ; }
+			
+			ctx = {
+				fn: function( v ) { return v * 2 + 1 ; } ,
+				object: object
+			} ;
+			
+			operators = {
+				D: function( args ) {
+					var sum = 0 , n = args[ 0 ] , faces = args[ 1 ] ;
+					for ( ; n > 0 ; n -- ) { sum += 1 + Math.floor( Math.random() * faces ) ; }
+					return sum ;
+				}
+			} ;
+			
+			parsed = Expression.parse( '3 D 6' , operators ) ;
+			//deb( parsed ) ;
+			v = parsed.getFinalValue( ctx ) ;
+			//deb( v ) ;
+			doormen.equals( v >= 1 && v <= 18 , true ) ;
+		} ) ;
+		
+		it( "parse/exec apply operator and substitution regexp" , function() {
+			var parsed , ctx , regexp ;
+			
+			regexp = /hello/ ;
+			kungFig.parse.builtin.regex.toExtended( regexp ) ;
+			
+			ctx = {
+				str: 'hello world!' ,
+				regexp: regexp ,
+				array: [
+					'hi' ,
+					'hello' ,
+					'hi there!' ,
+					'hello world!'
+				]
+			} ;
+			
+			parsed = Expression.parse( '$regexp.filter -> $array' ) ;
+			//deb( parsed ) ;
+			doormen.equals( parsed.getFinalValue( ctx ) , [ 'hello' , 'hello world!' ] ) ;
+			
+			kungFig.parse.builtin.regex.toSubstitution( regexp , 'hi' ) ;
+			
+			parsed = Expression.parse( '$regexp.substitute -> $str' ) ;
+			//deb( parsed ) ;
+			doormen.equals( parsed.getFinalValue( ctx ) , 'hi world!' ) ;
+		} ) ;
 	} ) ;
-	
-	it( "parse/exec an expression with operator repetition" , function() {
-		var parsed ;
-		
-		parsed = Expression.parse( '1 + 2 + 3' ) ;
-		doormen.equals( parsed.args , [ 1 , 2 , 3 ] ) ;
-		doormen.equals( parsed.getFinalValue() , 6 ) ;
-		
-		parsed = Expression.parse( '1 + 2 + 3 + -4' ) ;
-		doormen.equals( parsed.args , [ 1 , 2 , 3 , -4 ] ) ;
-		doormen.equals( parsed.getFinalValue() , 2 ) ;
-	} ) ;
-	
-	it( "parse/exec hypot operator" , function() {
-		var parsed ;
-		
-		parsed = Expression.parse( 'hypot 3 4' ) ;
-		doormen.equals( parsed.getFinalValue() , 5 ) ;
-		
-		parsed = Expression.parse( 'hypot 3 4 5' ) ;
-		doormen.equals( parsed.getFinalValue() , 7.0710678118654755 ) ;
-	} ) ;
-	
-	it( "parse/exec avg" , function() {
-		var parsed ;
-		
-		var ctx = {
-			array: [ 2 , 3 , 7 ]
-		} ;
-		
-		parsed = Expression.parse( 'avg 3 5 7' ) ;
-		doormen.equals( parsed.getFinalValue() , 5 ) ;
-		
-		parsed = Expression.parse( 'avg -4  10 27 3' ) ;
-		doormen.equals( parsed.getFinalValue() , 9 ) ;
-		
-		parsed = Expression.parse( 'avg $array' ) ;
-		doormen.equals( parsed.getFinalValue( ctx ) , 4 ) ;
-	} ) ;
-	
-	it( "parse/exec three-way" , function() {
-		var parsed ;
-		
-		parsed = Expression.parse( '1 ??? 4 5 6' ) ;
-		doormen.equals( parsed.getFinalValue() , 6 ) ;
-		
-		parsed = Expression.parse( '-1 ??? 4 5 6' ) ;
-		doormen.equals( parsed.getFinalValue() , 4 ) ;
-		
-		parsed = Expression.parse( '0 ??? 4 5 6' ) ;
-		doormen.equals( parsed.getFinalValue() , 5 ) ;
-	} ) ;
-	
-	it( "parse/exec round/floor/ceil operator" , function() {
-		var parsed ;
-		
-		parsed = Expression.parse( 'round 4.3' ) ;
-		doormen.equals( parsed.getFinalValue() , 4 ) ;
-		
-		parsed = Expression.parse( 'floor 4.3' ) ;
-		doormen.equals( parsed.getFinalValue() , 4 ) ;
-		
-		parsed = Expression.parse( 'ceil 4.3' ) ;
-		doormen.equals( parsed.getFinalValue() , 5 ) ;
-		
-		parsed = Expression.parse( 'round 4.7' ) ;
-		doormen.equals( parsed.getFinalValue() , 5 ) ;
-		
-		parsed = Expression.parse( 'floor 4.7' ) ;
-		doormen.equals( parsed.getFinalValue() , 4 ) ;
-		
-		parsed = Expression.parse( 'ceil 4.7' ) ;
-		doormen.equals( parsed.getFinalValue() , 5 ) ;
-	} ) ;
-	
-	it( "parse/exec round/floor/ceil operator with precision" , function() {
-		var parsed ;
-		
-		parsed = Expression.parse( 'round 4.3 1' ) ;
-		doormen.equals( parsed.getFinalValue() , 4 ) ;
-		
-		parsed = Expression.parse( 'round 4.2 0.5' ) ;
-		doormen.equals( parsed.getFinalValue() , 4 ) ;
-		
-		parsed = Expression.parse( 'round 4.3 0.5' ) ;
-		doormen.equals( parsed.getFinalValue() , 4.5 ) ;
-		
-		parsed = Expression.parse( 'round 4.3 2' ) ;
-		doormen.equals( parsed.getFinalValue() , 4 ) ;
-		
-		parsed = Expression.parse( 'round 5 2' ) ;
-		doormen.equals( parsed.getFinalValue() , 6 ) ;
-		
-		
-		parsed = Expression.parse( 'floor 4.3 1' ) ;
-		doormen.equals( parsed.getFinalValue() , 4 ) ;
-		
-		parsed = Expression.parse( 'floor 4.2 0.5' ) ;
-		doormen.equals( parsed.getFinalValue() , 4 ) ;
-		
-		parsed = Expression.parse( 'floor 4.3 0.5' ) ;
-		doormen.equals( parsed.getFinalValue() , 4 ) ;
-		
-		parsed = Expression.parse( 'floor 4.8 0.5' ) ;
-		doormen.equals( parsed.getFinalValue() , 4.5 ) ;
-		
-		parsed = Expression.parse( 'floor 4.3 2' ) ;
-		doormen.equals( parsed.getFinalValue() , 4 ) ;
-		
-		parsed = Expression.parse( 'floor 5 2' ) ;
-		doormen.equals( parsed.getFinalValue() , 4 ) ;
-		
-		parsed = Expression.parse( 'floor 5.5 2' ) ;
-		doormen.equals( parsed.getFinalValue() , 4 ) ;
-		
-		
-		parsed = Expression.parse( 'ceil 4.3 1' ) ;
-		doormen.equals( parsed.getFinalValue() , 5 ) ;
-		
-		parsed = Expression.parse( 'ceil 4.2 0.5' ) ;
-		doormen.equals( parsed.getFinalValue() , 4.5 ) ;
-		
-		parsed = Expression.parse( 'ceil 4.3 0.5' ) ;
-		doormen.equals( parsed.getFinalValue() , 4.5 ) ;
-		
-		parsed = Expression.parse( 'ceil 4.6 0.5' ) ;
-		doormen.equals( parsed.getFinalValue() , 5 ) ;
-		
-		parsed = Expression.parse( 'ceil 4.3 2' ) ;
-		doormen.equals( parsed.getFinalValue() , 6 ) ;
-		
-		parsed = Expression.parse( 'ceil 5 2' ) ;
-		doormen.equals( parsed.getFinalValue() , 6 ) ;
-		
-		parsed = Expression.parse( 'ceil 6.1 2' ) ;
-		doormen.equals( parsed.getFinalValue() , 8 ) ;
-	} ) ;
-	
-	it( "parse/exec is-set? operators" , function() {
-		var parsed ;
-		
-		parsed = Expression.parse( '$unknown is-set?' ) ;
-		doormen.equals( parsed.getFinalValue() , false ) ;
-		
-		parsed = Expression.parse( '0 is-set?' ) ;
-		doormen.equals( parsed.getFinalValue() , true ) ;
-		
-		parsed = Expression.parse( '1 is-set?' ) ;
-		doormen.equals( parsed.getFinalValue() , true ) ;
-	} ) ;
-	
-	it( "parse/exec is-real? operators" , function() {
-		var parsed ;
-		
-		parsed = Expression.parse( '0 is-real?' ) ;
-		doormen.equals( parsed.getFinalValue() , true ) ;
-		
-		parsed = Expression.parse( '1 is-real?' ) ;
-		doormen.equals( parsed.getFinalValue() , true ) ;
-		
-		parsed = Expression.parse( '1.5 is-real?' ) ;
-		doormen.equals( parsed.getFinalValue() , true ) ;
-		
-		parsed = Expression.parse( '-1.5 is-real?' ) ;
-		doormen.equals( parsed.getFinalValue() , true ) ;
-		
-		parsed = Expression.parse( '-1.5 is-real?' ) ;
-		doormen.equals( parsed.getFinalValue() , true ) ;
-		
-		parsed = Expression.parse( '( 1 / 0 ) is-real?' ) ;
-		doormen.equals( parsed.getFinalValue() , false ) ;
-		
-		parsed = Expression.parse( 'Infinity is-real?' ) ;
-		doormen.equals( parsed.getFinalValue() , false ) ;
-	} ) ;
-	
-	it( "parse/exec apply operator" , function() {
-		var parsed , ctx , object ;
-		
-		object = { a: 3 , b: 5 } ;
-		object.fn = function( v ) { return this.a * v + this.b ; }
-		
-		ctx = {
-			fn: function( v ) { return v * 2 + 1 ; } ,
-			object: object
-		} ;
-		
-		parsed = Expression.parse( '$fn -> 3' ) ;
-		doormen.equals( parsed.getFinalValue( ctx ) , 7 ) ;
-		
-		parsed = Expression.parse( '$object.fn -> 3' ) ;
-		//deb( parsed ) ;
-		doormen.equals( parsed.getFinalValue( ctx ) , 14 ) ;
-	} ) ;
-	
-	it( "parse/exec custom operator" , function() {
-		var parsed , ctx , operators , object , v ;
-		
-		object = { a: 3 , b: 5 } ;
-		object.fn = function( v ) { return this.a * v + this.b ; }
-		
-		ctx = {
-			fn: function( v ) { return v * 2 + 1 ; } ,
-			object: object
-		} ;
-		
-		operators = {
-			D: function( args ) {
-				var sum = 0 , n = args[ 0 ] , faces = args[ 1 ] ;
-				for ( ; n > 0 ; n -- ) { sum += 1 + Math.floor( Math.random() * faces ) ; }
-				return sum ;
-			}
-		} ;
-		
-		parsed = Expression.parse( '3 D 6' , operators ) ;
-		//deb( parsed ) ;
-		v = parsed.getFinalValue( ctx ) ;
-		//deb( v ) ;
-		doormen.equals( v >= 1 && v <= 18 , true ) ;
-	} ) ;
-	
-	it( "parse/exec apply operator and substitution regexp" , function() {
-		var parsed , ctx , regexp ;
-		
-		regexp = /hello/ ;
-		kungFig.parse.builtin.regex.toExtended( regexp ) ;
-		
-		ctx = {
-			str: 'hello world!' ,
-			regexp: regexp ,
-			array: [
-				'hi' ,
-				'hello' ,
-				'hi there!' ,
-				'hello world!'
-			]
-		} ;
-		
-		parsed = Expression.parse( '$regexp.filter -> $array' ) ;
-		//deb( parsed ) ;
-		doormen.equals( parsed.getFinalValue( ctx ) , [ 'hello' , 'hello world!' ] ) ;
-		
-		kungFig.parse.builtin.regex.toSubstitution( regexp , 'hi' ) ;
-		
-		parsed = Expression.parse( '$regexp.substitute -> $str' ) ;
-		//deb( parsed ) ;
-		doormen.equals( parsed.getFinalValue( ctx ) , 'hi world!' ) ;
-	} ) ;
-	
-	it( "more expression tests..." ) ;
 } ) ;
 
 
