@@ -135,6 +135,21 @@ doormen.equals( parsed.getFinalValue() , 21 ) ;
 
 <a name="expression-operators"></a>
 ## Operators
+parse/exec concat operator.
+
+```js
+var parsed ;
+
+parsed = Expression.parse( 'concat 3 4 5' ) ;
+doormen.equals( parsed.getFinalValue() , [ 3 , 4 , 5 ] ) ;
+
+parsed = Expression.parse( 'concat ( 3 4 ) ( 5 6 )' ) ;
+doormen.equals( parsed.getFinalValue() , [ 3 , 4 , 5 , 6 ] ) ;
+
+parsed = Expression.parse( 'concat ( array 3 , 4 ) , ( array 5 , 6 ) , ( array 7 , 8 )' ) ;
+doormen.equals( parsed.getFinalValue() , [ 3 , 4 , 5 , 6 , 7 , 8 ] ) ;
+```
+
 parse/exec hypot operator.
 
 ```js
