@@ -135,6 +135,24 @@ doormen.equals( parsed.getFinalValue() , 21 ) ;
 
 <a name="expression-operators"></a>
 ## Operators
+parse/exec has operator.
+
+```js
+var parsed ;
+
+parsed = Expression.parse( '( 3 4 5 ) has 4' ) ;
+doormen.equals( parsed.getFinalValue() , true ) ;
+
+parsed = Expression.parse( '( 3 4 5 ) has 6' ) ;
+doormen.equals( parsed.getFinalValue() , false ) ;
+
+parsed = Expression.parse( '( 3 "str" 5 ) has "str"' ) ;
+doormen.equals( parsed.getFinalValue() , true ) ;
+
+parsed = Expression.parse( '( 3 "str" 5 ) has "str2"' ) ;
+doormen.equals( parsed.getFinalValue() , false ) ;
+```
+
 parse/exec concat operator.
 
 ```js

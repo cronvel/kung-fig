@@ -150,6 +150,22 @@ describe( "Expression" , function() {
 	
 	describe( "Operators" , function() {
 		
+		it( "parse/exec has operator" , function() {
+			var parsed ;
+			
+			parsed = Expression.parse( '( 3 4 5 ) has 4' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			
+			parsed = Expression.parse( '( 3 4 5 ) has 6' ) ;
+			doormen.equals( parsed.getFinalValue() , false ) ;
+			
+			parsed = Expression.parse( '( 3 "str" 5 ) has "str"' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			
+			parsed = Expression.parse( '( 3 "str" 5 ) has "str2"' ) ;
+			doormen.equals( parsed.getFinalValue() , false ) ;
+		} ) ;
+		
 		it( "parse/exec concat operator" , function() {
 			var parsed ;
 			
