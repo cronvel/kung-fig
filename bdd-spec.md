@@ -1069,6 +1069,41 @@ doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello ${name}!' ) ;
 doormen.equals( o.tpl.apply( { name: "Bob" } ) , 'Hello Bob!' ) ;
 ```
 
+parse template elements.
+
+```js
+var o ;
+
+var babel = Babel.create() ;
+
+babel.extend( {
+	en: {
+		gIndex: { m: 0 , f: 1 , n: 3 , h: 3 } ,
+		element: {
+			apple: { g:'n', altn: [ 'apple' , 'apples' ] } ,
+			horse: { altn: [ 'horse' , 'horses' ] } ,
+		}
+	} ,
+	fr: {
+		gIndex: { m: 0 , f: 1 , n: 2 , h: 2 } ,
+		element: {
+			apple: { g:'f', altn: [ 'pomme' , 'pommes' ] } ,
+			horse: { altng: [ [ 'cheval' , 'jument' ] , [ 'chevaux' , 'juments' ] ] } ,
+		}
+	}
+} ) ;
+
+var babelFr = babel.use( 'fr' ) ;
+//o = parse( "el: <TemplateElement>" ) ;
+//doormen.equals( o.el.toString() , '' ) ;
+
+o = parse( "el: $%> horse" ) ;
+surfaceEquals( o.el , { t: "horse" , babel: Babel.default } ) ;
+doormen.equals( o.el.toString() , 'horse' ) ;
+
+// --------  HERE  -------------------------------------------------------------------------------------------------------------
+```
+
 parse a file with operators.
 
 ```js

@@ -40,9 +40,12 @@ var TemplateElement = kungFig.TemplateElement ;
 var Tag = kungFig.Tag ;
 var TagContainer = kungFig.TagContainer ;
 
+var Babel = require( 'babel-tower' ) ;
+
 var doormen = require( 'doormen' ) ;
 var expect = require( 'expect.js' ) ;
 var string = require( 'string-kit' ) ;
+var tree = require( 'tree-kit' ) ;
 var fs = require( 'fs' ) ;
 
 
@@ -55,6 +58,11 @@ function deb( v )
 function debfn( v )
 {
 	console.log( string.inspect( { style: 'color' , depth: 5 , proto: true , funcDetails: true } , v ) ) ;
+}
+
+function surfaceEquals( a , b )
+{
+	doormen.equals( tree.extend( { own:true } , {} , a ) , b ) ;
 }
 
 
@@ -675,11 +683,35 @@ describe( "KFG parse" , function() {
 	it( "parse template elements" , function() {
 		var o ;
 		
+		var babel = Babel.create() ;
+		
+		babel.extend( {
+			en: {
+				gIndex: { m: 0 , f: 1 , n: 3 , h: 3 } ,
+				element: {
+					apple: { g:'n', altn: [ 'apple' , 'apples' ] } ,
+					horse: { altn: [ 'horse' , 'horses' ] } ,
+				}
+			} ,
+			fr: {
+				gIndex: { m: 0 , f: 1 , n: 2 , h: 2 } ,
+				element: {
+					apple: { g:'f', altn: [ 'pomme' , 'pommes' ] } ,
+					horse: { altng: [ [ 'cheval' , 'jument' ] , [ 'chevaux' , 'juments' ] ] } ,
+				}
+			}
+		} ) ;
+		
+		var babelFr = babel.use( 'fr' ) ;
+
 		//o = parse( "el: <TemplateElement>" ) ;
 		//doormen.equals( o.el.toString() , '' ) ;
 		
-		o = parse( "el: $%> banana" ) ;
-		deb( o ) ;
+		o = parse( "el: $%> horse" ) ;
+		surfaceEquals( o.el , { t: "horse" , babel: Babel.default } ) ;
+		doormen.equals( o.el.toString() , 'horse' ) ;
+		
+// --------  HERE  -------------------------------------------------------------------------------------------------------------
 	} ) ;
 	
 	it( "parse a file with operators" , function() {
