@@ -36,6 +36,7 @@ var stringify = kungFig.stringify ;
 var parse = kungFig.parse ;
 var Ref = kungFig.Ref ;
 var Template = kungFig.Template ;
+var TemplateElement = kungFig.TemplateElement ;
 var Tag = kungFig.Tag ;
 var TagContainer = kungFig.TagContainer ;
 
@@ -669,6 +670,16 @@ describe( "KFG parse" , function() {
 		o = parse( 'tpl: $$"Hello ${name}!"' ) ;
 		doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello ${name}!' ) ;
 		doormen.equals( o.tpl.apply( { name: "Bob" } ) , 'Hello Bob!' ) ;
+	} ) ;
+	
+	it( "parse template elements" , function() {
+		var o ;
+		
+		//o = parse( "el: <TemplateElement>" ) ;
+		//doormen.equals( o.el.toString() , '' ) ;
+		
+		o = parse( "el: $%> banana" ) ;
+		deb( o ) ;
 	} ) ;
 	
 	it( "parse a file with operators" , function() {
