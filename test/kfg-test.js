@@ -681,7 +681,7 @@ describe( "KFG parse" , function() {
 	} ) ;
 	
 	it( "parse template elements" , function() {
-		var o ;
+		var o , o2 ;
 		
 		var babel = Babel.create() ;
 		
@@ -704,13 +704,25 @@ describe( "KFG parse" , function() {
 		
 		var babelFr = babel.use( 'fr' ) ;
 
-		//o = parse( "el: <TemplateElement>" ) ;
-		//doormen.equals( o.el.toString() , '' ) ;
-		
 		o = parse( "el: $%> horse" ) ;
 		surfaceEquals( o.el , { t: "horse" , babel: Babel.default } ) ;
 		doormen.equals( o.el.toString() , 'horse' ) ;
-		
+
+		o = parse( "el: $%> horse[altn:horse|horses]" ) ;
+		surfaceEquals( o.el , { t: "horse" , altn: [ "horse" , "horses" ] , babel: Babel.default } ) ;
+		doormen.equals( o.el.toString() , 'horse' ) ;
+		console.log( o.el ) ;
+		console.log( o.el instanceof Babel.Element ) ;
+		o2 = parse( '$> I like ${el}[n:2]!' ) ;
+		doormen.equals( o2.toString( { el: { altn: [ "horse" , "horses" ] } } ) , 'I like horses!' ) ;
+		doormen.equals( o2.toString( { el: Babel.Element.create( { altn: [ "horse" , "horses" ] } ) } ) , 'I like horses!' ) ;
+		console.log( "TemplateElement:" , TemplateElement ) ;
+		var e = TemplateElement.create( { altn: [ "horse" , "horses" ] } ) ;
+		//delete e.babel ;
+		e = tree.extend( { own: true } , {} , e ) ;
+		doormen.equals( o2.toString( { el: e } ) , 'I like horses!' ) ;
+		//doormen.equals( o2.toString( { el: TemplateElement.create( { altn: [ "horse" , "horses" ] } ) } ) , 'I like horses!' ) ;
+		//doormen.equals( o2.toString( o ) , 'I like horses!' ) ;
 // --------  HERE  -------------------------------------------------------------------------------------------------------------
 	} ) ;
 	
