@@ -703,18 +703,18 @@ describe( "KFG parse" , function() {
 		babel.extend( {
 			en: {
 				gIndex: { m: 0 , f: 1 , n: 3 , h: 3 } ,
-				element: {
+				elements: {
 					apple: { g:'n', altn: [ 'apple' , 'apples' ] } ,
 					horse: { altn: [ 'horse' , 'horses' ] } ,
 				}
 			} ,
 			fr: {
 				gIndex: { m: 0 , f: 1 , n: 2 , h: 2 } ,
-				sentence: {
+				sentences: {
 					"I like ${el}[n:many]!": "J'aime les ${el}[n:many]!" ,
 					"I like ${el}[n:many/g:f]!": "J'aime les ${el}[n:many/g:f]!" ,
 				} ,
-				element: {
+				elements: {
 					apple: { g:'f', altn: [ 'pomme' , 'pommes' ] } ,
 					horse: { altng: [ [ 'cheval' , 'jument' ] , [ 'chevaux' , 'juments' ] ] } ,
 				}
