@@ -1072,7 +1072,24 @@ doormen.equals( o.tpl.apply( { name: "Bob" } ) , 'Hello Bob!' ) ;
 parse template elements.
 
 ```js
-var o ;
+var o , o2 ;
+
+o = parse( "el: $%> horse" ) ;
+surfaceEquals( o.el , { t: "horse" , babel: Babel.default } ) ;
+doormen.equals( o.el.toString() , 'horse' ) ;
+
+o = parse( "el: $%> horse[altn:horse|horses]" ) ;
+surfaceEquals( o.el , { t: "horse" , altn: [ "horse" , "horses" ] , babel: Babel.default } ) ;
+doormen.equals( o.el.toString() , 'horse' ) ;
+
+o2 = parse( '$> I like ${el}[n:many]!' ) ;
+doormen.equals( o2.toString( o ) , 'I like horses!' ) ;
+```
+
+parse template sentence and element, and use a babel instance to localize it.
+
+```js
+var o , o2 ;
 
 var babel = Babel.create() ;
 
@@ -1086,6 +1103,10 @@ babel.extend( {
 	} ,
 	fr: {
 		gIndex: { m: 0 , f: 1 , n: 2 , h: 2 } ,
+		sentence: {
+			"I like ${el}[n:many]!": "J'aime les ${el}[n:many]!" ,
+			"I like ${el}[n:many/g:f]!": "J'aime les ${el}[n:many/g:f]!" ,
+		} ,
 		element: {
 			apple: { g:'f', altn: [ 'pomme' , 'pommes' ] } ,
 			horse: { altng: [ [ 'cheval' , 'jument' ] , [ 'chevaux' , 'juments' ] ] } ,
@@ -1094,14 +1115,26 @@ babel.extend( {
 } ) ;
 
 var babelFr = babel.use( 'fr' ) ;
-//o = parse( "el: <TemplateElement>" ) ;
-//doormen.equals( o.el.toString() , '' ) ;
 
+// Using Babel fr
 o = parse( "el: $%> horse" ) ;
 surfaceEquals( o.el , { t: "horse" , babel: Babel.default } ) ;
-doormen.equals( o.el.toString() , 'horse' ) ;
+doormen.equals( o.el.toString( { __babel: babelFr } ) , 'cheval' ) ;
 
-// --------  HERE  -------------------------------------------------------------------------------------------------------------
+o = parse( "el: $%> horse[altn:horse|horses]" ) ;
+surfaceEquals( o.el , { t: "horse" , altn: [ "horse" , "horses" ] , babel: Babel.default } ) ;
+doormen.equals( o.el.toString( { __babel: babelFr } ) , 'cheval' ) ;
+o.__babel = babelFr ;
+
+o2 = parse( '$> I like ${el}[n:many]!' ) ;
+doormen.equals( o2.toString( o ) , "J'aime les chevaux!" ) ;
+
+o2 = parse( '$> I like ${el}[n:many/g:f]!' ) ;
+doormen.equals( o2.toString( o ) , "J'aime les juments!" ) ;
+
+o.el.g = 'f' ;
+o2 = parse( '$> I like ${el}[n:many]!' ) ;
+doormen.equals( o2.toString( o ) , "J'aime les juments!" ) ;
 ```
 
 parse a file with operators.

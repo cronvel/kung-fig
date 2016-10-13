@@ -683,6 +683,21 @@ describe( "KFG parse" , function() {
 	it( "parse template elements" , function() {
 		var o , o2 ;
 		
+		o = parse( "el: $%> horse" ) ;
+		surfaceEquals( o.el , { t: "horse" , babel: Babel.default } ) ;
+		doormen.equals( o.el.toString() , 'horse' ) ;
+		
+		o = parse( "el: $%> horse[altn:horse|horses]" ) ;
+		surfaceEquals( o.el , { t: "horse" , altn: [ "horse" , "horses" ] , babel: Babel.default } ) ;
+		doormen.equals( o.el.toString() , 'horse' ) ;
+		
+		o2 = parse( '$> I like ${el}[n:many]!' ) ;
+		doormen.equals( o2.toString( o ) , 'I like horses!' ) ;
+	} ) ;
+	
+	it( "parse template sentence and element, and use a babel instance to localize it" , function() {
+		var o , o2 ;
+		
 		var babel = Babel.create() ;
 		
 		babel.extend( {
@@ -695,6 +710,10 @@ describe( "KFG parse" , function() {
 			} ,
 			fr: {
 				gIndex: { m: 0 , f: 1 , n: 2 , h: 2 } ,
+				sentence: {
+					"I like ${el}[n:many]!": "J'aime les ${el}[n:many]!" ,
+					"I like ${el}[n:many/g:f]!": "J'aime les ${el}[n:many/g:f]!" ,
+				} ,
 				element: {
 					apple: { g:'f', altn: [ 'pomme' , 'pommes' ] } ,
 					horse: { altng: [ [ 'cheval' , 'jument' ] , [ 'chevaux' , 'juments' ] ] } ,
@@ -703,27 +722,26 @@ describe( "KFG parse" , function() {
 		} ) ;
 		
 		var babelFr = babel.use( 'fr' ) ;
-
+		
+		// Using Babel fr
 		o = parse( "el: $%> horse" ) ;
 		surfaceEquals( o.el , { t: "horse" , babel: Babel.default } ) ;
-		doormen.equals( o.el.toString() , 'horse' ) ;
-
+		doormen.equals( o.el.toString( { __babel: babelFr } ) , 'cheval' ) ;
+		
 		o = parse( "el: $%> horse[altn:horse|horses]" ) ;
 		surfaceEquals( o.el , { t: "horse" , altn: [ "horse" , "horses" ] , babel: Babel.default } ) ;
-		doormen.equals( o.el.toString() , 'horse' ) ;
-		console.log( o.el ) ;
-		console.log( o.el instanceof Babel.Element ) ;
-		o2 = parse( '$> I like ${el}[n:2]!' ) ;
-		doormen.equals( o2.toString( { el: { altn: [ "horse" , "horses" ] } } ) , 'I like horses!' ) ;
-		doormen.equals( o2.toString( { el: Babel.Element.create( { altn: [ "horse" , "horses" ] } ) } ) , 'I like horses!' ) ;
-		console.log( "TemplateElement:" , TemplateElement ) ;
-		var e = TemplateElement.create( { altn: [ "horse" , "horses" ] } ) ;
-		//delete e.babel ;
-		e = tree.extend( { own: true } , {} , e ) ;
-		doormen.equals( o2.toString( { el: e } ) , 'I like horses!' ) ;
-		//doormen.equals( o2.toString( { el: TemplateElement.create( { altn: [ "horse" , "horses" ] } ) } ) , 'I like horses!' ) ;
-		//doormen.equals( o2.toString( o ) , 'I like horses!' ) ;
-// --------  HERE  -------------------------------------------------------------------------------------------------------------
+		doormen.equals( o.el.toString( { __babel: babelFr } ) , 'cheval' ) ;
+		o.__babel = babelFr ;
+		
+		o2 = parse( '$> I like ${el}[n:many]!' ) ;
+		doormen.equals( o2.toString( o ) , "J'aime les chevaux!" ) ;
+		
+		o2 = parse( '$> I like ${el}[n:many/g:f]!' ) ;
+		doormen.equals( o2.toString( o ) , "J'aime les juments!" ) ;
+		
+		o.el.g = 'f' ;
+		o2 = parse( '$> I like ${el}[n:many]!' ) ;
+		doormen.equals( o2.toString( o ) , "J'aime les juments!" ) ;
 	} ) ;
 	
 	it( "parse a file with operators" , function() {
