@@ -912,6 +912,21 @@ describe( "Meta-Tag" , function() {
 		doormen.equals( stringify( o ) , '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\n\nsome: data\n' ) ;
 	} ) ;
 	
+	it( "meta doctype filtering" , function() {
+		var o ;
+		var kfg = '[[doctype supadoc]]\nsome: data' ;
+		
+		o = parse( kfg ) ;
+		doormen.equals( kungFig.getMeta( o ).getTags( 'doctype' )[ 0 ].attributes , 'supadoc' ) ;
+		doormen.equals( o , { some: "data" } ) ;
+		
+		o = parse( kfg , { doctype: "supadoc" } ) ;
+		doormen.equals( kungFig.getMeta( o ).getTags( 'doctype' )[ 0 ].attributes , 'supadoc' ) ;
+		doormen.equals( o , { some: "data" } ) ;
+		
+		doormen.shouldThrow( () => parse( kfg , { doctype: "baddoc" } ) ) ;
+	} ) ;
+	
 	it( "parse meta-tag, with meta hook" , function() {
 		var o , hookTriggered = 0 ;
 		
@@ -946,15 +961,18 @@ describe( "Meta-Tag" , function() {
 	} ) ;
 	
 	it( "meta hook & loading (include, ...)" , function() {
-		var o , hookTriggered = 0 ;
+		var o , hookTriggered = 0 , nonIncludeHookTriggered = 0 , includeHookTriggered = 0 ;
 		
 		var options = {
-			metaHook: function( meta ) {
+			metaHook: function( meta , options ) {
 				//if ( meta ) { console.log( "Received meta: " , meta , "\n>>>" , meta.getFirstTag( 'meta' ).content ) ; }
 				//else { console.log( "No meta" ) ; }
 				
 				//doormen.equals( meta.getTags( 'meta' )[ 0 ].content , { author: "Joe Doe" , copyright: 2016 } ) ;
 				hookTriggered ++ ;
+				
+				if ( options.isInclude ) { includeHookTriggered ++ ; }
+				else { nonIncludeHookTriggered ++ ; }
 			}
 		} ;
 		
@@ -963,7 +981,9 @@ describe( "Meta-Tag" , function() {
 		//console.log( "data:" , o ) ;
 		//console.log( "meta:" , kungFig.getMeta( o ) , "\n###" , kungFig.getMeta( o ).getFirstTag( 'meta' ).content ) ;
 		
-		doormen.equals( hookTriggered , 1 ) ;
+		doormen.equals( hookTriggered , 2 ) ;
+		doormen.equals( includeHookTriggered , 1 ) ;
+		doormen.equals( nonIncludeHookTriggered , 1 ) ;
 		doormen.equals( o , { include: { some: { more: "content"  } } , some: "content" } ) ;
 		doormen.equals( kungFig.getMeta( o ).getFirstTag( 'meta' ).content , "master" ) ;
 	} ) ;
