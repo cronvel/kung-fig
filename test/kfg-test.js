@@ -47,6 +47,7 @@ var expect = require( 'expect.js' ) ;
 var string = require( 'string-kit' ) ;
 var tree = require( 'tree-kit' ) ;
 var fs = require( 'fs' ) ;
+var pathModule = require( 'path' ) ;
 
 
 
@@ -913,8 +914,9 @@ describe( "Meta-Tag" , function() {
 	} ) ;
 	
 	it( "meta doctype filtering" , function() {
-		var o ;
-		var kfg = '[[doctype supadoc]]\nsome: data' ;
+		var o , kfg ;
+		
+		kfg = '[[doctype supadoc]]\nsome: data' ;
 		
 		o = parse( kfg ) ;
 		doormen.equals( kungFig.getMeta( o ).getTags( "doctype" )[ 0 ].attributes , "supadoc" ) ;
@@ -931,6 +933,10 @@ describe( "Meta-Tag" , function() {
 		doormen.equals( o , { some: "data" } ) ;
 		
 		doormen.shouldThrow( () => parse( kfg , { doctype: [ "baddoc" , "wrongdoc" ] } ) ) ;
+		
+		kfg = '\nsome: data' ;
+		doormen.shouldThrow( () => parse( kfg , { doctype: "supadoc" } ) ) ;
+		doormen.shouldThrow( () => parse( kfg , { doctype: [ "supadoc" , "cooldoc" ] } ) ) ;
 	} ) ;
 	
 	it( "parse meta-tag, with meta hook" , function() {
@@ -976,6 +982,11 @@ describe( "Meta-Tag" , function() {
 				
 				//doormen.equals( meta.getTags( 'meta' )[ 0 ].content , { author: "Joe Doe" , copyright: 2016 } ) ;
 				hookTriggered ++ ;
+				
+				if ( [ "meta-hook.kfg" , "meta-hook-include.kfg" ].indexOf( pathModule.basename( options.file ) ) === -1 )
+				{
+					throw new Error( "Bad options.file" ) ;
+				}
 				
 				if ( options.isInclude ) { includeHookTriggered ++ ; }
 				else { nonIncludeHookTriggered ++ ; }

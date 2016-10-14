@@ -1315,8 +1315,9 @@ doormen.equals( stringify( o ) , '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016
 meta doctype filtering.
 
 ```js
-var o ;
-var kfg = '[[doctype supadoc]]\nsome: data' ;
+var o , kfg ;
+
+kfg = '[[doctype supadoc]]\nsome: data' ;
 
 o = parse( kfg ) ;
 doormen.equals( kungFig.getMeta( o ).getTags( "doctype" )[ 0 ].attributes , "supadoc" ) ;
@@ -1333,6 +1334,10 @@ doormen.equals( kungFig.getMeta( o ).getTags( "doctype" )[ 0 ].attributes , "sup
 doormen.equals( o , { some: "data" } ) ;
 
 doormen.shouldThrow( () => parse( kfg , { doctype: [ "baddoc" , "wrongdoc" ] } ) ) ;
+
+kfg = '\nsome: data' ;
+doormen.shouldThrow( () => parse( kfg , { doctype: "supadoc" } ) ) ;
+doormen.shouldThrow( () => parse( kfg , { doctype: [ "supadoc" , "cooldoc" ] } ) ) ;
 ```
 
 parse meta-tag, with meta hook.
@@ -1384,6 +1389,11 @@ var options = {
 		
 		//doormen.equals( meta.getTags( 'meta' )[ 0 ].content , { author: "Joe Doe" , copyright: 2016 } ) ;
 		hookTriggered ++ ;
+		
+		if ( [ "meta-hook.kfg" , "meta-hook-include.kfg" ].indexOf( pathModule.basename( options.file ) ) === -1 )
+		{
+			throw new Error( "Bad options.file" ) ;
+		}
 		
 		if ( options.isInclude ) { includeHookTriggered ++ ; }
 		else { nonIncludeHookTriggered ++ ; }
