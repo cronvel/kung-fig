@@ -1319,14 +1319,20 @@ var o ;
 var kfg = '[[doctype supadoc]]\nsome: data' ;
 
 o = parse( kfg ) ;
-doormen.equals( kungFig.getMeta( o ).getTags( 'doctype' )[ 0 ].attributes , 'supadoc' ) ;
+doormen.equals( kungFig.getMeta( o ).getTags( "doctype" )[ 0 ].attributes , "supadoc" ) ;
 doormen.equals( o , { some: "data" } ) ;
 
 o = parse( kfg , { doctype: "supadoc" } ) ;
-doormen.equals( kungFig.getMeta( o ).getTags( 'doctype' )[ 0 ].attributes , 'supadoc' ) ;
+doormen.equals( kungFig.getMeta( o ).getTags( "doctype" )[ 0 ].attributes , "supadoc" ) ;
 doormen.equals( o , { some: "data" } ) ;
 
 doormen.shouldThrow( () => parse( kfg , { doctype: "baddoc" } ) ) ;
+
+o = parse( kfg , { doctype: [ "cooldoc" , "supadoc" ] } ) ;
+doormen.equals( kungFig.getMeta( o ).getTags( "doctype" )[ 0 ].attributes , "supadoc" ) ;
+doormen.equals( o , { some: "data" } ) ;
+
+doormen.shouldThrow( () => parse( kfg , { doctype: [ "baddoc" , "wrongdoc" ] } ) ) ;
 ```
 
 parse meta-tag, with meta hook.
