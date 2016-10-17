@@ -424,7 +424,7 @@ describe( "KFG parse" , function() {
 		doormen.equals( parse( '> \tHello World!' ) , "\tHello World!" ) ;
 		doormen.equals( parse( '> \t\t\tHello\t\tWorld!' ) , "\t\t\tHello\t\tWorld!" ) ;
 		doormen.equals( parse( 'Hello World!' ) , "Hello World!" ) ;
-		doormen.equals( parse( '  Hello World!  ' ) , "Hello World!" ) ;
+		//doormen.equals( parse( '  Hello World!  ' ) , "Hello World!" ) ;	// Do not work with space indentation
 		doormen.equals( parse( '"123"' ) , "123" ) ;
 		doormen.equals( parse( '"123.45"' ) , "123.45" ) ;
 		doormen.equals( parse( '> 123' ) , "123" ) ;
@@ -483,6 +483,54 @@ describe( "KFG parse" , function() {
 	it( "parse a basic file" , function() {
 		
 		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/simple.kfg' , 'utf8' ) ) ;
+		
+		doormen.equals( o , {
+			a: 1,
+			b: 2,
+			c: 3,
+			'some key': 'some value',
+			d: null,
+			e1: true,
+			e2: true,
+			e3: true,
+			f1: false,
+			f2: false,
+			f3: false,
+			g: NaN,
+			h: Infinity,
+			i: -Infinity,
+			j1: {},
+			j2: [],
+			sub: 
+				{ sub: { 'another key': 'another value' },
+				k: 1,
+				l: 2,
+				sub2: { subway: 'no!' } },
+			sub2: { no: 'way' },
+			sub3: { nooo: 'wai!' },
+			text: "A cool story:\n\nIt all started a Friday..." ,
+			"inline-string": "This is an inline string!" ,
+			list: [ 'one', 'two', 'three' ],
+			'list embedded': 
+				[ { 'first name': 'Bill', 'last name': 'Baroud' },
+				{ 'first name': 'Joe', 'last name': 'Doe' },
+				[ [ 'one', 'two', 'three' ],
+				[ 'four', 'five' ],
+				[ 'six', 'seven' ] ],
+				{ 'first name': 'Bill', 'last name': 'Baroud' },
+				{ 'first name': 'Joe', 'last name': 'Doe' },
+				[ [ 'one', 'two', 'three' ],
+				[ 'four', 'five' ],
+				[ 'six', 'seven' ] ] ]
+		} ) ;
+		
+		//console.log( kungFig.getMeta( o ).getFirstTag( 'meta' ).content ) ;
+		doormen.equals( kungFig.getMeta( o ).getFirstTag( 'meta' ).content , { content: "test" } ) ;
+	} ) ;
+	
+	it( "parse a file using 4-spaces to indent" , function() {
+		
+		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/spaces-indent.kfg' , 'utf8' ) ) ;
 		
 		doormen.equals( o , {
 			a: 1,

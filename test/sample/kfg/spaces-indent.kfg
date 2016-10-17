@@ -1,0 +1,85 @@
+
+[[meta]]
+    content: test
+
+
+a: 1
+b:2
+c   :3
+
+# a comment
+        # another comment
+
+some key  :  some value
+d: null
+e1 :true
+e2: on
+e3: yes   
+f1 : false
+f2 : no
+f3 : off
+g : NaN
+h : Infinity
+i : -Infinity
+j1: <object>
+j2: <array>
+
+sub:
+    sub  :   
+        another key  : another value
+    k:1
+    l : 2
+    "sub2" :
+        "subway": "no!"
+sub2:
+    no : way
+
+sub3:
+    nooo : wai!
+
+text :
+    > A cool story:
+    >
+    > It all started a Friday...
+
+inline-string: > This is an inline string!
+
+list:
+    - one
+    - two
+    - > three
+
+list embedded:
+    # Without array beautifier
+    -
+        first name: Bill
+        last name: Baroud
+    -
+        first name: Joe
+        "last name": "Doe"
+    -
+        -
+            - one
+            - two
+            - three
+        -
+            - four
+            - five
+        -
+            - six
+            - seven
+    
+    # With compact-list beautifier
+    -   first name: Bill
+        last name: Baroud
+    -   first name: Joe
+        last name: Doe
+    -   -   - one
+            - two
+            - three
+        -   - four
+            - five
+        -   - six
+            - seven
+
+
