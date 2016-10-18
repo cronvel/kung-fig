@@ -104,23 +104,50 @@ The addition of **refs**, **templates** and **expressions** appears in 2016 to s
 
 
 
-### Table of Content
+### Table of Contents
 
 * [Constants](#ref.constants)
+* [Numbers](#ref.numbers)
 * [Strings](#ref.strings)
-* [Built-in constructors](#ref.builtin-constructors)
+* [Arrays](#ref.arrays)
+* [Objects](#ref.objects)
+* [Constructors](#ref.constructors)
+	* [Built-in constructors](#ref.builtin-constructors)
 
 
 
 <a name="ref.constants"></a>
 ### Constants
 
+Constants represent special values.
+
+They are few of them in KFG:
 * `null`: represent the `null` value.
 * `true`, `yes`, `on`: they are all representing the boolean `true` value.
 * `false`, `no`, `off`: they are all representing the boolean `false` value.
 * `NaN`: a number type whose value is *Not A Number* (e.g.: what we get when we divide by zero)
 * `Infinity`: a number type whose value is `Infinity`
 * `-Infinity`: a number type whose value is `-Infinity`
+
+E.g.:
+
+```
+debug: on
+```
+
+... would produce `{ "debug": true }`.
+
+
+<a name="ref.numbers"></a>
+### Numbers
+
+Numbers are written down directly. As anyone would expect, this KFG file will produce `{ "age": 42 }`:
+
+```
+age: 42
+```
+
+The scientific notation is also supported, like this: `value: 1.23e45`
 
 
 
@@ -143,7 +170,7 @@ name: Joe Doe
 ```
 
 Implicit strings are fine, however they should not collide with an existing [constants](#ref.constants),
-should not be a number and should not start by a symbole used by the Spellcast syntax, like:
+should not be a valid number and should not start by a symbole used by the Spellcast syntax, like:
 
 - spaces and tabs (they are trimmed out)
 - double-quote `"`
@@ -242,8 +269,104 @@ All the other rules of [introduced string](#ref.strings.introduced) applies.
 
 
 
+<a name="ref.arrays"></a>
+#### Arrays
+
+The array presentation in KFG is simply a list where each item/element is introduced by a minus sign `-` followed by a space ` `.
+
+For example, this would produce `[ "banana" , "apple" , "pear" ]`:
+
+```
+- banana
+- apple
+- pear
+```
+
+This is really a simple and easy to read syntax.
+
+Arrays are implicit, a *node* is an array as soon as it contains an array's element.
+
+Thus an empty array cannot be declared implicitly -- it has no element!
+So they should be declared explicitly with the [constructor syntax](#ref.contructors).
+
+E.g.:
+
+```
+empty: <Array>
+```
+... would produce `{ "empty": [] }`.
+
+Defining array of array would look like this:
+
+```
+-
+	- one
+	- two
+	- three
+-
+	- four
+	- five
+	- six
+-
+	- seven
+	- eight
+	- nine
+```
+
+Indeed, each top-level element is a container, so the nested array should be one-level deeper.
+
+However, the KFG supports this neat syntax inspired by YAML:
+
+```
+-	- one
+	- two
+	- three
+-	- four
+	- five
+	- six
+-	- seven
+	- eight
+	- nine
+```
+
+That's it: if an element/item of an array is a container (array or object), its first child can be put on the same line.
+For that purpose, a tab should be inserted right after the minus sign `-`.
+
+If you have insisted on using spaces instead of tabs for indentation (something that is not recommended),
+you should put exactly 3 spaces (not 4, for alignment reasons) right after the minus sign `-`.
+
+The same with object inside arrays:
+
+```
+-	first-name: Joe
+	last-name: Doe
+-	first-name: Bill
+	last-name: Baroud
+-	first-name: Jane
+	last-name: Doe
+```
+
+
+
+<a name="ref.objects"></a>
+#### Arrays
+
+The object presentation in KFG is simply a list of key, followed by a colon `:` followed by the value.
+
+
+
+<a name="ref.constructors"></a>
+### Constructors
+
+The constructor syntax consists of a constructor put inside angle brackets (`<` and `>`).
+
+The constructor should be put before the regular KFG value, if any.
+That KFG value will be passed to the constructor function.
+
+
+
 <a name="ref.builtin-constructors"></a>
-### Built-in constructors
+#### Built-in constructors
 
 * `<Object>`, `<object>`: Object constructor. Object are implicit in KFG, there is only one case where this constructor is needed:
   when we want to create an empty object.
