@@ -16,13 +16,15 @@ But it also features **custom classes/constructors**, **operations** and **tree 
 
 ## Getting started
 
+If you have already used YAML before, KFG will look familiar to you.
+For example:
 
 ```
 first-name: Joe
 last-name: Doe
 ```
 
-... is parsed into `{ "first-name": "Joe" , "last-name": "Doe" }`.
+... will produce `{ "first-name": "Joe" , "last-name": "Doe" }`.
 
 
 ```
@@ -32,7 +34,43 @@ fruits:
 	- pear
 ```
 
-... is parsed into `{ "fruits": [ "banana" , "apple" , "pear" ] }`.
+... will produce `{ "fruits": [ "banana" , "apple" , "pear" ] }`.
+
+Since there are no braces to delimit blocks in KFG, that's the indentation that produce the hierarchy.
+Here the array is the child of the *fruits* property of the top-level object.
+
+Note that **tabs SHOULD be used** to indent the KFG. This is the **recommended** way. One tab per level.
+
+If you insist with spaces, KFG only supports the 4-spaces indentation.
+
+Note how objects and arrays are implicit in KFG.
+
+A *node* is an object if it contains a key followed by a colon `:`.
+A *node* is an array if it contains array element introduced by the minus sign `-`.
+
+But KFG can do a lot more! Using few built-in constructors, we can store date or binary:
+
+```
+date: <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)
+bin: <bin16> af461e0a
+```
+
+... will produce an object, with 2 properties, the *date* property will contain a Javascript `Date` object,
+and the *bin* property will contain a `Buffer` instance.
+By the way the *date* constructor accepts a lot of input format, like timestamp, ISO, ...
+
+KFG supports tags:
+
+```
+[message]
+	text: Hello world!
+	color: blue
+```
+
+Parsing that will produce an instance of `TagContainer` that contains a single `Tag` instance, whose name is `message`,
+and whose content is `{ "text": "Hello world!" , "color": "blue" }`.
+
+Tags are useful to create scripting language. They supports attributes:
 
 
 
@@ -45,7 +83,7 @@ It ends up being like JSON without braces, bracket and comma, optional double-qu
 data representation, very close to YAML (also it was done *before* knowing the existence of YAML), and a simple syntax
 to perform operation.
 
-The addition of **custom classes/constructors** in 2015.
+The addition of **custom classes/constructors** appears in 2015.
 The addition of **tags** appears in 2016 to support creation of simple scripting language.
 
 
@@ -88,22 +126,12 @@ The addition of **tags** appears in 2016 to support creation of simple scripting
 
 * `<Date>`, `<date>`: construct a Date from a string or a number (timestamp)
   E.g.: `<Date> Fri Apr 29 2016 12:08:14 GMT+0200 (CEST)`
+  Or: `<Date> 1476785828944`
+  Or: `<Date> 2016-10-18`
+  ...
 
 * `<Regex>`, `<regex>`, `<RegExp>`, `<Regexp>`, `<regexp>`: construct a RegExp object from a string of the form `/<regexp>/<flag>`
   E.g.: `<RegExp> /hello/i`
-
-
-
-### Tag proxies
-
-Proxy mode:
-
-* `parent`: the tag use the same proxy than its closest parent tag
-* `local`: the tag has its own proxy
-* `parentLink`: the tag has its own proxy, but the `__parent` property on its proxy is a reference to its closest parent tag
-* `inherit`: the tag has its own proxy, but it inherit from its closest parent tag
-
-
 
 
 
