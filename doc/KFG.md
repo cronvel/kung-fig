@@ -170,7 +170,7 @@ name: Joe Doe
 ```
 
 Implicit strings are fine, however they should not collide with an existing [constants](#ref.constants),
-should not be a valid number and should not start by a symbole used by the Spellcast syntax, like:
+should not be a valid number and should not start with a symbole used by the Spellcast syntax, like:
 
 - spaces and tabs (they are trimmed out)
 - double-quote `"`
@@ -180,6 +180,9 @@ should not be a valid number and should not start by a symbole used by the Spell
 - dollar `$`
 
 Trailing spaces and tabs are trimmed out too.
+
+Lastly, if your string is at top-level, it should not be confused with an object's property or an array's element,
+thus it should not contain any colon `:` or start with a minus sign `-`.
 
 Multi-line strings are not supported by the implicit syntax.
 
@@ -273,6 +276,7 @@ All the other rules of [introduced string](#ref.strings.introduced) applies.
 #### Arrays
 
 The array presentation in KFG is simply a list where each item/element is introduced by a minus sign `-` followed by a space ` `.
+One item/element per line.
 
 For example, this would produce `[ "banana" , "apple" , "pear" ]`:
 
@@ -296,7 +300,7 @@ empty: <Array>
 ```
 ... would produce `{ "empty": [] }`.
 
-Defining array of array would look like this:
+Defining array of arrays would look like this:
 
 ```
 -
@@ -315,7 +319,7 @@ Defining array of array would look like this:
 
 Indeed, each top-level element is a container, so the nested array should be one-level deeper.
 
-However, the KFG supports this neat syntax inspired by YAML:
+However, the KFG supports this neat *compact syntax* inspired by YAML:
 
 ```
 -	- one
@@ -349,9 +353,94 @@ The same with object inside arrays:
 
 
 <a name="ref.objects"></a>
-#### Arrays
+#### Objects
 
 The object presentation in KFG is simply a list of key, followed by a colon `:` followed by the value.
+There can be any number of spaces before and after the colon.
+
+The syntax is similar to the array syntax, the minus sign `-` being replaced by the property's key and the colon:
+one property per line.
+
+For example, this would produce `{ "first-name": "Joe" , "last-name": "Doe" , "job": "developer" }`:
+
+```
+first-name: Joe
+last-name: Doe
+job: developer
+```
+
+Like arrays, objects are implicit, a *node* is an object as soon as it contains one object's property.
+
+Thus an empty object cannot be declared implicitly -- it has no property!
+So they should be declared explicitly with the [constructor syntax](#ref.contructors).
+
+E.g.:
+
+```
+<Object>
+```
+... would produce `{}`.
+
+Defining object of objects would look like this:
+
+```
+name:
+	first: Joe
+	last: Doe
+address:
+	town: Chicago
+	state: Illinois
+```
+
+... and would produce `{ "name": { "first": "Joe" , "last": "Doe" } , "address": { "town": "Chicago" , "state": "Illinois" } }`.
+
+Note that unlike arrays, there is **no** *compact syntax* for object of objects.
+
+Keys should not start with:
+
+- spaces and tabs (they are trimmed out)
+- double-quote `"`
+- lesser than `<` or greater than `>`
+- opening parenthesis `(`
+- arobas `@`
+- dollar `$`
+- minus sign `-`
+
+Trailing spaces and tabs are trimmed out too.
+
+They should not contain:
+
+- colon `:`
+- controle chars
+
+If the key should contain any of this, it should be quoted using the [quoted strings rules](#ref.strings.quoted).
+
+Unquoted key can contain spaces between words, so this is perfectly legit:
+
+```
+first name: Joe
+last name: Doe
+```
+
+... and would produce `{ "first name": "Joe" , "last name": "Doe" }`.
+
+**So be careful:**
+
+```
+I just want to say: hello!
+```
+
+**This will not produce** the string `I just want to say: hello!`, but an object: `{ "I just want to say": "hello!" }`,
+because of the presence of the colon. See the [implicit strings rules](#ref.strings.implicit).
+
+On the other hand:
+
+```
+text: I just want to say: hello!
+```
+
+... does not cause any trouble, the implicit string is not top-level thus it would produce
+`{ "text": "I just want to say: hello!" }` as expected.
 
 
 

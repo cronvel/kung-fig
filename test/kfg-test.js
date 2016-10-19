@@ -429,6 +429,7 @@ describe( "KFG parse" , function() {
 		doormen.equals( parse( '"123.45"' ) , "123.45" ) ;
 		doormen.equals( parse( '> 123' ) , "123" ) ;
 		doormen.equals( parse( '> 123.45' ) , "123.45" ) ;
+		//doormen.equals( parse( 'this is not: an object' ) , "this is not: an object" ) ;
 	} ) ;
 	
 	it( "parse multi-line string at top-level" , function() {
@@ -464,8 +465,25 @@ describe( "KFG parse" , function() {
 		doormen.equals( parse( "v:true or false" ) , {v:"true or false"} ) ;
 	} ) ;
 	
-	it( "key ambiguity" , function() {
+	it( "unquoted key ambiguity" , function() {
 		doormen.equals( parse( "first-name:Joe" ) , {"first-name":"Joe"} ) ;
+		doormen.equals( parse( "first-name :Joe" ) , {"first-name":"Joe"} ) ;
+		doormen.equals( parse( "first-name   :Joe" ) , {"first-name":"Joe"} ) ;
+		doormen.equals( parse( "first-name: Joe" ) , {"first-name":"Joe"} ) ;
+		doormen.equals( parse( "first-name:   Joe" ) , {"first-name":"Joe"} ) ;
+		doormen.equals( parse( "first-name : Joe" ) , {"first-name":"Joe"} ) ;
+		doormen.equals( parse( "first-name   :   Joe" ) , {"first-name":"Joe"} ) ;
+		
+		doormen.equals( parse( "first name: Joe" ) , {"first name":"Joe"} ) ;
+		doormen.equals( parse( "first name   :   Joe" ) , {"first name":"Joe"} ) ;
+		
+		doormen.equals( parse( "null: Joe" ) , {"null":"Joe"} ) ;
+		doormen.equals( parse( "true: Joe" ) , {"true":"Joe"} ) ;
+		doormen.equals( parse( "false: Joe" ) , {"false":"Joe"} ) ;
+	} ) ;
+	
+	it( "quoted key" , function() {
+		doormen.equals( parse( '"some:\\"bizarre:\\nkey" : value' ) , {"some:\"bizarre:\nkey":"value"} ) ;
 	} ) ;
 	
 	it( "unquoted tabs should not be parsed as string but as undefined" , function() {
