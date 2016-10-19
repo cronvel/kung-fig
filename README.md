@@ -44,6 +44,8 @@ Now, look at this **impressive** list of features:
 * [The Wonderful KFG format](https://github.com/cronvel/kung-fig/blob/master/doc/KFG.md)
 * [.load()](#ref.load)
 * [.loadMeta()](#ref.loadMeta)
+* [.saveJson()](#ref.saveJson)
+* [.saveKfg()](#ref.saveKfg)
 
 *Documentation TODO:*
 * [.reduce()](#ref.reduce)
@@ -119,4 +121,40 @@ This synchronously load the header/meta-tags of the file using the *filePath* ar
 It returns a [TagContainer](#ref.TagContainer).
 
 The body of the file is not parsed.
+
+
+
+<a name="ref.saveJson"></a>
+### .saveJson( data , filePath , [options] )
+
+* data `mixed` the data to serialize
+* filePath `string` the path of the file
+* options `object` (optional) an object of options, where:
+	* indent `number` or `string` (default: 2) how to indent the JSON, if its a number it's the number of spaces per indentation.
+	  This is the value passed as the third argument of
+	  [JSON.stringify()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
+	Any other options are passed to
+	[fs.writeFileSync()](https://nodejs.org/dist/latest-v4.x/docs/api/fs.html#fs_fs_writefilesync_file_data_options)
+	as its third argument.
+
+This serialize the data in the JSON format into the file, using the *filePath* argument.
+
+This supports serialization of data structure containing circular references, because extra markup are hidden into property keys.
+
+
+
+<a name="ref.saveKfg"></a>
+### .saveKfg( data , filePath , [options] )
+
+* data `mixed` the data to serialize
+* filePath `string` the path of the file
+* options `object` (optional) an object of options passed to
+	[fs.writeFileSync()](https://nodejs.org/dist/latest-v4.x/docs/api/fs.html#fs_fs_writefilesync_file_data_options)
+	as its third argument.
+
+This serialize the data in the KFG format into the file, using the *filePath* argument.
+
+Some advanced features of the KFG format are not serializable at the moment, but will be available soon.
+
+Circular references are supported.
 
