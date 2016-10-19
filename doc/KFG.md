@@ -154,10 +154,10 @@ The addition of **refs**, **templates** and **expressions** appears in 2016 to s
 	* [Glob: including multiple files at once](#ref.includes.glob)
 	* [Local reference: including a sub-tree of a document](#ref.includes.local-reference)
 	* [Circular References](#ref.includes.circular)
+* [Tags](#ref.tags)
 
 *Documentation TODO:*
-* [Meta-Tags](#ref.meta-tags)
-* [Tags](#ref.tags)
+* [Meta Tags and Header](#ref.meta-tags)
 * [References](#ref.references)
 * [Templates](#ref.templates)
 * [Expressions](#ref.expressions)
@@ -817,5 +817,43 @@ It is also possible to reference the root of the document with a hash sign `#` a
 key: value
 circular: @@#
 ```
+
+
+
+<a name="ref.meta-tags"></a>
+## Meta Tags and Header
+
+The meta tag syntax consists in a tag name and some attributes, between a two opening and two closing square brackets.
+
+One of the most common meta-tag is the doctype tag. Here an example of doctype: `[[doctype adventurer]]`
+(this is the doctype used by [Spellcast in adventurer mode](https://github.com/cronvel/spellcast)).
+
+There are built-in, reserved or standardized meta-tags, but everyone is free to create their own custom meta-tags.
+
+
+
+### Special tags
+
+Here is a list of built-in/reserved/standardized meta-tags and their role:
+
+* [[doctype <name>]]: the doctype meta-tag is a built-in meta-tag, its role is to describe the document.
+  Since KFG can describe a wide range of things, and can be extended/customized (tags, operators, etc),
+  it is a very important meta-tag. The `doctype` option of `kungFig.load()` can enforce some doctype,
+  rejecting KFG files that does not match. It prevents us from loading random/unrelated documents in our app
+  by end-user mistake.
+
+* [[locales <path>]]: this meta-tag is not built-in, but is standardized. It means that KungFig has
+  no special treatment for this tag, and that the job of the userland code to process it the appropriate way.
+  However the `locales` meta-tag syntax is standardized: it should contain a path relative to the current file.
+
+---------------------------------------- here ----------------------------------------------
+
+<a name="ref.tags"></a>
+## Tags
+
+
+
+
+
 
 
