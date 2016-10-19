@@ -1,4 +1,10 @@
 
+v0.33.0
+-------
+
+kungFig.load() and kungFig.parse() now support the 'metaTags' options to customize meta-tags, it works just like the 'tags' options
+
+
 v0.32.4
 -------
 
