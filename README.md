@@ -15,7 +15,7 @@ It is **great** for:
 * Application data
 * Saving user prefs in a human-friendly format
 * Building scripting language on top of it
-* Game characters, weapons, armors, spells, etc, stats and bonus
+* Game characters, weapons, armors, spells, etc, stats and bonuses
 * Internationalization/localization
 * *... and many more*
 
@@ -24,9 +24,10 @@ Now, look at this **impressive** list of features:
 * Human friendly data structure representation (similar to YAML)
 * Comments support
 * Multi-line strings support
-* Constructors (date, binary data, regular expression, and custom constructors!)
+* Classes/Constructors (date, binary data, regular expression, and custom constructors!)
 * Including files (.kfg, .json, .js, .txt, etc), featuring globs and recursive parent search
 * Inner and circular references support
+* Meta-tags (headers)
 * Tags (to build scripting language on top of KFG)
 * References
 * Template strings and internationalization/localization
@@ -35,7 +36,87 @@ Now, look at this **impressive** list of features:
 
 
 
+<a name="ref"></a>
+## Kung-Fig Lib References
+
 ### Table of Contents
 
 * [The Wonderful KFG format](https://github.com/cronvel/kung-fig/blob/master/doc/KFG.md)
+* [.load()](#ref.load)
+* [.loadMeta()](#ref.loadMeta)
+
+*Documentation TODO:*
+* [.reduce()](#ref.reduce)
+* [.autoReduce()](#ref.autoReduce)
+* [Expression class](#ref.Expression)
+* [Tag class](#ref.Tag)
+* [TagContainer class](#ref.TagContainer)
+
+
+
+<a name="ref.load"></a>
+### .load( filePath , [options] )
+
+* filePath `string` the path of the file to load
+* options `object` (optional) an object of options, where:
+	* cwd `string` override the Current Working Directory
+	* reduce `boolean` (default: true) if true, the config is reduced (see [.autoReduce()](#ref.autoReduce))
+	* doctype `string` or `array` of `string` (KFG only) if set, the KFG file to load **MUST** have a meta tag *doctype*
+	  and it should match the doctype string or be listed in the doctype array
+	* kfgFiles `object` where:
+		* extname `array` of `string` the extension list (without the initial dot) that should be treated as KFG files
+		* basename `array` of `string` the filename list (including the extension part) that should be treated as KFG files
+	* metaHook `function( metaContainer , options )` (KFG only) a callback triggered once the header part of the file
+	  is parsed, where:
+		* metaContainer `TagContainer` the meta-tag container, see [TagContainer](#ref.TagContainer)
+		* options `object` mostly reserved, where:
+			* isInclude `boolean` true if the hook is not called for the top-level document's file
+			  but for an included document
+			* file `string` the path of the file of the current document, if any
+	* classes `object` (KFG only) each key is a class name and each value is the constructor to build the instance.
+	  Constructors are of type `function( data )` where `data` is the parsed value used to instanciate the object.
+	* tags `object` (KFG only) each key is a tag name and each value is the constructor to build the tag. Constructor are of
+	  type `function( tagName , attributes , content , shouldParseAttributes , runtime )` where:
+		* tagName `string` the name of the tag to instanciate
+		* attributes `mixed` the attributes of the tag, if `shouldParseAttributes` is *true*, this is a `string` and
+		  it should be parsed
+		* content `mixed` this is the parsed content of the tag
+		* shouldParseAttributes `boolean` it true, the `attributes` argument is a raw string and should be parsed,
+		  if false the `attributes` argument contains the parsed argument, in whatever type the tag use (usually `object`)
+		* runtime `object` reserved
+	  The prototype of the tag constructor **MUST** be an instance of `Tag.prototype`, see [Tag](#ref.Tag).
+	* operators `object` (KFG only) custom operators for Expression, the key is the operator string that should be
+	  in the Expression, the value is a `function( args )` that should compute the operation, where `args` is an array
+	  of argument. See [Expression](#ref.Expression).
+	* fileObjectMap `object` reserved
+
+This synchronously load the file using the *filePath* argument, parse it and return it.
+
+If the document contains includes, there are all resolved synchronously before returning.
+
+Available file types are:
+
+* [KFG](https://github.com/cronvel/kung-fig/blob/master/doc/KFG.md) (*.kfg)
+* JSON (*.json)
+* Node.js Javascript module (*.js)
+* Raw text files (*.txt, or any unknown extension)
+
+The path can be absolute, relative (to the Current Working Directory), or relative using the
+[recursive parent search feature](https://github.com/cronvel/kung-fig/blob/master/doc/KFG.md#ref.includes.recursive-parent-search).
+
+If the document contains tags that don't exist in the `options.tags` argument, there are instanciated using the 
+built-in [Tag](#ref.Tag) constructor.
+
+
+
+<a name="ref.loadMeta"></a>
+### .loadMeta( filePath , [options] )
+
+* filePath `string` the path of the file
+* options `object` (optional) an object of options, see [.load()](#ref.load)
+
+This synchronously load the header/meta-tags of the file using the *filePath* argument, and parse it and return it, if any.
+It returns a [TagContainer](#ref.TagContainer).
+
+The body of the file is not parsed.
 

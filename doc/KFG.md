@@ -12,9 +12,10 @@ but with an impressive list of features:
 * Human friendly data structure representation (similar to YAML)
 * Comments support
 * Multi-line strings support
-* Constructors (date, binary data, regular expression, and custom constructors!)
+* Classes/Constructors (date, binary data, regular expression, and custom constructors!)
 * Including files (.kfg, .json, .js, .txt, etc), featuring globs and recursive parent search
 * Inner and circular references support
+* Meta-tags (headers)
 * Tags (to build scripting language on top of KFG)
 * References
 * Template strings and internationalization/localization
@@ -145,7 +146,7 @@ The addition of **refs**, **templates** and **expressions** appears in 2016 to s
 	* [Multi-line strings](#ref.strings.multiline)
 * [Arrays](#ref.arrays)
 * [Objects](#ref.objects)
-* [Constructors](#ref.constructors)
+* [Classes/Constructors](#ref.constructors)
 	* [Built-in constructors](#ref.builtin-constructors)
 * [Comments](#ref.comments)
 * [Includes](#ref.includes)
@@ -155,6 +156,7 @@ The addition of **refs**, **templates** and **expressions** appears in 2016 to s
 	* [Circular References](#ref.includes.circular)
 
 *Documentation TODO:*
+* [Meta-Tags](#ref.meta-tags)
 * [Tags](#ref.tags)
 * [References](#ref.references)
 * [Templates](#ref.templates)
@@ -491,7 +493,7 @@ text: I just want to say: hello!
 
 
 <a name="ref.constructors"></a>
-## Constructors
+## Classes/Constructors
 
 The constructor syntax consists of a constructor put inside angle brackets (`<` and `>`).
 
@@ -501,7 +503,7 @@ That KFG value will be passed to the constructor function.
 
 
 <a name="ref.builtin-constructors"></a>
-### Built-in constructors
+### Built-in Classes/Constructors
 
 * `<Object>`, `<object>`: Object constructor. Object are implicit in KFG, there is only one case where this constructor is needed:
   when we want to create an empty object.
