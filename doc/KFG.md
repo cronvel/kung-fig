@@ -1,14 +1,28 @@
 
 # The Wonderful KFG format
 
-The **KFG** format is the **Kung-Fig** file format, and it does wonders for all your config files. It's like .cfg on steroid!
-Once you start using it, you won't use anything else!
+The **KFG** format is the **Kung-Fig** file format, and it does wonders for all your config and data files.
+It's like .cfg on steroid!
+Once you start using it, you won't use anything else anymore!
 
 **KFG** is primarily a **human-friendly format for describing data**
-(i.e. a [data serialization language](https://en.wikipedia.org/wiki/Serialization)).
+(i.e. a [data serialization language](https://en.wikipedia.org/wiki/Serialization))
+but with an impressive list of features:
 
-But it also features **custom classes/constructors**, **operations** and **tree operations** (like sub-tree merge),
-**file inclusion**, and even **tags** to serve as the basis of a scripting language.
+* Human friendly data structure representation (similar to YAML)
+* Comments support
+* Multi-line strings support
+* Constructors (date, binary data, regular expression, and custom constructors!)
+* Including files (.kfg, .json, .js, .txt, etc), featuring globs and recursive parent search
+* Inner and circular references support
+* Tags (to build scripting language on top of KFG)
+* References
+* Template strings and internationalization/localization
+* Expressions (arithmetic, logic, maths, etc)
+* Tree operations syntax (merge, combine, etc)
+* *... and many more!*
+
+Stop using JSON for configuration files, use KFG now!
 
 **This documentation is still a work in progress.**
 
@@ -140,7 +154,7 @@ The addition of **refs**, **templates** and **expressions** appears in 2016 to s
 	* [Local reference: including a sub-tree of a document](#ref.includes.local-reference)
 	* [Circular References](#ref.includes.circular)
 
-*Todo:*
+*Documentation TODO:*
 * [Tags](#ref.tags)
 * [References](#ref.references)
 * [Templates](#ref.templates)

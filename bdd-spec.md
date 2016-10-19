@@ -790,6 +790,7 @@ doormen.equals( parse( '"123"' ) , "123" ) ;
 doormen.equals( parse( '"123.45"' ) , "123.45" ) ;
 doormen.equals( parse( '> 123' ) , "123" ) ;
 doormen.equals( parse( '> 123.45' ) , "123.45" ) ;
+//doormen.equals( parse( 'this is not: an object' ) , "this is not: an object" ) ;
 ```
 
 parse multi-line string at top-level.
@@ -835,10 +836,29 @@ doormen.equals( parse( "v:true" ) , {v:true} ) ;
 doormen.equals( parse( "v:true or false" ) , {v:"true or false"} ) ;
 ```
 
-key ambiguity.
+unquoted key ambiguity.
 
 ```js
 doormen.equals( parse( "first-name:Joe" ) , {"first-name":"Joe"} ) ;
+doormen.equals( parse( "first-name :Joe" ) , {"first-name":"Joe"} ) ;
+doormen.equals( parse( "first-name   :Joe" ) , {"first-name":"Joe"} ) ;
+doormen.equals( parse( "first-name: Joe" ) , {"first-name":"Joe"} ) ;
+doormen.equals( parse( "first-name:   Joe" ) , {"first-name":"Joe"} ) ;
+doormen.equals( parse( "first-name : Joe" ) , {"first-name":"Joe"} ) ;
+doormen.equals( parse( "first-name   :   Joe" ) , {"first-name":"Joe"} ) ;
+
+doormen.equals( parse( "first name: Joe" ) , {"first name":"Joe"} ) ;
+doormen.equals( parse( "first name   :   Joe" ) , {"first name":"Joe"} ) ;
+
+doormen.equals( parse( "null: Joe" ) , {"null":"Joe"} ) ;
+doormen.equals( parse( "true: Joe" ) , {"true":"Joe"} ) ;
+doormen.equals( parse( "false: Joe" ) , {"false":"Joe"} ) ;
+```
+
+quoted key.
+
+```js
+doormen.equals( parse( '"some:\\"bizarre:\\nkey" : value' ) , {"some:\"bizarre:\nkey":"value"} ) ;
 ```
 
 unquoted tabs should not be parsed as string but as undefined.
@@ -853,6 +873,16 @@ doormen.equals( o , { object: { a: 1 } } ) ;
 o = parse( "[tag]\t\t\t\n\ta: 1" ) ;
 //console.log( o ) ; console.log( JSON.stringify( o ) ) ;
 doormen.equals( JSON.stringify( o ) , '{"children":[{"name":"tag","content":{"a":1},"attributes":null}]}' ) ;
+```
+
+comment ambiguity.
+
+```js
+doormen.equals( parse( "#comment\nkey: value" ) , { key: "value" } ) ;
+doormen.equals( parse( "key: value # comment" ) , { key: "value # comment" } ) ;
+doormen.equals( parse( "object:\n\t# comment\n\tkey: value" ) , { object: { key: "value" } } ) ;
+doormen.equals( parse( "object:\n# comment\n\tkey: value" ) , { object: { key: "value" } } ) ;
+doormen.equals( parse( "object:\n\t\t# comment\n\tkey: value" ) , { object: { key: "value" } } ) ;
 ```
 
 parse a basic file.

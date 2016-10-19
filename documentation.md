@@ -1,33 +1,41 @@
 
-
 # Kung-Fig
 
 ![Kung Fig!](https://raw.githubusercontent.com/cronvel/kung-fig/master/kung-fig.png)
 
-The Kung Fu of configuration files!
+*The Kung Fu of configuration files!*
 
-Support includes and circular includes.
+**Kung-Fig** is a **wonderful** file format named **KFG**, its parser, its stringifier, and a set of great tools.
 
-Beta version.
+It is **great** for:
+
+* Configuration files
+* Hierarchical configuration files
+* Global/local and vanilla/plugins override and extension management
+* Application data
+* Saving user prefs in a human-friendly format
+* Building scripting language on top of it
+* Game characters, weapons, armors, spells, etc, stats and bonus
+* Internationalization/localization
+* *... and many more*
+
+Now, look at this **impressive** list of features:
+
+* Human friendly data structure representation (similar to YAML)
+* Comments support
+* Multi-line strings support
+* Constructors (date, binary data, regular expression, and custom constructors!)
+* Including files (.kfg, .json, .js, .txt, etc), featuring globs and recursive parent search
+* Inner and circular references support
+* Tags (to build scripting language on top of KFG)
+* References
+* Template strings and internationalization/localization
+* Expressions (arithmetic, logic, maths, etc)
+* Tree operations (merge, combine, etc)
 
 
 
-## Special command
+### Table of Contents
 
-Special command can be added at the beginning of the key of a property.
-
-If the `object` object has the current key/value pair...
-
-* `"@@key" : "path/to/another.json"` : ... then it will load the Kung-Fig file `path/to/another.json` and put it into `object.key`,
-	if it can't open the file, it throw an error
-
-* `"@@key" : ";tree.path"` : ... then it will set `object.key` to `object.tree.path`
-
-* `"@@key" : "path/to/another.json;tree.path"` : ... then it will mix the previous two: it will load `path/to/another.json` and
-	extract only `.tree.path` sub-object, and put it into `object.key`
-
-* `"@@key" : ";"` : ... then it will set `object.key` to `object`: this allows circular references to be stored
-
-* `"@key" : "path/to/another.json"` : ... then it will load the Kung-Fig file `path/to/another.json` and put it into `object.key`,
-	if it can't open the file, `object.key` will be set to `{}` (empty object)
+* [The Wonderful KFG format](https://github.com/cronvel/kung-fig/blob/master/doc/KFG.md)
 
