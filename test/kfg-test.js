@@ -498,6 +498,14 @@ describe( "KFG parse" , function() {
 		doormen.equals( JSON.stringify( o ) , '{"children":[{"name":"tag","content":{"a":1},"attributes":null}]}' ) ;
 	} ) ;
 	
+	it( "comment ambiguity" , function() {
+		doormen.equals( parse( "#comment\nkey: value" ) , { key: "value" } ) ;
+		doormen.equals( parse( "key: value # comment" ) , { key: "value # comment" } ) ;
+		doormen.equals( parse( "object:\n\t# comment\n\tkey: value" ) , { object: { key: "value" } } ) ;
+		doormen.equals( parse( "object:\n# comment\n\tkey: value" ) , { object: { key: "value" } } ) ;
+		doormen.equals( parse( "object:\n\t\t# comment\n\tkey: value" ) , { object: { key: "value" } } ) ;
+	} ) ;
+	
 	it( "parse a basic file" , function() {
 		
 		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/simple.kfg' , 'utf8' ) ) ;

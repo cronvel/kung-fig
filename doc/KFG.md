@@ -137,7 +137,18 @@ The addition of **refs**, **templates** and **expressions** appears in 2016 to s
 * [Objects](#ref.objects)
 * [Constructors](#ref.constructors)
 	* [Built-in constructors](#ref.builtin-constructors)
+* [Comments](#ref.comments)
 * [Includes](#ref.includes)
+	* [Recursive Parent Search](#ref.includes.recursive-parent-search)
+	* [Glob: including multiple files at once](#ref.includes.glob)
+	* [Local reference: including a sub-tree of a document](#ref.includes.local-reference)
+	* [Circular References](#ref.includes.circular)
+
+*Todo:*
+* [Tags](#ref.tags)
+* [References](#ref.references)
+* [Templates](#ref.templates)
+* [Expressions](#ref.expressions)
 
 
 
@@ -510,14 +521,79 @@ That KFG value will be passed to the constructor function.
 
 
 
+<a name="ref.comments"></a>
+### Comments
+
+KFG supports single line comments, introduced by the hash char `#`.
+
+A comment **MUST** be on its own line: it cannot be placed after any content, or it would be parsed as part of that content.
+
+A comment can be indented, and can even lie at a nonsensical depth.
+
+So a comment is basically some indentations, followed by a hash char `#`,
+followed by anything until the end of the line.
+
+The whole line will be ignored, so any chars are accepted, even non-printable/controle chars (except, of course, the newline char).
+
+Examples of valid and invalid comments:
+
+```
+# This is a valid comment
+		# This is a valid comment
+
+# If you need multiple lines,
+# you should put a # at the
+# beginning of each line.
+
+users:
+	-	first-name: Joe
+		# This is a valid comment
+		last-name: Doe
+	# This is a valid comment, it does not 'close' the current object
+		job: developer # This is NOT comment! It will be included in the string!
+```
+
+It will produce:
+
+```
+{
+	users: [
+		{
+			"first-name": "Joe" ,
+			"last-name": "Doe" ,
+			"job": "developer # This is NOT comment! It will be included in the string!"
+		}
+	]
+}
+```
+
+As you can see, the *job* property contains the hash and anything beyond it.
+
+
+
 <a name="ref.includes"></a>
 ### Includes
 
 **Includes is one of the key feature of KFG!**
 It makes your work easier at managing complex configs or dataset.
 
-The include syntax use one arobas `@` for optional includes (replaced by `undefined` if the file cannot be found or parsed)
-or two arobas `@@` for mandatory includes (throw an error if the file cannot be found or parsed).
+Includes can import the whole document of a file, a sub-tree of the document of that file,
+and even the current document or a sub-tree of it.
+
+There are two type of include:
+
+* optional includes start with a single arobas `@` immediately followed by the *reference*: if the reference is not found,
+  it will be replaced by an empty object if the reference would point to a whole document, or undefined if it would point
+  to a sub-tree. If the reference point to an existing file that contains parse error, it will throw anyway!
+  Debugging would be hard if it doesn't.
+* mandatory includes start with a double arobas `@@` immediately followed by the *reference*: if the reference is not found
+  or cannot be loaded, parsed or whatever, it will throw.
+
+Here, a *reference* is an optional file path **relative to the current file directory** (or absolute if it starts with a `/`),
+and/or an optional *local reference*: a hash char `#` followed by a path to a sub-tree of the document.
+(Not to be confused with the [Reference](#ref.reference) class)
+
+Example with file path only:
 
 ```
 user: Joe Doe
@@ -525,7 +601,8 @@ items: @@items.kfg
 ```
 
 ... this would load the file `items.kfg` and put its content inside the `items` property.
-The path is relative to the current file, so assuming `items.kfg` is in the same directory and contains this:
+If the file `items.kfg` cannot be found, the parser will throw an error.
+Otherwise, assuming `items.kfg` contains this:
 
 ```
 - pear
@@ -535,6 +612,198 @@ The path is relative to the current file, so assuming `items.kfg` is in the same
 
 ... the previous document would be `{ "user": "Joe Doe" , "items": [ "pear" , "pencil" , "paper" ] }`.
 
+If we use the optional include and if `items.kfg` does not exist, then:
 
+```
+user: Joe Doe
+items: @items.kfg
+```
+
+... would produce `{ "user": "Joe Doe" , "items": {} }`
+
+
+
+**Every file format supported by Kung-Fig can be included!** Supported extensions:
+
+* .kfg: this will load the file as a KFG file. It is possible to load other files as KFG: e.g. one should
+  pass `{ kfgFiles: { extname: [ "myext" ] , basename: [ "mykfgfile.ext" ] } }` as the second argument
+  of `kungFig.load()` to load the file *mykfgfile.ext* or any file with the extension *.myext* as KFG.
+* .json: this will load the file as JSON
+* .js: this will load the file as a Node.js module: anything exported by the module will be returned.
+  This is actually the sole way to include JS functions.
+* .txt: this will load the file as a raw string
+
+Any file format unknown to Kung-Fig will be assumed as raw string.
+
+
+
+<a name="ref.includes.recursive-parent-search"></a>
+#### Recursive Parent Search
+
+KFG also supports a particular sort of relative path: path starting with `.../`.
+We call that **recursive parent search**. The file is first searched on the current folder, if not found, it is searched
+on the parent folder, and so on.
+
+So, imagine there is a file `/home/bob/coding/my-project/data/users/joe-doe.kfg` containing:
+
+```
+user: Joe Doe
+items: @@.../items.kfg
+```
+
+The file `items.kfg` will be searched in that order at those paths:
+- `/home/bob/coding/my-project/data/users/items.kfg`
+- `/home/bob/coding/my-project/data/items.kfg`
+- `/home/bob/coding/my-project/items.kfg`
+- `/home/bob/coding/items.kfg`
+- `/home/bob/items.kfg`
+- `/home/items.kfg`
+- `/items.kfg`
+
+Another example:
+
+```
+user: Joe Doe
+items: @@.../items/tools.kfg
+```
+
+The file `tools.kfg` will be searched in that order at those paths:
+- `/home/bob/coding/my-project/data/users/items/tools.kfg`
+- `/home/bob/coding/my-project/data/items/tools.kfg`
+- `/home/bob/coding/my-project/items/tools.kfg`
+- `/home/bob/coding/items/tools.kfg`
+- `/home/bob/items/tools.kfg`
+- `/home/items/tools.kfg`
+- `/items/tools.kfg`
+
+
+
+<a name="ref.includes.glob"></a>
+#### Glob: including multiple files at once
+
+If the path contains any wild-card or glob-pattern, the include command will return an array containing the parsed content
+of all those files.
+
+Example:
+
+```
+user: Joe Doe
+items: @@items/*.kfg
+```
+
+Assuming there is an `items/` folder with those 2 files:
+
+* items/paper.kfg:
+```
+name: paper
+count: 123
+```
+
+* items/pencil.kfg:
+```
+name: pencil
+count: 3
+```
+
+... then the whole document would be:
+```
+{
+	"user": "Joe Doe" ,
+	"items": [
+		{
+			"name": "paper"
+			"count": 123
+		} ,
+		{
+			"name": "pencil"
+			"count": 3
+		}
+	]
+}
+```
+
+
+
+<a name="ref.includes.local-reference"></a>
+#### Local reference: including a sub-tree of a document
+
+Thanks to local reference, it is possible to include only a sub-tree of a document.
+Local reference is the part after the hash sign `#`.
+
+Consider this:
+
+```
+user: Joe Doe
+item: @@items.kfg#tools.pencil
+```
+
+Assuming the `items.kfg` file contains this:
+
+```
+fruits:
+	banana:
+		name: banana
+		count: 3
+	apple:
+		name: apple
+		count: 7
+tools:
+	paper:
+		name: paper
+		count: 123
+	pencil:
+		name: pencil
+		count: 3
+```
+
+... then it would produce:
+
+```
+{
+	"user": "Joe Doe" ,
+	"item": {
+		"name": "pencil"
+		"count": 3
+	}
+}
+```
+
+The local reference supports a dot-separated property path syntax.
+It is possible to navigate through array too, using the `[X]` syntax where *X* is a positive integer or *0*.
+This is valid: `@@file.kfg#path.to[12][5].path[0].to.object`.
+
+Do not add extra spaces in a local reference: all spaces should be meaningful.
+
+
+
+<a name="ref.includes.circular"></a>
+#### Circular references
+
+**It is also possible to reference parts of the current document itself.** Just remove the file reference part.
+
+```
+users:
+	joedoe:
+		name: Joe Doe
+		friend: @@#users.bbaroud
+	bbaroud:
+		name: Bill Baroud
+		friend: @@#users.joedoe
+	jane:
+		name: Jane
+		friend:	@@#users.joedoe
+```
+
+This will produce **actual references, not clones**. Hence it is not possible to write down the result,
+because of circular references.
+
+This is an interesting feature since it permits to load or save complex data structure using KFG.
+
+It is also possible to reference the root of the document with a hash sign `#` with an empty local reference:
+
+```
+key: value
+circular: @@#
+```
 
 
