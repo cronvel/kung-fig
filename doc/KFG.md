@@ -48,7 +48,7 @@ Note how objects and arrays are implicit in KFG.
 A *node* is an object if it contains a key followed by a `:` colon.
 A *node* is an array if it contains array element introduced by a `-` minus sign.
 
-But KFG can do a lot more! Using few built-in constructors, we can store date or binary:
+But KFG can do a lot more! **Using few built-in constructors, we can store date or binary:**
 
 ```
 date: <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)
@@ -59,7 +59,25 @@ bin: <bin16> af461e0a
 and the *bin* property will contain a `Buffer` instance created from the hexadecimal string.
 By the way the *date* constructor accepts a lot of input format, like timestamp, ISO, ...
 
-Also KFG supports tags:
+**What is wonderful about KFG is that it supports file inclusions:**
+
+```
+user: Joe Doe
+items: @@items.kfg
+```
+
+... this would load the file `items.kfg` and put its content inside the `items` property.
+The path is relative to the current file, so assuming `items.kfg` is in the same directory and contains this:
+
+```
+- pear
+- pencil
+- paper
+```
+
+... the previous document would be `{ "user": "Joe Doe" , "items": [ "pear" , "pencil" , "paper" ] }`.
+
+**Also KFG supports tags:**
 
 ```
 [message]
@@ -70,7 +88,9 @@ Also KFG supports tags:
 Parsing that will produce an instance of `TagContainer` that contains a single `Tag` instance, whose name is `message`,
 and whose content is `{ "text": "Hello world!" , "color": "blue" }`.
 
-Tags are useful to create scripting language. They supports attributes:
+Tags are useful to create scripting language on top of KFG.
+For example, [Spellcast](https://github.com/cronvel/spellcast) is a full-blown scripting language built on top of KFG.
+Tags support attributes:
 
 ```
 [message some:attribute]
@@ -109,10 +129,15 @@ The addition of **refs**, **templates** and **expressions** appears in 2016 to s
 * [Constants](#ref.constants)
 * [Numbers](#ref.numbers)
 * [Strings](#ref.strings)
+	* [Implicit strings](#ref.strings.implicit)
+	* [Quoted strings](#ref.strings.quoted)
+	* [Introduced strings](#ref.strings.introduced)
+	* [Multi-line strings](#ref.strings.multiline)
 * [Arrays](#ref.arrays)
 * [Objects](#ref.objects)
 * [Constructors](#ref.constructors)
 	* [Built-in constructors](#ref.builtin-constructors)
+* [Includes](#ref.includes)
 
 
 
@@ -273,7 +298,7 @@ All the other rules of [introduced string](#ref.strings.introduced) applies.
 
 
 <a name="ref.arrays"></a>
-#### Arrays
+### Arrays
 
 The array presentation in KFG is simply a list where each item/element is introduced by a minus sign `-` followed by a space ` `.
 One item/element per line.
@@ -353,7 +378,7 @@ The same with object inside arrays:
 
 
 <a name="ref.objects"></a>
-#### Objects
+### Objects
 
 The object presentation in KFG is simply a list of key, followed by a colon `:` followed by the value.
 There can be any number of spaces before and after the colon.
@@ -482,6 +507,34 @@ That KFG value will be passed to the constructor function.
 
 * `<Regex>`, `<regex>`, `<RegExp>`, `<Regexp>`, `<regexp>`: construct a RegExp object from a string of the form `/<regexp>/<flag>`
   E.g.: `<RegExp> /hello/i`
+
+
+
+<a name="ref.includes"></a>
+### Includes
+
+**Includes is one of the key feature of KFG!**
+It makes your work easier at managing complex configs or dataset.
+
+The include syntax use one arobas `@` for optional includes (replaced by `undefined` if the file cannot be found or parsed)
+or two arobas `@@` for mandatory includes (throw an error if the file cannot be found or parsed).
+
+```
+user: Joe Doe
+items: @@items.kfg
+```
+
+... this would load the file `items.kfg` and put its content inside the `items` property.
+The path is relative to the current file, so assuming `items.kfg` is in the same directory and contains this:
+
+```
+- pear
+- pencil
+- paper
+```
+
+... the previous document would be `{ "user": "Joe Doe" , "items": [ "pear" , "pencil" , "paper" ] }`.
+
 
 
 
