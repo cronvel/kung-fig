@@ -118,11 +118,7 @@ The addition of **refs**, **templates** and **expressions** appears in 2016 to s
 
 
 
-## Language References
-
-**This section is still a work in progress.**
-
-
+# Language References
 
 ### Table of Contents
 
@@ -153,7 +149,7 @@ The addition of **refs**, **templates** and **expressions** appears in 2016 to s
 
 
 <a name="ref.constants"></a>
-### Constants
+## Constants
 
 Constants represent special values.
 
@@ -175,7 +171,7 @@ debug: on
 
 
 <a name="ref.numbers"></a>
-### Numbers
+## Numbers
 
 Numbers are written down directly. As anyone would expect, this KFG file will produce `{ "age": 42 }`:
 
@@ -188,14 +184,14 @@ The scientific notation is also supported, like this: `value: 1.23e45`
 
 
 <a name="ref.strings"></a>
-### Strings
+## Strings
 
 There are many way to declare strings in KFG.
 
 
 
 <a name="ref.strings.implicit"></a>
-#### Implicit Strings
+### Implicit Strings
 
 The most straight-forward way is implicit strings.
 
@@ -227,7 +223,7 @@ If you are in one of those cases, declare your string using one of the following
 
 
 <a name="ref.strings.quoted"></a>
-#### Quoted Strings
+### Quoted Strings
 
 Quoted strings are string inside double-quote.
 
@@ -259,7 +255,7 @@ of the string can be multi-line: just use the `\n` special sequence to represent
 
 
 <a name="ref.strings.introduced"></a>
-#### Introduced Strings
+### Introduced Strings
 
 Introduced strings are strings introduced by the *greater than* sign `>` followed by a space ` `.
 
@@ -284,7 +280,7 @@ If you need multi-line, use the [multi-line string syntax](#ref.strings.multilin
 
 
 <a name="ref.strings.multiline"></a>
-#### Multi-line Strings
+### Multi-line Strings
 
 Multi-line strings is a variant of [introduced string](#ref.strings.introduced).
 
@@ -309,7 +305,7 @@ All the other rules of [introduced string](#ref.strings.introduced) applies.
 
 
 <a name="ref.arrays"></a>
-### Arrays
+## Arrays
 
 The array presentation in KFG is simply a list where each item/element is introduced by a minus sign `-` followed by a space ` `.
 One item/element per line.
@@ -389,7 +385,7 @@ The same with object inside arrays:
 
 
 <a name="ref.objects"></a>
-### Objects
+## Objects
 
 The object presentation in KFG is simply a list of key, followed by a colon `:` followed by the value.
 There can be any number of spaces before and after the colon.
@@ -481,7 +477,7 @@ text: I just want to say: hello!
 
 
 <a name="ref.constructors"></a>
-### Constructors
+## Constructors
 
 The constructor syntax consists of a constructor put inside angle brackets (`<` and `>`).
 
@@ -491,7 +487,7 @@ That KFG value will be passed to the constructor function.
 
 
 <a name="ref.builtin-constructors"></a>
-#### Built-in constructors
+### Built-in constructors
 
 * `<Object>`, `<object>`: Object constructor. Object are implicit in KFG, there is only one case where this constructor is needed:
   when we want to create an empty object.
@@ -522,15 +518,15 @@ That KFG value will be passed to the constructor function.
 
 
 <a name="ref.comments"></a>
-### Comments
+## Comments
 
-KFG supports single line comments, introduced by the hash char `#`.
+KFG supports single line comments, introduced by the hash sign `#`.
 
 A comment **MUST** be on its own line: it cannot be placed after any content, or it would be parsed as part of that content.
 
 A comment can be indented, and can even lie at a nonsensical depth.
 
-So a comment is basically some indentations, followed by a hash char `#`,
+So a comment is basically some indentations, followed by a hash sign `#`,
 followed by anything until the end of the line.
 
 The whole line will be ignored, so any chars are accepted, even non-printable/controle chars (except, of course, the newline char).
@@ -572,7 +568,7 @@ As you can see, the *job* property contains the hash and anything beyond it.
 
 
 <a name="ref.includes"></a>
-### Includes
+## Includes
 
 **Includes is one of the key feature of KFG!**
 It makes your work easier at managing complex configs or dataset.
@@ -590,7 +586,7 @@ There are two type of include:
   or cannot be loaded, parsed or whatever, it will throw.
 
 Here, a *reference* is an optional file path **relative to the current file directory** (or absolute if it starts with a `/`),
-and/or an optional *local reference*: a hash char `#` followed by a path to a sub-tree of the document.
+and/or an optional *local reference*: a hash sign `#` followed by a path to a sub-tree of the document.
 (Not to be confused with the [Reference](#ref.reference) class)
 
 Example with file path only:
@@ -638,7 +634,7 @@ Any file format unknown to Kung-Fig will be assumed as raw string.
 
 
 <a name="ref.includes.recursive-parent-search"></a>
-#### Recursive Parent Search
+### Recursive Parent Search
 
 KFG also supports a particular sort of relative path: path starting with `.../`.
 We call that **recursive parent search**. The file is first searched on the current folder, if not found, it is searched
@@ -679,7 +675,7 @@ The file `tools.kfg` will be searched in that order at those paths:
 
 
 <a name="ref.includes.glob"></a>
-#### Glob: including multiple files at once
+### Glob: including multiple files at once
 
 If the path contains any wild-card or glob-pattern, the include command will return an array containing the parsed content
 of all those files.
@@ -725,7 +721,7 @@ count: 3
 
 
 <a name="ref.includes.local-reference"></a>
-#### Local reference: including a sub-tree of a document
+### Local reference: including a sub-tree of a document
 
 Thanks to local reference, it is possible to include only a sub-tree of a document.
 Local reference is the part after the hash sign `#`.
@@ -777,7 +773,7 @@ Do not add extra spaces in a local reference: all spaces should be meaningful.
 
 
 <a name="ref.includes.circular"></a>
-#### Circular references
+### Circular references
 
 **It is also possible to reference parts of the current document itself.** Just remove the file reference part.
 
@@ -799,7 +795,7 @@ because of circular references.
 
 This is an interesting feature since it permits to load or save complex data structure using KFG.
 
-It is also possible to reference the root of the document with a hash sign `#` with an empty local reference:
+It is also possible to reference the root of the document with a hash sign `#` and an empty local reference:
 
 ```
 key: value
