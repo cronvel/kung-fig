@@ -1,31 +1,26 @@
 
+v0.33.2
+-------
+
+Documentation improvements
+
+
 v0.33.1
 -------
 
-The 5th argument of ClassicTag is now bugfixed
+The 5th argument of ClassicTag is now bugfixed.
 
 
 v0.33.0
 -------
 
-kungFig.load() and kungFig.parse() now support the 'metaTags' options to customize meta-tags, it works just like the 'tags' options
+kungFig.load() and kungFig.parse() now support the 'metaTags' options to customize meta-tags, it works just like the 'tags'
+options.
 
 
-v0.32.4
--------
+v0.32.2 - v0.32.4
+-----------------
 
-Documentation improvements
-
-
-v0.32.3
--------
-
-Documentation improvements
-
-
-v0.32.2
--------
-
-Documentation improvements
+Documentation improvements.
 
 

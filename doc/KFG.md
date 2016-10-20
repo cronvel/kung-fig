@@ -14,7 +14,7 @@ but with an impressive list of features:
 * Multi-line strings support
 * Classes/Constructors (date, binary data, regular expression, and custom constructors!)
 * Including files (.kfg, .json, .js, .txt, etc), featuring globs and recursive parent search
-* Inner and circular references support
+* Relational data representation support
 * Meta-tags (headers)
 * Tags (to build scripting language on top of KFG)
 * References
@@ -61,7 +61,7 @@ If you really insist with spaces, KFG only supports the 4-spaces indentation. Bu
 Note how objects and arrays are implicit in KFG.
 
 A *node* is an object if it contains a key followed by a `:` colon.
-A *node* is an array if it contains array element introduced by a `-` minus sign.
+A *node* is an array if it contains array element introduced by a hyphen `-`.
 
 But KFG can do a lot more! **Using few built-in constructors, we can store date or binary:**
 
@@ -137,6 +137,7 @@ The addition of **refs**, **templates** and **expressions** appears in 2016 to s
 
 ### Table of Contents
 
+* [Comments](#ref.comments)
 * [Constants](#ref.constants)
 * [Numbers](#ref.numbers)
 * [Strings](#ref.strings)
@@ -144,23 +145,73 @@ The addition of **refs**, **templates** and **expressions** appears in 2016 to s
 	* [Quoted strings](#ref.strings.quoted)
 	* [Introduced strings](#ref.strings.introduced)
 	* [Multi-line strings](#ref.strings.multiline)
+* [Hierarchical Data Representation - Containers](#ref.hierarchical)
 * [Arrays](#ref.arrays)
 * [Objects](#ref.objects)
 * [Classes/Constructors](#ref.constructors)
 	* [Built-in constructors](#ref.builtin-constructors)
-* [Comments](#ref.comments)
+* [Tags](#ref.tags)
+* [Meta Tags](#ref.meta-tags)
 * [Includes](#ref.includes)
 	* [Recursive Parent Search](#ref.includes.recursive-parent-search)
 	* [Glob: including multiple files at once](#ref.includes.glob)
 	* [Local reference: including a sub-tree of a document](#ref.includes.local-reference)
-	* [Circular References](#ref.includes.circular)
-* [Tags](#ref.tags)
+	* [Relational Data Representation](#ref.includes.relational)
 
 *Documentation TODO:*
-* [Meta Tags](#ref.meta-tags)
 * [References](#ref.references)
 * [Templates](#ref.templates)
 * [Expressions](#ref.expressions)
+
+
+
+<a name="ref.comments"></a>
+## Comments
+
+KFG supports single line comments, introduced by the hash sign `#`.
+
+A comment **MUST** be on its own line: it cannot be placed after any content, or it would be parsed as part of that content.
+
+A comment can be indented, and can even lie at a nonsensical depth.
+
+So a comment is basically some indentations, followed by a hash sign `#`,
+followed by anything until the end of the line.
+
+The whole line will be ignored, so any chars are accepted, even non-printable/controle chars (except, of course, the newline char).
+
+Examples of valid and invalid comments:
+
+```
+# This is a valid comment
+		# This is a valid comment
+
+# If you need multiple lines,
+# you should put a # at the
+# beginning of each line.
+
+users:
+	-	first-name: Joe
+		# This is a valid comment
+		last-name: Doe
+	# This is a valid comment, it does not 'close' the current object
+		job: developer # This is NOT comment! It will be included in the string!
+```
+
+It will produce:
+
+```
+{
+	users: [
+		{
+			"first-name": "Joe" ,
+			"last-name": "Doe" ,
+			"job": "developer # This is NOT comment! It will be included in the string!"
+		}
+	]
+}
+```
+
+As you can see, the *job* property contains the hash and anything beyond it.
 
 
 
@@ -226,13 +277,13 @@ should not be a valid number and should not start with a symbole used by the Spe
 - double-quote `"`
 - lesser than `<` or greater than `>`
 - opening parenthesis `(`
-- arobas `@`
+- at sign `@`
 - dollar `$`
 
 Trailing spaces and tabs are trimmed out too.
 
 Lastly, if your string is at top-level, it should not be confused with an object's property or an array's element,
-thus it should not contain any colon `:` or start with a minus sign `-`.
+thus it should not contain any colon `:` or start with a hyphen `-`.
 
 Multi-line strings are not supported by the implicit syntax.
 
@@ -329,10 +380,62 @@ This works mostly like the quotes in email format.
 
 
 
+<a name="ref.hierarchical"></a>
+## Hierarchical Data Representation - Containers
+
+Non-scalar value are called *containers*.
+There are three *container* type in KFG:
+
+* [Arrays](#ref.arrays): an ordered list of elements
+* [Objects](#ref.objects): a map of key/value pairs
+* [Tag Containers](#ref.tags): an ordered list of tags
+
+The indentation is used to denote structure, to express the nested/embedded relationship: any part that is
+indented belongs to the element on the closest line above having a smaller indentation level.
+
+Here is a commented document that explains for each element its parent relationship:
+
+```
+# The following tag belong to the root document, which is implicitly a Tag Container
+[character Joe]
+	# The following key/value pairs belong to the [character] tag above
+	name: Joe Doe
+	stats:
+		# The following key/value pairs belong to the stats object above
+		strength: 11
+		dexterity: 14
+		intelligence: 17
+	# The following key/value pair belongs to the [character] tag
+	status:
+		# The following key/value pair belongs to the status object
+		hp: 18
+	# The following key/value pair belongs to the [character] tag
+	friends:
+		# The following elements belong to the friends array above
+		- Rebecca
+		- Anna
+		- Siegfried
+```
+
+It is important to understand that **siblings should be of the same type**.
+This is incorrect and would cause a parse error:
+
+```
+[mytag]
+name: Joe Doe
+- one
+- two
+- three
+```
+
+Is this document a tag container? An object? An array? This doesn't make any sense.
+
+
+
 <a name="ref.arrays"></a>
 ## Arrays
 
-The array presentation in KFG is simply a list where each item/element is introduced by a minus sign `-` followed by a space ` `.
+The array presentation in KFG is simply a list where each item/element is introduced by a hyphen `-` followed by a space ` `.
 One item/element per line.
 
 For example, this would produce `[ "banana" , "apple" , "pear" ]`:
@@ -391,10 +494,10 @@ However, the KFG supports this neat *compact syntax* inspired by YAML:
 ```
 
 That's it: if an element/item of an array is a container (array or object), its first child can be put on the same line.
-For that purpose, **a tab should be inserted right after the minus sign** `-`.
+For that purpose, **a tab should be inserted right after the hyphen** `-`.
 
 If you have insisted on using spaces instead of tabs for indentation (something that is **not** recommended),
-you should insert exactly 3 spaces (not 4, for alignment reasons) right after the minus sign `-`.
+you should insert exactly 3 spaces (not 4, for alignment reasons) right after the hyphen `-`.
 
 The same syntax with objects inside the array:
 
@@ -415,7 +518,7 @@ The same syntax with objects inside the array:
 The object presentation in KFG is simply a list of key, followed by a colon `:` followed by the value.
 There can be any number of spaces before and after the colon.
 
-The syntax is similar to the array syntax, the minus sign `-` being replaced by the property's key and the colon:
+The syntax is similar to the array syntax, the hyphen `-` being replaced by the property's key and the colon:
 one property per line.
 
 For example, this would produce `{ "first-name": "Joe" , "last-name": "Doe" , "job": "developer" }`:
@@ -426,7 +529,7 @@ last-name: Doe
 job: developer
 ```
 
-Like arrays, objects are implicit, a *node* is an object as soon as it contains one object's property.
+Like arrays, **objects are implicit**: a *node* is an object as soon as it contains one object's property.
 
 Thus an empty object cannot be declared implicitly -- it has no property!
 So they should be declared explicitly with the [constructor syntax](#ref.contructors).
@@ -459,9 +562,9 @@ Keys should not start with:
 - double-quote `"`
 - lesser than `<` or greater than `>`
 - opening parenthesis `(`
-- arobas `@`
+- at sign `@`
 - dollar `$`
-- minus sign `-`
+- hyphen `-`
 
 Trailing spaces and tabs are trimmed out too.
 
@@ -558,53 +661,210 @@ Unknown class/constructor will **throw** an error: for any non-built-in class yo
 
 
 
-<a name="ref.comments"></a>
-## Comments
+<a name="ref.tags"></a>
+## Tags and Tag Containers
 
-KFG supports single line comments, introduced by the hash sign `#`.
+Tags are special objects that belongs to a tag container.
+A tag container can contains any number of tags.
+Tags are ordered inside their container, just like elements of an array are.
+If we would compare to arrays, **tag containers are to arrays what tags are to array's elements**.
 
-A comment **MUST** be on its own line: it cannot be placed after any content, or it would be parsed as part of that content.
+Like arrays and objects, **tag containers are implicit**: a *node* is a tag container as soon as it contains one tag.
 
-A comment can be indented, and can even lie at a nonsensical depth.
+Tags can be use for anything, but they are usually describing actions, and are well-suited for building
+scripting language on top of KFG.
 
-So a comment is basically some indentations, followed by a hash sign `#`,
-followed by anything until the end of the line.
-
-The whole line will be ignored, so any chars are accepted, even non-printable/controle chars (except, of course, the newline char).
-
-Examples of valid and invalid comments:
-
-```
-# This is a valid comment
-		# This is a valid comment
-
-# If you need multiple lines,
-# you should put a # at the
-# beginning of each line.
-
-users:
-	-	first-name: Joe
-		# This is a valid comment
-		last-name: Doe
-	# This is a valid comment, it does not 'close' the current object
-		job: developer # This is NOT comment! It will be included in the string!
-```
-
-It will produce:
+This is an example of tag:
 
 ```
-{
-	users: [
-		{
-			"first-name": "Joe" ,
-			"last-name": "Doe" ,
-			"job": "developer # This is NOT comment! It will be included in the string!"
-		}
-	]
-}
+[user first-name="Joe" last-name="Doe"]
+	job: developer
+	town: Chicago
+	state: Ilinois
 ```
 
-As you can see, the *job* property contains the hash and anything beyond it.
+**The tag syntax:**
+
+* a tag starts with an opening bracket `[`, followed by a tag name, optionally followed by some attributes and
+  it ends with a closing bracket `]`
+* the inside of the tag (i.e. the tag name + the attributes) is trimmed, so extra spaces after the opening bracket
+  and before the closing bracket are ignored
+* if there are some attributes, one or more spaces should separate them from the tag name
+* the tag name can contains any chars except spaces, tabs and double-quote `"`, brackets are not recommended here
+* the attributes part can contains any chars, but there are special rules for double-quotes `"` and brackets `[]`,
+  except for thoses rules, that's the userland code role to parse attributes if needed.
+  By default the whole attribute string is fetched into the `attributes` property of the `Tag` instance.
+* **the double-quotes rule:** double-quote should always be paired inside a tag, anything inside a pair of double quote
+  is ignored, even brackets (but except the newline controle char), it allows tags to contains strings as parameters.
+* **the brackets rule:** if brackets are used inside of the tag syntax, unless they are inside a pair of
+  double-quote, **they have to be balanced**:
+	* there **MUST** be as many opening and closing brackets
+	* reading from left to right, there shouldn't be any moment where more closing brackets have been encountered
+	  than opening one
+
+Those are all valid tags:
+* `[mytag]` this create a tag named *mytag*
+* `[mytag my attributes]` create a tag named *mytag* having the `attributes` property set to `my attributes`
+* `[mytag "my id"]` create a tag named *mytag* having the `attributes` property set to `'"my id"'`, note that
+  the `attributes`'s value still contains the double-quote: nothing is parsed (except if there is a custom tag
+  named *mytag* defined by userland, that parse it)
+* `[mytag first-name="Joe" last-name="Doe"]` create a tag named *mytag* having the `attributes` property
+  set to `'first-name="Joe" last-name="Doe"'` (string).
+  If userland defined a custom tag named *mytag* that use the Kung-Fig built-in `ClassicTag` constructor,
+  attributes would be an object: `{ "first-name": "Joe" , "last-name": "Doe" }`.
+* `[inc $array[1][2].value]` create a tag named *inc* having the `attributes` property set to `$array[1][2].value`.
+  See how the brackets inside the tag follow the brackets rule correctly.
+  In [Spellcast scripting](https://github.com/cronvel/spellcast), this tag is used to increment the variable `$array[1][2].value`.
+* `[mytag some "garbage]]]][] inside ]] a quote"]` this is still correct: all those misleading brackets are inside
+  a double-quote string. Syntax hilighters may help a bit there!
+
+Beware:
+* `[mytag bad][attributes]` this create a tag named *mytag* with `attributes` set to `bad`, having the content `"[attributes]"`,
+  the tag end after the first closing bracket (after *bad*), the content starts immediately.
+* `[mytag bad[attributes]` this will throw a parse error, because the end of line will be reached before closing all brackets
+* `[mytag "bad"attributes"]` this will throw a parse error, because the number of double-quote is not even
+
+A tag can contains any content.
+Some example of tags with content here:
+
+```
+[mytag] 1234
+[mytag] "some string"
+[item]
+	type: pencil
+	count: 3
+[items]
+	-	type: pencil
+		count: 3
+	-	type: paper
+		count: 123
+[mytag]
+	[yetanothertag] 12
+	[yetanothertag] 42
+```
+
+As usual, if a tag contains an object, an array or is a tag container, **its content should be indented one level deeper**.
+
+Tags are mostly useful if you are going to build a scripting language on top of KFG.
+For pure descriptive, config or data files, that does not make much sense, except if you would like to create rather
+complex documents similar to *HTML*.
+On the other hand, most of time tags will be used for actions, hence scripting.
+So it is not particularly useful if you don't create your own userland tag constructors.
+See the Kung-Fig lib reference for that (`kungFig.load()` options).
+
+For the record, here is a bit of [Spellcast scripting](https://github.com/cronvel/spellcast) to see tags in action:
+
+```
+[chapter intro]
+	[scene intro]
+		[image] background.png
+		[sound] effect1.mp3
+		[music] theme.ogg
+		
+		[on-global blast]
+			[message]
+				$> ${this.data} was blasted!
+		
+		[message]
+			$> Choose your path:
+		
+		[next left-road]
+			[label] Take the left road
+		[next right-road]
+			[label] Take the right road
+```
+
+It defines a scene named *intro* inside a chapter. When played, that scene will set a background image, a background music
+and play a sound.
+Then the scene would define a global event handler for the *blast* event that would display a message telling which character
+was blasted.
+After that, it displays the message *“Choose your path”* and allow the user to choose either the left or the right road.
+After the user choice, it will jump either to the scene named *left-road* or *right-road* (those scenes does not appear
+in this snippet)
+
+
+
+<a name="ref.meta-tags"></a>
+## Meta Tags
+
+The meta tag syntax consists in a tag name and some attributes, between a two opening and two closing square brackets
+(`[[` and `]]`).
+See the [tag syntax](#ref.tags) for more details: tags and meta-tags share the same syntax except that meta-tags
+use double opening and closing brackets where tags use a single opening and closing bracket.
+
+One of the most common meta-tag is the built-in *doctype* tag. Here an example of doctype: `[[doctype adventurer]]`
+(this is the doctype used by [Spellcast in adventurer mode](https://github.com/cronvel/spellcast)).
+
+There are few built-in, reserved or standardized meta-tags, but everyone is free to create their own custom meta-tags.
+
+A meta-tags can have any type of content. Few example of meta-tags with content:
+
+```
+[[my-meta]] 1234
+[[another-meta]] some meta data
+[[yet-another-meta]]
+	id: meta4357
+	description: a meta description
+```
+
+Meta-tags will be instanciated with the `Tag` constructor.
+
+The userland code may pass its own constructor to the parser, but it should have `Tag` as its superclass.
+
+**All meta-tags MUST be placed at the begining of the file, before any other document content.**
+Think of them as **headers**.
+
+Userland code may pass a *meta-hook* to the parser, that hook will be triggered before the actual document content,
+with all the meta-tags.
+The hook may throw an error to interrupt the parser if there is something wrong with those meta-tags.
+
+Meta-tags are not part of the document, the parser will not return them.
+Since they are not part of the document, the *siblings should be of the same type* rule does not apply.
+
+This is correct:
+
+```
+[[my-tag]]
+name: Joe Doe
+job: developer
+```
+
+But if it was a tag, it would be incorrect:
+
+```
+[my-tag]
+
+# Parse error: a tag was expected, but got key/value pairs!
+name: Joe Doe
+job: developer
+```
+
+
+
+### Special Meta Tags
+
+Here is a list of built-in/reserved/standardized meta-tags and their roles:
+
+* [[doctype <name>]]: the doctype meta-tag is a **built-in** meta-tag, its role is to describe the document.
+  Since KFG can describe a wide range of things, and can be extended/customized (tags, operators, etc),
+  it is a very important meta-tag. The `doctype` option of `kungFig.load()` can enforce some doctype,
+  rejecting KFG files that does not match. It prevents us from loading random/unrelated documents in our app
+  by end-user mistake.
+
+* [[locales <path>]]: this meta-tag is not built-in, but **standardized**. It means that KungFig has
+  no special treatment for this tag, and that is the job of the userland code to process it the appropriate way
+  (e.g.: should all the locales be loaded? or just the one found in a command line argument? Actually this is
+  highly application dependent).
+  However the `locales` meta-tag syntax is **standardized**: it should contain a path relative to the current file,
+  and should support globs.
+  Example of a valid `locales` tag: `[[locales path/to/locales/*]]`.
+
+* [[include]]: **RESERVED**
+* [[require]]: **RESERVED**
+* [[module]]: **RESERVED**
+* [[export]]: **RESERVED**
+* [[kfg]]: **RESERVED**
+* [[version]]: **RESERVED**
 
 
 
@@ -619,11 +879,11 @@ and even the current document or a sub-tree of it.
 
 There are two type of include:
 
-* optional includes start with a single arobas `@` immediately followed by the *reference*: if the reference is not found,
+* optional includes start with a single *at sign* `@` immediately followed by the *reference*: if the reference is not found,
   it will be replaced by an empty object if the reference would point to a whole document, or undefined if it would point
   to a sub-tree. If the reference point to an existing file that contains parse error, it will throw anyway!
   Debugging would be hard if it doesn't.
-* mandatory includes start with a double arobas `@@` immediately followed by the *reference*: if the reference is not found
+* mandatory includes start with a double *at sign* `@@` immediately followed by the *reference*: if the reference is not found
   or cannot be loaded, parsed or whatever, it will throw.
 
 Here, a *reference* is an optional file path **relative to the current file directory** (or absolute if it starts with a `/`),
@@ -813,10 +1073,14 @@ Do not add extra spaces in a local reference: all spaces should be meaningful.
 
 
 
-<a name="ref.includes.circular"></a>
-### Circular references
+<a name="ref.includes.relational"></a>
+### Relational References
 
-**It is also possible to reference parts of the current document itself.** Just remove the file reference part.
+**It is also possible to reference parts of the current document itself.**
+Just remove the file reference part.
+It is usually called *relational data representation*.
+
+Consider this:
 
 ```
 users:
@@ -833,8 +1097,10 @@ users:
 
 This will produce **actual references, not clones**. Hence it is not possible to write down the result,
 because of circular references.
-
-This is an interesting feature since it permits to load or save complex data structure using KFG.
+This is an efficient data representation, it avoids redundancies, it avoids human errors and avoids
+wasting memory.
+Moreover, this is possible to stringify complex data structure that would usually fail (e.g. `JSON.stringify()`
+would throw an error when attempting to serialize data with circular references).
 
 It is also possible to reference the root of the document with a hash sign `#` and an empty local reference:
 
@@ -842,92 +1108,5 @@ It is also possible to reference the root of the document with a hash sign `#` a
 key: value
 circular: @@#
 ```
-
-
-
-<a name="ref.meta-tags"></a>
-## Meta Tags
-
-The meta tag syntax consists in a tag name and some attributes, between a two opening and two closing square brackets
-(`[[` and `]]`).
-See the [tag syntax](#ref.tags) for more details: they share the same syntax except that meta-tags use double opening
-and closing brackets where tags use a single opening and closing bracket.
-
-One of the most common meta-tag is the built-in *doctype* tag. Here an example of doctype: `[[doctype adventurer]]`
-(this is the doctype used by [Spellcast in adventurer mode](https://github.com/cronvel/spellcast)).
-
-There are few built-in, reserved or standardized meta-tags, but everyone is free to create their own custom meta-tags.
-
-A meta-tags can have any type of content. Few example of meta-tags with content:
-
-```
-[[my-meta]] 1234
-[[another-meta]] some meta data
-[[yet-another-meta]]
-	id: meta4357
-	description: a meta description
-```
-
-Meta-tags will be instanciated with the `Tag` constructor.
-
-The userland code may pass its own constructor to the parser, but it should have `Tag` as its superclass.
-
-**All meta-tags MUST be placed at the begining of the file, before any other document content.**
-Think of them as **headers**.
-
-Userland code may pass a *meta-hook* to the parser, that hook will be triggered before the actual document content,
-with all the meta-tags.
-The hook may throw an error to interrupt the parser if there is something wrong with those meta-tags.
-
-Meta-tags are not part of the document the parser will return.
-
-
-
-### Special Meta Tags
-
-Here is a list of built-in/reserved/standardized meta-tags and their roles:
-
-* [[doctype <name>]]: the doctype meta-tag is a **built-in** meta-tag, its role is to describe the document.
-  Since KFG can describe a wide range of things, and can be extended/customized (tags, operators, etc),
-  it is a very important meta-tag. The `doctype` option of `kungFig.load()` can enforce some doctype,
-  rejecting KFG files that does not match. It prevents us from loading random/unrelated documents in our app
-  by end-user mistake.
-
-* [[locales <path>]]: this meta-tag is not built-in, but **standardized**. It means that KungFig has
-  no special treatment for this tag, and that is the job of the userland code to process it the appropriate way
-  (e.g.: should all the locales be loaded? or just the one found in a command line argument? Actually this is
-  highly application dependent).
-  However the `locales` meta-tag syntax is **standardized**: it should contain a path relative to the current file,
-  and should support globs.
-  Example of a valid `locales` tag: `[[locales path/to/locales/*]]`.
-
-* [[include]]: **RESERVED**
-* [[require]]: **RESERVED**
-* [[module]]: **RESERVED**
-* [[export]]: **RESERVED**
-* [[kfg]]: **RESERVED**
-* [[version]]: **RESERVED**
-
-
-
-<a name="ref.tags"></a>
-## Tags and Tag Containers
-
-**The tag syntax:**
-
-* a tag start with an opening bracket `[`, followed by a tag name, optionally followed by some attributes and end
-  with a closing bracket `]`
-* the inside of the tag (i.e. tag name + attributes) is trimmed, so extra spaces after the opening bracket
-  and before the closing bracket are ignored
-* if there are some attributes, one or more spaces should separate them from the tag name
-* the tag name can contains any chars except spaces, tabs and double-quote `"`, brackets are not recommended here
-* the attributes part can contains any chars, but there are special rules for double-quotes `"` and brackets `[]`,
-  except for thoses rules, that's the userland code role to parse attributes. By default the whole attribute string
-  is fetched into the `attributes` property of the `Tag` instance.
-* **the double-quotes rule:** double-quote should always be paired inside a tag, anything inside a pair of double quote
-  is ignored, even brackets, it allows tags to contains strings. However
-* **the brackets rule:** if brackets are used inside of
-
-
 
 
