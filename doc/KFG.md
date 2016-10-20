@@ -924,9 +924,9 @@ Here is a list of built-in/reserved/standardized meta-tags and their roles:
 * the attributes part can contains any chars, but there are special rules for double-quotes `"` and brackets `[]`,
   except for thoses rules, that's the userland code role to parse attributes. By default the whole attribute string
   is fetched into the `attributes` property of the `Tag` instance.
-* double-quotes rule: double-quote should always be paired inside a tag, anything inside a pair of double quote
+* **the double-quotes rule:** double-quote should always be paired inside a tag, anything inside a pair of double quote
   is ignored, even brackets, it allows tags to contains strings. However
-* brackets rule: if brackets are used inside of
+* **the brackets rule:** if brackets are used inside of
 
 
 
