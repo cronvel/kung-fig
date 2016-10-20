@@ -157,7 +157,7 @@ The addition of **refs**, **templates** and **expressions** appears in 2016 to s
 * [Tags](#ref.tags)
 
 *Documentation TODO:*
-* [Meta Tags and Header](#ref.meta-tags)
+* [Meta Tags](#ref.meta-tags)
 * [References](#ref.references)
 * [Templates](#ref.templates)
 * [Expressions](#ref.expressions)
@@ -202,14 +202,16 @@ The scientific notation is also supported, like this: `value: 1.23e45`
 <a name="ref.strings"></a>
 ## Strings
 
-There are many way to declare strings in KFG.
+All KFG's strings are encoded in **UTF-8**.
+
+There are many string declaration syntax in KFG, one should use the most appropriate syntax for its usage.
 
 
 
 <a name="ref.strings.implicit"></a>
 ### Implicit Strings
 
-The most straight-forward way is implicit strings.
+The most straight-forward syntax is *implicit strings*.
 
 For example, this KFG file will produce `{ "name": "Joe Doe" }`:
 
@@ -241,7 +243,7 @@ If you are in one of those cases, declare your string using one of the following
 <a name="ref.strings.quoted"></a>
 ### Quoted Strings
 
-Quoted strings are string inside double-quote.
+*Quoted strings* are string inside double-quote.
 
 This KFG file will produce `{ "name": "Joe Doe" }`:
 
@@ -249,31 +251,33 @@ This KFG file will produce `{ "name": "Joe Doe" }`:
 name: "Joe Doe"
 ```
 
-Inside a quoted string, all character are available except three types that have special meanings:
-- the double-quote `"` itself should be *escaped* with a backslash `\`, otherwise it would mean the end of the string
-- the backslash `\` should be *escaped* with another backslash `\`, because it is used for escape sequence
-- all controle characters are illegals, they should be represented by a backslash escape sequence
+Inside a quoted string, all characters are available except three types that have special meanings:
+- the double-quote `"` itself should be *escaped* with a backslash: `\"`, otherwise it would mean the end of the string
+- the backslash `\` should be *escaped* with another backslash: `\\`, because it is used to start escape sequence
+- all controle characters are illegals, they should be represented by a backslash escape sequence, see below
 
-Special chars backslash escape sequence:
+Backslash escape sequence:
 - `\b` for the *bell* controle char
 - `\f` for the *form feed* controle char
 - `\n` for the *new line* controle char
 - `\r` for the *carriage return* controle char
 - `\t` for the *tab* controle char
 - `\\` for a single *backslash* `\` char
-- `\/` for a single *slash* `\` char (escaping slashes is optional and not recommended)
+- `\/` for a single *slash* `\` char (escaping slashes is **optional** and **not recommended**)
 - `\"` for the *double-quote* `"` char
-- `\uXXXX` for writing a char using its unicode code point, where *XXXX* is the hexedecimal unicode code point
+- `\uXXXX` for writing a char using its unicode code point, where *XXXX* is the hexedecimal unicode code point,
+  this is **optional**, KFG support UTF-8 out of the box, so it should be used only if one want to avoid
+  some strange chararacters in its source code
 
 Quoted strings does not support multi-line: they should start and end at the same line, however the **content**
-of the string can be multi-line: just use the `\n` special sequence to represent each new line.
+of the string can be multi-line: just insert as many `\n` as you need.
 
 
 
 <a name="ref.strings.introduced"></a>
 ### Introduced Strings
 
-Introduced strings are strings introduced by the *greater than* sign `>` followed by a space ` `.
+*Introduced strings* are strings introduced by the *greater than* sign `>` followed by a space ` `.
 
 This KFG file will produce `{ "name": "Joe Doe" }`:
 
@@ -281,24 +285,24 @@ This KFG file will produce `{ "name": "Joe Doe" }`:
 name: > Joe Doe
 ```
 
-Everything after the `> ` mark until the end of the line will be in the string, without being trimmed.
-That means that trailing spaces before the end of the line will be part of the string.
+Everything after the `> ` mark **until the end of the line** will be in the string, without being trimmed.
+That means that trailing spaces will be part of the string, as well as extra spaces after the `> ` mark.
 
 Introduced strings are great because they do not need escaping, any chars except the new line can be used.
 They are left untouched.
 
 Reciprocally, since chars aren't interpreted, it could be hard to spot bad chars, especially controle chars.
 If you need to declare a string with controle chars, it's best to use [quoted string](#ref.strings.quoted)
-and backslash escape sequences.
+and backslash escape sequences. For anything else, they are generally greater than *quoted strings*.
 
-If you need multi-line, use the [multi-line string syntax](#ref.strings.multiline).
+If you need multi-line, use the [multi-line string syntax](#ref.strings.multiline), which is a variant of this syntax.
 
 
 
 <a name="ref.strings.multiline"></a>
 ### Multi-line Strings
 
-Multi-line strings is a variant of [introduced string](#ref.strings.introduced).
+*Multi-line strings* is a variant of [introduced string](#ref.strings.introduced).
 
 Just look at this example:
 
@@ -311,12 +315,17 @@ description:
 ```
 
 As you would expect, it produces an object with a single *description* property containing the whole paragraph,
-of course without the initial indentation and `> ` mark at the start of each lines.
+of course without the initial indentation and the `> ` mark at the start of each lines.
 
 Note that the multi-line string does not start at the same line than the property key *description*,
-but at the next line, one level of indentation deeper than its container.
+but at the next line, one level of indentation deeper than its *container*.
 
 All the other rules of [introduced string](#ref.strings.introduced) applies.
+
+*Multi-line strings* are really great. Copy-paste any raw text paragraph in your KFG, then prefix
+each line with `> ` and indent it: *and it just works!*
+Your text editor may even do that for you with a few keystrokes.
+This works mostly like the quotes in email format.
 
 
 
@@ -336,10 +345,10 @@ For example, this would produce `[ "banana" , "apple" , "pear" ]`:
 
 This is really a simple and easy to read syntax.
 
-Arrays are implicit, a *node* is an array as soon as it contains an array's element.
+**Arrays are implicit**: a *node* is an array as soon as it contains an array's element.
 
 Thus an empty array cannot be declared implicitly -- it has no element!
-So they should be declared explicitly with the [constructor syntax](#ref.contructors).
+So it should be declared explicitly with the [constructor syntax](#ref.contructors).
 
 E.g.:
 
@@ -382,12 +391,12 @@ However, the KFG supports this neat *compact syntax* inspired by YAML:
 ```
 
 That's it: if an element/item of an array is a container (array or object), its first child can be put on the same line.
-For that purpose, a tab should be inserted right after the minus sign `-`.
+For that purpose, **a tab should be inserted right after the minus sign** `-`.
 
-If you have insisted on using spaces instead of tabs for indentation (something that is not recommended),
-you should put exactly 3 spaces (not 4, for alignment reasons) right after the minus sign `-`.
+If you have insisted on using spaces instead of tabs for indentation (something that is **not** recommended),
+you should insert exactly 3 spaces (not 4, for alignment reasons) right after the minus sign `-`.
 
-The same with object inside arrays:
+The same syntax with objects inside the array:
 
 ```
 -	first-name: Joe
@@ -456,12 +465,18 @@ Keys should not start with:
 
 Trailing spaces and tabs are trimmed out too.
 
-They should not contain:
+A key should not contain:
 
 - colon `:`
 - controle chars
 
-If the key should contain any of this, it should be quoted using the [quoted strings rules](#ref.strings.quoted).
+**If the key should contain any of this, it should be quoted** using the [quoted strings rules](#ref.strings.quoted).
+
+E.g.:
+
+```
+"#strange:key\n": value
+```
 
 Unquoted key can contain spaces between words, so this is perfectly legit:
 
@@ -495,12 +510,21 @@ text: I just want to say: hello!
 <a name="ref.constructors"></a>
 ## Classes/Constructors
 
-The constructor syntax consists of a constructor put inside angle brackets (`<` and `>`).
+The constructor syntax consists of a constructor/class name put inside angle brackets (`<` and `>`).
 
-The constructor should be put before the regular KFG value, if any.
+The constructor should be inserted before the regular KFG value, if any.
 That KFG value will be passed to the constructor function.
 
+Here a class/constructor that use a number as its init value, and another that needs an object:
 
+```
+date: <Date> 1476785828944
+item: <Item>
+	name: pencil
+	count: 4
+```
+
+Unknown class/constructor will **throw** an error: for any non-built-in class you use, there **MUST** be a userland constructor.
 
 <a name="ref.builtin-constructors"></a>
 ### Built-in Classes/Constructors
@@ -514,15 +538,16 @@ That KFG value will be passed to the constructor function.
 * `<TagContainer>`, `<tagContainer>`: TagContainer constructor. TagContainer are implicit, there is only one case where this
   constructor is needed: when we want to create an empty TagContainer.
 
-* `<JSON>`, `<Json>`, `<json>`: a pseudo-constructor that accept a string and parse it as JSON, the result can be
+* `<JSON>`, `<Json>`, `<json>`: a constructor that accept a string and parse it as JSON, the result can be
   any native JSON type (null, boolean, number, string, array, object).
   E.g.: `<JSON> > {"a":1,"b":2,"array":[1,2,"three"]}`
 
 * `<Bin16>`, `<bin16>`: represent binary data stored in an hexadecimal string, converted to the most appropriate
-  type for binary data of the platform (Node.js: Buffer).
+  type for binary data depending on the platform (Node.js: `Buffer`).
   E.g.: `<Bin16> fd104b19`
 
 * `<Date>`, `<date>`: construct a Date from a string or a number (timestamp)
+  Anything accepted by the Javascript `Date()` constructor is possible.
   E.g.: `<Date> Fri Apr 29 2016 12:08:14 GMT+0200 (CEST)`
   Or: `<Date> 1476785828944`
   Or: `<Date> 2016-10-18`
@@ -821,38 +846,87 @@ circular: @@#
 
 
 <a name="ref.meta-tags"></a>
-## Meta Tags and Header
+## Meta Tags
 
-The meta tag syntax consists in a tag name and some attributes, between a two opening and two closing square brackets.
+The meta tag syntax consists in a tag name and some attributes, between a two opening and two closing square brackets
+(`[[` and `]]`).
+See the [tag syntax](#ref.tags) for more details: they share the same syntax except that meta-tags use double opening
+and closing brackets where tags use a single opening and closing bracket.
 
-One of the most common meta-tag is the doctype tag. Here an example of doctype: `[[doctype adventurer]]`
+One of the most common meta-tag is the built-in *doctype* tag. Here an example of doctype: `[[doctype adventurer]]`
 (this is the doctype used by [Spellcast in adventurer mode](https://github.com/cronvel/spellcast)).
 
-There are built-in, reserved or standardized meta-tags, but everyone is free to create their own custom meta-tags.
+There are few built-in, reserved or standardized meta-tags, but everyone is free to create their own custom meta-tags.
+
+A meta-tags can have any type of content. Few example of meta-tags with content:
+
+```
+[[my-meta]] 1234
+[[another-meta]] some meta data
+[[yet-another-meta]]
+	id: meta4357
+	description: a meta description
+```
+
+Meta-tags will be instanciated with the `Tag` constructor.
+
+The userland code may pass its own constructor to the parser, but it should have `Tag` as its superclass.
+
+**All meta-tags MUST be placed at the begining of the file, before any other document content.**
+Think of them as **headers**.
+
+Userland code may pass a *meta-hook* to the parser, that hook will be triggered before the actual document content,
+with all the meta-tags.
+The hook may throw an error to interrupt the parser if there is something wrong with those meta-tags.
+
+Meta-tags are not part of the document the parser will return.
 
 
 
-### Special tags
+### Special Meta Tags
 
-Here is a list of built-in/reserved/standardized meta-tags and their role:
+Here is a list of built-in/reserved/standardized meta-tags and their roles:
 
-* [[doctype <name>]]: the doctype meta-tag is a built-in meta-tag, its role is to describe the document.
+* [[doctype <name>]]: the doctype meta-tag is a **built-in** meta-tag, its role is to describe the document.
   Since KFG can describe a wide range of things, and can be extended/customized (tags, operators, etc),
   it is a very important meta-tag. The `doctype` option of `kungFig.load()` can enforce some doctype,
   rejecting KFG files that does not match. It prevents us from loading random/unrelated documents in our app
   by end-user mistake.
 
-* [[locales <path>]]: this meta-tag is not built-in, but is standardized. It means that KungFig has
-  no special treatment for this tag, and that the job of the userland code to process it the appropriate way.
-  However the `locales` meta-tag syntax is standardized: it should contain a path relative to the current file.
+* [[locales <path>]]: this meta-tag is not built-in, but **standardized**. It means that KungFig has
+  no special treatment for this tag, and that is the job of the userland code to process it the appropriate way
+  (e.g.: should all the locales be loaded? or just the one found in a command line argument? Actually this is
+  highly application dependent).
+  However the `locales` meta-tag syntax is **standardized**: it should contain a path relative to the current file,
+  and should support globs.
+  Example of a valid `locales` tag: `[[locales path/to/locales/*]]`.
 
----------------------------------------- here ----------------------------------------------
+* [[include]]: **RESERVED**
+* [[require]]: **RESERVED**
+* [[module]]: **RESERVED**
+* [[export]]: **RESERVED**
+* [[kfg]]: **RESERVED**
+* [[version]]: **RESERVED**
+
+
 
 <a name="ref.tags"></a>
-## Tags
+## Tags and Tag Containers
 
+**The tag syntax:**
 
-
+* a tag start with an opening bracket `[`, followed by a tag name, optionally followed by some attributes and end
+  with a closing bracket `]`
+* the inside of the tag (i.e. tag name + attributes) is trimmed, so extra spaces after the opening bracket
+  and before the closing bracket are ignored
+* if there are some attributes, one or more spaces should separate them from the tag name
+* the tag name can contains any chars except spaces, tabs and double-quote `"`, brackets are not recommended here
+* the attributes part can contains any chars, but there are special rules for double-quotes `"` and brackets `[]`,
+  except for thoses rules, that's the userland code role to parse attributes. By default the whole attribute string
+  is fetched into the `attributes` property of the `Tag` instance.
+* double-quotes rule: double-quote should always be paired inside a tag, anything inside a pair of double quote
+  is ignored, even brackets, it allows tags to contains strings. However
+* brackets rule: if brackets are used inside of
 
 
 

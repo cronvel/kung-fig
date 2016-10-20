@@ -87,7 +87,7 @@ Now, look at this **impressive** list of features:
 		  if false the `attributes` argument contains the parsed argument, in whatever type the tag use (usually `object`)
 		* runtime `object` reserved
 	  The prototype of the tag constructor **MUST** be an instance of `Tag.prototype`, see [Tag](#ref.Tag).
-	* metaTags `object` (KFG only) workd just like the `tags` option but for meta-tags
+	* metaTags `object` (KFG only) works just like the `tags` option but for meta-tags
 	* operators `object` (KFG only) custom operators for Expression, the key is the operator string that should be
 	  in the Expression, the value is a `function( args )` that should compute the operation, where `args` is an array
 	  of argument. See [Expression](#ref.Expression).
