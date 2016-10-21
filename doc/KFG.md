@@ -33,8 +33,8 @@ Stop using JSON for configuration files, use KFG now!
 
 ### Table of Contents
 
-* [A Bit of History](#ref.history)
-* [Getting Started](#ref.getting-started)
+* [A Bit of History](#history)
+* [Getting Started](#getting-started)
 * [Comments](#ref.comments)
 * [Constants](#ref.constants)
 * [Numbers](#ref.numbers)
@@ -63,6 +63,7 @@ Stop using JSON for configuration files, use KFG now!
 
 
 
+<a name="history"></a>
 ## A Bit of History
 
 It all started back in 2009, when Cédric Ronvel was bored by the fact that JSON would be a great format to write config file
@@ -78,7 +79,7 @@ The addition of **refs**, **templates** and **expressions** appears in 2016 to s
 
 
 
-<a name="ref.getting-started"></a>
+<a name="getting-started"></a>
 ## Getting started
 
 If you have already used YAML before, KFG will look familiar to you.
