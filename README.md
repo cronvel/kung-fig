@@ -36,7 +36,7 @@ Now, look at this **impressive** list of features:
 
 
 
-### Table of Contents
+## Table of Contents
 
 * [The Wonderful KFG Format](doc/KFG.md)
 * [Basic Module Methods](doc/lib.md#ref.basic)

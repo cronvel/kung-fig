@@ -3,7 +3,7 @@
 
 ### Table of Contents
 
-* [The Wonderful KFG Format](https://github.com/cronvel/kung-fig/blob/master/doc/KFG.md)
+* [The Wonderful KFG Format](KFG.md)
 * [Basic Module Methods](#ref.basic)
 	* [.load()](#ref.load)
 	* [.loadMeta()](#ref.loadMeta)
@@ -73,13 +73,13 @@ If the document contains includes, there are all resolved synchronously before r
 
 Available file types are:
 
-* [KFG](https://github.com/cronvel/kung-fig/blob/master/doc/KFG.md) (*.kfg)
+* [KFG](KFG.md) (*.kfg)
 * JSON (*.json)
 * Node.js Javascript module (*.js)
 * Raw text files (*.txt, or any unknown extension)
 
 The path can be absolute, relative (to the Current Working Directory), or relative using the
-[recursive parent search feature](https://github.com/cronvel/kung-fig/blob/master/doc/KFG.md#ref.includes.recursive-parent-search).
+[recursive parent search feature](KFG.md#ref.includes.recursive-parent-search).
 
 If the document contains tags that don't exist in the `options.tags` argument, there are instanciated using the 
 built-in [Tag](#ref.Tag) constructor.

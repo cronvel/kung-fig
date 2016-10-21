@@ -714,7 +714,7 @@ Those are all valid tags:
   named *mytag* defined by userland, that parse it)
 * `[mytag first-name="Joe" last-name="Doe"]` create a tag named *mytag* having the `attributes` property
   set to `'first-name="Joe" last-name="Doe"'` (string).
-  If userland defined a custom tag named *mytag* that use the Kung-Fig built-in `ClassicTag` constructor,
+  If userland defined a custom tag named *mytag* that use the [Kung-Fig built-in `ClassicTag` constructor](lib.md#ref.ClassicTag),
   attributes would be an object: `{ "first-name": "Joe" , "last-name": "Doe" }`.
 * `[inc $array[1][2].value]` create a tag named *inc* having the `attributes` property set to `$array[1][2].value`.
   See how the brackets inside the tag follow the brackets rule correctly.
@@ -754,7 +754,7 @@ For pure descriptive, config or data files, that does not make much sense, excep
 complex documents similar to *HTML*.
 On the other hand, most of time tags will be used for actions, hence scripting.
 So it is not particularly useful if you don't create your own userland tag constructors.
-See the Kung-Fig [lib references](lib.md) for that ([`kungFig.load()`'s options](lib.md#ref.load)).
+See the [`kungFig.load()` options](lib.md#ref.load).
 
 For the record, here is a bit of [Spellcast scripting](https://github.com/cronvel/spellcast) to see tags in action:
 
@@ -851,7 +851,7 @@ Here is a list of built-in/reserved/standardized meta-tags and their roles:
 
 * [[doctype <name>]]: the doctype meta-tag is a **built-in** meta-tag, its role is to describe the document.
   Since KFG can describe a wide range of things, and can be extended/customized (tags, operators, etc),
-  it is a very important meta-tag. The `doctype` option of `kungFig.load()` can enforce some doctype,
+  it is a very important meta-tag. The `doctype` option of [`kungFig.load()`](lib.md#ref.load) can enforce some doctype,
   rejecting KFG files that does not match. It prevents us from loading random/unrelated documents in our app
   by end-user mistake.
 
@@ -928,7 +928,7 @@ items: @items.kfg
 
 * .kfg: this will load the file as a KFG file. It is possible to load other files as KFG: e.g. one should
   pass `{ kfgFiles: { extname: [ "myext" ] , basename: [ "mykfgfile.ext" ] } }` as the second argument
-  of `kungFig.load()` to load the file *mykfgfile.ext* or any file with the extension *.myext* as KFG.
+  of [`kungFig.load()`](lib.md#ref.load) to load the file *mykfgfile.ext* or any file with the extension *.myext* as KFG.
 * .json: this will load the file as JSON
 * .js: this will load the file as a Node.js module: anything exported by the module will be returned.
   This is actually the sole way to include JS functions.
