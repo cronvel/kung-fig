@@ -22,11 +22,15 @@
 	* [.setRef()](#ref.Ref.setRef)
 	* [.get(), .getValue()](#ref.Ref.get)
 	* [.set()](#ref.Ref.set)
+* [The Template Class](#ref.Template)
+	* [Template.create()](#ref.Template.create)
+* [The TemplateElement Class](#ref.TemplateElement)
+	* [TemplateElement.parse()](#ref.TemplateElement.parse)
+	* [TemplateElement.create()](#ref.TemplateElement.create)
 
 *Documentation TODO:*
 * [.reduce()](#ref.reduce)
 * [.autoReduce()](#ref.autoReduce)
-* [The Template Class](#ref.Template)
 * [The Expression Class](#ref.Expression)
 * [The Tag Class](#ref.Tag)
 * [The TagContainer Class](#ref.TagContainer)
@@ -38,7 +42,7 @@
 
 Those are top-level module methods.
 
-In all the following examples, it is assumed that `var kungFig = require( 'kung-fig' ) `, and all the following
+In all the following examples, it is assumed that `var kungFig = require( 'kung-fig' )`, and all the following
 are methods of the `kungFig` object.
 
 
@@ -497,7 +501,171 @@ So ctx is now equal to:
 
 
 
+<a name="ref.Template"></a>
+## The Template Class
 
+*Templates* are useful for building scripting language on top of KFG: they are internationalizable templates,
+containing references.
+
+The `Template` class uses [Babel Tower](https://github.com/cronvel/babel-tower) behind the scene, and encapsulate
+a `Babel.Sentence` instance **behind a [Dynamic interface](#ref.Dynamic)**.
+
+Like all Dynamic object, to solve a *template*, a *context* is needed.
+
+Let's see a *template* in action:
+
+```js
+var kungFig = require( 'kung-fig' ) ;
+
+// First define a context
+var ctx = {
+	name: "Bob"
+} ;
+
+// Create the template
+var template = kungFig.Template.create( "Hello ${name}!" ) ;
+
+// Output "Hello Bob!", using the string in ctx.name
+console.log( template.get( ctx ) ) ;
+```
+
+This is a really simple example, and *templates* can do a lot more.
+See the [KFG Template syntax](KFG.md#ref.template) and the [Babel Tower documentation](https://github.com/cronvel/babel-tower)
+for more.
+
+The `Babel` object used for internationalization/localization is the `__babel` property of the context,
+if it's not defined, or it will fallback to the global `Babel.default` instance.
+
+Example featuring i18n/l10n:
+
+```js
+var kungFig = require( 'kung-fig' ) ;
+var babel = require( 'babel-tower' ).create() ;
+
+babel.extend( {
+	fr: {
+		sentences: {
+			"Give me ${count} apple${count}[n?|s]!" : "Donne-moi ${count} pomme${count}[n?|s]!"
+		}
+	}
+} ) ;
+
+// Define the context
+var ctx = {
+	__babel: babel ,
+	count: 2
+} ;
+
+// Create the template
+var template = kungFig.Template.create( "Give me ${count} apple${count}[n?|s]!" ) ;
+
+// Output "Give me 2 apples!"
+console.log( template.get( ctx ) ) ;
+
+// Switch to the 'fr' (french) locale
+ctx.__babel.setLocale( 'fr' ) ;
+
+// Output "Donne-moi 2 pommes!"
+console.log( template.get( ctx ) ) ;
+```
+
+
+
+<a name="ref.Template.create"></a>
+### Template.create( template )
+
+* template `string` the string used as template
+
+This creates a `Template` instance from a string and return it.
+
+
+
+<a name="ref.TemplateElement"></a>
+## The TemplateElement Class
+
+A *template element* is a used as a part of *template*.
+
+The `TemplateElement` class uses [Babel Tower](https://github.com/cronvel/babel-tower) behind the scene, and encapsulate
+a `Babel.Element` instance **behind a [Dynamic interface](#ref.Dynamic)**.
+
+Like all Dynamic object, to solve a *templateElement*, a *context* is needed.
+
+Think of *template element* as a part of a sentence, it can be a noun, a noun group.
+
+A *template element* can have alternative strings according to its gender and number, it can have a translatable key,
+it can be just a number...
+
+Example featuring i18n/l10n and *template elements*:
+
+```js
+var kungFig = require( 'kung-fig' ) ;
+var babel = require( 'babel-tower' ).create() ;
+
+babel.extend( {
+	fr: {
+		sentences: {
+			"Hello ${who}[g:m]!" : "Bonjour ${who}[g:m]!" ,
+			"Hello ${who}[g:f]!" : "Bonjour ${who}[g:f]!"
+		} ,
+		elements: {
+			master: { altg: [ 'maitre' , 'maitresse' ] }
+		}
+	}
+} ) ;
+
+// Define the context
+var ctx = {
+	__babel: babel ,
+	
+	/*
+		Create an element having:
+		* a translatable key: master
+		* a male gender alternative: master
+		* a female gender alternative: mistress
+	*/
+	who: kungFig.TemplateElement.parse( "master[altg:master|mistress]" )
+} ;
+
+// Create two templates using the element, the first one use the male version ([g:m])
+// the last one use the female version ([g:f])
+var template1 = kungFig.Template.create( "Hello ${who}[g:m]!" ) ;
+var template2 = kungFig.Template.create( "Hello ${who}[g:f]!" ) ;
+
+// Output "Hello master!"
+console.log( template1.get( ctx ) ) ;
+
+// Output "Hello mistress!"
+console.log( template2.get( ctx ) ) ;
+
+// Switch to the 'fr' (french) locale
+ctx.__babel.setLocale( 'fr' ) ;
+
+// Output "Bonjour maitre!"
+console.log( template1.get( ctx ) ) ;
+
+// Output "Bonjour maitress!"
+console.log( template2.get( ctx ) ) ;
+```
+
+
+
+<a name="ref.TemplateElement.parse"></a>
+### TemplateElement.parse( str )
+
+* str `string` represent a Babel Element using the Babel Element syntax
+
+This creates a `TemplateElement` instance from a string in the Babel Element syntax.
+It calls `Babel.Element.parse()`.
+
+
+
+<a name="ref.TemplateElement.create"></a>
+### TemplateElement.create( arg )
+
+* arg `mixed`
+
+This creates a `TemplateElement` instance, the *arg* argument is passed as the first argument of `Babel.Element.create()`.
+See [Babel Tower documentation](https://github.com/cronvel/babel-tower).
 
 
 

@@ -55,10 +55,10 @@ Stop using JSON for configuration files, use KFG now!
 	* [Glob: including multiple files at once](#ref.includes.glob)
 	* [Local reference: including a sub-tree of a document](#ref.includes.local-reference)
 	* [Relational Data Representation](#ref.includes.relational)
-* [Ref](#ref.ref)
+* [Refs](#ref.refs)
+* [Templates](#ref.templates)
 
 *Documentation TODO:*
-* [Templates](#ref.templates)
 * [Expressions](#ref.expressions)
 
 
@@ -1115,8 +1115,8 @@ circular: @@#
 
 
 
-<a name="ref.ref"></a>
-### Ref
+<a name="ref.refs"></a>
+### Refs
 
 *Refs* are useful for building scripting language on top of KFG: they represent variables, or paths to variable.
 
@@ -1149,5 +1149,44 @@ There is no escape mecanism ATM, so a *ref* cannot have keys containing those ch
 Those are incorrect:
 * `$myarray[ 1 ]`
 * `$path .to. my . var`
+
+
+
+<a name="ref.templates"></a>
+### Templates
+
+*Templates* are useful for building scripting language on top of KFG: they are internationalizable templates,
+containing references.
+
+When successfully parsed, it creates a [Kung-Fig Template instance](lib.md#ref.Template).
+
+The syntax for declaring a *template* is similar to the syntax for declaring strings:
+
+* for the quoted template syntax, start with `$"` and end with `"`, and follow the [quoted string rules](#ref.strings.quoted)
+* for the introduced template syntax, start with `$> ` and follow the [introduced string rules](#ref.strings.introduced)
+* for the multi-line template syntax, start each line with the proper indentation, the `$> ` mark, and follow
+  the [multi-line string rules](#ref.strings.multiline)
+
+Example of valid *template* declaration:
+
+```
+template1: $"Hello ${name}!"
+template2: $> Hello ${name}!
+template3:
+	$> Hello ${name}!
+	$> How are you?
+```
+
+As for the template syntax itself (i.e. the inside), it uses the
+[Babel Tower sentence syntax](https://github.com/cronvel/babel-tower).
+
+Basically, any `${}` mark (with a path inside the curly brace) are substituted by a value taken from the context.
+The path syntax is closed to the one of the [Ref](#ref.refs), except that there is no support for nested references.
+Hence, `$> Hello ${user.bob.name}!` is supported, but not `$> Hello ${user[$id].name}!`.
+
+All [Babel Tower commands](https://github.com/cronvel/babel-tower) are supported.
+E.g. `$> Hello ${who}[altg:guys|girls//uc]!` will be *solved* to `Hello GUYS!` if the context is equal to `{ who: { g: "m" } }`,
+or it will be *solved* to `Hello GIRLS!` if the context is equal to `{ who: { g: "f" } }`.
+
 
 
