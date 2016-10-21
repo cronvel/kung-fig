@@ -57,6 +57,7 @@ Stop using JSON for configuration files, use KFG now!
 	* [Relational Data Representation](#ref.includes.relational)
 * [Refs](#ref.refs)
 * [Templates](#ref.templates)
+* [Template Elements](#ref.template-elements)
 
 *Documentation TODO:*
 * [Expressions](#ref.expressions)
@@ -1156,7 +1157,7 @@ Those are incorrect:
 ### Templates
 
 *Templates* are useful for building scripting language on top of KFG: they are internationalizable templates,
-containing references.
+containing references, and a lot of tools to ease human language.
 
 When successfully parsed, it creates a [Kung-Fig Template instance](lib.md#ref.Template).
 
@@ -1189,4 +1190,34 @@ E.g. `$> Hello ${who}[altg:guys|girls//uc]!` will be *solved* to `Hello GUYS!` i
 or it will be *solved* to `Hello GIRLS!` if the context is equal to `{ who: { g: "f" } }`.
 
 
+
+<a name="ref.template-elements"></a>
+### Template Elements
+
+*Template elements* are useful for advanced i18n/l10n and human language usage.
+
+When successfully parsed, it creates a [Kung-Fig TemplateElement instance](lib.md#ref.TemplateElement).
+
+The syntax for declaring a *template element* is similar to the syntax for declaring strings:
+
+* for the quoted template element syntax, start with `$%"` and end with `"`, and follow
+  the [quoted string rules](#ref.strings.quoted)
+* for the introduced template element syntax, start with `$%> ` and follow
+  the [introduced string rules](#ref.strings.introduced)
+* there is no for the multi-line template element syntax
+
+Example of valid *template element* declaration:
+
+```
+element1: $%"master[altg:master|mistress]"
+element2: $%> master[altg:master|mistress]
+```
+
+Both example create an element (here a noun), having:
+* a translatable key: *master*
+* a male gender alternative: *master*
+* a female gender alternative: *mistress*
+
+As for the template element syntax itself (i.e. the inside), it uses the
+[Babel Tower element syntax](https://github.com/cronvel/babel-tower).
 

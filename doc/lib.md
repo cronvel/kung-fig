@@ -505,7 +505,7 @@ So ctx is now equal to:
 ## The Template Class
 
 *Templates* are useful for building scripting language on top of KFG: they are internationalizable templates,
-containing references.
+containing references, and a lot of tools to ease human language.
 
 The `Template` class uses [Babel Tower](https://github.com/cronvel/babel-tower) behind the scene, and encapsulate
 a `Babel.Sentence` instance **behind a [Dynamic interface](#ref.Dynamic)**.
