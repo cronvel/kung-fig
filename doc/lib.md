@@ -146,7 +146,7 @@ Circular references are supported.
 ## The Ref Class
 
 *Refs* are useful for building scripting language on top of KFG: they represent variable.
-To solve a *ref*, a *context* is needed. The *ref* is simply a path in that context, it point to a data.
+To solve a *ref*, a *context* is needed. The *ref* is simply a path in that context, it point to a data in the context.
 
 Let's see *ref* in action:
 
@@ -156,17 +156,14 @@ var kungFig = require( 'kung-fig' ) ;
 var ctx = {
 	a: 1 ,
 	b: 2 ,
-	sub: {
-		c: 3 ,
-		sub: {
-			d: 4
-		}
+	nested: {
+		c: 3
 	}
 } ;
 
-var myref = kungFig.Ref.parse( '$sub.c' ) ;
+var myref = kungFig.Ref.parse( '$nested.c' ) ;
 
-// Output '3', the value of ctx.sub.c
+// Output '3', the value of ctx.nested.c
 console.log( myref.get( ctx ) ) ;
 ```
 

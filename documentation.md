@@ -35,3 +35,15 @@ Now, look at this **impressive** list of features:
 * Tree operations (merge, combine, etc)
 
 
+
+### Table of Contents
+
+* [The Wonderful KFG Format](doc/KFG.md)
+* [Basic Module Methods](doc/lib.md#ref.basic)
+	* [.load()](doc/lib.md#ref.load)
+	* [.loadMeta()](doc/lib.md#ref.loadMeta)
+	* [.saveJson()](doc/lib.md#ref.saveJson)
+	* [.saveKfg()](doc/lib.md#ref.saveKfg)
+* [The Ref Class](doc/lib.md#ref.Ref)
+
+
