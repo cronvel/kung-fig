@@ -22,11 +22,8 @@ lint: log/jshint.log
 # This run the Mocha BDD test, display it to STDOUT & save it to log/mocha.log
 unit: log/mocha.log
 
-# This build the doc and README.md
-doc: README.md
-
 # This publish to NPM and push to Github, if we are on master branch only
-publish: check-if-commited README.md build-commit log/npm-publish.log log/github-push.log
+publish: check-if-commited build-commit log/npm-publish.log log/github-push.log
 
 # Clean temporary things, or things that can be automatically regenerated
 clean: clean-all
@@ -49,10 +46,6 @@ log/jshint.log: log/npm-dev-install.log lib/*.js test/*.js
 # Mocha BDD STDOUT test
 log/mocha.log: log/npm-dev-install.log lib/*.js test/*.js
 	${MOCHA} test/*.js -R spec | tee log/mocha.log ; exit $${PIPESTATUS[0]}
-
-# README
-README.md: documentation.md
-	cat documentation.md > README.md
 
 # Mocha Markdown BDD spec
 bdd-spec.md: log/npm-dev-install.log lib/*.js test/*.js
@@ -84,7 +77,7 @@ log/npm-dev-install.log: package.json
 
 # Delete files, mostly log and non-versioned files
 clean-all:
-	rm -rf log/*.log README.md bdd-spec.md node_modules
+	rm -rf log/*.log bdd-spec.md node_modules
 
 # This will fail if we are not on master branch (grep exit 1 if nothing found)
 check-if-master-branch:
