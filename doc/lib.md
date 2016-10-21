@@ -148,22 +148,24 @@ Circular references are supported.
 *Refs* are useful for building scripting language on top of KFG: they represent variable.
 To solve a *ref*, a *context* is needed. The *ref* is simply a path in that context, it point to a data in the context.
 
-Let's see *ref* in action:
+Let's see a *ref* in action:
 
 ```js
 var kungFig = require( 'kung-fig' ) ;
 
+// First define a context
 var ctx = {
 	a: 1 ,
-	b: 2 ,
 	nested: {
-		c: 3
+		b: 2
 	}
 } ;
 
-var myref = kungFig.Ref.parse( '$nested.c' ) ;
+// Parse a ref
+var myref = kungFig.Ref.parse( '$nested.b' ) ;
 
-// Output '3', the value of ctx.nested.c
+// Output '2', the value of ctx.nested.b
 console.log( myref.get( ctx ) ) ;
 ```
 
+*Refs* always start with a `$`, because this is the KFG ref syntax.

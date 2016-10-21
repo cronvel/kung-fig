@@ -754,7 +754,7 @@ For pure descriptive, config or data files, that does not make much sense, excep
 complex documents similar to *HTML*.
 On the other hand, most of time tags will be used for actions, hence scripting.
 So it is not particularly useful if you don't create your own userland tag constructors.
-See the Kung-Fig lib reference for that (`kungFig.load()` options).
+See the Kung-Fig [lib references](lib.md) for that ([`kungFig.load()`'s options](lib.md#ref.load)).
 
 For the record, here is a bit of [Spellcast scripting](https://github.com/cronvel/spellcast) to see tags in action:
 
