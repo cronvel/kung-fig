@@ -762,7 +762,15 @@ describe( "KFG parse" , function() {
 		surfaceEquals( o.el , { t: "horse" , babel: Babel.default } ) ;
 		doormen.equals( o.el.toString() , 'horse' ) ;
 		
+		o = parse( 'el: $%"horse"' ) ;
+		surfaceEquals( o.el , { t: "horse" , babel: Babel.default } ) ;
+		doormen.equals( o.el.toString() , 'horse' ) ;
+		
 		o = parse( "el: $%> horse[altn:horse|horses]" ) ;
+		surfaceEquals( o.el , { t: "horse" , altn: [ "horse" , "horses" ] , babel: Babel.default } ) ;
+		doormen.equals( o.el.toString() , 'horse' ) ;
+		
+		o = parse( 'el: $%"horse[altn:horse|horses]"' ) ;
 		surfaceEquals( o.el , { t: "horse" , altn: [ "horse" , "horses" ] , babel: Babel.default } ) ;
 		doormen.equals( o.el.toString() , 'horse' ) ;
 		
