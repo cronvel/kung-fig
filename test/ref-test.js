@@ -33,7 +33,6 @@
 
 var kungFig = require( '../lib/kungFig.js' ) ;
 var Ref = kungFig.Ref ;
-//var Ref = require( '../lib/Ref2.js' ) ;
 
 var string = require( 'string-kit' ) ;
 var doormen = require( 'doormen' ) ;

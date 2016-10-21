@@ -9,11 +9,24 @@
 	* [.loadMeta()](#ref.loadMeta)
 	* [.saveJson()](#ref.saveJson)
 	* [.saveKfg()](#ref.saveKfg)
+* [The Dynamic Interface](#ref.Dynamic)
+	* [.get(), .getValue()](#ref.Dynamic.get)
+	* [.getFinalValue()](#ref.Dynamic.getFinalValue)
+	* [.getRecursiveFinalValue()](#ref.Dynamic.getRecursiveFinalValue)
+	* [.toString()](#ref.Dynamic.toString)
+	* [.apply()](#ref.Dynamic.apply)
+	* [.set()](#ref.Dynamic.set)
 * [The Ref Class](#ref.Ref)
+	* [Ref.create()](#ref.Ref.create)
+	* [Ref.parse()](#ref.Ref.parse)
+	* [.setRef()](#ref.Ref.setRef)
+	* [.get(), .getValue()](#ref.Ref.get)
+	* [.set()](#ref.Ref.set)
 
 *Documentation TODO:*
 * [.reduce()](#ref.reduce)
 * [.autoReduce()](#ref.autoReduce)
+* [The Template Class](#ref.Template)
 * [The Expression Class](#ref.Expression)
 * [The Tag Class](#ref.Tag)
 * [The TagContainer Class](#ref.TagContainer)
@@ -142,11 +155,196 @@ Circular references are supported.
 
 
 
+<a name="ref.Dynamic"></a>
+## The Dynamic Interface
+
+The Dynamic interface/class is used to define dynamic objects suitable for scripting language.
+Bascially, a Dynamic object represents a thing that is not fully known at the time the object is created,
+and needs a context to be *defined* at runtime.
+
+Different context produces different output values.
+
+One example of a Dynamic object is a variable name, or a reference, inside a scripting language.
+
+
+
+<a name="ref.Dynamic.get"></a>
+### .get( ctx , [bound] ) or .getValue( ctx , [bound] )
+
+* ctx `mixed` the context, it can be of any type, but it is usually an object
+* bound `boolean` (optional) if true and the value to be returned is a function, the function is bounded
+  to the relevant value, depending on the type of the Dynamic object (e.g. given a [Ref instance](#ref.Ref) *"$obj.myfunc"*,
+  the returned value would be bound to `ctx.obj`, like a regular Javascript method call would).
+  This argument has no effect on some Dynamic objects where the *bound* concept is not relevant
+  (e.g. [Template instances](#ref.Template))
+
+This get the value of a `Dynamic` instance (i.e. it *solves* it), using the provided *ctx* context.
+This should be idempotent as long as the values holded in the context do not change.
+
+
+
+### Dynamic.get( value , ctx , [bound] ) or Dynamic.getValue( value , ctx , [bound] )
+
+This is the static method variant of [.get()](#ref.Dynamic.get).
+
+The first argument *value* can be anything, if it is a Dynamic object, it will return `value.get()`,
+else it would return *value*.
+
+
+
+<a name="ref.Dynamic.getFinalValue"></a>
+### .getFinalValue( ctx , [bound] )
+
+* ctx `mixed` the context, it can be of any type, but it is usually an object
+* bound `boolean` (optional) if true and the value to be returned is a function, the function is bounded
+  to the relevant value, depending on the type of the Dynamic object (e.g. given a [Ref instance](#ref.Ref) *"$obj.myfunc"*,
+  the returned value would be bound to `ctx.obj`, like a regular Javascript method call would).
+  This argument has no effect on some Dynamic objects where the *bound* concept is not relevant
+  (e.g. [Template instances](#ref.Template))
+
+Like [.get()](#ref.Dynamic.get), it *solves* a Dynamic instance using the *ctx* context
+However, as long as the result itself is a Dynamic instance, it is *solved* again.
+
+E.g. a [Ref instance](#ref.Ref) can reference another *ref*, that itself reference another *ref*, and so on...
+This will solve the whole reference chain until a non-Dynamic value is found.
+
+
+
+### Dynamic.getFinalValue( value , ctx , [bound] )
+
+This is the static method variant of [.getFinalValue()](#ref.Dynamic.getFinalValue).
+
+The first argument *value* can be anything, if it is a Dynamic object, it will return `value.getFinalValue()`,
+else it would return *value*.
+
+
+
+<a name="ref.Dynamic.getRecursiveFinalValue"></a>
+### .getRecursiveFinalValue( ctx , [bound] )
+
+* ctx `mixed` the context, it can be of any type, but it is usually an object
+* bound `boolean` (optional) if true and the value to be returned is a function, the function is bounded
+  to the relevant value, depending on the type of the Dynamic object (e.g. given a [Ref instance](#ref.Ref) *"$obj.myfunc"*,
+  the returned value would be bound to `ctx.obj`, like a regular Javascript method call would).
+  This argument has no effect on some Dynamic objects where the *bound* concept is not relevant
+  (e.g. [Template instances](#ref.Template))
+
+Like [.getFinalValue()](#ref.Dynamic.getFinalValue), a Dynamic chain is *solved* until a non-Dynamic value is found.
+
+Then, if the final value is an object or an array, it will search recursively for Dynamic object inside it,
+and if any, it would apply [.getFinalValue()](#ref.Dynamic.getFinalValue) on them.
+
+
+
+### Dynamic.getRecursiveFinalValue( value , ctx , [bound] )
+
+This is the static method variant of [.getRecursiveFinalValue()](#ref.Dynamic.getRecursiveFinalValue).
+
+The first argument *value* can be anything, if it is a Dynamic object, it would return `value.getRecursiveFinalValue()`,
+else it would return *value*.
+
+
+
+<a name="ref.Dynamic.toString"></a>
+### .toString( ctx )
+
+* ctx `mixed` the context, it can be of any type, but it is usually an object
+
+This [get the final value](#ref.Dynamic.getFinalValue) of the Dynamic and cast it to a string, if possible.
+
+
+
+<a name="ref.Dynamic.apply"></a>
+### .apply( ctx , [bound] )
+
+* ctx `mixed` the context, it can be of any type, but it is usually an object
+* bound `boolean` (optional) if true and the value to be returned is a function, the function is bounded
+  to the relevant value, depending on the type of the Dynamic object (e.g. given a [Ref instance](#ref.Ref) *"$obj.myfunc"*,
+  the returned value would be bound to `ctx.obj`, like a regular Javascript method call would).
+  This argument has no effect on some Dynamic objects where the *bound* concept is not relevant
+  (e.g. [Template instances](#ref.Template))
+
+Some Dynamic instance don't have the *dynamic* flag on but instead the *applicable* flag.
+
+There is not much difference between *dynamic* and *applicable*, but all `.get*()` methods will do nothing on an *applicable*,
+(i.e. those method would return the Dynamic instance untouched), instead, `.apply()` should be used.
+
+`.apply()` produce exactly the same output than [.get()](#ref.Dynamic.get) does, except that it works on *applicable* only,
+where `.get()` works on *dynamic* only.
+
+Think of *applicable* as a sort of **locked** Dynamic object.
+
+*Applicable* are an important concept in [KFG](KFG.md).
+
+Here is a fragment of [Spellcast scripting](https://github.com/cronvel/spellcast) (a scripting language built on top of KFG)
+to explain why *applicable* Dynamic object are useful:
+
+```
+# Set the var named $you to "Bob"
+[set $you] Bob
+
+# Set the var named $message to "Hello Bob!",
+# solving the template "Hello ${you}!" immediately
+[set $message] $> Hello ${you}!
+
+# Set the var named $template to the template "Hello ${you}!",
+# $template will be an applicable object and will never been solved
+# unless the [apply-to] tag is called on it explicitly
+[set $template] $$> Hello ${you}!
+
+# Output "Hello Bob!"
+[message] $message
+
+# Apply the template now and put the value inside the $applied var
+[apply-to $applied] $template
+
+# Output "Hello Bob!"
+[message] $applied
+
+# Now we set $you to a different value: "Jack"
+[set $you] Jack
+
+# It still output "Hello Bob!", $message is indeed a string
+[message] $message
+
+# This apply the template but now the variable $you used
+# to solve the template is not "Bob" anymore but "Jack"
+[apply-to $applied] $template
+
+# So this output "Hello Jack!"
+[message] $applied
+```
+
+
+
+### Dynamic.apply( value , ctx , [bound] )
+
+This is the static method variant of [.apply()](#ref.Dynamic.apply).
+
+The first argument *value* can be anything, if it is a Dynamic object, it would return `value.apply()`,
+else it would return *value*.
+
+
+
+<a name="ref.Dynamic.set"></a>
+### .set( ctx , value )
+
+* ctx `mixed` the context, it can be of any type, but it is usually an object
+* value `mixed` the value to set on the `Dynamic` instance
+
+This set the value of a `Dynamic` instance, using the provided *ctx* context.
+Not all `Dynamic` instance supports `.set()`, it does not always make sense.
+
+
+
 <a name="ref.Ref"></a>
 ## The Ref Class
 
-*Refs* are useful for building scripting language on top of KFG: they represent variable.
-To solve a *ref*, a *context* is needed. The *ref* is simply a path in that context, it point to a data in the context.
+*Refs* are useful for building scripting language on top of KFG: they represent variables, or paths to variable.
+To solve a *ref*, a *context* is needed.
+The *ref* is simply a path to walk in that context, it point to a data in the context.
+
+**It implements [the `Dynamic` interface](#ref.Dynamic).**
 
 Let's see a *ref* in action:
 
@@ -161,11 +359,145 @@ var ctx = {
 	}
 } ;
 
-// Parse a ref
+// Parse and create a ref
 var myref = kungFig.Ref.parse( '$nested.b' ) ;
 
 // Output '2', the value of ctx.nested.b
 console.log( myref.get( ctx ) ) ;
 ```
 
-*Refs* always start with a `$`, because this is the KFG ref syntax.
+*Refs* always start with a `$`.
+See the [KFG Ref syntax](KFG.md#ref.ref).
+
+*Refs* may contain *refs* in their paths, e.g. `kungFig.Ref.parse( "$path.to[$key1][$key2]" )`.
+Or even any depth-level of nested *refs*: `kungFig.Ref.parse( "$path.to[$path.to.keys[$key]]" )`.
+
+
+
+<a name="ref.Ref.create"></a>
+### Ref.create( arg )
+
+* arg `mixed`
+
+Create a `Ref` instance, call [.setRef()](#ref.Ref.setRef) with *arg* and return the instance.
+
+
+
+<a name="ref.Ref.parse"></a>
+### Ref.parse( str )
+
+* str `string` a KFG Ref string to parse
+
+This parse a *ref* and return a `Ref` instance.
+See the [KFG Ref syntax](KFG.md#ref.ref).
+
+
+
+<a name="ref.Ref.setRef"></a>
+### .setRef( arg )
+
+* arg `mixed`, the type is either:
+	* `string` this set the ref to this KFG Ref string, see the [KFG Ref syntax](KFG.md#ref.ref)
+	* `array` this set the ref to this parsed ref (internal use)
+	* `null` or `undefined` nullify the ref
+
+Set the internal reference value.
+
+
+
+<a name="ref.Ref.get"></a>
+### .get( ctx , [bound] , [getArray] ) or .getValue( ctx , [bound] , [getArray] )
+
+* ctx `object` or `array` the context
+* bound `boolean` (optional) if true and the value to be returned is a function, the function is bounded
+  e.g. given a [Ref instance](#ref.Ref) *"$obj.myfunc"*, assuming `ctx.obj.myfunc` is a function, the returned value
+  would be the function `ctx.obj.myfunc` bounded to `ctx.obj`, like a regular Javascript method call would.
+* getArray `boolean` if true, instead of returning the *solved* value, it returns an array containing
+  the *solved* value, the *solved* value without the last part of the path, and the last part of the path,
+  e.g. *"$path.to.value"* would return this array: `[ ctx.path.to.value , ctx.path.to , "value" ]`
+
+This get a value out of the *ctx* context, by using the path of the *ref*.
+If the path cannot be solved, `undefined` is returned (or `[]` if the *getArray* option was set).
+
+Example:
+
+```js
+var kungFig = require( 'kung-fig' ) ;
+
+// First define a context
+var ctx = {
+	a: 1 ,
+	nested: {
+		b: 2
+	}
+} ;
+
+// Parse and create a ref
+var myref = kungFig.Ref.parse( '$nested.b' ) ;
+
+// Output '2', the value of ctx.nested.b
+console.log( myref.get( ctx ) ) ;
+```
+
+
+<a name="ref.Ref.set"></a>
+### .set( ctx , value )
+
+* ctx `object` or `array` the context
+* value `mixed` the value to set where the ref point to in the context
+
+Following the path of the *ref*, this set a value inside the *ctx* context.
+
+If the path does not exist inside the context, it creates as many objects and/or arrays needed along the way.
+
+Example:
+
+```js
+var kungFig = require( 'kung-fig' ) ;
+
+// First define a context
+var ctx = {
+	nested: {
+		b: "old value"
+	}
+} ;
+
+// Parse and create a ref
+var myref = kungFig.Ref.parse( '$nested.b' ) ;
+
+// Output "old value", the value of ctx.nested.b
+console.log( myref.get( ctx ) ) ;
+
+// Set ctx.nested.b to "new value"
+myref.set( ctx , "new value" ) ;
+
+// Output "new value", the new value of ctx.nested.b
+console.log( myref.get( ctx ) ) ;
+
+// Create a new ref with a path that does not exist in ctx ATM
+myref = kungFig.Ref.parse( '$an.unexistant.path' ) ;
+
+// Set ctx.an.unexistant.path to "bouh!", creating all objects along the way
+myref.set( ctx , "bouh!" ) ;
+
+/*
+So ctx is now equal to:
+{
+	nested: {
+		b: "new value"
+	} ,
+	an: {
+		unexistant: {
+			path: "bouh!"
+		}
+	}
+} ;
+*/
+```
+
+
+
+
+
+
+

@@ -55,9 +55,9 @@ Stop using JSON for configuration files, use KFG now!
 	* [Glob: including multiple files at once](#ref.includes.glob)
 	* [Local reference: including a sub-tree of a document](#ref.includes.local-reference)
 	* [Relational Data Representation](#ref.includes.relational)
+* [Ref](#ref.ref)
 
 *Documentation TODO:*
-* [References](#ref.references)
 * [Templates](#ref.templates)
 * [Expressions](#ref.expressions)
 
@@ -1112,5 +1112,42 @@ It is also possible to reference the root of the document with a hash sign `#` a
 key: value
 circular: @@#
 ```
+
+
+
+<a name="ref.ref"></a>
+### Ref
+
+*Refs* are useful for building scripting language on top of KFG: they represent variables, or paths to variable.
+
+When successfully parsed, it creates a [Kung-Fig Ref instance](lib.md#ref.Ref).
+
+A *ref* always start with a `$`, followed by the whole dot-separated path.
+E.g. `$path.to.my.var`.
+
+Arrays are supported, with the bracket notation: `$myarray[1][2][3]`.
+Or even `$[1][2][3]`, if the context supposed to be used to solve the *ref* is assumed to be an array.
+
+Dots and brackets can be mixed together: `$path.to.array[1][2].key[3]`.
+
+*Refs* can contain any depth-level of nested *refs*:
+* `$path.to[$key1][$key2]`
+* `$path.to[$path.to.keys[$key]]`
+
+This basically works just like in Javascript or similar language, except that the dollar sign `$` is mandatory
+for any variable.
+
+**Beware: some characters are not supported!**
+There is no escape mecanism ATM, so a *ref* cannot have keys containing those chars:
+* dollar sign `$`
+* brackets `[` and `]`
+* dot `.`
+* space ` `
+
+**Spaces are forbidden everywhere.**
+
+Those are incorrect:
+* `$myarray[ 1 ]`
+* `$path .to. my . var`
 
 
