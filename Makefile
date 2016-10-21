@@ -51,8 +51,8 @@ log/mocha.log: log/npm-dev-install.log lib/*.js test/*.js
 	${MOCHA} test/*.js -R spec | tee log/mocha.log ; exit $${PIPESTATUS[0]}
 
 # README
-README.md: documentation.md doc/lib-references.md
-	cat documentation.md doc/lib-references.md > README.md
+README.md: documentation.md doc/lib.md
+	cat documentation.md doc/lib.md > README.md
 
 # Mocha Markdown BDD spec
 bdd-spec.md: log/npm-dev-install.log lib/*.js test/*.js

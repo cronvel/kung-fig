@@ -36,22 +36,34 @@ Now, look at this **impressive** list of features:
 
 
 <a name="ref"></a>
-## Kung-Fig Lib References
+# Kung-Fig Lib References
 
 ### Table of Contents
 
-* [The Wonderful KFG format](https://github.com/cronvel/kung-fig/blob/master/doc/KFG.md)
-* [.load()](#ref.load)
-* [.loadMeta()](#ref.loadMeta)
-* [.saveJson()](#ref.saveJson)
-* [.saveKfg()](#ref.saveKfg)
+* [The Wonderful KFG Format](https://github.com/cronvel/kung-fig/blob/master/doc/KFG.md)
+* [Basic Module Methods](#ref.basic)
+	* [.load()](#ref.load)
+	* [.loadMeta()](#ref.loadMeta)
+	* [.saveJson()](#ref.saveJson)
+	* [.saveKfg()](#ref.saveKfg)
+* [The Ref Class](#ref.Ref)
 
 *Documentation TODO:*
 * [.reduce()](#ref.reduce)
 * [.autoReduce()](#ref.autoReduce)
-* [Expression class](#ref.Expression)
-* [Tag class](#ref.Tag)
-* [TagContainer class](#ref.TagContainer)
+* [The Expression Class](#ref.Expression)
+* [The Tag Class](#ref.Tag)
+* [The TagContainer Class](#ref.TagContainer)
+
+
+
+<a name="ref.basic"></a>
+## Basic Module Methods
+
+Those are top-level module methods.
+
+In all the following examples, it is assumed that `var kungFig = require( 'kung-fig' ) `, and all the following
+are methods of the `kungFig` object.
 
 
 
@@ -109,6 +121,13 @@ The path can be absolute, relative (to the Current Working Directory), or relati
 If the document contains tags that don't exist in the `options.tags` argument, there are instanciated using the 
 built-in [Tag](#ref.Tag) constructor.
 
+Simple document loading example:
+
+```js
+var kungFig = require( 'kung-fig' ) ;
+var document = kungFig.load( 'path/to/my/document.kfg' ) ;
+```
+
 
 
 <a name="ref.loadMeta"></a>
@@ -157,4 +176,34 @@ This serialize the data in the KFG format into the file, using the *filePath* ar
 Some advanced features of the KFG format are not serializable at the moment, but will be available soon.
 
 Circular references are supported.
+
+
+
+<a name="ref.Ref"></a>
+## The Ref Class
+
+*Refs* are useful for building scripting language on top of KFG: they represent variable.
+To solve a *ref*, a *context* is needed. The *ref* is simply a path in that context, it point to a data.
+
+Let's see *ref* in action:
+
+```js
+var kungFig = require( 'kung-fig' ) ;
+
+var ctx = {
+	a: 1 ,
+	b: 2 ,
+	sub: {
+		c: 3 ,
+		sub: {
+			d: 4
+		}
+	}
+} ;
+
+var myref = kungFig.Ref.parse( '$sub.c' ) ;
+
+// Output '3', the value of ctx.sub.c
+console.log( myref.get( ctx ) ) ;
+```
 

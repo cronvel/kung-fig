@@ -1,5 +1,5 @@
 
-# The Wonderful KFG format
+# The Wonderful KFG Format
 
 The **KFG** format is the **Kung-Fig** file format, and it does wonders for all your config and data files.
 It's like .cfg on steroid!
@@ -73,9 +73,9 @@ It ends up being like JSON without braces, brackets and commas, optional double-
 data representation, very close to YAML (also it worth noting that it was done *before* knowing the existence of YAML),
 and a simple syntax to perform operation.
 
-The addition of **custom classes/constructors** appears in 2015.
-The addition of **tags** appears in 2016 to support creation of simple scripting language.
-The addition of **refs**, **templates** and **expressions** appears in 2016 to support creation of simple scripting language.
+* The addition of **custom classes/constructors** appears in 2015.
+* The addition of **tags** appears in 2016 to support creation of simple scripting language.
+* The addition of **refs**, **templates** and **expressions** appears in 2016 to support creation of simple scripting language.
 
 
 
@@ -1078,7 +1078,7 @@ Do not add extra spaces in a local reference: all spaces should be meaningful.
 
 
 <a name="ref.includes.relational"></a>
-### Relational References
+### Relational Data Representation
 
 **It is also possible to reference parts of the current document itself.**
 Just remove the file reference part.
