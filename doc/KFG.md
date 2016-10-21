@@ -29,6 +29,56 @@ Stop using JSON for configuration files, use KFG now!
 
 
 
+# Language References
+
+### Table of Contents
+
+* [A Bit of History](#ref.history)
+* [Getting Started](#ref.getting-started)
+* [Comments](#ref.comments)
+* [Constants](#ref.constants)
+* [Numbers](#ref.numbers)
+* [Strings](#ref.strings)
+	* [Implicit strings](#ref.strings.implicit)
+	* [Quoted strings](#ref.strings.quoted)
+	* [Introduced strings](#ref.strings.introduced)
+	* [Multi-line strings](#ref.strings.multiline)
+* [Hierarchical Data Representation - Containers](#ref.hierarchical)
+* [Arrays](#ref.arrays)
+* [Objects](#ref.objects)
+* [Classes/Constructors](#ref.constructors)
+	* [Built-in constructors](#ref.builtin-constructors)
+* [Tags](#ref.tags)
+* [Meta Tags](#ref.meta-tags)
+* [Includes](#ref.includes)
+	* [Recursive Parent Search](#ref.includes.recursive-parent-search)
+	* [Glob: including multiple files at once](#ref.includes.glob)
+	* [Local reference: including a sub-tree of a document](#ref.includes.local-reference)
+	* [Relational Data Representation](#ref.includes.relational)
+
+*Documentation TODO:*
+* [References](#ref.references)
+* [Templates](#ref.templates)
+* [Expressions](#ref.expressions)
+
+
+
+## A Bit of History
+
+It all started back in 2009, when Cédric Ronvel was bored by the fact that JSON would be a great format to write config file
+if it had comments support and would be less nitpicking with commas.
+
+It ends up being like JSON without braces, brackets and commas, optional double-quotes, relying on indentation for hierarchical
+data representation, very close to YAML (also it worth noting that it was done *before* knowing the existence of YAML),
+and a simple syntax to perform operation.
+
+The addition of **custom classes/constructors** appears in 2015.
+The addition of **tags** appears in 2016 to support creation of simple scripting language.
+The addition of **refs**, **templates** and **expressions** appears in 2016 to support creation of simple scripting language.
+
+
+
+<a name="ref.getting-started"></a>
 ## Getting started
 
 If you have already used YAML before, KFG will look familiar to you.
@@ -115,53 +165,6 @@ Tags support attributes:
 
 ... but in order to works properly, a constructor should be provided for each tag. By default, attributes are
 a single unparsed and trimmed string starting after the tag's name and finished before the closing bracket.
-
-
-
-## A Bit of History
-
-It all started back in 2009, when Cédric Ronvel was bored by the fact that JSON would be a great format to write config file
-if it had comments support and would be less nitpicking with commas.
-
-It ends up being like JSON without braces, brackets and commas, optional double-quotes, relying on indentation for hierarchical
-data representation, very close to YAML (also it worth noting that it was done *before* knowing the existence of YAML),
-and a simple syntax to perform operation.
-
-The addition of **custom classes/constructors** appears in 2015.
-The addition of **tags** appears in 2016 to support creation of simple scripting language.
-The addition of **refs**, **templates** and **expressions** appears in 2016 to support creation of simple scripting language.
-
-
-
-# Language References
-
-### Table of Contents
-
-* [Comments](#ref.comments)
-* [Constants](#ref.constants)
-* [Numbers](#ref.numbers)
-* [Strings](#ref.strings)
-	* [Implicit strings](#ref.strings.implicit)
-	* [Quoted strings](#ref.strings.quoted)
-	* [Introduced strings](#ref.strings.introduced)
-	* [Multi-line strings](#ref.strings.multiline)
-* [Hierarchical Data Representation - Containers](#ref.hierarchical)
-* [Arrays](#ref.arrays)
-* [Objects](#ref.objects)
-* [Classes/Constructors](#ref.constructors)
-	* [Built-in constructors](#ref.builtin-constructors)
-* [Tags](#ref.tags)
-* [Meta Tags](#ref.meta-tags)
-* [Includes](#ref.includes)
-	* [Recursive Parent Search](#ref.includes.recursive-parent-search)
-	* [Glob: including multiple files at once](#ref.includes.glob)
-	* [Local reference: including a sub-tree of a document](#ref.includes.local-reference)
-	* [Relational Data Representation](#ref.includes.relational)
-
-*Documentation TODO:*
-* [References](#ref.references)
-* [Templates](#ref.templates)
-* [Expressions](#ref.expressions)
 
 
 
