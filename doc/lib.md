@@ -676,7 +676,7 @@ See [Babel Tower documentation](https://github.com/cronvel/babel-tower).
 ## The Expression Class
 
 *Expressions* are useful for building scripting language on top of KFG: they provide arithmetical expression,
-logic expression, various math functions, and more.
+logic expression, various math functions, and more...
 
 **It implements behind the [Dynamic interface](#ref.Dynamic)**.
 

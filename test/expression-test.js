@@ -62,6 +62,22 @@ describe( "Expression" , function() {
 			doormen.equals( parsed.getFinalValue() , 3 ) ;
 		} ) ;
 		
+		it( "parse/exec an expression with constant operands" , function() {
+			var parsed ;
+			
+			parsed = Expression.parse( 'true && true' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			
+			parsed = Expression.parse( 'true && false' ) ;
+			doormen.equals( parsed.getFinalValue() , false ) ;
+			
+			parsed = Expression.parse( 'true || false' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			
+			parsed = Expression.parse( '1 + Infinity' ) ;
+			doormen.equals( parsed.getFinalValue() , Infinity ) ;
+		} ) ;
+		
 		it( "parse/exec a simple expression of expression" , function() {
 			var parsed ;
 			
@@ -149,6 +165,135 @@ describe( "Expression" , function() {
 	
 	
 	describe( "Operators" , function() {
+		
+		it( "parse/exec the 'and' operator" , function() {
+			var parsed ;
+			
+			parsed = Expression.parse( 'true and true' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			
+			parsed = Expression.parse( 'true and false' ) ;
+			doormen.equals( parsed.getFinalValue() , false ) ;
+			
+			parsed = Expression.parse( 'false and true' ) ;
+			doormen.equals( parsed.getFinalValue() , false ) ;
+			
+			parsed = Expression.parse( 'false and false' ) ;
+			doormen.equals( parsed.getFinalValue() , false ) ;
+			
+			parsed = Expression.parse( 'true and 1 and "hey"' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			
+			parsed = Expression.parse( 'true and 1 and null and "hey"' ) ;
+			doormen.equals( parsed.getFinalValue() , false ) ;
+		} ) ;
+		
+		it( "parse/exec the guard operator &&" , function() {
+			var parsed ;
+			
+			parsed = Expression.parse( 'true && true' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			
+			parsed = Expression.parse( 'true && false' ) ;
+			doormen.equals( parsed.getFinalValue() , false ) ;
+			
+			parsed = Expression.parse( 'false && true' ) ;
+			doormen.equals( parsed.getFinalValue() , false ) ;
+			
+			parsed = Expression.parse( 'false && false' ) ;
+			doormen.equals( parsed.getFinalValue() , false ) ;
+			
+			parsed = Expression.parse( 'true && 1 && "hey"' ) ;
+			doormen.equals( parsed.getFinalValue() , "hey" ) ;
+			
+			parsed = Expression.parse( 'true && 1 && null && "hey"' ) ;
+			doormen.equals( parsed.getFinalValue() , null ) ;
+		} ) ;
+		
+		it( "parse/exec the 'or' operator" , function() {
+			var parsed ;
+			
+			parsed = Expression.parse( 'true or true' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			
+			parsed = Expression.parse( 'true or false' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			
+			parsed = Expression.parse( 'false or true' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			
+			parsed = Expression.parse( 'false or false' ) ;
+			doormen.equals( parsed.getFinalValue() , false ) ;
+			
+			parsed = Expression.parse( '"hey" or 2 or true' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			
+			parsed = Expression.parse( 'null or 4 or false or "hey"' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			
+			parsed = Expression.parse( 'null or false or 0' ) ;
+			doormen.equals( parsed.getFinalValue() , false ) ;
+		} ) ;
+		
+		it( "parse/exec the default operator ||" , function() {
+			var parsed ;
+			
+			parsed = Expression.parse( 'true || true' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			
+			parsed = Expression.parse( 'true || false' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			
+			parsed = Expression.parse( 'false || true' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			
+			parsed = Expression.parse( 'false || false' ) ;
+			doormen.equals( parsed.getFinalValue() , false ) ;
+			
+			parsed = Expression.parse( '"hey" || 2 || true' ) ;
+			doormen.equals( parsed.getFinalValue() , "hey" ) ;
+			
+			parsed = Expression.parse( 'null || 4 || false || "hey"' ) ;
+			doormen.equals( parsed.getFinalValue() , 4 ) ;
+			
+			parsed = Expression.parse( 'null || false || 0' ) ;
+			doormen.equals( parsed.getFinalValue() , 0 ) ;
+		} ) ;
+		
+		it( "parse/exec the 'xor' operator" , function() {
+			var parsed ;
+			
+			parsed = Expression.parse( 'true xor true' ) ;
+			doormen.equals( parsed.getFinalValue() , false ) ;
+			
+			parsed = Expression.parse( 'true xor false' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			
+			parsed = Expression.parse( 'false xor true' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			
+			parsed = Expression.parse( 'false xor false' ) ;
+			doormen.equals( parsed.getFinalValue() , false ) ;
+			
+			/* iterative XOR variant
+			parsed = Expression.parse( 'true xor true xor true' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			//*/
+			
+			//* true exclusive XOR variant: should have one and only one truthy operand
+			parsed = Expression.parse( 'true xor true xor true' ) ;
+			doormen.equals( parsed.getFinalValue() , false ) ;
+			
+			parsed = Expression.parse( 'true xor true xor true xor true' ) ;
+			doormen.equals( parsed.getFinalValue() , false ) ;
+			
+			parsed = Expression.parse( 'false xor false xor false xor false' ) ;
+			doormen.equals( parsed.getFinalValue() , false ) ;
+			
+			parsed = Expression.parse( 'false xor true xor false xor false' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			//*/
+		} ) ;
 		
 		it( "parse/exec has operator" , function() {
 			var parsed ;

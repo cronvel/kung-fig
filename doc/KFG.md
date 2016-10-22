@@ -59,6 +59,7 @@ Stop using JSON for configuration files, use KFG now!
 * [Templates](#ref.templates)
 * [Template Elements](#ref.template-elements)
 * [Expressions](#ref.expressions)
+	* [Built-in Expressions Operators](#ref.expressions.builtin-operators)
 
 *Documentation TODO:*
 * [Tree operations](#ref.tree-operations)
@@ -1227,4 +1228,121 @@ As for the template element syntax itself (i.e. the inside), it uses the
 
 <a name="ref.expressions"></a>
 ### Expressions
+
+*Expressions* are useful for building scripting language on top of KFG: they provide arithmetical expression,
+logic expression, various math functions, and more...
+
+When successfully parsed, it creates a [Kung-Fig Expression instance](lib.md#ref.Expression).
+
+The syntax for declaring an *expression* is similar to the syntax for declaring strings:
+An expression is declared with `$=` followed by the expression itself until the end of the line.
+
+The syntax for the *expression* itself is the following those rules:
+* an *expression* should contain one or more parts, each parts is separated by at least one space
+* ... so a part cannot contain any spaces
+* a part can be an operand or an operator
+* there can be only one operator, and it should be either the first or the second part, the place
+  doesn't matter, being only for presentation
+* ... but optionally, for presentation purpose, one may insert extra-operators if there are of the same kind,
+  they will simply be ignored
+* an operand can be:
+	* a [constant](#ref.constants)
+	* a [number](#ref.numbers)
+	* a [quoted string](#ref.strings.quoted)
+	* a [ref](#ref.refs)
+	* another expression enclosed in a pair of parenthesis, each parenthesis should be preceded and followed
+	  by at least one space
+* if an expression has no operator:
+	* if it has one operand, the expression will return that operand
+	* if it has multiple operand, the expression will return an array of those operand
+
+An expression does not care if the operator come first or second, so `1 + 2` is the same than `+ 1 2`.
+By the way, one may use the more natural variant, the former being recommended over the later.
+
+Also `1 + 2 + 3 + 4` is the same than `+ 1 2 3 4`, since extra operators of the same kind are removed.
+
+On the other hand, this is not correct and would throw an error: `3 + 4 - 2`.
+There is no operator precedence in KFG, the user have to use parenthesis to denote orders.
+So the incorrect `2 + 3 * 4` should be rewritten `2 + ( 3 * 4 )`
+
+Since an operand cannot be a non-scalar adhoc value (there is no syntax for that ATM), objects and array
+can still be used with the following tricks:
+* use a [ref](#ref.refs) pointing to that array or object
+* arrays of two or more elements can be produced with an implicit array sub-expression, e.g.: `( 1 2 3 )`
+* arrays can be produced with the array operator in a sub-expression, e.g.: `( array 1 2 3 )`
+
+
+
+<a name="ref.expressions.builtin-operators"></a>
+#### Built-in Expression Operators
+
+Here a the full list of operators with their alias.
+The number in parenthesis indicate how many operands is needed.
+
+**Arithmetic operators:**
+
+* `+`, `add` (1+): add all operands together
+* `-`, `sub` (1+): depending on the number of operands:
+	* 1: it is the unary operator, it negates the operand
+	* more: all operands starting from the second one are subtracted from the first
+* `*`, `mul` (1+): multiply all operands together
+* `/`, `div` (1+): the first operand is divided by the second operand, the result is eventually divided
+  by a third operand, and so on...
+* `%`, `modulo` (1+): this is the **remainder operator**: the first operand is divided by the second operand
+  and the remainder is returned, this remainder is eventually divided by a third operand and this produce
+  another remainder that is returned, and so on...
+
+**Comparison operators:**
+
+* `>` (2): return true if the first operand is greater than the second, otherwise return false
+* `>=` (2): return true if the first operand is greater than or equal to the second, otherwise return false
+* `<` (2): return true if the first operand is lesser than the second, otherwise return false
+* `<=` (2): return true if the first operand is lesser than or equal to the second, otherwise return false
+* `=`, `==`, `===` (2): return true if the first operand is **strictly** equal to the second, otherwise return false
+* `!=`, `!==` (2): return true if the first operand is **strictly** equal to the second, otherwise return false
+
+**Logical operators:**
+
+* `!`, `not` (1): return true if the first operand is *falsy*, otherwise return false
+* `and` (1+): return the logical *AND* value of all operands
+* `or` (1+): return the logical *OR* value of all operands
+* `xor` (1+): return the logical *XOR* value of all operands, if there are more than 2 operands,
+  the logical *XOR* **is not iterative but exclusive**, therefore `true xor true xor true` return *false*:
+  there should be one and only one *truthy* value. If it was meant to be iterative, it would return *true*
+  (*true xor true* -> *false*, then *false xor true* -> *true*). If you want to force an iterative *XOR*,
+  just add parenthesis: `( true xor true ) xor true` will return *true*.
+* `&&` (1+): this is the **guard operator**: it returns the first *falsy* operand, otherwise it returns the last,
+  it can be used as the **and operator** if it doesn't matter if the result is not a boolean
+* `||` (1+): this is the **default operator**: it returns the first *truthy* operand, otherwise it returns the last,
+  it can be used as the **or operator** if it doesn't matter if the result is not a boolean
+* `?` (3): this is the **ternary operator**, if the first operand is *truthy*, then it returns the second operand,
+  else it returns the third.
+
+**Rounding:**
+
+* `round` (1,2): round the first operand to the nearest integer, if a second operand is given, this is the step increment
+  (default to 1): the first operand is rounded to the nearest step. E.g. `round 0.8 2` returns 0 while `round 1.2 2` returns 2.
+* `floor` (1,2): returns the smallest integer lesser than or equal to a given number, if a second operand is given,
+  this is the step increment (default to 1): the first operand is rounded down to the nearest step.
+  E.g. `floor 1.2 2` returns 0.
+* `ceil` (1,2): returns the smallest integer greater than or equal to a given number, if a second operand is given,
+  this is the step increment (default to 1): the first operand is rounded up to the nearest step.
+  E.g. `ceil 0.8 2` returns 2.
+* `trunc` (1,2): returns the integral part of a number by removing any fractional digits. If a second operand is given,
+  it is used in the same way than for *round*, *floor* and *ceil*.
+
+**Various Math Functions:**
+
+* `sign` (1): return the sign of the first operand: -1, 0 or 1, or even -0, if relevant
+  ([see the MDN Math.sign() page](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/sign).
+* `abs` (1): return the absolute value of the first operand.
+* `max` (1+): return the greatest operand.
+* `min` (1+): return the smallest operand.
+* `^`, `pow` (2): returns the base (first operand) to the exponent (second operand) power
+
+
+
+
+
+
 
