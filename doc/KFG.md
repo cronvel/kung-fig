@@ -1294,33 +1294,36 @@ The number in parenthesis indicate how many operands is needed.
 
 **Comparison operators:**
 
-* `>` (2): return true if the first operand is greater than the second, otherwise return false
-* `>=` (2): return true if the first operand is greater than or equal to the second, otherwise return false
-* `<` (2): return true if the first operand is lesser than the second, otherwise return false
-* `<=` (2): return true if the first operand is lesser than or equal to the second, otherwise return false
-* `=`, `==`, `===` (2): return true if the first operand is **strictly** equal to the second, otherwise return false
-* `!=`, `!==` (2): return true if the first operand is **strictly** equal to the second, otherwise return false
+* `>` (2): returns true if the first operand is greater than the second, otherwise returns false
+* `>=` (2): returns true if the first operand is greater than or equal to the second, otherwise returns false
+* `<` (2): returns true if the first operand is lesser than the second, otherwise returns false
+* `<=` (2): returns true if the first operand is lesser than or equal to the second, otherwise returns false
+* `=`, `==`, `===` (2): returns true if the first operand is **strictly** equal to the second, otherwise returns false
+* `!=`, `!==` (2): returns true if the first operand is **strictly** equal to the second, otherwise returns false
 
 **Logical operators:**
 
-* `!`, `not` (1): return true if the first operand is *falsy*, otherwise return false
-* `and` (1+): return the logical *AND* value of all operands
-* `or` (1+): return the logical *OR* value of all operands
-* `xor` (1+): return the logical *XOR* value of all operands, if there are more than 2 operands,
-  the logical *XOR* **is not iterative but exclusive**, therefore `true xor true xor true` return *false*:
-  there should be one and only one *truthy* value. If it was meant to be iterative, it would return *true*
+* `!`, `not` (1): returns true if the first operand is *falsy*, otherwise returns false
+* `and` (1+): returns the logical *AND* value of all operands
+* `or` (1+): returns the logical *OR* value of all operands
+* `xor` (1+): returns the logical *XOR* value of all operands, if there are more than 2 operands,
+  the logical *XOR* **is not iterative but exclusive**, therefore `true xor true xor true` returns *false*:
+  there should be one and only one *truthy* value. If it was meant to be iterative, it would returns *true*
   (*true xor true* -> *false*, then *false xor true* -> *true*). If you want to force an iterative *XOR*,
-  just add parenthesis: `( true xor true ) xor true` will return *true*.
+  just add parenthesis: `( true xor true ) xor true` will returns *true*.
 * `&&` (1+): this is the **guard operator**: it returns the first *falsy* operand, otherwise it returns the last,
   it can be used as the **and operator** if it doesn't matter if the result is not a boolean
 * `||` (1+): this is the **default operator**: it returns the first *truthy* operand, otherwise it returns the last,
   it can be used as the **or operator** if it doesn't matter if the result is not a boolean
 * `?` (3): this is the **ternary operator**, if the first operand is *truthy*, then it returns the second operand,
   else it returns the third.
+* `???` (4): this is the **three way operator**, if the first operand is negative, then it returns the second operand,
+  if it is positive then it returns the fourth operand, else it returns the third operand (if 0, null or
+  various edge cases like NaN).
 
 **Rounding:**
 
-* `round` (1,2): round the first operand to the nearest integer, if a second operand is given, this is the step increment
+* `round` (1,2): rounds the first operand to the nearest integer, if a second operand is given, this is the step increment
   (default to 1): the first operand is rounded to the nearest step. E.g. `round 0.8 2` returns 0 while `round 1.2 2` returns 2.
 * `floor` (1,2): returns the smallest integer lesser than or equal to a given number, if a second operand is given,
   this is the step increment (default to 1): the first operand is rounded down to the nearest step.
@@ -1331,18 +1334,53 @@ The number in parenthesis indicate how many operands is needed.
 * `trunc` (1,2): returns the integral part of a number by removing any fractional digits. If a second operand is given,
   it is used in the same way than for *round*, *floor* and *ceil*.
 
-**Various Math Functions:**
+**Various math functions:**
 
-* `sign` (1): return the sign of the first operand: -1, 0 or 1, or even -0, if relevant
-  ([see the MDN Math.sign() page](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/sign).
-* `abs` (1): return the absolute value of the first operand.
-* `max` (1+): return the greatest operand.
-* `min` (1+): return the smallest operand.
+* `sign` (1): returns the sign of the first operand: -1, 0 or 1, or even -0, if relevant
+  (see [the MDN Math.sign() page](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/sign).
+* `abs` (1): returns the absolute value of the first operand.
+* `max` (1+): returns the greatest operand.
+* `min` (1+): returns the smallest operand.
 * `^`, `pow` (2): returns the base (first operand) to the exponent (second operand) power
+* `exp` (1): returns e (the Euler's number) to the first operand power
+* `log` (1): returns the natural logarithm (base e, the Euler's number) of the first operand
+* `log2` (1): returns the base 2 logarithm of the first operand
+* `log10` (1): returns the base 10 logarithm of the first operand
+* `sqrt` (1): returns the square root of the first operand
+* `cos` (1): returns the cosine of the first operand
+* `sin` (1): returns the sine of the first operand
+* `tan` (1): returns the tangent of the first operand
+* `acos` (1): returns the arc cosine (in radians) of the first operand
+* `asin` (1): returns the arc sine (in radians) of the first operand
+* `atan` (1): returns the arc tangent (in radians) of the first operand
+* `atan2` (2): returns the arc tangent of the quotient of the first and second operand
+  See [the MDN Math.atan2() page](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/atan2).
+* `hypot` (2+): returns the hypothenuse of a right triangle, where the first and the second operands are its side,
+  or more generally: the square root of the sum of squares of its operands.
+* `avg` (1+): returns the average value of its operands, **or** if there is only one operand that is an array,
+  returns the average value of all the elements of that array
 
+**Array operators:**
 
+* `array` (0+): creates an array from all its operand and returns it
+* `concat` (0+): merges all its operands array and returns it, if an operand is not an array, it is assumed to be
+  an array of itself
 
+**Type checker operators:**
 
+* `is-set?` (1): returns true if the first operand is defined (i.e. not `undefined`), otherwise returns false
+* `is-boolean?` (1): returns true if the first operand is a boolean, otherwise returns false
+* `is-number?` (1): returns true if the first operand is a number, otherwise returns false
+* `is-real?` (1): returns true if the first operand is a real number (not NaN, not +/- Infinity), otherwise returns false
+* `is-string?` (1): returns true if the first operand is a string, otherwise returns false
+* `is-array?` (1): returns true if the first operand is an array, otherwise returns false
+* `is-object?` (1): returns true if the first operand is an object (but **not an array**), otherwise returns false
 
+**Misc operators:**
 
+* `has` (2): returns true if the first operand has the second operand, i.e. if the the first operand is an array
+  has the second operand, or if the first operand is an object that has a `.has()` method that returns true when
+  called with the second operand. Otherwise it returns false.
+  an array of itself
+* `->`
 
