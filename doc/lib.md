@@ -27,6 +27,9 @@
 * [The TemplateElement Class](#ref.TemplateElement)
 	* [TemplateElement.parse()](#ref.TemplateElement.parse)
 	* [TemplateElement.create()](#ref.TemplateElement.create)
+* [The Expression Class](#ref.Expression)
+	* [Expression.parse()](#ref.Expression.parse)
+	* [Expression.create()](#ref.Expression.create)
 
 *Documentation TODO:*
 * [.reduce()](#ref.reduce)
@@ -392,7 +395,7 @@ Create a `Ref` instance, call [.setRef()](#ref.Ref.setRef) with *arg* and return
 
 * str `string` a KFG Ref string to parse
 
-This parse a *ref* and return a `Ref` instance.
+This parses a *ref* and returns a `Ref` instance.
 See the [KFG Ref syntax](KFG.md#ref.ref).
 
 
@@ -666,6 +669,96 @@ It calls `Babel.Element.parse()`.
 
 This creates a `TemplateElement` instance, the *arg* argument is passed as the first argument of `Babel.Element.create()`.
 See [Babel Tower documentation](https://github.com/cronvel/babel-tower).
+
+
+
+<a name="ref.Expression"></a>
+## The Expression Class
+
+*Expressions* are useful for building scripting language on top of KFG: they provide arithmetical expression,
+logic expression, various math functions, and more.
+
+**It implements behind the [Dynamic interface](#ref.Dynamic)**.
+
+Like all Dynamic object, to solve an *expression*, a *context* is needed.
+
+Let's see an *expression* in action:
+
+```js
+var kungFig = require( 'kung-fig' ) ;
+
+// First define a context
+var ctx = {
+	a: 7 ,
+	b: 5
+} ;
+
+// Parse and create 2 expressions
+var exp1 = kungFig.Expression.parse( '1 + 1' ) ;
+var exp2 = kungFig.Expression.parse( '$a + $b' ) ;
+
+// Output '2', the value of 1 + 1
+console.log( exp1.get( ctx ) ) ;
+
+// Output '12', the value of ctx.a + ctx.b
+console.log( exp2.get( ctx ) ) ;
+```
+
+An *expression* is basically an operator (i.e. a function) and an array of operands.
+An operand can be anything, even a *Dynamic object*, such like *refs*, or another *expression*...
+
+First, all *Dynamic objects* operands are *solved* using the provided *context*.
+Once done, the operator function is called with the *solved* array of operands.
+
+See the [KFG expression documentation](KFG.md#ref.expressions) for the expression syntax and the built-in operators.
+
+
+
+<a name="ref.Expression.parse"></a>
+### Expression.parse( str , [customOperators] )
+
+* str `string` the expression string
+* customOperators `object` (optional) where keys are operator identifiers and value a `function( operands )`, where:
+	* operands `array` the array of operands
+
+This parses and returns an Expression.
+Custom operators cannot override built-in operators.
+
+Example using a custom operator:
+
+```js
+var kungFig = require( 'kung-fig' ) ;
+
+// First define a context
+var ctx = {
+	a: 7 ,
+	b: 5
+} ;
+
+// Parse and create 2 expressions
+var exp = kungFig.Expression.parse( 'my-operator $a $b' , {
+	"my-operator": function( operands ) {
+		return ( operands[ 0 ] + 1 ) / ( operands[ 1 ] + 1 ) ;
+	}
+} ) ;
+
+// Output 1.333333, the value of ( ctx.a + 1 ) / ( ctx.b + 1 )
+console.log( exp.get( ctx ) ) ;
+```
+
+
+
+<a name="ref.Expression.create"></a>
+### Expression.create( fnOperator , operands )
+
+* fnOperator `function( operands )` the operator's function, where:
+	* operands `array` the array of operands
+* operands `array` the array of operands
+
+This creates an `Expression` instance and returns it.
+
+
+
 
 
 

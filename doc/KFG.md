@@ -58,9 +58,10 @@ Stop using JSON for configuration files, use KFG now!
 * [Refs](#ref.refs)
 * [Templates](#ref.templates)
 * [Template Elements](#ref.template-elements)
+* [Expressions](#ref.expressions)
 
 *Documentation TODO:*
-* [Expressions](#ref.expressions)
+* [Tree operations](#ref.tree-operations)
 
 
 
@@ -1186,8 +1187,9 @@ The path syntax is closed to the one of the [Ref](#ref.refs), except that there 
 Hence, `$> Hello ${user.bob.name}!` is supported, but not `$> Hello ${user[$id].name}!`.
 
 All [Babel Tower commands](https://github.com/cronvel/babel-tower) are supported.
-E.g. `$> Hello ${who}[altg:guys|girls//uc]!` will be *solved* to `Hello GUYS!` if the context is equal to `{ who: { g: "m" } }`,
-or it will be *solved* to `Hello GIRLS!` if the context is equal to `{ who: { g: "f" } }`.
+E.g. `$> Hello ${who}[altng:(guy|girl)|(guys|girls)//uc]!` will be *solved* to `Hello GUYS!` if the context is equal
+to `{ who: { g: "m" , n: "many" } }`, or it will be *solved* to `Hello GIRLS!` if the context is equal
+to `{ who: { g: "f" , n: "many" } }`, or `Hello GUY!` if `{ who: { g: "f" , n: 1 } }`, etc...
 
 
 
@@ -1220,4 +1222,9 @@ Both example create an element (here a noun), having:
 
 As for the template element syntax itself (i.e. the inside), it uses the
 [Babel Tower element syntax](https://github.com/cronvel/babel-tower).
+
+
+
+<a name="ref.expressions"></a>
+### Expressions
 
