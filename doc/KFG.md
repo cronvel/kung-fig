@@ -1382,5 +1382,5 @@ The number in parenthesis indicate how many operands is needed.
   has the second operand, or if the first operand is an object that has a `.has()` method that returns true when
   called with the second operand. Otherwise it returns false.
   an array of itself
-* `->`
+* `->`: RESERVED
 

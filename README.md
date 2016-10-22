@@ -62,4 +62,7 @@ Now, look at this **impressive** list of features:
 * [The TemplateElement Class](doc/lib.md#ref.TemplateElement)
 	* [TemplateElement.parse()](doc/lib.md#ref.TemplateElement.parse)
 	* [TemplateElement.create()](doc/lib.md#ref.TemplateElement.create)
+* [The Expression Class](doc/lib.md#ref.Expression)
+	* [Expression.parse()](doc/lib.md#ref.Expression.parse)
+	* [Expression.create()](doc/lib.md#ref.Expression.create)
 

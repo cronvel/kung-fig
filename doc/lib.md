@@ -30,12 +30,11 @@
 * [The Expression Class](#ref.Expression)
 	* [Expression.parse()](#ref.Expression.parse)
 	* [Expression.create()](#ref.Expression.create)
+* [The Tag Class](#ref.Tag)
 
 *Documentation TODO:*
 * [.reduce()](#ref.reduce)
 * [.autoReduce()](#ref.autoReduce)
-* [The Expression Class](#ref.Expression)
-* [The Tag Class](#ref.Tag)
 * [The TagContainer Class](#ref.TagContainer)
 
 
@@ -759,6 +758,48 @@ This creates an `Expression` instance and returns it.
 
 
 
+<a name="ref.Tag"></a>
+## The Tag Class
 
+*Tag* are useful for building scripting language on top of KFG: they often represent actions.
+
+The *Tag* class is very generic, it is used as the super class for more specific tags that the userland
+scripting language should define.
+
+A *tag* instance has those properties:
+* name `string` the name of the tag
+* parent `TagContainer` this is the parent `TagContainer` instance or *null* if it has no parent
+* attributes `mixed` the tag attributes, it can be a `string` or `object` or anything, it all depends on the derived class
+* content `mixed` the content of the tag, it can be anything
+
+
+
+<a name="ref.Tag.new"></a>
+### new Tag( tagName , attributes , content , shouldParseAttributes , options )
+
+* tagName `string` the name of the tag, assigned to the `name` property
+* attributes `mixed` the tag attributes, assigned to the `attributes` property
+* content `mixed` the content of the tag, assigned to the `content` property
+* shouldParseAttributes `boolean` true if the `attributes` argument is a raw string that needs to be parsed
+* options: RESERVED
+
+If `shouldParseAttributes` is on, it calls the `tag.parseAttributes()` with the `attributes` argument, the result
+is assigned to the `attributes` property.
+
+
+
+<a name="ref.Tag.parseAttributes"></a>
+### .parseAttributes( str )
+
+* str `string` the raw attribute string to be parsed
+
+This method returns a parsed attribute (a string, an object or whatever) from a raw attribute string.
+
+**Most of time, this method should be overloaded to get a meaningful output.**
+By default it just returns the trimmed the string.
+
+
+<a name="ref.Tag.stringifyAttributes"></a>
+### .stringifyAttributes()
 
 
