@@ -864,7 +864,7 @@ If the content is a *Dynamic object*, it returns
 
 
 
-<a name="#ref.Tag.derived"></a>
+<a name="ref.Tag.derived"></a>
 ## Built-in Tag Derived Class
 
 There are various built-in Tag available out of the box.
@@ -872,7 +872,7 @@ They have their own attributes parser.
 
 
 
-<a name="#ref.Tag.LabelTag"></a>
+<a name="ref.Tag.LabelTag"></a>
 ### LabelTag Class
 
 This Tag is simply aware of quoted-string.
@@ -882,7 +882,7 @@ would produce `attributes`=`"label"` for the later KFG syntax.
 
 
 
-<a name="#ref.Tag.VarTag"></a>
+<a name="ref.Tag.VarTag"></a>
 ### VarTag Class
 
 This Tag is used when an attributes should be a *ref*.
@@ -891,7 +891,7 @@ So this KFG tags `[mytag $path.to.data]` would produce `attributes`=`Ref.parse( 
 
 
 
-<a name="#ref.Tag.ClassicTag"></a>
+<a name="ref.Tag.ClassicTag"></a>
 ### ClassicTag Class
 
 This Tag uses a syntax similar to XML/HTML.
@@ -906,7 +906,7 @@ Given the KFG tag `[mytag key1=123 key2="value" key3=$path.to.data]`, it would p
 
 
 
-<a name="#ref.Tag.ExpressionTag"></a>
+<a name="ref.Tag.ExpressionTag"></a>
 ### ExpressionTag Class
 
 This Tag is used when the attribute should be an expression 
