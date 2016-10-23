@@ -31,12 +31,27 @@
 	* [Expression.parse()](#ref.Expression.parse)
 	* [Expression.create()](#ref.Expression.create)
 * [The Tag Class](#ref.Tag)
+	* [new Tag()](#ref.Tag.new)
+	* [.parseAttributes()](#ref.Tag.parseAttributes)
+	* [.stringifyAttributes()](#ref.Tag.stringifyAttributes)
+	* [.getParentTag()](#ref.Tag.getParentTag)
+	* [.getFinalContent()](#ref.Tag.getFinalContent)
+	* [.getRecursiveFinalContent()](#ref.Tag.getRecursiveFinalContent)
+* [Built-in Tag Derived Class](#ref.Tag.derived)
+	* [LabelTag Class](#ref.Tag.LabelTag)
+	* [VarTag Class](#ref.Tag.VarTag)
+	* [ClassicTag Class](#ref.Tag.ClassicTag)
+	* [ExpressionTag Class](#ref.Tag.ExpressionTag)
+* [The TagContainer Class](#ref.TagContainer)
+	* [new TagContainer()](#ref.TagContainer.new)
+	* [.get()](#ref.TagContainer.get)
+	* [.getTags()](#ref.TagContainer.getTags)
+	* [.getFirstTag()](#ref.TagContainer.getFirstTag)
+	* [.getUniqueTag()](#ref.TagContainer.getUniqueTag)
 
 *Documentation TODO:*
 * [.reduce()](#ref.reduce)
 * [.autoReduce()](#ref.autoReduce)
-* [The TagContainer Class](#ref.TagContainer)
-
 
 
 <a name="ref.basic"></a>
@@ -765,6 +780,7 @@ This creates an `Expression` instance and returns it.
 
 The *Tag* class is very generic, it is used as the super class for more specific tags that the userland
 scripting language should define.
+Most of time, you wont derive from Tag itself but from [one of the built-in derived class](#ref.Tag.derived).
 
 A *tag* instance has those properties:
 * name `string` the name of the tag
@@ -775,13 +791,13 @@ A *tag* instance has those properties:
 
 
 <a name="ref.Tag.new"></a>
-### new Tag( tagName , attributes , content , shouldParseAttributes , options )
+### new Tag( tagName , attributes , [content] , [shouldParseAttributes] , [options] )
 
 * tagName `string` the name of the tag, assigned to the `name` property
 * attributes `mixed` the tag attributes, assigned to the `attributes` property
-* content `mixed` the content of the tag, assigned to the `content` property
-* shouldParseAttributes `boolean` true if the `attributes` argument is a raw string that needs to be parsed
-* options: RESERVED
+* content `mixed` (optional) the content of the tag, assigned to the `content` property
+* shouldParseAttributes `boolean` (optional) true if the `attributes` argument is a raw string that needs to be parsed
+* options: (optional) RESERVED
 
 If `shouldParseAttributes` is on, it calls the `tag.parseAttributes()` with the `attributes` argument, the result
 is assigned to the `attributes` property.
@@ -796,10 +812,166 @@ is assigned to the `attributes` property.
 This method returns a parsed attribute (a string, an object or whatever) from a raw attribute string.
 
 **Most of time, this method should be overloaded to get a meaningful output.**
-By default it just returns the trimmed the string.
+By default it just returns the trimmed raw string.
 
 
 <a name="ref.Tag.stringifyAttributes"></a>
 ### .stringifyAttributes()
+
+This method returns the stringified (i.e. serialized) attributes.
+
+**Most of time, this method should be overloaded to get a meaningful output.**
+By default it just returns the trimmed `attributes` property if it's a string, otherwise an empty string.
+
+
+
+<a name="ref.Tag.getParentTag"></a>
+### .getParentTag()
+
+This method returns the parent tag, if any. Otherwise it returns *null*.
+
+
+
+<a name="ref.Tag.getFinalContent"></a>
+### .getFinalContent( ctx , [bound] )
+
+* ctx `mixed` the context, it can be of any type, but it is usually an object
+* bound `boolean` (optional) if true and the value to be returned is a function, the function is bounded
+  to the relevant value, depending on the type of the Dynamic object (e.g. given a [Ref instance](#ref.Ref) *"$obj.myfunc"*,
+  the returned value would be bound to `ctx.obj`, like a regular Javascript method call would).
+  This argument has no effect on some Dynamic objects where the *bound* concept is not relevant
+  (e.g. [Template instances](#ref.Template))
+
+This method returns the tag's content (i.e. the `content` preoperty).
+If the content is a *Dynamic object*, it returns
+[`this.content.getFinalContent( ctx , bound )`](#ref.Dynamic.getFinalValue) instead.
+
+
+
+<a name="ref.Tag.getRecursiveFinalContent"></a>
+### .getRecursiveFinalContent( ctx , [bound] )
+
+* ctx `mixed` the context, it can be of any type, but it is usually an object
+* bound `boolean` (optional) if true and the value to be returned is a function, the function is bounded
+  to the relevant value, depending on the type of the Dynamic object (e.g. given a [Ref instance](#ref.Ref) *"$obj.myfunc"*,
+  the returned value would be bound to `ctx.obj`, like a regular Javascript method call would).
+  This argument has no effect on some Dynamic objects where the *bound* concept is not relevant
+  (e.g. [Template instances](#ref.Template))
+
+This method returns the tag's content (i.e. the `content` preoperty).
+If the content is a *Dynamic object*, it returns
+[`this.content.getRecursiveFinalContent( ctx , bound )`](#ref.Dynamic.getRecursiveFinalValue) instead.
+
+
+
+<a name="#ref.Tag.derived"></a>
+## Built-in Tag Derived Class
+
+There are various built-in Tag available out of the box.
+They have their own attributes parser.
+
+
+
+<a name="#ref.Tag.LabelTag"></a>
+### LabelTag Class
+
+This Tag is simply aware of quoted-string.
+
+So both KFG tags `[mytag label]` and `[mytag "label"]` would produce `attributes`=`label`, where a simple Tag instance
+would produce `attributes`=`"label"` for the later KFG syntax.
+
+
+
+<a name="#ref.Tag.VarTag"></a>
+### VarTag Class
+
+This Tag is used when an attributes should be a *ref*.
+
+So this KFG tags `[mytag $path.to.data]` would produce `attributes`=`Ref.parse( "$path.to.data" )`.
+
+
+
+<a name="#ref.Tag.ClassicTag"></a>
+### ClassicTag Class
+
+This Tag uses a syntax similar to XML/HTML.
+
+Supported attribute values:
+* numbers
+* quoted strings
+* refs
+
+Given the KFG tag `[mytag key1=123 key2="value" key3=$path.to.data]`, it would produce the `attributes`:
+`{ "key1": 123 , "key2": "value" , "key3": Ref.parse( "$path.to.data" ) }`.
+
+
+
+<a name="#ref.Tag.ExpressionTag"></a>
+### ExpressionTag Class
+
+This Tag is used when the attribute should be an expression 
+
+Given the KFG tag `[my-if-tag $a > $b]`, it would produce the `attributes`:`Expression.parse( "$a > $b" )`.
+
+
+
+<a name="ref.TagContainer"></a>
+## The TagContainer Class
+
+*TagContainers* are implicitly created by the KFG parser as soon as a *node* [has a tag as its child](KFG.md#ref.tags).
+It has some methods
+
+A *tag container* instance has those properties:
+* tag `Tag` the parent Tag instance, if any, otherwise *null*.
+* children `array` an array of Tag instances
+
+
+
+<a name="ref.TagContainer.new"></a>
+### new TagContainer( [children] , [tag] )
+
+* children `array` (optional) an array of Tag instances, assigned to the `children` property, default to an empty array.
+* tag `Tag` (optional) a parent Tag instance, assigned to the `tag` property, default to null.
+
+
+
+<a name="ref.TagContainer.get"></a>
+### .get( id )
+
+* id `mixed` the tag ID
+
+It searches the *tag container* for a tag matching this ID and returns it, otherwise it returns `undefined`.
+The Tag instance should has an `id` property, this is something the Tag don't have, but that could exist in a derived class.
+It stops at the first matching ID, that's the duty of the userland code to ensure that the ID is unique.
+
+
+
+<a name="ref.TagContainer.getTags"></a>
+### .getTags( tagName )
+
+* tagName `string` the tag name to search for
+
+It searches the *tag container* for all tags matching the provided *tagName*, and returns them in an array.
+
+
+
+<a name="ref.TagContainer.getFirstTag"></a>
+### .getFirstTag( tagName )
+
+* tagName `string` the tag name to search for
+
+It searches the *tag container* for the first tag matching the provided *tagName*, and returns it.
+It returns `undefined` if the tag is not found.
+
+
+
+<a name="ref.TagContainer.getUniqueTag"></a>
+### .getUniqueTag( tagName )
+
+* tagName `string` the tag name to search for
+
+It searches the *tag container* for the unique tag matching the provided *tagName*, and returns it.
+If the tag is not found or if there are more than one matching tags, it throws an error.
+
 
 
