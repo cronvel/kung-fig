@@ -1486,10 +1486,12 @@ log-level: debug
 
 All those operators are listed from the highest to lowest priority.
 
-* `` the *empty operator*: it just replace the target property
+* the *empty operator* (nothing in the parenthesis: `()`): it just replace the target property
 * `<*` the *combine before operator*: it [merges](lib.md#ref.treeops.autoReduce) the target property and the operand,
-  but it acts as if the operand was coming first
-* `*>` the *combine after operator*: it [merges](lib.md#ref.treeops.autoReduce) the target property and the operand
+  but it acts as if the operand was coming first: the operand properties can never override existing target properties,
+  but instead can provide defaults
+* `*>` the *combine after operator*: it [merges](lib.md#ref.treeops.autoReduce) the target property and the operand,
+  so the operand properties may override the target properties
 * `<<*` the *combine before operator, lower priority*: just like the *combine before operator*
 * `*>>` the *combine after operator, lower priority*: just like the *combine after operator*
 * `<+` the *prepend operator*: it prepends the operand array to the target property array
