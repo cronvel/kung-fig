@@ -51,6 +51,8 @@
 * [Tree Operations](#ref.treeops)
 	* [.reduce()](#ref.treeops.reduce)
 	* [.autoReduce()](#ref.treeops.autoReduce)
+	* [.toObject()](#ref.treeops.toObject)
+	* [.reduceToObject()](#ref.treeops.reduceToObject)
 
 
 
@@ -1029,9 +1031,9 @@ See the whole operators list [here](KFG.md#ref.treeops.operators).
 ### .reduce( object1 , [object2] , [...] )
 
 * object1 `object` the object to reduce
-* object2, ... `object` other objects to merge and reduce
+* object2, ... `object` other objects to merge and reduce with object1
 
-It reduces one or many objects, i.e. it extends and applies operator properties, and return the result.
+It reduces one or many objects, i.e. it extends and applies operator properties, and returns the result.
 It does not modify any objects, but creates a brand new one.
 
 
@@ -1039,11 +1041,49 @@ It does not modify any objects, but creates a brand new one.
 <a name="ref.treeops.autoReduce"></a>
 ### .autoReduce( object1 , [object2] , [...] )
 
+* object1 `object` the object to reduce in-place
+* object2, ... `object` other objects to merge and reduce with object1
+
+It works like [.reduce()](#ref.treeops.reduce) except that it does not creates a new object, instead
+all operations are applied on the first argument (*object1*) in-place.
+It returns the modified *object1*.
+
+
+
+<a name="ref.treeops.toObject"></a>
+### .toObject( object )
+
+* src `object` the source object
+
+It returns an object where all property-operators have been *deeply* (i.e. recursively) removed,
+and where *escaped* keys are unescaped.
+
+Example:
+
+```js
+var creature = {
+	hp: 8 ,
+	attack: 5 ,
+	defense: 4 ,
+	"+defense": 1 ,
+	"+hp": 2
+} ;
+
+console.log( kungFig.toObject( creature ) ) ;
+```
+
+This will output `{ hp: 8 , attack: 5 , defense: 4 }`.
+
+
+
+<a name="ref.treeops.reduceToObject"></a>
+### .reduceToObject( object1 , [object2] , [...] )
+
 * object1 `object` the object to reduce
-* object2, ... `object` other objects to merge and reduce
+* object2, ... `object` other objects to merge and reduce with object1
 
-It works like [.reduce()](#ref.treeops.reduce) except that it does not creates a new object but instead
-all operations take place on the first object argument (*object1*).
+It reduces one or many objects, i.e. it extends and applies operator properties, and returns the result
+where all remaining property-operators have been *deeply* (recursively) removed, and all *escaped* keys are unescaped.
 
-
+This is a shorthand for: `kungFig.toObject( kungFig.reduce( object1 , [object2] , [...] ) )`.
 

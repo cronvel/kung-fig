@@ -61,6 +61,7 @@ Stop using JSON for configuration files, use KFG now!
 * [Expressions](#ref.expressions)
 	* [Built-in Expressions Operators](#ref.expressions.builtin-operators)
 * [Tree Operations](#ref.treeops)
+	* [Operator list](#ref.treeops.operators)
 
 
 
@@ -937,6 +938,8 @@ items: @items.kfg
 
 Any file format unknown to Kung-Fig will be assumed as raw string.
 
+**Mixing includes and the “combining after” operator can be great:** [see it here](#ref.treeops.including-overriding).
+
 
 
 <a name="ref.includes.recursive-parent-search"></a>
@@ -1387,9 +1390,112 @@ The number in parenthesis indicate how many operands is needed.
 <a name="ref.treeops"></a>
 ## Tree Operations
 
+KFG has a special *tree operations* syntax.
+
+*Tree operations* merge multiple trees (i.e. deep nested object structure) according to some rules.
+It works mostly like a regular *deep object extensions* most Javascript coders are used to,
+except that some specials operators can affect how the merge works for some properties.
+
+*Tree operations* are great for many things.
+One of the greatest use-case is for games, especially RPG-like game, where some items/spells/power-up can
+boost the character base stats.
+
+Let's see *tree operations* in action with two KFG files:
+
+```
+# This is the KFG of the character
+name: Jörgl, the Barbarian
+hp: 8
+attack: 5
+defense: 4
+```
+
+```
+# This is the KFG of an item: the Amulet of Protection
+defense: (+) 1
+hp: (+) 2
+```
+
+If both KFG are loaded and combined (e.g. using Kung Fig's [`kungFig.reduce( character , amulet )`](lib.md#ref.treeops.reduce)),
+it would produce the document: `{ "name": "Jörgl, the Barbarian", "hp": 10 , "attack": 5 , "defense": 5 }`.
+
+The *tree operator* syntax rules are:
+* the operator should be placed **after** the property key and its colon `:`, except for the parent node operator case
+* the operator should be placed **before** an eventual class/constructor
+* the operator should be placed **before** an eventual inline scalar value
+* the operator is enclosed inside parenthesis `()`, therefore it should not contain parenthesis
+* operators are only working on objects
+* parent node operator: if an operator is not preceded by a property key (i.e. it is the first thing on the line after
+  eventually the indentation), it will be applied on the parent *node*
+
+When multiple property-operators target the same property, they are applied in a predefined order.
+For example the `*` operator is always applied before the `+` operator, regardless of which one come first in the file.
+
+So those two items would produce the same result:
+
+```
+# First item
+defense: (*) 2
+defense: (+) 3
+```
+
+```
+# Second item
+defense: (+) 3
+defense: (*) 2
+```
+
+If it was merged with the character of the first example, both would produce:
+`{ "name": "Jörgl, the Barbarian", "hp": 8 , "attack": 5 , "defense": 11 }`.
+
+<a name="ref.treeops.including-overriding"></a>
+**Now let's talk about a great usage for config files: including and overriding.**
+
+Consider this application config as it would be packaged in the source code:
+
+```
+base-url: www.example.com
+port: 1234
+log-level: warning
+
+(*>) @config.local.kfg
+```
+
+The last line contains all the magic.
+As you can see, there is that `@` that performs an [optional include](#ref.includes) of the file
+named `config.local.kfg` (if the file is not found, it returns an empty object).
+Before the include command, there is the *combine after operator*, not preceded by a key,
+that means that the operator will target the *parent node*: the root document itself.
+
+So it will simply merge the the current file and the `config.local.kfg` file together, the later overriding the former.
+
+If the `config.local.kfg` file contains this:
+
+```
+app-name: my supa app
+log-level: debug
+```
+
+... loading the previous master file would produce: 
+`{ "app-name": "my supa app" , "base-url": "www.example.com" , "port": 1234 , "log-level": "debug" }`.
+
+
+
 <a name="ref.treeops.operators"></a>
-### Operators
+### Operator list
 
+All those operators are listed from the highest to lowest priority.
 
-
+* `` the *empty operator*: it just replace the target property
+* `<*` the *combine before operator*: it [merges](lib.md#ref.treeops.autoReduce) the target property and the operand,
+  but it acts as if the operand was coming first
+* `*>` the *combine after operator*: it [merges](lib.md#ref.treeops.autoReduce) the target property and the operand
+* `<<*` the *combine before operator, lower priority*: just like the *combine before operator*
+* `*>>` the *combine after operator, lower priority*: just like the *combine after operator*
+* `<+` the *prepend operator*: it prepends the operand array to the target property array
+* `+>` the *append operator*: it appends the operand array to the target property array
+* `/` the *divide operator*: it divides the target property by the operand
+* `*` the *multiply operator*: it multiplies the target property by the operand
+* `-` the *subtract operator*: it subtracts operand to the target property
+* `+` the *add operator*: it adds the operands and the target property
 

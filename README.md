@@ -83,4 +83,9 @@ Now, look at this **impressive** list of features:
 	* [.getTags()](doc/lib.md#ref.TagContainer.getTags)
 	* [.getFirstTag()](doc/lib.md#ref.TagContainer.getFirstTag)
 	* [.getUniqueTag()](doc/lib.md#ref.TagContainer.getUniqueTag)
+* [Tree Operations](doc/lib.md#ref.treeops)
+	* [.reduce()](doc/lib.md#ref.treeops.reduce)
+	* [.autoReduce()](doc/lib.md#ref.treeops.autoReduce)
+	* [.toObject()](doc/lib.md#ref.treeops.toObject)
+	* [.reduceToObject()](doc/lib.md#ref.treeops.reduceToObject)
 
