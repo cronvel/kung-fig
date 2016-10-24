@@ -48,10 +48,10 @@
 	* [.getTags()](#ref.TagContainer.getTags)
 	* [.getFirstTag()](#ref.TagContainer.getFirstTag)
 	* [.getUniqueTag()](#ref.TagContainer.getUniqueTag)
+* [Tree Operations](#ref.treeops)
+	* [.reduce()](#ref.treeops.reduce)
+	* [.autoReduce()](#ref.treeops.autoReduce)
 
-*Documentation TODO:*
-* [.reduce()](#ref.reduce)
-* [.autoReduce()](#ref.autoReduce)
 
 
 <a name="ref.basic"></a>
@@ -70,7 +70,7 @@ are methods of the `kungFig` object.
 * filePath `string` the path of the file to load
 * options `object` (optional) an object of options, where:
 	* cwd `string` override the Current Working Directory
-	* reduce `boolean` (default: true) if true, the config is reduced (see [.autoReduce()](#ref.autoReduce))
+	* reduce `boolean` (default: true) if true, the config is reduced (see [.autoReduce()](#ref.treeops.autoReduce))
 	* doctype `string` or `array` of `string` (KFG only) if set, the KFG file to load **MUST** have a meta tag *doctype*
 	  and it should match the doctype string or be listed in the doctype array
 	* kfgFiles `object` where:
@@ -972,6 +972,78 @@ It returns `undefined` if the tag is not found.
 
 It searches the *tag container* for the unique tag matching the provided *tagName*, and returns it.
 If the tag is not found or if there are more than one matching tags, it throws an error.
+
+
+
+<a name="ref.treeops"></a>
+## Tree Operations
+
+Kung Fig has a special *tree operations* syntax.
+*Tree operations* merge multiple trees (i.e. deep nested object structure) according to some rules.
+It works mostly like a regular *deep object extensions* most Javascript coders are used to,
+except that some specials operators can be placed at the begining of some properties' key.
+
+Let's see *tree operations* in action:
+
+```js
+var creature = {
+	hp: 8 ,
+	attack: 5 ,
+	defense: 4
+} ;
+
+var amulet = {
+	"+defense": 1 ,
+	"+hp": 2
+} ;
+
+var stats = kungFig.reduce( creature , amulet ) ;
+```
+
+The `stats` var equals to: `{ hp: 10 , attack: 5 , defense: 5 }`.
+The two objects are merged, but the second object contains operators: the `+defense` means
+*add the value of this `+defense` property to the value of the `defense` property, then delete `+defense`*.
+The same applies with the `+hp` property.
+
+Also it would have created the same `stats` var if all properties were in the same object:
+
+```js
+var creature = {
+	hp: 8 ,
+	attack: 5 ,
+	defense: 4 ,
+	"+defense": 1 ,
+	"+hp": 2
+} ;
+
+var stats = kungFig.reduce( creature ) ;
+```
+
+Most of time, you would not create object having tree-operations operators inside JS code source, but you would
+just use them in a [KFG file](KFG.md#ref.treeops), then process them in JS with the methods below.
+See the whole operators list [here](KFG.md#ref.treeops.operators).
+
+
+
+<a name="ref.treeops.reduce"></a>
+### .reduce( object1 , [object2] , [...] )
+
+* object1 `object` the object to reduce
+* object2, ... `object` other objects to merge and reduce
+
+It reduces one or many objects, i.e. it extends and applies operator properties, and return the result.
+It does not modify any objects, but creates a brand new one.
+
+
+
+<a name="ref.treeops.autoReduce"></a>
+### .autoReduce( object1 , [object2] , [...] )
+
+* object1 `object` the object to reduce
+* object2, ... `object` other objects to merge and reduce
+
+It works like [.reduce()](#ref.treeops.reduce) except that it does not creates a new object but instead
+all operations take place on the first object argument (*object1*).
 
 
 

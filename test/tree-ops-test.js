@@ -115,7 +115,7 @@ describe( "Operator behaviours" , function() {
 		) ;
 		
 		doormen.equals(
-			kungFig.reduce( {} , creature , amulet ) ,
+			kungFig.reduce( creature , amulet ) ,
 			{
 				hp: 9 ,
 				attack: 5 ,
@@ -125,7 +125,7 @@ describe( "Operator behaviours" , function() {
 		) ;
 		
 		doormen.equals(
-			kungFig.reduce( {} , creature , amulet , ring ) ,
+			kungFig.reduce( creature , amulet , ring ) ,
 			{
 				hp: 11 ,
 				attack: 5 ,
@@ -135,7 +135,7 @@ describe( "Operator behaviours" , function() {
 		) ;
 	} ) ;
 	
-	it( "check stack behaviour bug, when a 'foreach' and 'non-foreach' key are mixed" , function() {
+	it( "check stack behaviour bugs, when a 'foreach' and 'non-foreach' key are mixed" , function() {
 		
 		var creature = {
 			hp: 8 ,

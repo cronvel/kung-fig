@@ -60,9 +60,7 @@ Stop using JSON for configuration files, use KFG now!
 * [Template Elements](#ref.template-elements)
 * [Expressions](#ref.expressions)
 	* [Built-in Expressions Operators](#ref.expressions.builtin-operators)
-
-*Documentation TODO:*
-* [Tree operations](#ref.tree-operations)
+* [Tree Operations](#ref.treeops)
 
 
 
@@ -1119,7 +1117,7 @@ circular: @@#
 
 
 <a name="ref.refs"></a>
-### Refs
+## Refs
 
 *Refs* are useful for building scripting language on top of KFG: they represent variables, or paths to variable.
 
@@ -1156,7 +1154,7 @@ Those are incorrect:
 
 
 <a name="ref.templates"></a>
-### Templates
+## Templates
 
 *Templates* are useful for building scripting language on top of KFG: they are internationalizable templates,
 containing references, and a lot of tools to ease human language.
@@ -1195,7 +1193,7 @@ to `{ who: { g: "f" , n: "many" } }`, or `Hello GUY!` if `{ who: { g: "f" , n: 1
 
 
 <a name="ref.template-elements"></a>
-### Template Elements
+## Template Elements
 
 *Template elements* are useful for advanced i18n/l10n and human language usage.
 
@@ -1227,7 +1225,7 @@ As for the template element syntax itself (i.e. the inside), it uses the
 
 
 <a name="ref.expressions"></a>
-### Expressions
+## Expressions
 
 *Expressions* are useful for building scripting language on top of KFG: they provide arithmetical expression,
 logic expression, various math functions, and more...
@@ -1274,7 +1272,7 @@ can still be used with the following tricks:
 
 
 <a name="ref.expressions.builtin-operators"></a>
-#### Built-in Expression Operators
+### Built-in Expression Operators
 
 Here a the full list of operators with their alias.
 The number in parenthesis indicate how many operands is needed.
@@ -1383,4 +1381,15 @@ The number in parenthesis indicate how many operands is needed.
   called with the second operand. Otherwise it returns false.
   an array of itself
 * `->`: RESERVED
+
+
+
+<a name="ref.treeops"></a>
+## Tree Operations
+
+<a name="ref.treeops.operators"></a>
+### Operators
+
+
+
 
