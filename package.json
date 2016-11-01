@@ -1,8 +1,8 @@
 {
   "name": "kung-fig",
-  "version": "0.33.17",
+  "version": "0.34.0",
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=4.5.0"
   },
   "description": "The Kung Fu of configuration files!",
   "main": "lib/kungFig.js",
