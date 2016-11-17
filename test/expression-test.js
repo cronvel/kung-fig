@@ -462,6 +462,31 @@ describe( "Expression" , function() {
 			doormen.equals( parsed.getFinalValue() , true ) ;
 		} ) ;
 		
+		it( "parse/exec is-empty? operators" , function() {
+			var parsed ;
+			
+			parsed = Expression.parse( '$unknown is-empty?' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			
+			parsed = Expression.parse( '0 is-empty?' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			
+			parsed = Expression.parse( '1 is-empty?' ) ;
+			doormen.equals( parsed.getFinalValue() , false ) ;
+			
+			parsed = Expression.parse( '( array ) is-empty?' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			
+			parsed = Expression.parse( '( array 1 ) is-empty?' ) ;
+			doormen.equals( parsed.getFinalValue() , false ) ;
+			
+			parsed = Expression.parse( '( array 1 2 3 ) is-empty?' ) ;
+			doormen.equals( parsed.getFinalValue() , false ) ;
+			
+			parsed = Expression.parse( '( array 0 ) is-empty?' ) ;
+			doormen.equals( parsed.getFinalValue() , false ) ;
+		} ) ;
+		
 		it( "parse/exec is-real? operators" , function() {
 			var parsed ;
 			
