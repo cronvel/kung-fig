@@ -1291,7 +1291,10 @@ The number in parenthesis indicate how many operands is needed.
   by a third operand, and so on...
 * `%`, `modulo` (1+): this is the **remainder operator**: the first operand is divided by the second operand
   and the remainder is returned, this remainder is eventually divided by a third operand and this produce
-  another remainder that is returned, and so on...
+  another remainder that is returned, and so on... the modulo can be negative
+* `\`, `intdiv` (1+): this is the integer division operator: the first operand is divided by the second operand,
+  the result is eventually divided by a third operand, and so on... each division produces an integer by truncating
+  the result (i.e. rounding toward 0)
 
 **Comparison operators:**
 
