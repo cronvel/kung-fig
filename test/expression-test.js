@@ -197,6 +197,99 @@ describe( "Expression" , function() {
 			doormen.equals( parsed.getFinalValue() , -2 ) ;
 		} ) ;
 		
+		it( "parse/exec the floored integer division '\\\\' operator" , function() {
+			var parsed ;
+			
+			parsed = Expression.parse( '0 \\\\ 4' ) ;
+			doormen.equals( parsed.getFinalValue() , 0 ) ;
+			
+			parsed = Expression.parse( '3 \\\\ 4' ) ;
+			doormen.equals( parsed.getFinalValue() , 0 ) ;
+			
+			parsed = Expression.parse( '7 \\\\ 4' ) ;
+			doormen.equals( parsed.getFinalValue() , 1 ) ;
+			
+			parsed = Expression.parse( '6 \\\\ 4' ) ;
+			doormen.equals( parsed.getFinalValue() , 1 ) ;
+			
+			parsed = Expression.parse( '8 \\\\ 4' ) ;
+			doormen.equals( parsed.getFinalValue() , 2 ) ;
+			
+			parsed = Expression.parse( '17 \\\\ 4' ) ;
+			doormen.equals( parsed.getFinalValue() , 4 ) ;
+			
+			parsed = Expression.parse( '-1 \\\\ 4' ) ;
+			doormen.equals( parsed.getFinalValue() , -1 ) ;
+			
+			parsed = Expression.parse( '-7 \\\\ 4' ) ;
+			doormen.equals( parsed.getFinalValue() , -2 ) ;
+			
+			parsed = Expression.parse( '-8 \\\\ 4' ) ;
+			doormen.equals( parsed.getFinalValue() , -2 ) ;
+		} ) ;
+		
+		it( "parse/exec the modulo '%' operator" , function() {
+			var parsed ;
+			
+			parsed = Expression.parse( '0 % 4' ) ;
+			doormen.equals( parsed.getFinalValue() , 0 ) ;
+			
+			parsed = Expression.parse( '3 % 4' ) ;
+			doormen.equals( parsed.getFinalValue() , 3 ) ;
+			
+			parsed = Expression.parse( '7 % 4' ) ;
+			doormen.equals( parsed.getFinalValue() , 3 ) ;
+			
+			parsed = Expression.parse( '6 % 4' ) ;
+			doormen.equals( parsed.getFinalValue() , 2 ) ;
+			
+			parsed = Expression.parse( '8 % 4' ) ;
+			doormen.equals( parsed.getFinalValue() , 0 ) ;
+			
+			parsed = Expression.parse( '17 % 4' ) ;
+			doormen.equals( parsed.getFinalValue() , 1 ) ;
+			
+			parsed = Expression.parse( '-1 % 4' ) ;
+			doormen.equals( parsed.getFinalValue() , -1 ) ;
+			
+			parsed = Expression.parse( '-7 % 4' ) ;
+			doormen.equals( parsed.getFinalValue() , -3 ) ;
+			
+			parsed = Expression.parse( '-8 % 4' ) ;
+			doormen.equals( parsed.getFinalValue() , 0 ) ;
+		} ) ;
+		
+		it( "parse/exec the positive modulo '%+' operator" , function() {
+			var parsed ;
+			
+			parsed = Expression.parse( '0 %+ 4' ) ;
+			doormen.equals( parsed.getFinalValue() , 0 ) ;
+			
+			parsed = Expression.parse( '3 %+ 4' ) ;
+			doormen.equals( parsed.getFinalValue() , 3 ) ;
+			
+			parsed = Expression.parse( '7 %+ 4' ) ;
+			doormen.equals( parsed.getFinalValue() , 3 ) ;
+			
+			parsed = Expression.parse( '6 %+ 4' ) ;
+			doormen.equals( parsed.getFinalValue() , 2 ) ;
+			
+			parsed = Expression.parse( '8 %+ 4' ) ;
+			doormen.equals( parsed.getFinalValue() , 0 ) ;
+			
+			parsed = Expression.parse( '17 %+ 4' ) ;
+			doormen.equals( parsed.getFinalValue() , 1 ) ;
+			
+			parsed = Expression.parse( '-1 %+ 4' ) ;
+			doormen.equals( parsed.getFinalValue() , 3 ) ;
+			
+			parsed = Expression.parse( '-7 %+ 4' ) ;
+			doormen.equals( parsed.getFinalValue() , 1 ) ;
+			
+			parsed = Expression.parse( '-8 %+ 4' ) ;
+			doormen.equals( parsed.getFinalValue() , 0 ) ;
+		} ) ;
+		
 		it( "parse/exec the 'and' operator" , function() {
 			var parsed ;
 			

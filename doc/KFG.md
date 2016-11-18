@@ -1289,12 +1289,18 @@ The number in parenthesis indicate how many operands is needed.
 * `*`, `mul` (1+): multiply all operands together
 * `/`, `div` (1+): the first operand is divided by the second operand, the result is eventually divided
   by a third operand, and so on...
-* `%`, `modulo` (1+): this is the **remainder operator**: the first operand is divided by the second operand
-  and the remainder is returned, this remainder is eventually divided by a third operand and this produce
-  another remainder that is returned, and so on... the modulo can be negative
 * `\`, `intdiv` (1+): this is the integer division operator: the first operand is divided by the second operand,
   the result is eventually divided by a third operand, and so on... each division produces an integer by truncating
   the result (i.e. rounding toward 0)
+* `%`, `modulo` (1+): this is the **modulo** or **remainder operator**: the first operand is divided by the second operand
+  and the remainder is returned, this remainder is eventually divided by a third operand and this produce
+  another remainder that is returned, and so on... the modulo can be negative, e.g.: `-7 % 4` produces -3.
+  This modulo variant works in pair with the `\` operator
+* `\\` (1+): this is the floored integer division operator: it works like the integer division operator, but each result
+  is floored instead of truncated (produces different values for negative numbers)
+* `%+` (1+): this is the positive modulo operator: it works like the modulo operator, but it always produces positive,
+  so it produces different result for negative numbers, e.g.: `-7 %+ 4` produces 1.
+  This modulo variant works in pair with the `\\` operator.
 
 **Comparison operators:**
 
