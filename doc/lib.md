@@ -312,14 +312,14 @@ to explain why *applicable* Dynamic object are useful:
 
 # Set the var named $template to the template "Hello ${you}!",
 # $template will be an applicable object and will never been solved
-# unless the [apply-to] tag is called on it explicitly
+# unless the [apply] tag is called on it explicitly
 [set $template] $$> Hello ${you}!
 
 # Output "Hello Bob!"
 [message] $message
 
 # Apply the template now and put the value inside the $applied var
-[apply-to $applied] $template
+[apply $template => $applied] $
 
 # Output "Hello Bob!"
 [message] $applied
@@ -332,7 +332,7 @@ to explain why *applicable* Dynamic object are useful:
 
 # This apply the template but now the variable $you used
 # to solve the template is not "Bob" anymore but "Jack"
-[apply-to $applied] $template
+[apply $template => $applied] $
 
 # So this output "Hello Jack!"
 [message] $applied
