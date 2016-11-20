@@ -1,4 +1,10 @@
 
+v0.34.7
+-------
+
+Tag#locationStr() dropped in favor of the Tag#location getter
+
+
 v0.34.6
 -------
 
