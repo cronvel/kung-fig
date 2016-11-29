@@ -70,6 +70,8 @@ describe( "Template" , function() {
 describe( "Dynamic.getRecursiveFinalValue()" , function() {
 	
 	it( "Historical non-cloning bug" , function() {
+		// Case where it SHOULD clone
+		
 		var ref1 , tpl1 , tpl2 ;
 		
 		var ctx = { a: 42 } ;
@@ -88,6 +90,43 @@ describe( "Dynamic.getRecursiveFinalValue()" , function() {
 		doormen.equals( ctx.b === ref1 , true ) ;
 		doormen.equals( ctx.c === tpl1 , true ) ;
 		doormen.equals( ctx.d === tpl2 , true ) ;
+	} ) ;
+	
+	it( "Historical cloning bug" , function() {
+		// Case where it should NOT clone
+		
+		var ref1 , v1 , v2 ;
+		
+		var ctx = {
+			array: [ 1 , 2 , 3 ] ,
+			object: {
+				a: 42
+			}
+		} ;
+		
+		ref1 = Ref.create( '$object' ) ;
+		ctx.object.array = Ref.create( '$array' ) ;
+		
+		v1 = Dynamic.getRecursiveFinalValue( ref1 , ctx ) ;
+		
+		//console.log( v1 ) ;
+		
+		v2 = Dynamic.getRecursiveFinalValue( v1 , ctx ) ;
+		
+		//console.log( v2 ) ;
+		
+		v1.array.push( 4 ) ;
+		v2.array.push( 5 ) ;
+		
+		doormen.equals( v1 === v2 , true ) ;
+		
+		doormen.equals( v1 , {
+			a: 42 ,
+			array: [ 1 , 2 , 3 , 4 , 5 ]
+		} ) ;
+		
+		doormen.equals( v1.array === ctx.array , true ) ;
+		doormen.equals( v1.array === ctx.object.array , true ) ;
 	} ) ;
 } ) ;
 
