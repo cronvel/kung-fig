@@ -34,6 +34,11 @@ Now, look at this **impressive** list of features:
 * Expressions (arithmetic, logic, maths, etc)
 * Tree operations (merge, combine, etc)
 
+Official support of the [Atom editor](https://atom.io):
+* [KFG and Spellcast! language package](https://atom.io/packages/language-kfg)
+* [Syntax theme dedicated to KFG and Spellcast!](https://atom.io/packages/kfg-dark-syntax) (better colors, colorize
+  specific KFG *scopes*)
+
 
 
 ## Table of Contents
