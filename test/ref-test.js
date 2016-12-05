@@ -408,6 +408,51 @@ describe( "Ref" , function() {
 		} ) ;
 	} ) ;
 		
+	describe( "Unset" , function() {
+		
+		it( "define a simple ref" , function() {
+			var ref_ ;
+			
+			var ctx = {
+				a: 1 ,
+				b: 2 ,
+				sub: {
+					c: 3 ,
+					sub: {
+						d: 4
+					}
+				}
+			} ;
+			
+			ref_ = Ref.parse( '$a' ) ;
+			ref_.unset( ctx ) ;
+			doormen.equals( ctx.a , undefined ) ;
+			
+			ref_ = Ref.parse( '$e' ) ;
+			ref_.unset( ctx ) ;
+			doormen.equals( ctx.e , undefined ) ;
+			
+			ref_ = Ref.parse( '$sub.sub' ) ;
+			ref_.unset( ctx ) ;
+			doormen.equals( ctx.sub.sub , undefined ) ;
+			
+			doormen.equals( ctx , {
+				b: 2 ,
+				sub: {
+					c: 3
+				}
+			} ) ;
+			
+			ref_ = Ref.parse( '$sub' ) ;
+			ref_.unset( ctx ) ;
+			doormen.equals( ctx.sub , undefined ) ;
+			
+			doormen.equals( ctx , {
+				b: 2
+			} ) ;
+		} ) ;
+	} ) ;
+		
 	describe( "Calling a function" , function() {
 		
 		it( "parse and call a function pointed by a ref" , function() {
