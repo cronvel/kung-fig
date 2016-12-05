@@ -1,4 +1,10 @@
 
+v0.34.13
+--------
+
+Ref#set() now has the 'defineOnly' option
+
+
 v0.34.12
 --------
 

@@ -36,7 +36,7 @@ Now, look at this **impressive** list of features:
 
 Official support of the [Atom editor](https://atom.io):
 * [KFG and Spellcast! language package](https://atom.io/packages/language-kfg)
-* [Syntax theme dedicated to KFG and Spellcast!](https://atom.io/packages/kfg-dark-syntax) (better colors, colorize
+* [Syntax theme dedicated to KFG and Spellcast!](https://atom.io/packages/kfg-dark-syntax) (more suitable colors, and it colorizes
   specific KFG *scopes*)
 
 
