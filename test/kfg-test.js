@@ -440,6 +440,8 @@ describe( "KFG parse" , function() {
 	it( "parse multi-line folding string at top-level" , function() {
 		doormen.equals( parse( '>> Hello\n>> World!' ) , "Hello World!" ) ;
 		doormen.equals( parse( '>>   Hello  \n>>    World!   ' ) , "Hello World!" ) ;
+		doormen.equals( parse( '>> Hello\n>>\n>> World!' ) , "Hello\nWorld!" ) ;
+		doormen.equals( parse( '>> Hello\n>>\n>>\n>> World!' ) , "Hello\n\nWorld!" ) ;
 		doormen.equals( parse( '>>  \t\t Hello \t\t \n>>  \t\t  World! \t\t  ' ) , "Hello World!" ) ;
 		doormen.equals( parse( '>> multi\n>> ple\n>> lines' ) , "multi ple lines" ) ;
 		doormen.equals( parse( '>> multi\n>> ple\n>>\n>> lines' ) , "multi ple\nlines" ) ;

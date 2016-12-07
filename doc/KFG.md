@@ -43,6 +43,7 @@ Stop using JSON for configuration files, use KFG now!
 	* [Quoted strings](#ref.strings.quoted)
 	* [Introduced strings](#ref.strings.introduced)
 	* [Multi-line strings](#ref.strings.multiline)
+	* [Multi-line folded strings](#ref.strings.multiline-folded)
 * [Hierarchical Data Representation - Containers](#ref.hierarchical)
 * [Arrays](#ref.arrays)
 * [Objects](#ref.objects)
@@ -383,6 +384,46 @@ All the other rules of [introduced string](#ref.strings.introduced) applies.
 each line with `> ` and indent it: *and it just works!*
 Your text editor may even do that for you with a few keystrokes.
 This works mostly like the quotes in email format.
+
+
+
+<a name="ref.strings.multiline-folded"></a>
+### Multi-line Folded Strings
+
+*Multi-line folded strings* is a variant of [multi-line string](#ref.strings.multiline).
+
+It works with a double `>>` sign instead of a single `>`.
+Just look at this example:
+
+```
+description:
+	>> The KFG format is the Kung-Fig file format.
+	>> It does wonders for all your config files.
+	>> It's like .cfg on steroid!
+	>> Once you start using it, you won't use anything else!
+```
+
+The description property will not contain a 4-lines string like it would for a regular multi-line,
+instead, the lines are folded: only one big line will be created.
+Before merging all lines in one, each lines is *trimmed*: all consecutive white spaces are removed from the left
+and the right of the line.
+
+If a true line break is needed, an *empty text line* is needed, i.e. a line with a `>>` mark with nothing left after it
+except white spaces.
+
+Example:
+
+```
+description:
+	>> The KFG format is the Kung-Fig file format.
+	>> It does wonders for all your config files.
+	>> It's like .cfg on steroid!
+	>> 
+	>> Once you start using it, you won't use anything else!
+```
+The first 3 lines are merged, but not the last one.
+
+So... if an empty line is needed, two consecutive *empty text lines* should be written.
 
 
 
@@ -1170,6 +1211,8 @@ The syntax for declaring a *template* is similar to the syntax for declaring str
 * for the introduced template syntax, start with `$> ` and follow the [introduced string rules](#ref.strings.introduced)
 * for the multi-line template syntax, start each line with the proper indentation, the `$> ` mark, and follow
   the [multi-line string rules](#ref.strings.multiline)
+* for the multi-line folded template syntax, start each line with the proper indentation, the `$>> ` mark, and follow
+  the [multi-line folded string rules](#ref.strings.multiline-folded)
 
 Example of valid *template* declaration:
 
@@ -1208,7 +1251,10 @@ The syntax for declaring a *template element* is similar to the syntax for decla
   the [quoted string rules](#ref.strings.quoted)
 * for the introduced template element syntax, start with `$%> ` and follow
   the [introduced string rules](#ref.strings.introduced)
-* there is no for the multi-line template element syntax
+* for the multi-line template element syntax, start each line with the proper indentation, the `$%> ` mark, and follow
+  the [multi-line string rules](#ref.strings.multiline)
+* for the multi-line folded template syntax, start each line with the proper indentation, the `$%>> ` mark, and follow
+  the [multi-line folded string rules](#ref.strings.multiline-folded)
 
 Example of valid *template element* declaration:
 
@@ -1256,6 +1302,8 @@ The syntax for the *expression* itself is the following those rules:
 * if an expression has no operator:
 	* if it has one operand, the expression will return that operand
 	* if it has multiple operand, the expression will return an array of those operand
+* for the multi-line expression syntax, start each line with the proper indentation, the `$= ` mark, and follow
+  the [multi-line folded string rules](#ref.strings.multiline-folded)
 
 An expression does not care if the operator come first or second, so `1 + 2` is the same than `+ 1 2`.
 By the way, one may use the more natural variant, the former being recommended over the later.

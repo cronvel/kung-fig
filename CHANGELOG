@@ -1,4 +1,10 @@
 
+v0.35.0
+-------
+
+Breaking changes: folded multi-line, Expression and TemplateElement can be multi-line too
+
+
 v0.34.16
 --------
 
