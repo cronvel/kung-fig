@@ -189,7 +189,7 @@ describe( "KFG stringify" , function() {
 	
 	it( "stringify templates" , function() {
 		doormen.equals( stringify( { tpl: Template.create( 'Hello ${name}!' ) } ) , 'tpl: $> Hello ${name}!\n' ) ;
-		doormen.equals( stringify( { tpl: new Template( 'Hey!\nHello ${name}!' ) } ) , 'tpl: $> Hey!\n\t$> Hello ${name}!\n' ) ;
+		doormen.equals( stringify( { tpl: new Template( 'Hey!\nHello ${name}!' ) } ) , 'tpl: \n\t$> Hey!\n\t$> Hello ${name}!\n' ) ;
 		doormen.equals( stringify( { tpl: Template.create( 'Hello ${name}!' ) } , { preferQuotes: true } ) , 'tpl: $"Hello ${name}!"\n' ) ;
 		doormen.equals( stringify( { tpl: Template.create( 'Hey!\nHello ${name}!' ) } , { preferQuotes: true } ) , 'tpl: $"Hey!\\nHello ${name}!"\n' ) ;
 		
@@ -437,6 +437,15 @@ describe( "KFG parse" , function() {
 		//doormen.equals( parse( 'Hello\nWorld!' ) , "Hello\nWorld!" ) ;
 	} ) ;
 	
+	it( "parse multi-line folding string at top-level" , function() {
+		doormen.equals( parse( '>> Hello\n>> World!' ) , "Hello World!" ) ;
+		doormen.equals( parse( '>>   Hello  \n>>    World!   ' ) , "Hello World!" ) ;
+		doormen.equals( parse( '>>  \t\t Hello \t\t \n>>  \t\t  World! \t\t  ' ) , "Hello World!" ) ;
+		doormen.equals( parse( '>> multi\n>> ple\n>> lines' ) , "multi ple lines" ) ;
+		doormen.equals( parse( '>> multi\n>> ple\n>>\n>> lines' ) , "multi ple\nlines" ) ;
+		doormen.equals( parse( '>> multi\n>> ple\n>> \n>>    \n>>\n>> lines' ) , "multi ple\n\n\nlines" ) ;
+	} ) ;
+	
 	it( "parse non-string scalar at top-level" , function() {
 		doormen.equals( parse( 'null' ) , null ) ;
 		doormen.equals( parse( 'true' ) , true ) ;
@@ -631,7 +640,7 @@ describe( "KFG parse" , function() {
 		doormen.equals( o.ref2.apply( ctx ) , 43 ) ;
 	} ) ;
 	
-	it( "parse expression" , function() {
+	it( "parse expressions" , function() {
 		var o ;
 		var ctx = { name: "Bob" , bob: { age: 43 } , bill: { age: 37 } } ;
 		
@@ -687,7 +696,29 @@ describe( "KFG parse" , function() {
 		doormen.equals( o.exp.getFinalValue( ctx ) , false ) ;
 	} ) ;
 	
-	it( "parse expression" , function() {
+	it( "parse multi-line expressions" , function() {
+		var o ;
+		var ctx = { name: "Bob" , bob: { age: 43 } , bill: { age: 37 } } ;
+		
+		o = parse( "exp:\n\t$= $bob.age + 2" ) ;
+		doormen.equals( o.exp.getFinalValue( ctx ) , 45 ) ;
+		
+		o = parse( "exp:\n\t$= $bob.age\n\t$= + 2" ) ;
+		doormen.equals( o.exp.getFinalValue( ctx ) , 45 ) ;
+		
+		o = parse( "exp:\n\t$=  $bob.age  \n\t$=   +  \n\t\n\t$=\n\t$= \n\t$=    \n\t$=  2  " ) ;
+		doormen.equals( o.exp.getFinalValue( ctx ) , 45 ) ;
+		
+		// Try with custom operators
+		var operators = {
+			triple: function( args ) { return args[ 0 ] * 3 ; }
+		} ;
+		
+		o = parse( "exp:\n\t$=  triple  \n\t\n\t$=\n\t$= \n\t$=    \n\t$=  $bob.age  " , { operators: operators } ) ;
+		doormen.equals( o.exp.getFinalValue( ctx ) , 129 ) ;
+	} ) ;
+	
+	it( "parse applicable expressions" , function() {
 		var o ;
 		var ctx = { name: "Bob" , bob: { age: 43 } , bill: { age: 37 } } ;
 		
