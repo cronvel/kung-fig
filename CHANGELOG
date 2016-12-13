@@ -1,4 +1,10 @@
 
+v0.35.2
+-------
+
+Expression: round, floor, ceil, trunc epsilon rounding error fixed
+
+
 v0.35.1
 -------
 
