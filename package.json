@@ -42,6 +42,13 @@
   "bugs": {
     "url": "https://github.com/cronvel/kung-fig/issues"
   },
+  "config": {
+    "tea-time": {
+      "coverDir": [
+        "lib"
+      ]
+    }
+  },
   "copyright": {
     "title": "Kung Fig",
     "years": [
