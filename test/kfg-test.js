@@ -803,6 +803,14 @@ describe( "KFG parse" , function() {
 		surfaceEquals( o.el , { t: "horse" , altn: [ "horse" , "horses" ] , babel: Babel.default } ) ;
 		doormen.equals( o.el.toString() , 'horse' ) ;
 		
+		o = parse( "el:\n\t$%> horse[altn:horse|horses]" ) ;
+		surfaceEquals( o.el , { t: "horse" , altn: [ "horse" , "horses" ] , babel: Babel.default } ) ;
+		doormen.equals( o.el.toString() , 'horse' ) ;
+		
+		o = parse( "el: $%> horse[n?horse|horses]" ) ;
+		surfaceEquals( o.el , { t: "horse" , altn: [ "horse" , "horses" ] , babel: Babel.default } ) ;
+		doormen.equals( o.el.toString() , 'horse' ) ;
+		
 		o = parse( 'el: $%"horse[altn:horse|horses]"' ) ;
 		surfaceEquals( o.el , { t: "horse" , altn: [ "horse" , "horses" ] , babel: Babel.default } ) ;
 		doormen.equals( o.el.toString() , 'horse' ) ;
@@ -810,6 +818,18 @@ describe( "KFG parse" , function() {
 		o2 = parse( '$> I like ${el}[n:many]!' ) ;
 		doormen.equals( o2.toString( o ) , 'I like horses!' ) ;
 	} ) ;
+	
+	it( "parse applicable template elements" , function() {
+		var o , o2 ;
+		
+		o = parse( "el: $$%> horse[altn:horse|horses]" ) ;
+		surfaceEquals( o.el , { __isApplicable__: true , __isDynamic__: false , t: "horse" , altn: [ "horse" , "horses" ] , babel: Babel.default } ) ;
+		doormen.equals( o.el.apply() , 'horse' ) ;
+		
+		o = parse( "el:\n\t$$%> horse[altn:horse|horses]" ) ;
+		surfaceEquals( o.el , { __isApplicable__: true , __isDynamic__: false , t: "horse" , altn: [ "horse" , "horses" ] , babel: Babel.default } ) ;
+		doormen.equals( o.el.apply() , 'horse' ) ;
+	} )
 	
 	it( "parse template sentence and element, and use a babel instance to localize it" , function() {
 		var o , o2 ;
