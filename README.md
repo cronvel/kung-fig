@@ -41,6 +41,63 @@ Official support of the [Atom editor](https://atom.io):
 
 
 
+### A KFG Primer
+
+Example of document:
+
+```
+# This is a comment!
+
+# Set few properties:
+first-name: Joe
+last-name: Doe
+age: 47
+
+# This property contains an array:
+interest:
+	- science
+	- literature
+	- computer
+
+# Use the special 'date' constructor:
+birth-date: <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)
+
+# This include a file
+items: @@path/to/file/items.kfg
+```
+
+Example featuring tags, suitable for for scripting (here [Spellcast Scripting](https://github.com/cronvel/spellcast)):
+
+```
+# Meta-tags (like headers)
+[[doctype adventurer]]
+[[locales locales/*]]
+
+# Tags
+[chapter story]
+	
+	[scene intro]
+		[image] village.png
+		[music] intro-theme.ogg
+		
+		[message]
+			$> Once upon a time, there was a ${character.class}...
+		
+		[next end]
+	
+	[scene end]
+		[image] castle.png
+		[music] ending-theme.ogg
+		
+		[message]
+			$> You found the master and learn everything he taught to you.
+			$> You became famous in the entire country.
+		
+		[win]
+```
+
+
+
 ## Table of Contents
 
 * [The Wonderful KFG Format](doc/KFG.md)

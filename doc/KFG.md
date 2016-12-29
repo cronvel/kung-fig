@@ -95,7 +95,6 @@ last-name: Doe
 
 ... will produce `{ "first-name": "Joe" , "last-name": "Doe" }`.
 
-
 ```
 fruits:
 	- banana
@@ -892,13 +891,13 @@ job: developer
 
 Here is a list of built-in/reserved/standardized meta-tags and their roles:
 
-* [[doctype <name>]]: the doctype meta-tag is a **built-in** meta-tag, its role is to describe the document.
+* [[doctype *name*]]: the doctype meta-tag is a **built-in** meta-tag, its role is to describe the document.
   Since KFG can describe a wide range of things, and can be extended/customized (tags, operators, etc),
   it is a very important meta-tag. The `doctype` option of [`kungFig.load()`](lib.md#ref.load) can enforce some doctype,
   rejecting KFG files that does not match. It prevents us from loading random/unrelated documents in our app
   by end-user mistake.
 
-* [[locales <path>]]: this meta-tag is not built-in, but **standardized**. It means that KungFig has
+* [[locales *path*]]: this meta-tag is not built-in, but **standardized**. It means that KungFig has
   no special treatment for this tag, and that is the job of the userland code to process it the appropriate way
   (e.g.: should all the locales be loaded? or just the one found in a command line argument? Actually this is
   highly application dependent).
