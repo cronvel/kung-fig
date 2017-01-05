@@ -1,4 +1,10 @@
 
+v0.36.0
+-------
+
+New: Tag#masterFile, Tag#relPath -- Breaking: Tag#uid changed
+
+
 v0.35.5
 -------
 
