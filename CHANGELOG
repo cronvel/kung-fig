@@ -1,4 +1,10 @@
 
+v0.38.0
+-------
+
+Breaking change: modulePath options from v0.37 was conflicting with glob pattern, switch the syntax from bracket to brace
+
+
 v0.37.0
 -------
 

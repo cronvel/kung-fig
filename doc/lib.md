@@ -102,8 +102,8 @@ are methods of the `kungFig` object.
 	  in the Expression, the value is a `function( args )` that should compute the operation, where `args` is an array
 	  of argument. See [Expression](#ref.Expression).
 	* modulePath `object` of `string` (optional) an object of module path that can be recognize substituted when a path
-	  like `[module]/path/to/file` is encountered.
-	  E.g.: if `modulePath = { core: '/usr/lib/myapp/kfg-lib' }`, and the file to load has to include `[core]/toto.kfg`,
+	  like `{module}/path/to/file` is encountered.
+	  E.g.: if `modulePath = { core: '/usr/lib/myapp/kfg-lib' }`, and the file to load has to include `{core}/toto.kfg`,
 	  then it would include `/usr/lib/myapp/kfg-lib/toto.kfg`
 	* baseDir `string` or `array` of `string` (optional) a list of allowed directories. If present, loading any file
 	  that is not descendant of one of those directories will throw an error. This is a security feature for apps
