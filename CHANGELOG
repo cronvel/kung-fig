@@ -1,4 +1,10 @@
 
+v0.37.0
+-------
+
+Breaking changes: node >= 6 ; new options for .load(): modulePath (create symboles) and baseDir (for security)
+
+
 v0.36.4
 -------
 

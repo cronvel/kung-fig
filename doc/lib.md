@@ -101,6 +101,15 @@ are methods of the `kungFig` object.
 	* operators `object` (KFG only) custom operators for Expression, the key is the operator string that should be
 	  in the Expression, the value is a `function( args )` that should compute the operation, where `args` is an array
 	  of argument. See [Expression](#ref.Expression).
+	* modulePath `object` of `string` (optional) an object of module path that can be recognize substituted when a path
+	  like `[module]/path/to/file` is encountered.
+	  E.g.: if `modulePath = { core: '/usr/lib/myapp/kfg-lib' }`, and the file to load has to include `[core]/toto.kfg`,
+	  then it would include `/usr/lib/myapp/kfg-lib/toto.kfg`
+	* baseDir `string` or `array` of `string` (optional) a list of allowed directories. If present, loading any file
+	  that is not descendant of one of those directories will throw an error. This is a security feature for apps
+	  running user content.
+	  All *baseDir* path **MUST BE** absolute path.
+	  No `fs.realpath()` are performed and it is not symlink bullet-proof: the app must not allow symlink creation by users.
 	* fileObjectMap `object` reserved
 
 This synchronously load the file using the *filePath* argument, parse it and return it.

@@ -374,6 +374,8 @@ describe( "Loading a config" , function() {
 	it( "path starting with ~/" ) ;
 	it( "recursive parent search: path containing .../" ) ;
 	it( "test the 'kfgFiles' option" ) ;
+	it( "test the 'modulePath' option" ) ;
+	it( "test the 'baseDir' option restriction" ) ;
 } ) ;
 
 

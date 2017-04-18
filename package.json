@@ -1,8 +1,8 @@
 {
   "name": "kung-fig",
-  "version": "0.36.4",
+  "version": "0.37.0",
   "engines": {
-    "node": ">=4.5.0"
+    "node": ">=6.0.0"
   },
   "description": "The Kung Fu of configuration files!",
   "main": "lib/kungFig.js",
@@ -15,7 +15,6 @@
     "doormen": "^0.6.7",
     "glob": "^7.1.1",
     "hash-kit": "^0.3.1",
-    "osenv": "^0.1.4",
     "string-kit": "^0.5.14",
     "tree-kit": "^0.5.26"
   },
