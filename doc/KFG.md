@@ -1432,6 +1432,8 @@ The number in parenthesis indicate how many operands is needed.
 * `is-string?` (1): returns true if the first operand is a string, otherwise returns false
 * `is-array?` (1): returns true if the first operand is an array, otherwise returns false
 * `is-object?` (1): returns true if the first operand is an object (but **not an array**), otherwise returns false
+* `is-empty?` (1): returns true if the first operand is either an empty array or not an array and falsy
+* `is-not-empty?` (1): returns true if the first operand is either a non-empty array or not an array and truthy
 
 **Misc operators:**
 
