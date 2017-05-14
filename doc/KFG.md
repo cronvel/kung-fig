@@ -838,7 +838,7 @@ The meta tag syntax consists in a tag name and some attributes, between a two op
 See the [tag syntax](#ref.tags) for more details: tags and meta-tags share the same syntax except that meta-tags
 use double opening and closing brackets where tags use a single opening and closing bracket.
 
-One of the most common meta-tag is the built-in *doctype* tag. Here an example of doctype: `[[doctype spellcast/story]]`
+One of the most common meta-tag is the built-in *doctype* tag. Here an example of doctype: `[[doctype spellcast/book]]`
 (this is the doctype used by [Spellcast in story mode](https://github.com/cronvel/spellcast)).
 
 There are few built-in, reserved or standardized meta-tags, but everyone is free to create their own custom meta-tags.
