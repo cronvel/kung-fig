@@ -70,7 +70,7 @@ Example featuring tags, suitable for for scripting (here [Spellcast Scripting](h
 
 ```
 # Meta-tags (like headers)
-[[doctype adventurer]]
+[[doctype spellcast/story]]
 [[locales locales/*]]
 
 # Tags
