@@ -1,6 +1,6 @@
 {
   "name": "kung-fig",
-  "version": "0.38.4",
+  "version": "0.38.5",
   "engines": {
     "node": ">=6.0.0"
   },
@@ -12,17 +12,16 @@
   "dependencies": {
     "async-kit": "^2.2.3",
     "babel-tower": "^0.12.2",
-    "doormen": "^0.6.7",
     "glob": "^7.1.1",
     "hash-kit": "^0.3.1",
-    "string-kit": "^0.5.14",
+    "string-kit": "^0.5.21",
     "tree-kit": "^0.5.26"
   },
   "devDependencies": {
-    "doormen": "^0.6.6",
+    "doormen": "^0.6.7",
     "expect.js": "^0.3.1",
     "jshint": "^2.9.4",
-    "tea-time": "^0.8.7"
+    "tea-time": "^0.9.0"
   },
   "scripts": {
     "test": "tea-time -R dot"
