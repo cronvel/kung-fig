@@ -1,4 +1,10 @@
 
+v0.38.6
+-------
+
+Important Babel-tower upgrade, allowing more characters as string template variable paths
+
+
 v0.38.5
 -------
 
