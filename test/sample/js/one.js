@@ -1,7 +1,7 @@
 /*
 	Kung Fig
 	
-	Copyright (c) 2015 - 2016 Cédric Ronvel
+	Copyright (c) 2015 - 2017 Cédric Ronvel
 	
 	The MIT License (MIT)
 	
