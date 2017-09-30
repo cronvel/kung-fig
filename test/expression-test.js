@@ -435,6 +435,19 @@ describe( "Expression" , function() {
 			doormen.equals( parsed.getFinalValue() , false ) ;
 		} ) ;
 		
+		it( "parse/exec . (dot) operator" , function() {
+			var parsed ;
+			
+			parsed = Expression.parse( '"one" . "two"' ) ;
+			doormen.equals( parsed.getFinalValue() , "onetwo" ) ;
+			
+			parsed = Expression.parse( '"one" . "two" . "three"' ) ;
+			doormen.equals( parsed.getFinalValue() , "onetwothree" ) ;
+			
+			parsed = Expression.parse( 'false . "one" . 2 . "three" true' ) ;
+			doormen.equals( parsed.getFinalValue() , "falseone2threetrue" ) ;
+		} ) ;
+		
 		it( "parse/exec concat operator" , function() {
 			var parsed ;
 			
@@ -446,6 +459,22 @@ describe( "Expression" , function() {
 			
 			parsed = Expression.parse( 'concat ( array 3 , 4 ) , ( array 5 , 6 ) , ( array 7 , 8 )' ) ;
 			doormen.equals( parsed.getFinalValue() , [ 3 , 4 , 5 , 6 , 7 , 8 ] ) ;
+		} ) ;
+		
+		it( "parse/exec join operator" , function() {
+			var parsed ;
+			
+			parsed = Expression.parse( 'join ( "one" )' ) ;
+			doormen.equals( parsed.getFinalValue() , "one" ) ;
+			
+			parsed = Expression.parse( 'join "one"' ) ;
+			doormen.equals( parsed.getFinalValue() , "one" ) ;
+			
+			parsed = Expression.parse( 'join ( "one" "two" "three" )' ) ;
+			doormen.equals( parsed.getFinalValue() , "onetwothree" ) ;
+			
+			parsed = Expression.parse( 'join ( "one" "two" "three" ) ", "' ) ;
+			doormen.equals( parsed.getFinalValue() , "one, two, three" ) ;
 		} ) ;
 		
 		it( "parse/exec hypot operator" , function() {

@@ -1,4 +1,10 @@
 
+v0.38.7
+-------
+
+New operators: . (dot): concat strings, join: array.join
+
+
 v0.38.6
 -------
 
