@@ -39,6 +39,7 @@ var Template = kungFig.Template ;
 var TemplateElement = kungFig.TemplateElement ;
 var Tag = kungFig.Tag ;
 var TagContainer = kungFig.TagContainer ;
+var OrderedObject = kungFig.OrderedObject ;
 
 var Babel = require( 'babel-tower' ) ;
 
@@ -921,6 +922,31 @@ describe( "KFG parse" , function() {
 		doormen.equals( o.sub.sub.regex2.toString() , "/abc/m" ) ;
 		
 		doormen.equals( o.bin.toString( 'hex' ) , "fd104b19" ) ;
+	} ) ;
+	
+	it( "parse a file with ordered object" , function() {
+		
+		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/ordered-object.kfg' , 'utf8' ) ) ;
+		
+		//console.log( JSON.stringify( o ) ) ;
+		
+		doormen.equals(
+			JSON.stringify( o ) ,
+			// Without _keys
+			'{"top":{"name":"John","_index":0},"sub":{"_index":1,"one":{"name":"Bob","_index":0},"two":{"name":"Bill","_index":1},"three":{"name":"Jack","_index":2}}}'
+			// With _keys
+			//'{"_keys":["top","sub"],"top":{"name":"John","_index":0},"sub":{"_keys":["one","two","three"],"_index":1,"one":{"name":"Bob","_index":0},"two":{"name":"Bill","_index":1},"three":{"name":"Jack","_index":2}}}'
+		) ;
+		
+		doormen.equals( o instanceof kungFig.OrderedObject , true ) ;
+		doormen.equals( o.sub instanceof kungFig.OrderedObject , true ) ;
+		doormen.equals( o._keys , [ 'top' , 'sub' ] ) ;
+		doormen.equals( o.top._key , 'top' ) ;
+		doormen.equals( o.sub._key , 'sub' ) ;
+		doormen.equals( o.sub._keys , [ 'one' , 'two' , 'three' ] ) ;
+		doormen.equals( o.sub.one._key , 'one' ) ;
+		doormen.equals( o.sub.two._key , 'two' ) ;
+		doormen.equals( o.sub.three._key , 'three' ) ;
 	} ) ;
 	
 	it( "parse a file with special custom instances" , function() {

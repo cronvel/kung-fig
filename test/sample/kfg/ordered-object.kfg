@@ -1,0 +1,12 @@
+<OrderedObject>
+
+top:
+	name: John
+
+sub: <OrderedObject>
+	one:
+		name: Bob
+	two:
+		name: Bill
+	three:
+		name: Jack
