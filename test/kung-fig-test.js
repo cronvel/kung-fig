@@ -369,10 +369,25 @@ describe( "Loading a config" , function() {
 		doormen.equals( kungFig.load( __dirname + '/sample/selfCircularReference.json' ) , shouldBe ) ;
 	} ) ;
 	
+	it( "recursive parent search: path containing .../", () => {
+		
+		doormen.equals(
+			kungFig.load( __dirname + '/sample/kfg/recursive/recursive/recursive.kfg' ) ,
+			{
+				one: "oneoneone" ,
+				two: {
+					four: "4!" ,
+					three: "3!"
+				}
+			}
+		) ;
+	} ) ;
+	
+	it( "recursive parent search with fixed part (i.e.: .../ in the middle of the path)" ) ;
+	
 	it( "path starting with ./" ) ;
 	it( "path starting with ../" ) ;
 	it( "path starting with ~/" ) ;
-	it( "recursive parent search: path containing .../" ) ;
 	it( "test the 'kfgFiles' option" ) ;
 	it( "test the 'modulePath' option" ) ;
 	it( "test the 'baseDir' option restriction" ) ;

@@ -1,0 +1,4 @@
+
+one: oneoneone
+two: @@.../recursive-include/include.kfg
+
