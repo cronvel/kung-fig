@@ -670,3 +670,68 @@ describe( "Array references" , function() {
 } ) ;
 	
 
+
+describe( "Async file loading" , () => {
+	
+	it( "load a KFG file asynchronously" , done => {
+		
+		kungFig.loadAsync( __dirname + '/sample/kfg/simple.kfg' , 'utf8' )
+		.then( object => {
+			doormen.equals( object , {
+				a: 1,
+				b: 2,
+				c: 3,
+				'some key': 'some value',
+				d: null,
+				e1: true,
+				e2: true,
+				e3: true,
+				f1: false,
+				f2: false,
+				f3: false,
+				g: NaN,
+				h: Infinity,
+				i: -Infinity,
+				j1: {},
+				j2: [],
+				sub: 
+					{ sub: { 'another key': 'another value' },
+					k: 1,
+					l: 2,
+					sub2: { subway: 'no!' } },
+				sub2: { no: 'way' },
+				sub3: { nooo: 'wai!' },
+				text: "A cool story:\n\nIt all started a Friday..." ,
+				"inline-string": "This is an inline string!" ,
+				list: [ 'one', 'two', 'three' ],
+				'list embedded': 
+					[ { 'first name': 'Bill', 'last name': 'Baroud' },
+					{ 'first name': 'Joe', 'last name': 'Doe' },
+					[ [ 'one', 'two', 'three' ],
+					[ 'four', 'five' ],
+					[ 'six', 'seven' ] ],
+					{ 'first name': 'Bill', 'last name': 'Baroud' },
+					{ 'first name': 'Joe', 'last name': 'Doe' },
+					[ [ 'one', 'two', 'three' ],
+					[ 'four', 'five' ],
+					[ 'six', 'seven' ] ] ]
+			} ) ;
+			
+			//console.log( kungFig.getMeta( object ).getFirstTag( 'meta' ).content ) ;
+			doormen.equals( kungFig.getMeta( object ).getFirstTag( 'meta' ).content , { content: "test" } ) ;
+		} )
+		.callback( done ) ;
+	} ) ;
+	
+	it( "load meta of a KFG file asynchronously" , done => {
+		
+		kungFig.loadMetaAsync( __dirname + '/sample/kfg/simple.kfg' , 'utf8' )
+		.then( meta => {
+			//console.log( kungFig.getMeta( object ).getFirstTag( 'meta' ).content ) ;
+			doormen.equals( meta.getFirstTag( 'meta' ).content , { content: "test" } ) ;
+		} )
+		.callback( done ) ;
+	} ) ;
+} ) ;
+
+
