@@ -133,6 +133,16 @@ describe( "Expression" , function() {
 			doormen.equals( parsed.getFinalValue() , [ 1 , 2 , 3 ]  ) ;
 		} ) ;
 		
+		it( "parse/exec an expression with implicit object creation" , function() {
+			var parsed ;
+			
+			//parsed = Expression.parse( '"key" : "value"' ) ;
+			parsed = Expression.parse( 'object "key" "value"' ) ;
+			doormen.equals( parsed , { key: 'value' }  ) ;
+		} ) ;
+		
+		it( "parse/exec an expression with explicit object creation" ) ;
+		
 		it( "parse/exec an expression featuring the comma separator syntax" , function() {
 			var parsed ;
 			
