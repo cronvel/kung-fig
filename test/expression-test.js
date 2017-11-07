@@ -133,13 +133,23 @@ describe( "Expression" , function() {
 			doormen.equals( parsed.getFinalValue() , [ 1 , 2 , 3 ]  ) ;
 		} ) ;
 		
-		it( "parse/exec an expression with implicit object creation" , function() {
+		it( "zzz parse/exec an expression with implicit object creation" , function() {
 			var parsed ;
 			
-			//parsed = Expression.parse( '"key" : "value"' ) ;
-			parsed = Expression.parse( 'object "key" "value"' ) ;
+			parsed = Expression.parse( '"key" : "value"' ) ;
 			console.log( parsed ) ;
 			doormen.equals( parsed.getFinalValue() , { key: 'value' }  ) ;
+			
+			parsed = Expression.parse( '"key1" : "value1" "key2" : 2' ) ;
+			console.log( parsed ) ;
+			doormen.equals( parsed.getFinalValue() , { key1: 'value1' , key2: 2 }  ) ;
+			
+			parsed = Expression.parse( '"key1" : "value1" , "key2" : 2' ) ;
+			console.log( parsed ) ;
+			doormen.equals( parsed.getFinalValue() , { key1: 'value1' , key2: 2 }  ) ;
+			
+			
+			//parsed = Expression.parse( 'object "key" "value"' ) ;
 		} ) ;
 		
 		it( "parse/exec an expression with explicit object creation" ) ;
@@ -170,6 +180,32 @@ describe( "Expression" , function() {
 			
 			parsed = Expression.parse( 'add 1 + 3 , 2 * 4 , 3 ^ 2' ) ;
 			doormen.equals( parsed.getFinalValue() , 21 ) ;
+		} ) ;
+		
+		it( "optional spaces around commas" , function() {
+			var parsed ;
+			
+			parsed = Expression.parse( '1 , 2 , 3' ) ;
+			doormen.equals( parsed.getFinalValue() , [ 1 , 2 , 3 ] ) ;
+			
+			parsed = Expression.parse( '1 ,2 ,3' ) ;
+			doormen.equals( parsed.getFinalValue() , [ 1 , 2 , 3 ] ) ;
+			
+			parsed = Expression.parse( '1, 2, 3' ) ;
+			doormen.equals( parsed.getFinalValue() , [ 1 , 2 , 3 ] ) ;
+			
+			parsed = Expression.parse( '1,2,3' ) ;
+			doormen.equals( parsed.getFinalValue() , [ 1 , 2 , 3 ] ) ;
+			
+			parsed = Expression.parse( '"one","two","three"' ) ;
+			doormen.equals( parsed.getFinalValue() , [ "one" , "two" , "three" ] ) ;
+		} ) ;
+		
+		it( "optional spaces around parenthesis" , function() {
+			var parsed ;
+			
+			parsed = Expression.parse( '1(2,3)4' ) ;
+			doormen.equals( parsed.getFinalValue() , [ 1 , [ 2 , 3 ] , 4 ] ) ;
 		} ) ;
 	} ) ;
 		
