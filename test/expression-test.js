@@ -133,23 +133,48 @@ describe( "Expression" , function() {
 			doormen.equals( parsed.getFinalValue() , [ 1 , 2 , 3 ]  ) ;
 		} ) ;
 		
-		it( "zzz parse/exec an expression with implicit object creation" , function() {
+		it( "parse/exec an expression with implicit object creation" , function() {
 			var parsed ;
 			
 			parsed = Expression.parse( '"key" : "value"' ) ;
-			console.log( parsed ) ;
+			//console.log( parsed ) ;
 			doormen.equals( parsed.getFinalValue() , { key: 'value' }  ) ;
 			
-			parsed = Expression.parse( '"key1" : "value1" "key2" : 2' ) ;
-			console.log( parsed ) ;
+			parsed = Expression.parse( '"key1": "value1" "key2": 2' ) ;
+			//console.log( parsed ) ;
 			doormen.equals( parsed.getFinalValue() , { key1: 'value1' , key2: 2 }  ) ;
 			
-			parsed = Expression.parse( '"key1" : "value1" , "key2" : 2' ) ;
-			console.log( parsed ) ;
+			parsed = Expression.parse( '"key1": "value1" , "key2": 2' ) ;
+			//console.log( parsed ) ;
+			doormen.equals( parsed.getFinalValue() , { key1: 'value1' , key2: 2 }  ) ;
+		} ) ;
+		
+		it( "parse/exec implicit object with quoteless keys" , function() {
+			var parsed ;
+			
+			parsed = Expression.parse( 'key: "value"' ) ;
+			//console.log( parsed ) ;
+			doormen.equals( parsed.getFinalValue() , { key: 'value' }  ) ;
+			
+			parsed = Expression.parse( 'key1: "value1" key2: 2' ) ;
+			//console.log( parsed ) ;
 			doormen.equals( parsed.getFinalValue() , { key1: 'value1' , key2: 2 }  ) ;
 			
+			parsed = Expression.parse( 'key1: "value1" , key2: 2' ) ;
+			//console.log( parsed ) ;
+			doormen.equals( parsed.getFinalValue() , { key1: 'value1' , key2: 2 }  ) ;
+		} ) ;
+		
+		it( "comma/colon precedence" , function() {
+			var parsed ;
 			
-			//parsed = Expression.parse( 'object "key" "value"' ) ;
+			parsed = Expression.parse( 'key1: "value1" , key2: 2' ) ;
+			//console.log( parsed ) ;
+			doormen.equals( parsed.getFinalValue() , { key1: 'value1' , key2: 2 }  ) ;
+			
+			parsed = Expression.parse( '"hello" , key1: "value1" , key2: 2' ) ;
+			//console.log( parsed ) ;
+			doormen.equals( parsed.getFinalValue() , [ "hello" , { key1: 'value1' } , { key2: 2 } ] ) ;
 		} ) ;
 		
 		it( "parse/exec an expression with explicit object creation" ) ;
