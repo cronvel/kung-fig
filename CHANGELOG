@@ -1,4 +1,10 @@
 
+v0.40.1
+-------
+
+Expression: object syntax now supports direct expression in properties
+
+
 v0.40.0
 -------
 

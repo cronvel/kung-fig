@@ -107,10 +107,10 @@ describe( "Expression" , function() {
 			var parsed ;
 			
 			parsed = Expression.parse( '1 2 3' ) ;
-			doormen.equals( parsed.getFinalValue() , [ 1 , 2 , 3 ]  ) ;
+			doormen.equals( parsed.getFinalValue() , [ 1 , 2 , 3 ] ) ;
 			
 			parsed = Expression.parse( '1 , 2 , 3' ) ;
-			doormen.equals( parsed.getFinalValue() , [ 1 , 2 , 3 ]  ) ;
+			doormen.equals( parsed.getFinalValue() , [ 1 , 2 , 3 ] ) ;
 		} ) ;
 		
 		it( "parse/exec an expression with explicit array creation" , function() {
@@ -118,19 +118,19 @@ describe( "Expression" , function() {
 			
 			parsed = Expression.parse( 'array' ) ;
 			doormen.equals( parsed.args , [] ) ;
-			doormen.equals( parsed.getFinalValue() , []  ) ;
+			doormen.equals( parsed.getFinalValue() , [] ) ;
 			
 			parsed = Expression.parse( 'array 1' ) ;
 			doormen.equals( parsed.args , [ 1 ] ) ;
-			doormen.equals( parsed.getFinalValue() , [ 1 ]  ) ;
+			doormen.equals( parsed.getFinalValue() , [ 1 ] ) ;
 			
 			parsed = Expression.parse( 'array 1 2 3' ) ;
 			doormen.equals( parsed.args , [ 1 , 2 , 3 ] ) ;
-			doormen.equals( parsed.getFinalValue() , [ 1 , 2 , 3 ]  ) ;
+			doormen.equals( parsed.getFinalValue() , [ 1 , 2 , 3 ] ) ;
 			
 			parsed = Expression.parse( 'array 1 , 2 , 3' ) ;
 			doormen.equals( parsed.args , [ 1 , 2 , 3 ] ) ;
-			doormen.equals( parsed.getFinalValue() , [ 1 , 2 , 3 ]  ) ;
+			doormen.equals( parsed.getFinalValue() , [ 1 , 2 , 3 ] ) ;
 		} ) ;
 		
 		it( "parse/exec an expression with implicit object creation" , function() {
@@ -138,15 +138,15 @@ describe( "Expression" , function() {
 			
 			parsed = Expression.parse( '"key" : "value"' ) ;
 			//console.log( parsed ) ;
-			doormen.equals( parsed.getFinalValue() , { key: 'value' }  ) ;
+			doormen.equals( parsed.getFinalValue() , { key: 'value' } ) ;
 			
 			parsed = Expression.parse( '"key1": "value1" "key2": 2' ) ;
 			//console.log( parsed ) ;
-			doormen.equals( parsed.getFinalValue() , { key1: 'value1' , key2: 2 }  ) ;
+			doormen.equals( parsed.getFinalValue() , { key1: 'value1' , key2: 2 } ) ;
 			
 			parsed = Expression.parse( '"key1": "value1" , "key2": 2' ) ;
 			//console.log( parsed ) ;
-			doormen.equals( parsed.getFinalValue() , { key1: 'value1' , key2: 2 }  ) ;
+			doormen.equals( parsed.getFinalValue() , { key1: 'value1' , key2: 2 } ) ;
 		} ) ;
 		
 		it( "parse/exec implicit object with quoteless keys" , function() {
@@ -154,30 +154,84 @@ describe( "Expression" , function() {
 			
 			parsed = Expression.parse( 'key: "value"' ) ;
 			//console.log( parsed ) ;
-			doormen.equals( parsed.getFinalValue() , { key: 'value' }  ) ;
+			doormen.equals( parsed.getFinalValue() , { key: 'value' } ) ;
 			
 			parsed = Expression.parse( 'key1: "value1" key2: 2' ) ;
 			//console.log( parsed ) ;
-			doormen.equals( parsed.getFinalValue() , { key1: 'value1' , key2: 2 }  ) ;
+			doormen.equals( parsed.getFinalValue() , { key1: 'value1' , key2: 2 } ) ;
 			
 			parsed = Expression.parse( 'key1: "value1" , key2: 2' ) ;
 			//console.log( parsed ) ;
-			doormen.equals( parsed.getFinalValue() , { key1: 'value1' , key2: 2 }  ) ;
+			doormen.equals( parsed.getFinalValue() , { key1: 'value1' , key2: 2 } ) ;
 		} ) ;
 		
-		it( "comma/colon precedence" , function() {
+		it( "object syntax: comma/colon precedence" , function() {
 			var parsed ;
 			
 			parsed = Expression.parse( 'key1: "value1" , key2: 2' ) ;
 			//console.log( parsed ) ;
-			doormen.equals( parsed.getFinalValue() , { key1: 'value1' , key2: 2 }  ) ;
+			doormen.equals( parsed.getFinalValue() , { key1: 'value1' , key2: 2 } ) ;
 			
 			parsed = Expression.parse( '"hello" , key1: "value1" , key2: 2' ) ;
 			//console.log( parsed ) ;
 			doormen.equals( parsed.getFinalValue() , [ "hello" , { key1: 'value1' } , { key2: 2 } ] ) ;
 		} ) ;
 		
-		it( "parse/exec an expression with explicit object creation" ) ;
+		it( "object syntax: direct expression in property" , function() {
+			var parsed ;
+			
+			parsed = Expression.parse( 'key1: 2 + 3' ) ;
+			//console.log( parsed ) ;
+			doormen.equals( parsed.getFinalValue() , { key1: 5 } ) ;
+			
+			parsed = Expression.parse( 'key1: 2 + 3 , key2: 3 / 5' ) ;
+			//console.log( parsed ) ;
+			doormen.equals( parsed.getFinalValue() , { key1: 5 , key2: 0.6 } ) ;
+		} ) ;
+		
+		it( "parse/exec an expression with explicit object creation" , function() {
+			var parsed ;
+			
+			parsed = Expression.parse( 'object key: "value"' ) ;
+			//console.log( parsed ) ;
+			doormen.equals( parsed.getFinalValue() , { key: 'value' } ) ;
+			
+			parsed = Expression.parse( 'key1: "value1", key2: 2' ) ;
+			//parsed = Expression.parse( 'key1: "value1", key2: 2' ) ;
+			//console.log( '\n\n' , parsed ) ;
+			
+			parsed = Expression.parse( 'object key1: "value1", key2: 2' ) ;
+			//parsed = Expression.parse( 'key1: "value1", key2: 2' ) ;
+			//console.log( '\n\n' , parsed ) ;
+			doormen.equals( parsed.getFinalValue() , { key1: 'value1' , key2: 2 } ) ;
+		} ) ;
+		
+		it( "ambiguous object syntax" , function() {
+			var parsed ;
+			
+			doormen.shouldThrow( () => Expression.parse( 'array key: "value"' ) ) ;
+			doormen.shouldThrow( () => Expression.parse( 'add key: "value"' ) ) ;
+			
+			parsed = Expression.parse( 'array ( key1: "value1", key2: 2 )' ) ;
+			//parsed = Expression.parse( 'key1: "value1", key2: 2' ) ;
+			//console.log( '\n\n' , parsed ) ;
+			doormen.equals( parsed.getFinalValue() , [ { key1: 'value1' , key2: 2 } ] ) ;
+			
+			parsed = Expression.parse( 'array ( key1: "value1" )' ) ;
+			//parsed = Expression.parse( 'key1: "value1", key2: 2' ) ;
+			//console.log( '\n\n' , parsed ) ;
+			doormen.equals( parsed.getFinalValue() , [ { key1: 'value1' } ] ) ;
+			
+			parsed = Expression.parse( 'array ( key1: "value1" ) ( key2: 2 )' ) ;
+			//parsed = Expression.parse( 'key1: "value1", key2: 2' ) ;
+			//console.log( '\n\n' , parsed ) ;
+			doormen.equals( parsed.getFinalValue() , [ { key1: 'value1' } , { key2: 2 } ] ) ;
+			
+			parsed = Expression.parse( 'array ( key1: "value1" ) , ( key2: 2 )' ) ;
+			//parsed = Expression.parse( 'key1: "value1", key2: 2' ) ;
+			//console.log( '\n\n' , parsed ) ;
+			doormen.equals( parsed.getFinalValue() , [ { key1: 'value1' } , { key2: 2 } ] ) ;
+		} ) ;
 		
 		it( "parse/exec an expression featuring the comma separator syntax" , function() {
 			var parsed ;
@@ -820,18 +874,18 @@ describe( "Expression" , function() {
 			
 			parsed = Expression.parse( 'array 1 2 ( array 3 4 )' ) ;
 			doormen.equals( parsed.getFinalValue() , [ 1 , 2 , [ 3 , 4 ] ] ) ;
-			doormen.equals( parsed.getFinalValue() === parsed.getFinalValue() , false  ) ;
-			doormen.equals( parsed.getFinalValue()[ 2 ] === parsed.getFinalValue()[ 2 ] , false  ) ;
+			doormen.equals( parsed.getFinalValue() === parsed.getFinalValue() , false ) ;
+			doormen.equals( parsed.getFinalValue()[ 2 ] === parsed.getFinalValue()[ 2 ] , false ) ;
 			
 			parsed = Expression.parse( 'array 1 2 ( 3 4 )' ) ;
 			doormen.equals( parsed.getFinalValue() , [ 1 , 2 , [ 3 , 4 ] ] ) ;
-			doormen.equals( parsed.getFinalValue() === parsed.getFinalValue() , false  ) ;
-			doormen.equals( parsed.getFinalValue()[ 2 ] === parsed.getFinalValue()[ 2 ] , false  ) ;
+			doormen.equals( parsed.getFinalValue() === parsed.getFinalValue() , false ) ;
+			doormen.equals( parsed.getFinalValue()[ 2 ] === parsed.getFinalValue()[ 2 ] , false ) ;
 			
 			parsed = Expression.parse( '1 2 ( 3 4 )' ) ;
 			doormen.equals( parsed.getFinalValue() , [ 1 , 2 , [ 3 , 4 ] ] ) ;
-			doormen.equals( parsed.getFinalValue() === parsed.getFinalValue() , false  ) ;
-			doormen.equals( parsed.getFinalValue()[ 2 ] === parsed.getFinalValue()[ 2 ] , false  ) ;
+			doormen.equals( parsed.getFinalValue() === parsed.getFinalValue() , false ) ;
+			doormen.equals( parsed.getFinalValue()[ 2 ] === parsed.getFinalValue()[ 2 ] , false ) ;
 		} ) ;
 	} ) ;
 } ) ;
