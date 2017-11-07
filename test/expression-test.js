@@ -107,10 +107,10 @@ describe( "Expression" , function() {
 			var parsed ;
 			
 			parsed = Expression.parse( '1 2 3' ) ;
-			doormen.equals( parsed , [ 1 , 2 , 3 ]  ) ;
+			doormen.equals( parsed.getFinalValue() , [ 1 , 2 , 3 ]  ) ;
 			
 			parsed = Expression.parse( '1 , 2 , 3' ) ;
-			doormen.equals( parsed , [ 1 , 2 , 3 ]  ) ;
+			doormen.equals( parsed.getFinalValue() , [ 1 , 2 , 3 ]  ) ;
 		} ) ;
 		
 		it( "parse/exec an expression with explicit array creation" , function() {
@@ -138,7 +138,8 @@ describe( "Expression" , function() {
 			
 			//parsed = Expression.parse( '"key" : "value"' ) ;
 			parsed = Expression.parse( 'object "key" "value"' ) ;
-			doormen.equals( parsed , { key: 'value' }  ) ;
+			console.log( parsed ) ;
+			doormen.equals( parsed.getFinalValue() , { key: 'value' }  ) ;
 		} ) ;
 		
 		it( "parse/exec an expression with explicit object creation" ) ;
@@ -746,6 +747,30 @@ describe( "Expression" , function() {
 			parsed = Expression.parse( '$regexp.substitute -> $str' ) ;
 			//deb( parsed ) ;
 			doormen.equals( parsed.getFinalValue( ctx ) , 'hi world!' ) ;
+		} ) ;
+	} ) ;
+	
+	
+	
+	describe( "Multi-references bugs" , function() {
+		
+		it( "array multi-reference to the same array" , function() {
+			var parsed ;
+			
+			parsed = Expression.parse( 'array 1 2 ( array 3 4 )' ) ;
+			doormen.equals( parsed.getFinalValue() , [ 1 , 2 , [ 3 , 4 ] ] ) ;
+			doormen.equals( parsed.getFinalValue() === parsed.getFinalValue() , false  ) ;
+			doormen.equals( parsed.getFinalValue()[ 2 ] === parsed.getFinalValue()[ 2 ] , false  ) ;
+			
+			parsed = Expression.parse( 'array 1 2 ( 3 4 )' ) ;
+			doormen.equals( parsed.getFinalValue() , [ 1 , 2 , [ 3 , 4 ] ] ) ;
+			doormen.equals( parsed.getFinalValue() === parsed.getFinalValue() , false  ) ;
+			doormen.equals( parsed.getFinalValue()[ 2 ] === parsed.getFinalValue()[ 2 ] , false  ) ;
+			
+			parsed = Expression.parse( '1 2 ( 3 4 )' ) ;
+			doormen.equals( parsed.getFinalValue() , [ 1 , 2 , [ 3 , 4 ] ] ) ;
+			doormen.equals( parsed.getFinalValue() === parsed.getFinalValue() , false  ) ;
+			doormen.equals( parsed.getFinalValue()[ 2 ] === parsed.getFinalValue()[ 2 ] , false  ) ;
 		} ) ;
 	} ) ;
 } ) ;
