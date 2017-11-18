@@ -43,6 +43,7 @@ module.exports = {
 		'prefer-spread': 'warn' ,
 		'prefer-rest-params': 'warn' ,
 		'no-control-regex': 'off' ,	// because thing like \x00 are considered like a control even if escaped...
+		'no-fallthrough': 'off' ,
 		
 		
 		
