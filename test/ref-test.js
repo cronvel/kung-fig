@@ -523,9 +523,43 @@ describe( "Ref" , function() {
 	
 	describe( "Parser edge cases" , function() {
 	
-		it( "Should stop parsing at first non-enclosed space" , function() {
+		it( "should stop parsing at first non-enclosed space" , function() {
 			var ref_ = Ref.parse( '$x y z' ) ;
 			doormen.equals( ref_.refParts , [ 'x' ] ) ;
+		} ) ;
+		
+		it( "should support empty properties" , function() {
+			var ref_ ;
+			
+			var ctx = {
+				'': {
+					a: 1 ,
+					'': {
+						b: 2 ,
+					}
+				} ,
+				c: 3
+			} ;
+			
+			ref_ = Ref.parse( '$.a' ) ;
+			doormen.equals( ref_.refParts , [ '' , 'a' ] ) ;
+			doormen.equals( ref_.get( ctx ) , 1 ) ;
+			
+			ref_ = Ref.parse( '$..b' ) ;
+			doormen.equals( ref_.refParts , [ '' , '' , 'b' ] ) ;
+			doormen.equals( ref_.get( ctx ) , 2 ) ;
+			
+			ref_ = Ref.parse( '$.' ) ;
+			doormen.equals( ref_.refParts , [ '' ] ) ;
+			doormen.equals( ref_.get( ctx ) , ctx[''] ) ;
+			
+			ref_ = Ref.parse( '$..' ) ;
+			doormen.equals( ref_.refParts , [ '' , '' ] ) ;
+			doormen.equals( ref_.get( ctx ) , ctx[''][''] ) ;
+			
+			ref_ = Ref.parse( '$..b' ) ;
+			ref_.set( ctx , 'bob' ) ;
+			doormen.equals( ref_.get( ctx ) , 'bob' ) ;
 		} ) ;
 	} ) ;
 } ) ;
