@@ -630,6 +630,43 @@ describe( "Expression" , function() {
 			doormen.equals( parsed.getFinalValue( ctx ) , 4 ) ;
 		} ) ;
 		
+		it( "parse/exec the '%=' (around) operator" , function() {
+			var parsed ;
+			
+			parsed = Expression.parse( '70 %= 50 0.2' ) ;
+			doormen.equals( parsed.getFinalValue() , false ) ;
+			
+			parsed = Expression.parse( '50 %= 70 0.2' ) ;
+			doormen.equals( parsed.getFinalValue() , false ) ;
+			
+			parsed = Expression.parse( '70 %= 50 0.3' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			
+			parsed = Expression.parse( '50 %= 70 0.3' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			
+			parsed = Expression.parse( '-50 %= -70 0.3' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			
+			parsed = Expression.parse( '50 %= -70 0.3' ) ;
+			doormen.equals( parsed.getFinalValue() , false ) ;
+			
+			parsed = Expression.parse( '0 %= 0 0.3' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			
+			parsed = Expression.parse( '0 %= 0.001 0.3' ) ;
+			doormen.equals( parsed.getFinalValue() , false ) ;
+			
+			parsed = Expression.parse( '30 %= 40 2' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			
+			parsed = Expression.parse( '20 %= 40 2' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			
+			parsed = Expression.parse( '19 %= 40 2' ) ;
+			doormen.equals( parsed.getFinalValue() , false ) ;
+		} ) ;
+		
 		it( "parse/exec three-way" , function() {
 			var parsed ;
 			
