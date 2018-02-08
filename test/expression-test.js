@@ -765,6 +765,41 @@ describe( "Expression" , function() {
 			doormen.equals( parsed.getFinalValue() , 8 ) ;
 		} ) ;
 		
+		it( "parse/exec the '?' ternary operators" , function() {
+			var parsed ;
+			
+			parsed = Expression.parse( '0 ?' ) ;
+			doormen.equals( parsed.getFinalValue() , false ) ;
+			
+			parsed = Expression.parse( '1 ?' ) ;
+			doormen.equals( parsed.getFinalValue() , true ) ;
+			
+			// True ternary mode
+			parsed = Expression.parse( '0 ? "great" "bad"' ) ;
+			doormen.equals( parsed.getFinalValue() , "bad" ) ;
+			
+			parsed = Expression.parse( '1 ? "great" "bad"' ) ;
+			doormen.equals( parsed.getFinalValue() , "great" ) ;
+			
+			parsed = Expression.parse( 'null ? "great" "bad"' ) ;
+			doormen.equals( parsed.getFinalValue() , "bad" ) ;
+			
+			parsed = Expression.parse( 'false ? "great" "bad"' ) ;
+			doormen.equals( parsed.getFinalValue() , "bad" ) ;
+			
+			parsed = Expression.parse( 'true ? "great" "bad"' ) ;
+			doormen.equals( parsed.getFinalValue() , "great" ) ;
+			
+			parsed = Expression.parse( '"" ? "great" "bad"' ) ;
+			doormen.equals( parsed.getFinalValue() , "bad" ) ;
+			
+			parsed = Expression.parse( '"something" ? "great" "bad"' ) ;
+			doormen.equals( parsed.getFinalValue() , "great" ) ;
+			
+			parsed = Expression.parse( '$unknown ? "great" "bad"' ) ;
+			doormen.equals( parsed.getFinalValue() , "bad" ) ;
+		} ) ;
+		
 		it( "parse/exec is-set? operators" , function() {
 			var parsed ;
 			
@@ -776,6 +811,19 @@ describe( "Expression" , function() {
 			
 			parsed = Expression.parse( '1 is-set?' ) ;
 			doormen.equals( parsed.getFinalValue() , true ) ;
+			
+			// Ternary mode
+			parsed = Expression.parse( '1 is-set? "great"' ) ;
+			doormen.equals( parsed.getFinalValue() , "great" ) ;
+			
+			parsed = Expression.parse( '1 is-set? "great" "bad"' ) ;
+			doormen.equals( parsed.getFinalValue() , "great" ) ;
+			
+			parsed = Expression.parse( '$unknown is-set? "great"' ) ;
+			doormen.equals( parsed.getFinalValue() , false ) ;
+			
+			parsed = Expression.parse( '$unknown is-set? "great" "bad"' ) ;
+			doormen.equals( parsed.getFinalValue() , "bad" ) ;
 		} ) ;
 		
 		it( "parse/exec is-empty? operators" , function() {
@@ -801,6 +849,13 @@ describe( "Expression" , function() {
 			
 			parsed = Expression.parse( '( array 0 ) is-empty?' ) ;
 			doormen.equals( parsed.getFinalValue() , false ) ;
+			
+			// Ternary mode
+			parsed = Expression.parse( '0 is-empty? "empty"' ) ;
+			doormen.equals( parsed.getFinalValue() , "empty" ) ;
+			
+			parsed = Expression.parse( '1 is-empty? "empty" "not-empty"' ) ;
+			doormen.equals( parsed.getFinalValue() , "not-empty" ) ;
 		} ) ;
 		
 		it( "parse/exec is-real? operators" , function() {
@@ -826,6 +881,13 @@ describe( "Expression" , function() {
 			
 			parsed = Expression.parse( 'Infinity is-real?' ) ;
 			doormen.equals( parsed.getFinalValue() , false ) ;
+			
+			// Ternary mode
+			parsed = Expression.parse( '-1.5 is-real? "real"' ) ;
+			doormen.equals( parsed.getFinalValue() , "real" ) ;
+			
+			parsed = Expression.parse( '( 1 / 0 ) is-real? "real" "not-real"' ) ;
+			doormen.equals( parsed.getFinalValue() , "not-real" ) ;
 		} ) ;
 		
 		it( "parse/exec apply operator" , function() {

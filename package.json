@@ -1,6 +1,6 @@
 {
   "name": "kung-fig",
-  "version": "0.41.4",
+  "version": "0.41.5",
   "engines": {
     "node": ">=6.0.0"
   },
