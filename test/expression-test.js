@@ -966,8 +966,9 @@ describe( "Expression" , function() {
 	
 	
 	
-	describe( "Multi-references bugs" , function() {
+	describe( "Historical bugs" , function() {
 		
+		// may check object multi-reference too
 		it( "array multi-reference to the same array" , function() {
 			var parsed ;
 			
@@ -985,6 +986,10 @@ describe( "Expression" , function() {
 			doormen.equals( parsed.getFinalValue() , [ 1 , 2 , [ 3 , 4 ] ] ) ;
 			doormen.equals( parsed.getFinalValue() === parsed.getFinalValue() , false ) ;
 			doormen.equals( parsed.getFinalValue()[ 2 ] === parsed.getFinalValue()[ 2 ] , false ) ;
+		} ) ;
+		
+		it( "extra spaces parse bug" , function() {
+			var parsed = Expression.parse( '0 ? ' ) ;
 		} ) ;
 	} ) ;
 } ) ;

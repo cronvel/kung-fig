@@ -1,4 +1,10 @@
 
+v0.41.6
+-------
+
+Fixed the extra spaces parser crash in expression
+
+
 v0.41.5
 -------
 
