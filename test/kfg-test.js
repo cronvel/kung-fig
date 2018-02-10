@@ -793,6 +793,7 @@ describe( "KFG parse" , function() {
 		var o , o2 ;
 		
 		o = parse( "el: $%> horse" ) ;
+		console.log( 'o:' , o ) ;
 		surfaceEquals( o.el , { t: "horse" , babel: Babel.default } ) ;
 		doormen.equals( o.el.toString() , 'horse' ) ;
 		
