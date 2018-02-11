@@ -35,7 +35,7 @@ var kungFig = require( '../lib/kungFig.js' ) ;
 var stringify = kungFig.stringify ;
 var parse = kungFig.parse ;
 var Ref = kungFig.Ref ;
-var Template = kungFig.Template ;
+var TemplateSentence = kungFig.TemplateSentence ;
 var TemplateElement = kungFig.TemplateElement ;
 var Tag = kungFig.Tag ;
 var TagContainer = kungFig.TagContainer ;
@@ -189,18 +189,18 @@ describe( "KFG stringify" , function() {
 	} ) ;
 	
 	it( "stringify templates" , function() {
-		doormen.equals( stringify( { tpl: Template.create( 'Hello ${name}!' ) } ) , 'tpl: $> Hello ${name}!\n' ) ;
-		doormen.equals( stringify( { tpl: new Template( 'Hey!\nHello ${name}!' ) } ) , 'tpl: \n\t$> Hey!\n\t$> Hello ${name}!\n' ) ;
-		doormen.equals( stringify( { tpl: Template.create( 'Hello ${name}!' ) } , { preferQuotes: true } ) , 'tpl: $"Hello ${name}!"\n' ) ;
-		doormen.equals( stringify( { tpl: Template.create( 'Hey!\nHello ${name}!' ) } , { preferQuotes: true } ) , 'tpl: $"Hey!\\nHello ${name}!"\n' ) ;
+		doormen.equals( stringify( { tpl: TemplateSentence.create( 'Hello ${name}!' ) } ) , 'tpl: $> Hello ${name}!\n' ) ;
+		doormen.equals( stringify( { tpl: new TemplateSentence( 'Hey!\nHello ${name}!' ) } ) , 'tpl: \n\t$> Hey!\n\t$> Hello ${name}!\n' ) ;
+		doormen.equals( stringify( { tpl: TemplateSentence.create( 'Hello ${name}!' ) } , { preferQuotes: true } ) , 'tpl: $"Hello ${name}!"\n' ) ;
+		doormen.equals( stringify( { tpl: TemplateSentence.create( 'Hey!\nHello ${name}!' ) } , { preferQuotes: true } ) , 'tpl: $"Hey!\\nHello ${name}!"\n' ) ;
 		
-		doormen.equals( stringify( Template.create( 'Hello ${name}!' ) ) , '$> Hello ${name}!\n' ) ;
-		doormen.equals( stringify( Template.create( 'Hey!\nHello ${name}!' ) ) , '$> Hey!\n$> Hello ${name}!\n' ) ;
-		doormen.equals( stringify( Template.create( 'Hello ${name}!' ) , { preferQuotes: true } ) , '$"Hello ${name}!"\n' ) ;
-		doormen.equals( stringify( Template.create( 'Hey!\nHello ${name}!' ) , { preferQuotes: true } ) , '$"Hey!\\nHello ${name}!"\n' ) ;
+		doormen.equals( stringify( TemplateSentence.create( 'Hello ${name}!' ) ) , '$> Hello ${name}!\n' ) ;
+		doormen.equals( stringify( TemplateSentence.create( 'Hey!\nHello ${name}!' ) ) , '$> Hey!\n$> Hello ${name}!\n' ) ;
+		doormen.equals( stringify( TemplateSentence.create( 'Hello ${name}!' ) , { preferQuotes: true } ) , '$"Hello ${name}!"\n' ) ;
+		doormen.equals( stringify( TemplateSentence.create( 'Hey!\nHello ${name}!' ) , { preferQuotes: true } ) , '$"Hey!\\nHello ${name}!"\n' ) ;
 		
-		doormen.equals( stringify( { tpl: Template.create( '' ) } ) , 'tpl: <Template>\n' ) ;
-		doormen.equals( stringify( Template.create( '' ) ) , '<Template>\n' ) ;
+		doormen.equals( stringify( { tpl: TemplateSentence.create( '' ) } ) , 'tpl: <TemplateSentence>\n' ) ;
+		doormen.equals( stringify( TemplateSentence.create( '' ) ) , '<TemplateSentence>\n' ) ;
 	} ) ;
 	
 	it( "stringify applicable templates" ) ;
@@ -461,7 +461,7 @@ describe( "KFG parse" , function() {
 		doormen.equals( JSON.stringify( parse( "<Bin16> 22" ) ) , '{"type":"Buffer","data":[34]}' ) ;
 		doormen.equals( JSON.stringify( parse( "<Object>" ) ) , '{}' ) ;
 		doormen.equals( JSON.stringify( parse( "<Object>\na: 1" ) ) , '{"a":1}' ) ;
-		doormen.equals( parse( "<Template> :string" ).toString() , ':string' ) ;
+		doormen.equals( parse( "<TemplateSentence> :string" ).toString() , ':string' ) ;
 	} ) ;
 		
 	it( "numbers and string ambiguity" , function() {
@@ -737,7 +737,7 @@ describe( "KFG parse" , function() {
 		// console.log( o.tpl.toString() ) ;
 		// console.log( o.tpl.toString( { name: "Bob" } ) ) ;
 		
-		o = parse( "tpl: <Template>" ) ;
+		o = parse( "tpl: <TemplateSentence>" ) ;
 		doormen.equals( o.tpl.toString() , '' ) ;
 		
 		o = parse( "tpl: $> Hello ${name}!" ) ;
@@ -757,7 +757,7 @@ describe( "KFG parse" , function() {
 		doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello Bob!' ) ;
 		
 		// Top-level templates
-		o = parse( "<Template>" ) ;
+		o = parse( "<TemplateSentence>" ) ;
 		doormen.equals( o.toString() , '' ) ;
 		
 		o = parse( '$"Hello ${name}!"' ) ;

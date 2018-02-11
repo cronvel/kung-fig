@@ -35,7 +35,7 @@ var kungFig = require( '../lib/kungFig.js' ) ;
 var Dynamic = kungFig.Dynamic ;
 var Ref = kungFig.Ref ;
 var Expression = kungFig.Expression ;
-var Template = kungFig.Template ;
+var TemplateSentence = kungFig.TemplateSentence ;
 
 var doormen = require( 'doormen' ) ;
 var expect = require( 'expect.js' ) ;
@@ -54,13 +54,13 @@ function debfn( v )
 
 
 
-describe( "Template" , function() {
+describe( "TemplateSentence" , function() {
 	
-	it( "Template#getFinalValue()" , function() {
+	it( "TemplateSentence#getFinalValue()" , function() {
 		var ctx = { a: 42 } ;
 		ctx.b = Ref.create( '$a' ) ;
-		ctx.c = Template.create( "Hello, I'm ${a}." ) ;
-		ctx.d = Template.create( "Hello, I'm ${b}." ) ;
+		ctx.c = TemplateSentence.create( "Hello, I'm ${a}." ) ;
+		ctx.d = TemplateSentence.create( "Hello, I'm ${b}." ) ;
 		doormen.equals( ctx.c.getFinalValue( ctx ) , "Hello, I'm 42." ) ;
 		doormen.equals( ctx.d.getFinalValue( ctx ) , "Hello, I'm 42." ) ;
 	} ) ;
@@ -111,8 +111,8 @@ describe( "Dynamic.getRecursiveFinalValue()" , function() {
 		var ctx = { a: 42 } ;
 		
 		ctx.b = ref1 = Ref.create( '$a' ) ;
-		ctx.c = tpl1 = Template.create( "Hello, I'm ${a}." ) ;
-		ctx.d = tpl2 = Template.create( "Hello, I'm ${b}." ) ;
+		ctx.c = tpl1 = TemplateSentence.create( "Hello, I'm ${a}." ) ;
+		ctx.d = tpl2 = TemplateSentence.create( "Hello, I'm ${b}." ) ;
 		
 		doormen.equals( Dynamic.getRecursiveFinalValue( ctx , ctx ) , {
 			a: 42 ,
