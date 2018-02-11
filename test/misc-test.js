@@ -34,6 +34,7 @@
 var kungFig = require( '../lib/kungFig.js' ) ;
 var Dynamic = kungFig.Dynamic ;
 var Ref = kungFig.Ref ;
+var Expression = kungFig.Expression ;
 var Template = kungFig.Template ;
 
 var doormen = require( 'doormen' ) ;
@@ -62,6 +63,39 @@ describe( "Template" , function() {
 		ctx.d = Template.create( "Hello, I'm ${b}." ) ;
 		doormen.equals( ctx.c.getFinalValue( ctx ) , "Hello, I'm 42." ) ;
 		doormen.equals( ctx.d.getFinalValue( ctx ) , "Hello, I'm 42." ) ;
+	} ) ;
+} ) ;
+
+
+
+describe( "Expression" , function() {
+	
+	it( "parse/exec apply operator and substitution regexp" , function() {
+		var parsed , ctx , regexp ;
+		
+		regexp = /hello/ ;
+		kungFig.parse.builtin.regex.toExtended( regexp ) ;
+		
+		ctx = {
+			str: 'hello world!' ,
+			regexp: regexp ,
+			array: [
+				'hi' ,
+				'hello' ,
+				'hi there!' ,
+				'hello world!'
+			]
+		} ;
+		
+		parsed = Expression.parse( '$regexp.filter -> $array' ) ;
+		//deb( parsed ) ;
+		doormen.equals( parsed.getFinalValue( ctx ) , [ 'hello' , 'hello world!' ] ) ;
+		
+		kungFig.parse.builtin.regex.toSubstitution( regexp , 'hi' ) ;
+		
+		parsed = Expression.parse( '$regexp.substitute -> $str' ) ;
+		//deb( parsed ) ;
+		doormen.equals( parsed.getFinalValue( ctx ) , 'hi world!' ) ;
 	} ) ;
 } ) ;
 
@@ -129,5 +163,6 @@ describe( "Dynamic.getRecursiveFinalValue()" , function() {
 		doormen.equals( v1.array === ctx.object.array , true ) ;
 	} ) ;
 } ) ;
+
 
 
