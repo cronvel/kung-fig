@@ -15,13 +15,14 @@
     "kung-fig-common-parsers": "^0.41.9",
     "kung-fig-dynamic": "^0.41.8",
     "kung-fig-expression": "^0.41.10",
-    "kung-fig-ref": "^0.41.8",
-    "kung-fig-template": "^0.42.0",
+    "kung-fig-ref": "^0.41.9",
+    "kung-fig-template": "^0.43.1",
     "seventh": "^0.6.4",
-    "string-kit": "^0.6.7",
+    "string-kit": "^0.6.8",
     "tree-kit": "^0.5.26"
   },
   "devDependencies": {
+    "babel-tower": "^0.15.4",
     "doormen": "^0.6.7",
     "expect.js": "^0.3.1"
   },
