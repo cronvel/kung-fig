@@ -22,7 +22,7 @@
     "tree-kit": "^0.5.26"
   },
   "devDependencies": {
-    "babel-tower": "^0.15.4",
+    "babel-tower": "^0.15.5",
     "doormen": "^0.6.7",
     "expect.js": "^0.3.1"
   },
