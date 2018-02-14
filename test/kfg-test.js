@@ -794,27 +794,27 @@ describe( "KFG parse" , function() {
 		
 		o = parse( "el: $%> horse" ) ;
 		console.log( 'o:' , o ) ;
-		surfaceEquals( o.el , { t: "horse" , babel: Babel.default } ) ;
+		surfaceEquals( o.el , { t: "horse" } ) ;
 		doormen.equals( o.el.toString() , 'horse' ) ;
 		
 		o = parse( 'el: $%"horse"' ) ;
-		surfaceEquals( o.el , { t: "horse" , babel: Babel.default } ) ;
+		surfaceEquals( o.el , { t: "horse" } ) ;
 		doormen.equals( o.el.toString() , 'horse' ) ;
 		
 		o = parse( "el: $%> horse[altn:horse|horses]" ) ;
-		surfaceEquals( o.el , { t: "horse" , altn: [ "horse" , "horses" ] , babel: Babel.default } ) ;
+		surfaceEquals( o.el , { t: "horse" , altn: [ "horse" , "horses" ] } ) ;
 		doormen.equals( o.el.toString() , 'horse' ) ;
 		
 		o = parse( "el:\n\t$%> horse[altn:horse|horses]" ) ;
-		surfaceEquals( o.el , { t: "horse" , altn: [ "horse" , "horses" ] , babel: Babel.default } ) ;
+		surfaceEquals( o.el , { t: "horse" , altn: [ "horse" , "horses" ] } ) ;
 		doormen.equals( o.el.toString() , 'horse' ) ;
 		
 		o = parse( "el: $%> horse[n?horse|horses]" ) ;
-		surfaceEquals( o.el , { t: "horse" , altn: [ "horse" , "horses" ] , babel: Babel.default } ) ;
+		surfaceEquals( o.el , { t: "horse" , altn: [ "horse" , "horses" ] } ) ;
 		doormen.equals( o.el.toString() , 'horse' ) ;
 		
 		o = parse( 'el: $%"horse[altn:horse|horses]"' ) ;
-		surfaceEquals( o.el , { t: "horse" , altn: [ "horse" , "horses" ] , babel: Babel.default } ) ;
+		surfaceEquals( o.el , { t: "horse" , altn: [ "horse" , "horses" ] } ) ;
 		doormen.equals( o.el.toString() , 'horse' ) ;
 		
 		o2 = parse( '$> I like ${el}[n:many]!' ) ;
@@ -825,11 +825,11 @@ describe( "KFG parse" , function() {
 		var o , o2 ;
 		
 		o = parse( "el: $$%> horse[altn:horse|horses]" ) ;
-		surfaceEquals( o.el , { __isApplicable__: true , __isDynamic__: false , t: "horse" , altn: [ "horse" , "horses" ] , babel: Babel.default } ) ;
+		surfaceEquals( o.el , { __isApplicable__: true , __isDynamic__: false , t: "horse" , altn: [ "horse" , "horses" ] } ) ;
 		doormen.equals( o.el.apply() , 'horse' ) ;
 		
 		o = parse( "el:\n\t$$%> horse[altn:horse|horses]" ) ;
-		surfaceEquals( o.el , { __isApplicable__: true , __isDynamic__: false , t: "horse" , altn: [ "horse" , "horses" ] , babel: Babel.default } ) ;
+		surfaceEquals( o.el , { __isApplicable__: true , __isDynamic__: false , t: "horse" , altn: [ "horse" , "horses" ] } ) ;
 		doormen.equals( o.el.apply() , 'horse' ) ;
 	} )
 	
@@ -863,11 +863,11 @@ describe( "KFG parse" , function() {
 		
 		// Using Babel fr
 		o = parse( "el: $%> horse" ) ;
-		surfaceEquals( o.el , { t: "horse" , babel: Babel.default } ) ;
+		surfaceEquals( o.el , { t: "horse" } ) ;
 		doormen.equals( o.el.toString( { __babel: babelFr } ) , 'cheval' ) ;
 		
 		o = parse( "el: $%> horse[altn:horse|horses]" ) ;
-		surfaceEquals( o.el , { t: "horse" , altn: [ "horse" , "horses" ] , babel: Babel.default } ) ;
+		surfaceEquals( o.el , { t: "horse" , altn: [ "horse" , "horses" ] } ) ;
 		doormen.equals( o.el.toString( { __babel: babelFr } ) , 'cheval' ) ;
 		o.__babel = babelFr ;
 		
