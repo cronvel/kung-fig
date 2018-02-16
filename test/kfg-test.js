@@ -794,27 +794,27 @@ describe( "KFG parse" , function() {
 		
 		o = parse( "el: $%> horse" ) ;
 		console.log( 'o:' , o ) ;
-		surfaceEquals( o.el , { t: "horse" } ) ;
+		surfaceEquals( o.el , { k: "horse" } ) ;
 		doormen.equals( o.el.toString() , 'horse' ) ;
 		
 		o = parse( 'el: $%"horse"' ) ;
-		surfaceEquals( o.el , { t: "horse" } ) ;
-		doormen.equals( o.el.toString() , 'horse' ) ;
-		
-		o = parse( "el: $%> horse[altn:horse|horses]" ) ;
-		surfaceEquals( o.el , { t: "horse" , altn: [ "horse" , "horses" ] } ) ;
-		doormen.equals( o.el.toString() , 'horse' ) ;
-		
-		o = parse( "el:\n\t$%> horse[altn:horse|horses]" ) ;
-		surfaceEquals( o.el , { t: "horse" , altn: [ "horse" , "horses" ] } ) ;
+		surfaceEquals( o.el , { k: "horse" } ) ;
 		doormen.equals( o.el.toString() , 'horse' ) ;
 		
 		o = parse( "el: $%> horse[n?horse|horses]" ) ;
-		surfaceEquals( o.el , { t: "horse" , altn: [ "horse" , "horses" ] } ) ;
+		surfaceEquals( o.el , { k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
 		doormen.equals( o.el.toString() , 'horse' ) ;
 		
-		o = parse( 'el: $%"horse[altn:horse|horses]"' ) ;
-		surfaceEquals( o.el , { t: "horse" , altn: [ "horse" , "horses" ] } ) ;
+		o = parse( "el:\n\t$%> horse[n?horse|horses]" ) ;
+		surfaceEquals( o.el , { k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
+		doormen.equals( o.el.toString() , 'horse' ) ;
+		
+		o = parse( "el: $%> horse[n?horse|horses]" ) ;
+		surfaceEquals( o.el , { k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
+		doormen.equals( o.el.toString() , 'horse' ) ;
+		
+		o = parse( 'el: $%"horse[n?horse|horses]"' ) ;
+		surfaceEquals( o.el , { k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
 		doormen.equals( o.el.toString() , 'horse' ) ;
 		
 		o2 = parse( '$> I like ${el}[n:many]!' ) ;
@@ -824,12 +824,12 @@ describe( "KFG parse" , function() {
 	it( "parse applicable template elements" , function() {
 		var o , o2 ;
 		
-		o = parse( "el: $$%> horse[altn:horse|horses]" ) ;
-		surfaceEquals( o.el , { __isApplicable__: true , __isDynamic__: false , t: "horse" , altn: [ "horse" , "horses" ] } ) ;
+		o = parse( "el: $$%> horse[n?horse|horses]" ) ;
+		surfaceEquals( o.el , { __isApplicable__: true , __isDynamic__: false , k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
 		doormen.equals( o.el.apply() , 'horse' ) ;
 		
-		o = parse( "el:\n\t$$%> horse[altn:horse|horses]" ) ;
-		surfaceEquals( o.el , { __isApplicable__: true , __isDynamic__: false , t: "horse" , altn: [ "horse" , "horses" ] } ) ;
+		o = parse( "el:\n\t$$%> horse[n?horse|horses]" ) ;
+		surfaceEquals( o.el , { __isApplicable__: true , __isDynamic__: false , k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
 		doormen.equals( o.el.apply() , 'horse' ) ;
 	} )
 	
@@ -840,21 +840,25 @@ describe( "KFG parse" , function() {
 		
 		babel.extend( {
 			en: {
-				gIndex: { m: 0 , f: 1 , n: 3 , h: 3 } ,
+				propertyIndexes: {
+					g: { m: 0 , f: 1 , n: 3 , h: 3 }
+				} ,
 				elements: {
-					apple: { g:'n', altn: [ 'apple' , 'apples' ] } ,
-					horse: { altn: [ 'horse' , 'horses' ] } ,
+					apple: { g:'n', "n?": [ 'apple' , 'apples' ] } ,
+					horse: { "n?": [ 'horse' , 'horses' ] } ,
 				}
 			} ,
 			fr: {
-				gIndex: { m: 0 , f: 1 , n: 2 , h: 2 } ,
+				propertyIndexes: {
+					g: { m: 0 , f: 1 , n: 2 , h: 2 }
+				} ,
 				sentences: {
 					"I like ${el}[n:many]!": "J'aime les ${el}[n:many]!" ,
 					"I like ${el}[n:many/g:f]!": "J'aime les ${el}[n:many/g:f]!" ,
 				} ,
 				elements: {
-					apple: { g:'f', altn: [ 'pomme' , 'pommes' ] } ,
-					horse: { altng: [ [ 'cheval' , 'jument' ] , [ 'chevaux' , 'juments' ] ] } ,
+					apple: { g:'f', "n?": [ 'pomme' , 'pommes' ] } ,
+					horse: { "ng?": [ [ 'cheval' , 'jument' ] , [ 'chevaux' , 'juments' ] ] } ,
 				}
 			}
 		} ) ;
@@ -863,11 +867,11 @@ describe( "KFG parse" , function() {
 		
 		// Using Babel fr
 		o = parse( "el: $%> horse" ) ;
-		surfaceEquals( o.el , { t: "horse" } ) ;
+		surfaceEquals( o.el , { k: "horse" } ) ;
 		doormen.equals( o.el.toString( { __babel: babelFr } ) , 'cheval' ) ;
 		
-		o = parse( "el: $%> horse[altn:horse|horses]" ) ;
-		surfaceEquals( o.el , { t: "horse" , altn: [ "horse" , "horses" ] } ) ;
+		o = parse( "el: $%> horse[n?horse|horses]" ) ;
+		surfaceEquals( o.el , { k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
 		doormen.equals( o.el.toString( { __babel: babelFr } ) , 'cheval' ) ;
 		o.__babel = babelFr ;
 		
