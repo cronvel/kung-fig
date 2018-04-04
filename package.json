@@ -1,6 +1,6 @@
 {
   "name": "kung-fig",
-  "version": "0.43.11",
+  "version": "0.43.12",
   "engines": {
     "node": ">=6.0.0"
   },
@@ -18,12 +18,12 @@
     "kung-fig-ref": "^0.41.14",
     "kung-fig-template": "^0.44.3",
     "seventh": "^0.6.4",
-    "string-kit": "^0.6.9",
+    "string-kit": "^0.6.11",
     "tree-kit": "^0.5.26"
   },
   "devDependencies": {
-    "babel-tower": "^0.16.1",
-    "doormen": "^0.6.7",
+    "babel-tower": "^0.16.4",
+    "doormen": "^0.6.10",
     "expect.js": "^0.3.1"
   },
   "scripts": {
