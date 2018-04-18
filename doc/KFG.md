@@ -704,6 +704,14 @@ Unknown class/constructor will **throw** an error: for any non-built-in class yo
 * `<Regex>`, `<regex>`, `<RegExp>`, `<Regexp>`, `<regexp>`: construct a RegExp object from a string of the form `/<regexp>/<flag>`
   E.g.: `<RegExp> /hello/i`
 
+* `<Sentence>`, `<sentence>`, `<TemplateSentence>`, `<templateSentence>`: construct a [TemplateSentence](#ref.TemplateSentence)
+  object from a string.
+  E.g.: `<Sentence> I like ${something}!
+
+* `<Atom>`, `<atom>`, `<TemplateAtom>`, `<templateAtom>`: construct a [TemplateAtom](lib.md#ref.TemplateAtom) object from
+  a string or an object.
+  E.g.: `<Atom> horse[n?horse|horses]
+
 
 
 <a name="ref.tags"></a>

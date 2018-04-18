@@ -17,18 +17,18 @@
 	* [.apply()](#ref.Dynamic.apply)
 	* [.set()](#ref.Dynamic.set)
 * [The Ref Class](#ref.Ref)
-	* [Ref.create()](#ref.Ref.create)
+	* [new Ref()](#ref.Ref.new)
 	* [Ref.parse()](#ref.Ref.parse)
 	* [.setRef()](#ref.Ref.setRef)
 	* [.get(), .getValue()](#ref.Ref.get)
 	* [.set()](#ref.Ref.set)
 * [The TemplateSentence Class](#ref.TemplateSentence)
-	* [new TemplateSentence()](#ref.new-TemplateSentence)
+	* [new TemplateSentence()](#ref.TemplateSentence.new)
 * [The TemplateAtom Class](#ref.TemplateAtom)
-	* [new TemplateAtom()](#ref.TemplateAtom)
+	* [new TemplateAtom()](#ref.TemplateAtom.new)
 * [The Expression Class](#ref.Expression)
+	* [new Expression()](#ref.Expression.new)
 	* [Expression.parse()](#ref.Expression.parse)
-	* [Expression.create()](#ref.Expression.create)
 * [The Tag Class](#ref.Tag)
 	* [new Tag()](#ref.Tag.new)
 	* [.parseAttributes()](#ref.Tag.parseAttributes)
@@ -405,8 +405,8 @@ Or even any depth-level of nested *refs*: `kungFig.Ref.parse( "$path.to[$path.to
 
 
 
-<a name="ref.Ref.create"></a>
-### Ref.create( arg )
+<a name="ref.Ref.new"></a>
+### new Ref( arg )
 
 * arg `mixed`
 
@@ -567,7 +567,7 @@ Example featuring i18n/l10n:
 
 ```js
 var kungFig = require( 'kung-fig' ) ;
-var babel = require( 'babel-tower' ).create() ;
+var babel = new require( 'babel-tower' )() ;
 
 babel.extend( {
 	fr: {
@@ -598,8 +598,8 @@ console.log( template.get( ctx ) ) ;
 
 
 
-<a name="ref.new-Template"></a>
-### new Template( template )
+<a name="ref.TemplateSentence.new"></a>
+### new TemplateSentence( template )
 
 * template `string` the string used as template
 
@@ -626,7 +626,7 @@ Example featuring i18n/l10n and *template atoms*:
 
 ```js
 var kungFig = require( 'kung-fig' ) ;
-var babel = require( 'babel-tower' ).create() ;
+var babel = new require( 'babel-tower' )() ;
 
 babel.extend( {
 	fr: {
@@ -676,7 +676,7 @@ console.log( template2.get( ctx ) ) ;
 
 
 
-<a name="ref.new-TemplateAtom"></a>
+<a name="ref.TemplateAtom.new"></a>
 ### new TemplateAtom( arg )
 
 * arg `mixed`
@@ -762,8 +762,8 @@ console.log( exp.get( ctx ) ) ;
 
 
 
-<a name="ref.Expression.create"></a>
-### Expression.create( fnOperator , operands )
+<a name="ref.Expression.new"></a>
+### new Expression( fnOperator , operands )
 
 * fnOperator `function( operands )` the operator's function, where:
 	* operands `array` the array of operands
