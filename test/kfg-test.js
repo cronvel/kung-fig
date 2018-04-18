@@ -174,8 +174,8 @@ describe( "KFG stringify" , function() {
 		//require( 'expect.js' )( o ).to.eql( parse( s ) ) ;
 	} ) ;
 	
-	it.skip( "stringify ref" , function() {
-		throw new Error( "Not coded" ) ;
+	it( "stringify ref" , function() {
+		doormen.equals( stringify( { ref: new Ref( '$path.to.var' ) } ) , 'ref: $path.to.var\n' ) ;
 	} ) ;
 	
 	it( "stringify applicable ref" ) ;
@@ -189,18 +189,18 @@ describe( "KFG stringify" , function() {
 	} ) ;
 	
 	it( "stringify templates" , function() {
-		doormen.equals( stringify( { tpl: TemplateSentence.create( 'Hello ${name}!' ) } ) , 'tpl: $> Hello ${name}!\n' ) ;
+		doormen.equals( stringify( { tpl: new TemplateSentence( 'Hello ${name}!' ) } ) , 'tpl: $> Hello ${name}!\n' ) ;
 		doormen.equals( stringify( { tpl: new TemplateSentence( 'Hey!\nHello ${name}!' ) } ) , 'tpl: \n\t$> Hey!\n\t$> Hello ${name}!\n' ) ;
-		doormen.equals( stringify( { tpl: TemplateSentence.create( 'Hello ${name}!' ) } , { preferQuotes: true } ) , 'tpl: $"Hello ${name}!"\n' ) ;
-		doormen.equals( stringify( { tpl: TemplateSentence.create( 'Hey!\nHello ${name}!' ) } , { preferQuotes: true } ) , 'tpl: $"Hey!\\nHello ${name}!"\n' ) ;
+		doormen.equals( stringify( { tpl: new TemplateSentence( 'Hello ${name}!' ) } , { preferQuotes: true } ) , 'tpl: $"Hello ${name}!"\n' ) ;
+		doormen.equals( stringify( { tpl: new TemplateSentence( 'Hey!\nHello ${name}!' ) } , { preferQuotes: true } ) , 'tpl: $"Hey!\\nHello ${name}!"\n' ) ;
 		
-		doormen.equals( stringify( TemplateSentence.create( 'Hello ${name}!' ) ) , '$> Hello ${name}!\n' ) ;
-		doormen.equals( stringify( TemplateSentence.create( 'Hey!\nHello ${name}!' ) ) , '$> Hey!\n$> Hello ${name}!\n' ) ;
-		doormen.equals( stringify( TemplateSentence.create( 'Hello ${name}!' ) , { preferQuotes: true } ) , '$"Hello ${name}!"\n' ) ;
-		doormen.equals( stringify( TemplateSentence.create( 'Hey!\nHello ${name}!' ) , { preferQuotes: true } ) , '$"Hey!\\nHello ${name}!"\n' ) ;
+		doormen.equals( stringify( new TemplateSentence( 'Hello ${name}!' ) ) , '$> Hello ${name}!\n' ) ;
+		doormen.equals( stringify( new TemplateSentence( 'Hey!\nHello ${name}!' ) ) , '$> Hey!\n$> Hello ${name}!\n' ) ;
+		doormen.equals( stringify( new TemplateSentence( 'Hello ${name}!' ) , { preferQuotes: true } ) , '$"Hello ${name}!"\n' ) ;
+		doormen.equals( stringify( new TemplateSentence( 'Hey!\nHello ${name}!' ) , { preferQuotes: true } ) , '$"Hey!\\nHello ${name}!"\n' ) ;
 		
-		doormen.equals( stringify( { tpl: TemplateSentence.create( '' ) } ) , 'tpl: <TemplateSentence>\n' ) ;
-		doormen.equals( stringify( TemplateSentence.create( '' ) ) , '<TemplateSentence>\n' ) ;
+		doormen.equals( stringify( { tpl: new TemplateSentence( '' ) } ) , 'tpl: <Sentence>\n' ) ;
+		doormen.equals( stringify( new TemplateSentence( '' ) ) , '<Sentence>\n' ) ;
 	} ) ;
 	
 	it( "stringify applicable templates" ) ;
@@ -868,7 +868,7 @@ describe( "KFG parse" , function() {
 	it( "parse template sentence and atom, and use a babel instance to localize it" , function() {
 		var o , o2 ;
 		
-		var babel = Babel.create() ;
+		var babel = new Babel() ;
 		
 		babel.extend( {
 			en: {
