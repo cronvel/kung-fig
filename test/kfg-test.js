@@ -789,6 +789,7 @@ describe( "KFG parse" , function() {
 		doormen.equals( o.tpl.apply( { name: "Bob" } ) , 'Hello Bob!' ) ;
 	} ) ;
 	
+	/*
 	it( "parse template atoms" , function() {
 		var o , o2 ;
 		
@@ -820,7 +821,37 @@ describe( "KFG parse" , function() {
 		o2 = parse( '$> I like ${el}[n:many]!' ) ;
 		doormen.equals( o2.toString( o ) , 'I like horses!' ) ;
 	} ) ;
+	*/
 	
+	it( "parse template atoms" , function() {
+		var o , o2 ;
+		
+		o = parse( "el: <Atom> horse" ) ;
+		console.log( 'o:' , o ) ;
+		surfaceEquals( o.el , { k: "horse" } ) ;
+		doormen.equals( o.el.toString() , 'horse' ) ;
+		
+		o = parse( 'el: <Atom> "horse"' ) ;
+		surfaceEquals( o.el , { k: "horse" } ) ;
+		doormen.equals( o.el.toString() , 'horse' ) ;
+		
+		o = parse( "el: <Atom> horse[n?horse|horses]" ) ;
+		surfaceEquals( o.el , { k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
+		doormen.equals( o.el.toString() , 'horse' ) ;
+		
+		o = parse( 'el: <Atom> "horse[n?horse|horses]"' ) ;
+		surfaceEquals( o.el , { k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
+		doormen.equals( o.el.toString() , 'horse' ) ;
+		
+		o = parse( "el: <Atom>\n\t> horse[n?horse|horses]" ) ;
+		surfaceEquals( o.el , { k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
+		doormen.equals( o.el.toString() , 'horse' ) ;
+		
+		o2 = parse( '$> I like ${el}[n:many]!' ) ;
+		doormen.equals( o2.toString( o ) , 'I like horses!' ) ;
+	} ) ;
+	
+	/*
 	it( "parse applicable template atoms" , function() {
 		var o , o2 ;
 		
@@ -832,6 +863,7 @@ describe( "KFG parse" , function() {
 		surfaceEquals( o.el , { __isApplicable__: true , __isDynamic__: false , k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
 		doormen.equals( o.el.apply() , 'horse' ) ;
 	} )
+	*/
 	
 	it( "parse template sentence and atom, and use a babel instance to localize it" , function() {
 		var o , o2 ;
@@ -866,13 +898,14 @@ describe( "KFG parse" , function() {
 		var babelFr = babel.use( 'fr' ) ;
 		
 		// Using Babel fr
-		o = parse( "el: $%> horse" ) ;
+		o = parse( "el: <Atom> horse" ) ;
 		surfaceEquals( o.el , { k: "horse" } ) ;
-		doormen.equals( o.el.toString( { __babel: babelFr } ) , 'cheval' ) ;
+		doormen.equals( o.el.toString( babelFr ) , 'cheval' ) ;
 		
-		o = parse( "el: $%> horse[n?horse|horses]" ) ;
+		o = parse( "el: <Atom> horse[n?horse|horses]" ) ;
 		surfaceEquals( o.el , { k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
-		doormen.equals( o.el.toString( { __babel: babelFr } ) , 'cheval' ) ;
+		doormen.equals( o.el.toString( babelFr ) , 'cheval' ) ;
+		
 		o.__babel = babelFr ;
 		
 		o2 = parse( '$> I like ${el}[n:many]!' ) ;
