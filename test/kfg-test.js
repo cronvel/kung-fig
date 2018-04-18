@@ -36,7 +36,7 @@ var stringify = kungFig.stringify ;
 var parse = kungFig.parse ;
 var Ref = kungFig.Ref ;
 var TemplateSentence = kungFig.TemplateSentence ;
-var TemplateElement = kungFig.TemplateElement ;
+var TemplateAtom = kungFig.TemplateAtom ;
 var Tag = kungFig.Tag ;
 var TagContainer = kungFig.TagContainer ;
 var OrderedObject = kungFig.OrderedObject ;
@@ -789,7 +789,7 @@ describe( "KFG parse" , function() {
 		doormen.equals( o.tpl.apply( { name: "Bob" } ) , 'Hello Bob!' ) ;
 	} ) ;
 	
-	it( "parse template elements" , function() {
+	it( "parse template atoms" , function() {
 		var o , o2 ;
 		
 		o = parse( "el: $%> horse" ) ;
@@ -821,7 +821,7 @@ describe( "KFG parse" , function() {
 		doormen.equals( o2.toString( o ) , 'I like horses!' ) ;
 	} ) ;
 	
-	it( "parse applicable template elements" , function() {
+	it( "parse applicable template atoms" , function() {
 		var o , o2 ;
 		
 		o = parse( "el: $$%> horse[n?horse|horses]" ) ;
@@ -833,7 +833,7 @@ describe( "KFG parse" , function() {
 		doormen.equals( o.el.apply() , 'horse' ) ;
 	} )
 	
-	it( "parse template sentence and element, and use a babel instance to localize it" , function() {
+	it( "parse template sentence and atom, and use a babel instance to localize it" , function() {
 		var o , o2 ;
 		
 		var babel = Babel.create() ;
@@ -843,7 +843,7 @@ describe( "KFG parse" , function() {
 				propertyIndexes: {
 					g: { m: 0 , f: 1 , n: 3 , h: 3 }
 				} ,
-				elements: {
+				atoms: {
 					apple: { g:'n', "n?": [ 'apple' , 'apples' ] } ,
 					horse: { "n?": [ 'horse' , 'horses' ] } ,
 				}
@@ -856,7 +856,7 @@ describe( "KFG parse" , function() {
 					"I like ${el}[n:many]!": "J'aime les ${el}[n:many]!" ,
 					"I like ${el}[n:many/g:f]!": "J'aime les ${el}[n:many/g:f]!" ,
 				} ,
-				elements: {
+				atoms: {
 					apple: { g:'f', "n?": [ 'pomme' , 'pommes' ] } ,
 					horse: { "ng?": [ [ 'cheval' , 'jument' ] , [ 'chevaux' , 'juments' ] ] } ,
 				}
