@@ -57,8 +57,7 @@ Stop using JSON for configuration files, use KFG now!
 	* [Local reference: including a sub-tree of a document](#ref.includes.local-reference)
 	* [Relational Data Representation](#ref.includes.relational)
 * [Refs](#ref.refs)
-* [Templates](#ref.templates)
-* [Template Elements](#ref.template-elements)
+* [Template Sentences](#ref.template-sentences)
 * [Expressions](#ref.expressions)
 	* [Built-in Expressions Operators](#ref.expressions.builtin-operators)
 * [Tree Operations](#ref.treeops)
@@ -73,7 +72,7 @@ It all started back in 2009, when Cédric Ronvel was bored by the fact that JSON
 if it had comments support and would be less nitpicking with commas.
 
 It ends up being like JSON without braces, brackets and commas, optional double-quotes, relying on indentation for hierarchical
-data representation, very close to YAML (also it worth noting that it was done *before* knowing the existence of YAML),
+data representation, very close to YAML (also it's worth noting that it was done *before* being aware of the existence of YAML),
 and a simple syntax to perform operation.
 
 * The addition of **custom classes/constructors** appears in 2015.
@@ -1196,15 +1195,15 @@ Those are incorrect:
 
 
 
-<a name="ref.templates"></a>
-## Templates
+<a name="ref.template-sentences"></a>
+## Template Sentences
 
-*Templates* are useful for building scripting language on top of KFG: they are internationalizable templates,
+*Template sentences* are useful for building scripting language on top of KFG: they are internationalizable templates,
 containing references, and a lot of tools to ease human language.
 
-When successfully parsed, it creates a [Kung-Fig Template instance](lib.md#ref.Template).
+When successfully parsed, it creates a [Kung-Fig TemplateSentence instance](lib.md#ref.TemplateSentence).
 
-The syntax for declaring a *template* is similar to the syntax for declaring strings:
+The syntax for declaring a *template sentence* is similar to the syntax for declaring strings:
 
 * for the quoted template syntax, start with `$"` and end with `"`, and follow the [quoted string rules](#ref.strings.quoted)
 * for the introduced template syntax, start with `$> ` and follow the [introduced string rules](#ref.strings.introduced)
@@ -1234,41 +1233,6 @@ All [Babel Tower commands](https://github.com/cronvel/babel-tower) are supported
 E.g. `$> Hello ${who}[altng:(guy|girl)|(guys|girls)//uc]!` will be *solved* to `Hello GUYS!` if the context is equal
 to `{ who: { g: "m" , n: "many" } }`, or it will be *solved* to `Hello GIRLS!` if the context is equal
 to `{ who: { g: "f" , n: "many" } }`, or `Hello GUY!` if `{ who: { g: "f" , n: 1 } }`, etc...
-
-
-
-<a name="ref.template-elements"></a>
-## Template Elements
-
-*Template elements* are useful for advanced i18n/l10n and human language usage.
-
-When successfully parsed, it creates a [Kung-Fig TemplateElement instance](lib.md#ref.TemplateElement).
-
-The syntax for declaring a *template element* is similar to the syntax for declaring strings:
-
-* for the quoted template element syntax, start with `$%"` and end with `"`, and follow
-  the [quoted string rules](#ref.strings.quoted)
-* for the introduced template element syntax, start with `$%> ` and follow
-  the [introduced string rules](#ref.strings.introduced)
-* for the multi-line template element syntax, start each line with the proper indentation, the `$%> ` mark, and follow
-  the [multi-line string rules](#ref.strings.multiline)
-* for the multi-line folded template syntax, start each line with the proper indentation, the `$%>> ` mark, and follow
-  the [multi-line folded string rules](#ref.strings.multiline-folded)
-
-Example of valid *template element* declaration:
-
-```
-element1: $%"master[altg:master|mistress]"
-element2: $%> master[altg:master|mistress]
-```
-
-Both example create an element (here a noun), having:
-* a translatable key: *master*
-* a male gender alternative: *master*
-* a female gender alternative: *mistress*
-
-As for the template element syntax itself (i.e. the inside), it uses the
-[Babel Tower element syntax](https://github.com/cronvel/babel-tower).
 
 
 

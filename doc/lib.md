@@ -22,11 +22,10 @@
 	* [.setRef()](#ref.Ref.setRef)
 	* [.get(), .getValue()](#ref.Ref.get)
 	* [.set()](#ref.Ref.set)
-* [The Template Class](#ref.Template)
-	* [Template.create()](#ref.Template.create)
-* [The TemplateElement Class](#ref.TemplateElement)
-	* [TemplateElement.parse()](#ref.TemplateElement.parse)
-	* [TemplateElement.create()](#ref.TemplateElement.create)
+* [The TemplateSentence Class](#ref.TemplateSentence)
+	* [new TemplateSentence()](#ref.new-TemplateSentence)
+* [The TemplateAtom Class](#ref.TemplateAtom)
+	* [new TemplateAtom()](#ref.TemplateAtom)
 * [The Expression Class](#ref.Expression)
 	* [Expression.parse()](#ref.Expression.parse)
 	* [Expression.create()](#ref.Expression.create)
@@ -208,7 +207,7 @@ One example of a Dynamic object is a variable name, or a reference, inside a scr
   to the relevant value, depending on the type of the Dynamic object (e.g. given a [Ref instance](#ref.Ref) *"$obj.myfunc"*,
   the returned value would be bound to `ctx.obj`, like a regular Javascript method call would).
   This argument has no effect on some Dynamic objects where the *bound* concept is not relevant
-  (e.g. [Template instances](#ref.Template))
+  (e.g. [TemplateSentence instances](#ref.TemplateSentence))
 
 This get the value of a `Dynamic` instance (i.e. it *solves* it), using the provided *ctx* context.
 This should be idempotent as long as the values holded in the context do not change.
@@ -232,7 +231,7 @@ else it would return *value*.
   to the relevant value, depending on the type of the Dynamic object (e.g. given a [Ref instance](#ref.Ref) *"$obj.myfunc"*,
   the returned value would be bound to `ctx.obj`, like a regular Javascript method call would).
   This argument has no effect on some Dynamic objects where the *bound* concept is not relevant
-  (e.g. [Template instances](#ref.Template))
+  (e.g. [TemplateSentence instances](#ref.TemplateSentence))
 
 Like [.get()](#ref.Dynamic.get), it *solves* a Dynamic instance using the *ctx* context
 However, as long as the result itself is a Dynamic instance, it is *solved* again.
@@ -259,7 +258,7 @@ else it would return *value*.
   to the relevant value, depending on the type of the Dynamic object (e.g. given a [Ref instance](#ref.Ref) *"$obj.myfunc"*,
   the returned value would be bound to `ctx.obj`, like a regular Javascript method call would).
   This argument has no effect on some Dynamic objects where the *bound* concept is not relevant
-  (e.g. [Template instances](#ref.Template))
+  (e.g. [TemplateSentence instances](#ref.TemplateSentence))
 
 Like [.getFinalValue()](#ref.Dynamic.getFinalValue), a Dynamic chain is *solved* until a non-Dynamic value is found.
 
@@ -294,7 +293,7 @@ This [get the final value](#ref.Dynamic.getFinalValue) of the Dynamic and cast i
   to the relevant value, depending on the type of the Dynamic object (e.g. given a [Ref instance](#ref.Ref) *"$obj.myfunc"*,
   the returned value would be bound to `ctx.obj`, like a regular Javascript method call would).
   This argument has no effect on some Dynamic objects where the *bound* concept is not relevant
-  (e.g. [Template instances](#ref.Template))
+  (e.g. [TemplateSentence instances](#ref.TemplateSentence))
 
 Some Dynamic instance don't have the *dynamic* flag on but instead the *applicable* flag.
 
@@ -529,18 +528,18 @@ So ctx is now equal to:
 
 
 
-<a name="ref.Template"></a>
-## The Template Class
+<a name="ref.TemplateSentence"></a>
+## The TemplateSentence Class
 
-*Templates* are useful for building scripting language on top of KFG: they are internationalizable templates,
+*Template sentences* are useful for building scripting language on top of KFG: they are internationalizable templates,
 containing references, and a lot of tools to ease human language.
 
-The `Template` class uses [Babel Tower](https://github.com/cronvel/babel-tower) behind the scene, and encapsulate
+The `TemplateSentence` class uses [Babel Tower](https://github.com/cronvel/babel-tower) behind the scene, and encapsulate
 a `Babel.Sentence` instance **behind a [Dynamic interface](#ref.Dynamic)**.
 
-Like all Dynamic object, to solve a *template*, a *context* is needed.
+Like all Dynamic object, to solve a *template sentence*, a *context* is needed.
 
-Let's see a *template* in action:
+Let's see a *template sentence* in action:
 
 ```js
 var kungFig = require( 'kung-fig' ) ;
@@ -551,15 +550,15 @@ var ctx = {
 } ;
 
 // Create the template
-var template = kungFig.Template.create( "Hello ${name}!" ) ;
+var template = new kungFig.TemplateSentence( "Hello ${name}!" ) ;
 
 // Output "Hello Bob!", using the string in ctx.name
 console.log( template.get( ctx ) ) ;
 ```
 
-This is a really simple example, and *templates* can do a lot more.
-See the [KFG Template syntax](KFG.md#ref.template) and the [Babel Tower documentation](https://github.com/cronvel/babel-tower)
-for more.
+This is a really simple example, and *template sentences* can do a lot more.
+See the [KFG TemplateSentence syntax](KFG.md#ref.template-sentences) and
+the [Babel Tower documentation](https://github.com/cronvel/babel-tower) for more.
 
 The `Babel` object used for internationalization/localization is the `__babel` property of the context,
 if it's not defined, or it will fallback to the global `Babel.default` instance.
@@ -585,7 +584,7 @@ var ctx = {
 } ;
 
 // Create the template
-var template = kungFig.Template.create( "Give me ${count} apple${count}[n?|s]!" ) ;
+var template = new kungFig.TemplateSentence( "Give me ${count} apple${count}[n?|s]!" ) ;
 
 // Output "Give me 2 apples!"
 console.log( template.get( ctx ) ) ;
@@ -599,31 +598,31 @@ console.log( template.get( ctx ) ) ;
 
 
 
-<a name="ref.Template.create"></a>
-### Template.create( template )
+<a name="ref.new-Template"></a>
+### new Template( template )
 
 * template `string` the string used as template
 
-This creates a `Template` instance from a string and return it.
+This creates a `TemplateSentence` instance from a string and return it.
 
 
 
-<a name="ref.TemplateElement"></a>
-## The TemplateElement Class
+<a name="ref.TemplateAtom"></a>
+## The TemplateAtom Class
 
-A *template element* is a used as a part of *template*.
+A *template atom* is a used as a part of a *template sentence*.
 
-The `TemplateElement` class uses [Babel Tower](https://github.com/cronvel/babel-tower) behind the scene, and encapsulate
-a `Babel.Element` instance **behind a [Dynamic interface](#ref.Dynamic)**.
+The `TemplateAtom` class uses [Babel Tower](https://github.com/cronvel/babel-tower) behind the scene, and encapsulate
+a `Babel.Atom` instance **behind a [Dynamic interface](#ref.Dynamic)**.
 
-Like all Dynamic object, to solve a *templateElement*, a *context* is needed.
+Like all Dynamic object, to solve a *templateAtom*, a *context* is needed.
 
-Think of *template element* as a part of a sentence, it can be a noun, a noun group.
+Think of *template atom* as a part of a sentence, it can be a noun, a noun group.
 
-A *template element* can have alternative strings according to its gender and number, it can have a translatable key,
+A *template atom* can have alternative strings according to its gender and number, it can have a translatable key,
 it can be just a number...
 
-Example featuring i18n/l10n and *template elements*:
+Example featuring i18n/l10n and *template atoms*:
 
 ```js
 var kungFig = require( 'kung-fig' ) ;
@@ -635,7 +634,7 @@ babel.extend( {
 			"Hello ${who}[g:m]!" : "Bonjour ${who}[g:m]!" ,
 			"Hello ${who}[g:f]!" : "Bonjour ${who}[g:f]!"
 		} ,
-		elements: {
+		atoms: {
 			master: { altg: [ 'maitre' , 'maitresse' ] }
 		}
 	}
@@ -646,18 +645,18 @@ var ctx = {
 	__babel: babel ,
 	
 	/*
-		Create an element having:
+		Create an atom having:
 		* a translatable key: master
 		* a male gender alternative: master
 		* a female gender alternative: mistress
 	*/
-	who: kungFig.TemplateElement.parse( "master[altg:master|mistress]" )
+	who: new kungFig.TemplateAtom( "master[g?master|mistress]" )
 } ;
 
-// Create two templates using the element, the first one use the male version ([g:m])
+// Create two templates using the atom, the first one use the male version ([g:m])
 // the last one use the female version ([g:f])
-var template1 = kungFig.Template.create( "Hello ${who}[g:m]!" ) ;
-var template2 = kungFig.Template.create( "Hello ${who}[g:f]!" ) ;
+var template1 = new kungFig.TemplateSentence( "Hello ${who}[g:m]!" ) ;
+var template2 = new kungFig.TemplateSentence( "Hello ${who}[g:f]!" ) ;
 
 // Output "Hello master!"
 console.log( template1.get( ctx ) ) ;
@@ -677,22 +676,12 @@ console.log( template2.get( ctx ) ) ;
 
 
 
-<a name="ref.TemplateElement.parse"></a>
-### TemplateElement.parse( str )
-
-* str `string` represent a Babel Element using the Babel Element syntax
-
-This creates a `TemplateElement` instance from a string in the Babel Element syntax.
-It calls `Babel.Element.parse()`.
-
-
-
-<a name="ref.TemplateElement.create"></a>
-### TemplateElement.create( arg )
+<a name="ref.new-TemplateAtom"></a>
+### new TemplateAtom( arg )
 
 * arg `mixed`
 
-This creates a `TemplateElement` instance, the *arg* argument is passed as the first argument of `Babel.Element.create()`.
+This creates a `TemplateAtom` instance, the *arg* argument is passed as the first argument of `Babel.Atom()`.
 See [Babel Tower documentation](https://github.com/cronvel/babel-tower).
 
 
@@ -851,7 +840,7 @@ This method returns the parent tag, if any. Otherwise it returns *null*.
   to the relevant value, depending on the type of the Dynamic object (e.g. given a [Ref instance](#ref.Ref) *"$obj.myfunc"*,
   the returned value would be bound to `ctx.obj`, like a regular Javascript method call would).
   This argument has no effect on some Dynamic objects where the *bound* concept is not relevant
-  (e.g. [Template instances](#ref.Template))
+  (e.g. [TemplateSentence instances](#ref.TemplateSentence))
 
 This method returns the tag's content (i.e. the `content` preoperty).
 If the content is a *Dynamic object*, it returns
@@ -867,7 +856,7 @@ If the content is a *Dynamic object*, it returns
   to the relevant value, depending on the type of the Dynamic object (e.g. given a [Ref instance](#ref.Ref) *"$obj.myfunc"*,
   the returned value would be bound to `ctx.obj`, like a regular Javascript method call would).
   This argument has no effect on some Dynamic objects where the *bound* concept is not relevant
-  (e.g. [Template instances](#ref.Template))
+  (e.g. [TemplateSentence instances](#ref.TemplateSentence))
 
 This method returns the tag's content (i.e. the `content` preoperty).
 If the content is a *Dynamic object*, it returns
