@@ -318,6 +318,15 @@ describe( "KFG stringify" , function() {
 	} ) ;
 	
 	it( "stringify an object with tags" , function() {
+		var content = fs.readFileSync( __dirname + '/sample/kfg/tag.kfg' , 'utf8' ) ;
+		var expected = fs.readFileSync( __dirname + '/sample/kfg/tag.expected.kfg' , 'utf8' ) ;
+		var o = parse( content ) ;
+		var s = stringify( o ) ;
+		//console.log( s ) ;
+		doormen.equals( s , expected ) ;
+	} ) ;
+	
+	it( "stringify an object with tags" , function() {
 		var o = new TagContainer( [
 			new Tag( 'if' , 'something > constant' , new TagContainer( [
 				new Tag( 'do' , null , 'some tasks' ) ,
@@ -1442,3 +1451,16 @@ describe( "ExpressionTag" , function() {
 } ) ;
 
 
+
+describe( "Historical bugs" , function() {
+	
+	it( ".saveKfg() bug with tags" , function() {
+		var content = fs.readFileSync( __dirname + '/sample/kfg/tag.kfg' , 'utf8' ) ;
+		var expected = fs.readFileSync( __dirname + '/sample/kfg/tag.expected.kfg' , 'utf8' ) ;
+		var o = parse( content ) ;
+		var s = kungFig.saveKfg( o , __dirname + '/sample/output.kfg' ) ;
+		//console.log( s ) ;
+		doormen.equals( s , expected ) ;
+	} ) ;
+} ) ;
+	

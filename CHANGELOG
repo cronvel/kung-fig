@@ -1,4 +1,10 @@
 
+v0.44.3
+-------
+
+.saveKfg(): non-plain object bug fixed when patching circular references
+
+
 v0.44.2
 -------
 
