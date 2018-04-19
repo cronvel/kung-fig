@@ -175,13 +175,16 @@ describe( "KFG stringify" , function() {
 	} ) ;
 	
 	it( "stringify ref" , function() {
+		doormen.equals( stringify( new Ref( '$path.to.var' ) ) , '$path.to.var\n' ) ;
 		doormen.equals( stringify( { ref: new Ref( '$path.to.var' ) } ) , 'ref: $path.to.var\n' ) ;
 	} ) ;
 	
 	it( "stringify applicable ref" ) ;
 	
-	it.skip( "stringify expression" , function() {
-		throw new Error( "Not coded" ) ;
+	it( "stringify expression" , function() {
+		doormen.equals( stringify( parse( '$= 1 + ( 2 * ( 3 * $path.to.my.var ) )' ) ) , '$= 1 + ( 2 * ( 3 * $path.to.my.var ) )\n' ) ;
+		doormen.equals( stringify( parse( 'expression: $= 1 + ( 2 * ( 3 * $path.to.my.var ) )' ) ) , 'expression: $= 1 + ( 2 * ( 3 * $path.to.my.var ) )\n' ) ;
+		doormen.equals( stringify( parse( 'expression: $= $path.to.my.var ??? "bob" "bill" "jack"' ) ) , 'expression: $= $path.to.my.var ??? "bob" "bill" "jack"\n' ) ;
 	} ) ;
 	
 	it.skip( "stringify applicable expression" , function() {

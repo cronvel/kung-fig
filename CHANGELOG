@@ -1,4 +1,10 @@
 
+v0.44.5
+-------
+
+.stringify() now supports expressions
+
+
 v0.44.4
 -------
 
