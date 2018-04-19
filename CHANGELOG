@@ -1,4 +1,10 @@
 
+v0.44.4
+-------
+
+Stringifier of expression and ref bugfixed ; more expression operators and constant ; better expression operator documentation
+
+
 v0.44.3
 -------
 
@@ -20,7 +26,8 @@ updated the doc
 v0.44.0
 -------
 
-Breaking change: all TemplateElement syntaxes have been removed, since there is no real use-cases, instead, the new <Atom> built-in class (which is not a Dynamic) should be used
+Breaking change: all TemplateElement syntaxes have been removed, since there is no real use-cases, instead,
+the new <Atom> built-in class (which is not a Dynamic) should be used.
 
 
 v0.43.13

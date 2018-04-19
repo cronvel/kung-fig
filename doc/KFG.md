@@ -1291,6 +1291,8 @@ can still be used with the following tricks:
 * arrays of two or more elements can be produced with an implicit array sub-expression, e.g.: `( 1 2 3 )`
 * arrays can be produced with the array operator in a sub-expression, e.g.: `( array 1 2 3 )`
 
+Comma are used for presentation, e.g.: `key1: "one" key2: "two"` -> `key1: "one" , key2: "two"`, the latest being recommended.
+
 
 
 <a name="ref.expressions.builtin-operators"></a>
@@ -1323,12 +1325,18 @@ The number in parenthesis indicate how many operands is needed.
 
 **Comparison operators:**
 
-* `>` (2): returns true if the first operand is greater than the second, otherwise returns false
-* `>=` (2): returns true if the first operand is greater than or equal to the second, otherwise returns false
-* `<` (2): returns true if the first operand is lesser than the second, otherwise returns false
-* `<=` (2): returns true if the first operand is lesser than or equal to the second, otherwise returns false
-* `=`, `==`, `===` (2): returns true if the first operand is **strictly** equal to the second, otherwise returns false
-* `!=`, `!==` (2): returns true if the first operand is **strictly** equal to the second, otherwise returns false
+* `>` (2+): returns true if the first operand is greater than the second, otherwise returns false
+* `>=`, `≥` (2+): returns true if the first operand is greater than or equal to the second, otherwise returns false
+* `<` (2+): returns true if the first operand is lesser than the second, otherwise returns false
+* `<=`, `≤` (2): returns true if the first operand is lesser than or equal to the second, otherwise returns false
+* `=`, `==`, `===` (2+): returns true if the first operand is **strictly** equal to the second, otherwise returns false
+* `!=`, `!==`, `≠` (2+): returns true if the first operand is **strictly** equal to the second, otherwise returns false
+* `%=`, `≈` (3): around, almost equal to: sort of equal, with a delta error rate, first and second operand are compared,
+  using the third operand as the error delta.
+
+If there is more than 2 operands, the comparison return true if all comparisons between adjacent operands are true, e.g.:
+* `2 > 3 > 5 > 6` is true (because 2>3, 3>5 and 5>6 are all true)
+* `2 > 3 > 5 > 3` is false (because 5>3 is false)
 
 **Logical operators:**
 
@@ -1384,26 +1392,41 @@ The number in parenthesis indicate how many operands is needed.
 * `atan` (1): returns the arc tangent (in radians) of the first operand
 * `atan2` (2): returns the arc tangent of the quotient of the first and second operand
   See [the MDN Math.atan2() page](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/atan2).
+* `cosh` (1): returns the hyperbolic cosine of the first operand
+* `sinh` (1): returns the hyperbolic sine of the first operand
+* `tanh` (1): returns the hyperbolic tangent of the first operand
+* `acosh` (1): returns the hyperbolic arc cosine (in radians) of the first operand
+* `asinh` (1): returns the hyperbolic arc sine (in radians) of the first operand
+* `atanh` (1): returns the hyperbolic arc tangent (in radians) of the first operand
 * `hypot` (2+): returns the hypothenuse of a right triangle, where the first and the second operands are its side,
   or more generally: the square root of the sum of squares of its operands.
 * `avg` (1+): returns the average value of its operands, **or** if there is only one operand that is an array,
   returns the average value of all the elements of that array
 
+**String operators:**
+
+* `.` (1+): the string concatenation operator
+
 **Array operators:**
 
-* `array` (0+): creates an array from all its operand and returns it
+* `array` (0+): creates an array from all its operands and returns it
 * `concat` (0+): merges all its operands array and returns it, if an operand is not an array, it is assumed to be
   an array of itself
+* `join` (1,2): join all string of the first operand array, if a second operand exist, it is used as the *glue* string
+
+**Object operators:**
+
+* `:`, `object` (0+): creates an object and set keys and properties (e.g.: `key1: "one" , key2: "two"`)
 
 **Type checker operators:**
 
 * `is-set?` (1): returns true if the first operand is defined (i.e. not `undefined`), otherwise returns false
 * `is-boolean?` (1): returns true if the first operand is a boolean, otherwise returns false
 * `is-number?` (1): returns true if the first operand is a number, otherwise returns false
-* `is-real?` (1): returns true if the first operand is a real number (not NaN, not +/- Infinity), otherwise returns false
 * `is-string?` (1): returns true if the first operand is a string, otherwise returns false
 * `is-array?` (1): returns true if the first operand is an array, otherwise returns false
 * `is-object?` (1): returns true if the first operand is an object (but **not an array**), otherwise returns false
+* `is-real?` (1): returns true if the first operand is a real number (not NaN, not +/- Infinity), otherwise returns false
 * `is-empty?` (1): returns true if the first operand is either an empty array or not an array and falsy
 * `is-not-empty?` (1): returns true if the first operand is either a non-empty array or not an array and truthy
 
@@ -1414,6 +1437,12 @@ The number in parenthesis indicate how many operands is needed.
   called with the second operand. Otherwise it returns false.
   an array of itself
 * `->`: RESERVED
+
+**Constants:**
+
+* `pi`, `π`: the Pi constant
+* `e`: the Euler's constant
+* `phi`, `φ`: phi, the golden ratio (1.618033988749895)
 
 
 
