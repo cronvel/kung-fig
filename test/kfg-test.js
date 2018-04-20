@@ -317,6 +317,15 @@ describe( "KFG stringify" , function() {
 		) ;
 	} ) ;
 	
+	it( "stringify dynamic instance" , function() {
+		doormen.equals( stringify( parse( "el: $<Atom> $> ${name}" ) ) , "el: $<Atom> $> ${name}\n" ) ;
+		
+		// This does not make sense for the <Atom> constructor, but we don't care, it's just for the testing purpose
+		doormen.equals( stringify( parse( "el: $<Atom>\n\tbob: true\n\tbill: false" ) ) , "el: $<Atom>\n\tbob: true\n\tbill: false\n" ) ;
+	} ) ;
+	
+	it( "stringify applicable instance of template atoms" ) ;
+	
 	it( "stringify an object with tags" , function() {
 		var content = fs.readFileSync( __dirname + '/sample/kfg/tag.kfg' , 'utf8' ) ;
 		var expected = fs.readFileSync( __dirname + '/sample/kfg/tag.expected.kfg' , 'utf8' ) ;
@@ -860,8 +869,8 @@ describe( "KFG parse" , function() {
 		doormen.equals( o2.toString( o ) , 'I like horses!' ) ;
 	} ) ;
 	
-	it( "zzz parse dynamic instance of template atoms" , function() {
-		var o , o2 ;
+	it( "parse dynamic instance" , function() {
+		var o ;
 		
 		o = parse( "el: $<Atom> $> ${name}" ) ;
 		//console.log( o.el ) ;
@@ -869,8 +878,8 @@ describe( "KFG parse" , function() {
 		surfaceEquals( o.el.getValue( { name: 'bob' } ) , { k: 'bob' } ) ;
 	} ) ;
 	
-	it( "zzz parse applicable instance of template atoms" , function() {
-		var o , o2 ;
+	it( "parse applicable instance" , function() {
+		var o ;
 		
 		o = parse( "el: $$<Atom> $> ${name}" ) ;
 		//console.log( o.el ) ;

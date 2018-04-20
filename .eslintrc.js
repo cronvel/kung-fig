@@ -116,8 +116,14 @@ module.exports = {
 			'mode': 'strict'
 		} ] ,
 		'object-curly-newline': [ 'error' , {
-			'consistent': true ,
-			'minProperties': 3
+			'ObjectExpression' : {
+				'consistent': true ,
+				'minProperties': 4
+			} ,
+			'ObjectPattern' : {
+				'consistent': true ,
+				'minProperties': 6
+			}
 		} ] ,
 		'object-curly-spacing': [ 'error' , 'always' ] ,
 		'object-property-newline': [ 'error' , { 'allowMultiplePropertiesPerLine': true } ] ,
