@@ -52,18 +52,15 @@ var pathModule = require( 'path' ) ;
 
 
 
-function deb( v )
-{
+function deb( v ) {
 	console.log( string.inspect( { style: 'color' , depth: 15 } , v ) ) ;
 }
 
-function debfn( v )
-{
+function debfn( v ) {
 	console.log( string.inspect( { style: 'color' , depth: 5 , proto: true , funcDetails: true } , v ) ) ;
 }
 
-function surfaceEquals( a , b )
-{
+function surfaceEquals( a , b ) {
 	doormen.equals( tree.extend( { own:true } , {} , a ) , b ) ;
 }
 
@@ -861,6 +858,25 @@ describe( "KFG parse" , function() {
 		
 		o2 = parse( '$> I like ${el}[n:many]!' ) ;
 		doormen.equals( o2.toString( o ) , 'I like horses!' ) ;
+	} ) ;
+	
+	it( "zzz parse dynamic instance of template atoms" , function() {
+		var o , o2 ;
+		
+		o = parse( "el: $<Atom> $> ${name}" ) ;
+		//console.log( o.el ) ;
+		//deb( o.el.getValue( { name: 'bob' } ) ) ;
+		surfaceEquals( o.el.getValue( { name: 'bob' } ) , { k: 'bob' } ) ;
+	} ) ;
+	
+	it( "zzz parse applicable instance of template atoms" , function() {
+		var o , o2 ;
+		
+		o = parse( "el: $$<Atom> $> ${name}" ) ;
+		//console.log( o.el ) ;
+		//deb( o.el.getValue( { name: 'bob' } ) ) ;
+		doormen.equals( o.el.getValue( { name: 'bob' } ) , o.el ) ;
+		surfaceEquals( o.el.apply( { name: 'bob' } ) , { k: 'bob' } ) ;
 	} ) ;
 	
 	/*
