@@ -15,7 +15,7 @@ It is **great** for:
 * Application data
 * Saving user prefs in a human-friendly format
 * Building scripting language on top of it
-* Game characters, weapons, armors, spells, etc, stats and bonuses
+* Game characters, weapons, armors, spells, stats, bonuses, etc
 * Internationalization/localization
 * *... and many more*
 

@@ -905,7 +905,7 @@ Here is a list of built-in/reserved/standardized meta-tags and their roles:
   by end-user mistake.
 
 * [[locales *path*]]: this meta-tag is not built-in, but **standardized**. It means that KungFig has
-  no special treatment for this tag, and that is the job of the userland code to process it the appropriate way
+  no special treatment for this tag, and that it is the job of the userland code to process it the appropriate way
   (e.g.: should all the locales be loaded? or just the one found in a command line argument? Actually this is
   highly application dependent).
   However the `locales` meta-tag syntax is **standardized**: it should contain a path relative to the current file,
