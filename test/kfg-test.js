@@ -24,8 +24,7 @@
 	SOFTWARE.
 */
 
-/* jshint unused:false */
-/* global describe, it, before, after */
+/* global describe, it, expect */
 
 "use strict" ;
 
@@ -43,8 +42,6 @@ var OrderedObject = kungFig.OrderedObject ;
 
 var Babel = require( 'babel-tower' ) ;
 
-var doormen = require( 'doormen' ) ;
-var expect = require( 'expect.js' ) ;
 var string = require( 'string-kit' ) ;
 var tree = require( 'tree-kit' ) ;
 var fs = require( 'fs' ) ;
@@ -60,66 +57,62 @@ function debfn( v ) {
 	console.log( string.inspect( { style: 'color' , depth: 5 , proto: true , funcDetails: true } , v ) ) ;
 }
 
-function surfaceEquals( a , b ) {
-	doormen.equals( tree.extend( { own:true } , {} , a ) , b ) ;
-}
-
 
 
 describe( "KFG stringify" , function() {
 	
 	it( "stringify string" , function() {
-		doormen.equals( stringify( "Hello World!" ) , 'Hello World!\n' ) ;
-		doormen.equals( stringify( "a:1" ) , '> a:1\n' ) ;
-		doormen.equals( stringify( "123" ) , '> 123\n' ) ;
-		doormen.equals( stringify( "123.45" ) , '> 123.45\n' ) ;
-		doormen.equals( stringify( "Hello: World!" ) , '> Hello: World!\n' ) ;
-		doormen.equals( stringify( "[Hello World!]" ) , '> [Hello World!]\n' ) ;
-		doormen.equals( stringify( "<hello>" ) , '> <hello>\n' ) ;
-		doormen.equals( stringify( "(hello)" ) , '> (hello)\n' ) ;
-		doormen.equals( stringify( "   Hello World!" ) , '>    Hello World!\n' ) ;
-		doormen.equals( stringify( "Hello World!   " ) , '> Hello World!   \n' ) ;
+		expect( stringify( "Hello World!" ) ).to.be( 'Hello World!\n' ) ;
+		expect( stringify( "a:1" ) ).to.be( '> a:1\n' ) ;
+		expect( stringify( "123" ) ).to.be( '> 123\n' ) ;
+		expect( stringify( "123.45" ) ).to.be( '> 123.45\n' ) ;
+		expect( stringify( "Hello: World!" ) ).to.be( '> Hello: World!\n' ) ;
+		expect( stringify( "[Hello World!]" ) ).to.be( '> [Hello World!]\n' ) ;
+		expect( stringify( "<hello>" ) ).to.be( '> <hello>\n' ) ;
+		expect( stringify( "(hello)" ) ).to.be( '> (hello)\n' ) ;
+		expect( stringify( "   Hello World!" ) ).to.be( '>    Hello World!\n' ) ;
+		expect( stringify( "Hello World!   " ) ).to.be( '> Hello World!   \n' ) ;
 		
-		doormen.equals( stringify( "Hello\nWorld!" ) , '> Hello\n> World!\n' ) ;
-		doormen.equals( stringify( "One...\nTwo...\n\nThree!" ) , '> One...\n> Two...\n> \n> Three!\n' ) ;
-		doormen.equals( stringify( "One...\n\tTwo...\n\nThree!" ) , '> One...\n> \tTwo...\n> \n> Three!\n' ) ;
+		expect( stringify( "Hello\nWorld!" ) ).to.be( '> Hello\n> World!\n' ) ;
+		expect( stringify( "One...\nTwo...\n\nThree!" ) ).to.be( '> One...\n> Two...\n> \n> Three!\n' ) ;
+		expect( stringify( "One...\n\tTwo...\n\nThree!" ) ).to.be( '> One...\n> \tTwo...\n> \n> Three!\n' ) ;
 	} ) ;
 		
 	it( "stringify string with option 'preferQuotes'" , function() {
-		doormen.equals( stringify( "Hello World!" , { preferQuotes: true } ) , 'Hello World!\n' ) ;
-		doormen.equals( stringify( "a:1" , { preferQuotes: true } ) , '"a:1"\n' ) ;
-		doormen.equals( stringify( "123" , { preferQuotes: true } ) , '"123"\n' ) ;
-		doormen.equals( stringify( "123.45" , { preferQuotes: true } ) , '"123.45"\n' ) ;
-		doormen.equals( stringify( "Hello: World!" , { preferQuotes: true } ) , '"Hello: World!"\n' ) ;
-		doormen.equals( stringify( "[Hello World!]" , { preferQuotes: true } ) , '"[Hello World!]"\n' ) ;
-		doormen.equals( stringify( "<hello>" , { preferQuotes: true } ) , '"<hello>"\n' ) ;
-		doormen.equals( stringify( "(hello)" , { preferQuotes: true } ) , '"(hello)"\n' ) ;
-		doormen.equals( stringify( "   Hello World!" , { preferQuotes: true } ) , '"   Hello World!"\n' ) ;
-		doormen.equals( stringify( "Hello World!   " , { preferQuotes: true } ) , '"Hello World!   "\n' ) ;
+		expect( stringify( "Hello World!" , { preferQuotes: true } ) ).to.be( 'Hello World!\n' ) ;
+		expect( stringify( "a:1" , { preferQuotes: true } ) ).to.be( '"a:1"\n' ) ;
+		expect( stringify( "123" , { preferQuotes: true } ) ).to.be( '"123"\n' ) ;
+		expect( stringify( "123.45" , { preferQuotes: true } ) ).to.be( '"123.45"\n' ) ;
+		expect( stringify( "Hello: World!" , { preferQuotes: true } ) ).to.be( '"Hello: World!"\n' ) ;
+		expect( stringify( "[Hello World!]" , { preferQuotes: true } ) ).to.be( '"[Hello World!]"\n' ) ;
+		expect( stringify( "<hello>" , { preferQuotes: true } ) ).to.be( '"<hello>"\n' ) ;
+		expect( stringify( "(hello)" , { preferQuotes: true } ) ).to.be( '"(hello)"\n' ) ;
+		expect( stringify( "   Hello World!" , { preferQuotes: true } ) ).to.be( '"   Hello World!"\n' ) ;
+		expect( stringify( "Hello World!   " , { preferQuotes: true } ) ).to.be( '"Hello World!   "\n' ) ;
 		
-		doormen.equals( stringify( "Hello\nWorld!" , { preferQuotes: true } ) , '"Hello\\nWorld!"\n' ) ;
-		doormen.equals( stringify( "One...\nTwo...\n\nThree!" , { preferQuotes: true } ) , '"One...\\nTwo...\\n\\nThree!"\n' ) ;
-		doormen.equals( stringify( "One...\n\tTwo...\n\nThree!" , { preferQuotes: true } ) , '"One...\\n\\tTwo...\\n\\nThree!"\n' ) ;
+		expect( stringify( "Hello\nWorld!" , { preferQuotes: true } ) ).to.be( '"Hello\\nWorld!"\n' ) ;
+		expect( stringify( "One...\nTwo...\n\nThree!" , { preferQuotes: true } ) ).to.be( '"One...\\nTwo...\\n\\nThree!"\n' ) ;
+		expect( stringify( "One...\n\tTwo...\n\nThree!" , { preferQuotes: true } ) ).to.be( '"One...\\n\\tTwo...\\n\\nThree!"\n' ) ;
 	} ) ;
 		
 	it( "stringify non-string scalar" , function() {
-		doormen.equals( stringify( undefined ) , "null\n" ) ;
-		doormen.equals( stringify( null ) , "null\n" ) ;
-		doormen.equals( stringify( true ) , "true\n" ) ;
-		doormen.equals( stringify( false ) , "false\n" ) ;
-		doormen.equals( stringify( 123 ) , "123\n" ) ;
-		doormen.equals( stringify( 123.456 ) , "123.456\n" ) ;
+		expect( stringify( undefined ) ).to.be( "null\n" ) ;
+		expect( stringify( null ) ).to.be( "null\n" ) ;
+		expect( stringify( true ) ).to.be( "true\n" ) ;
+		expect( stringify( false ) ).to.be( "false\n" ) ;
+		expect( stringify( 123 ) ).to.be( "123\n" ) ;
+		expect( stringify( 123.456 ) ).to.be( "123.456\n" ) ;
 	} ) ;
 	
 	it( "stringify empty object/array" , function() {
-		doormen.equals( stringify( [] ) , '<Array>\n' ) ;
-		doormen.equals( stringify( {} ) , '<Object>\n' ) ;
-		doormen.equals( stringify( new TagContainer() ) , '<TagContainer>\n' ) ;
+		expect( stringify( [] ) ).to.be( '<Array>\n' ) ;
+		expect( stringify( {} ) ).to.be( '<Object>\n' ) ;
+		expect( stringify( new TagContainer() ) ).to.be( '<TagContainer>\n' ) ;
 	} ) ;
 	
 	it( "undefined value" , function() {
-		doormen.equals( stringify( {a:{},b:undefined,c:{d:undefined}} ) , 'a: <Object>\nc: <Object>\n' ) ;
-		doormen.equals( stringify( [{},undefined,{d:undefined}] ) , '- <Object>\n- null\n- <Object>\n' ) ;
+		expect( stringify( {a:{},b:undefined,c:{d:undefined}} ) ).to.be( 'a: <Object>\nc: <Object>\n' ) ;
+		expect( stringify( [{},undefined,{d:undefined}] ) ).to.be( '- <Object>\n- null\n- <Object>\n' ) ;
 	} ) ;
 	
 	it( "stringify a basic object" , function() {
@@ -167,21 +160,20 @@ describe( "KFG stringify" , function() {
 		//console.log( s ) ;
 		
 		// Check that the original object and the stringified/parsed object are equals:
-		doormen.equals( o , parse( s ) ) ;
-		//require( 'expect.js' )( o ).to.eql( parse( s ) ) ;
+		expect( o ).to.equal( parse( s ) ) ;
 	} ) ;
 	
 	it( "stringify ref" , function() {
-		doormen.equals( stringify( new Ref( '$path.to.var' ) ) , '$path.to.var\n' ) ;
-		doormen.equals( stringify( { ref: new Ref( '$path.to.var' ) } ) , 'ref: $path.to.var\n' ) ;
+		expect( stringify( new Ref( '$path.to.var' ) ) ).to.be( '$path.to.var\n' ) ;
+		expect( stringify( { ref: new Ref( '$path.to.var' ) } ) ).to.be( 'ref: $path.to.var\n' ) ;
 	} ) ;
 	
 	it( "stringify applicable ref" ) ;
 	
 	it( "stringify expression" , function() {
-		doormen.equals( stringify( parse( '$= 1 + ( 2 * ( 3 * $path.to.my.var ) )' ) ) , '$= 1 + ( 2 * ( 3 * $path.to.my.var ) )\n' ) ;
-		doormen.equals( stringify( parse( 'expression: $= 1 + ( 2 * ( 3 * $path.to.my.var ) )' ) ) , 'expression: $= 1 + ( 2 * ( 3 * $path.to.my.var ) )\n' ) ;
-		doormen.equals( stringify( parse( 'expression: $= $path.to.my.var ??? "bob" "bill" "jack"' ) ) , 'expression: $= $path.to.my.var ??? "bob" "bill" "jack"\n' ) ;
+		expect( stringify( parse( '$= 1 + ( 2 * ( 3 * $path.to.my.var ) )' ) ) ).to.be( '$= 1 + ( 2 * ( 3 * $path.to.my.var ) )\n' ) ;
+		expect( stringify( parse( 'expression: $= 1 + ( 2 * ( 3 * $path.to.my.var ) )' ) ) ).to.be( 'expression: $= 1 + ( 2 * ( 3 * $path.to.my.var ) )\n' ) ;
+		expect( stringify( parse( 'expression: $= $path.to.my.var ??? "bob" "bill" "jack"' ) ) ).to.be( 'expression: $= $path.to.my.var ??? "bob" "bill" "jack"\n' ) ;
 	} ) ;
 	
 	it.skip( "stringify applicable expression" , function() {
@@ -189,18 +181,18 @@ describe( "KFG stringify" , function() {
 	} ) ;
 	
 	it( "stringify templates" , function() {
-		doormen.equals( stringify( { tpl: new TemplateSentence( 'Hello ${name}!' ) } ) , 'tpl: $> Hello ${name}!\n' ) ;
-		doormen.equals( stringify( { tpl: new TemplateSentence( 'Hey!\nHello ${name}!' ) } ) , 'tpl: \n\t$> Hey!\n\t$> Hello ${name}!\n' ) ;
-		doormen.equals( stringify( { tpl: new TemplateSentence( 'Hello ${name}!' ) } , { preferQuotes: true } ) , 'tpl: $"Hello ${name}!"\n' ) ;
-		doormen.equals( stringify( { tpl: new TemplateSentence( 'Hey!\nHello ${name}!' ) } , { preferQuotes: true } ) , 'tpl: $"Hey!\\nHello ${name}!"\n' ) ;
+		expect( stringify( { tpl: new TemplateSentence( 'Hello ${name}!' ) } ) ).to.be( 'tpl: $> Hello ${name}!\n' ) ;
+		expect( stringify( { tpl: new TemplateSentence( 'Hey!\nHello ${name}!' ) } ) ).to.be( 'tpl: \n\t$> Hey!\n\t$> Hello ${name}!\n' ) ;
+		expect( stringify( { tpl: new TemplateSentence( 'Hello ${name}!' ) } , { preferQuotes: true } ) ).to.be( 'tpl: $"Hello ${name}!"\n' ) ;
+		expect( stringify( { tpl: new TemplateSentence( 'Hey!\nHello ${name}!' ) } , { preferQuotes: true } ) ).to.be( 'tpl: $"Hey!\\nHello ${name}!"\n' ) ;
 		
-		doormen.equals( stringify( new TemplateSentence( 'Hello ${name}!' ) ) , '$> Hello ${name}!\n' ) ;
-		doormen.equals( stringify( new TemplateSentence( 'Hey!\nHello ${name}!' ) ) , '$> Hey!\n$> Hello ${name}!\n' ) ;
-		doormen.equals( stringify( new TemplateSentence( 'Hello ${name}!' ) , { preferQuotes: true } ) , '$"Hello ${name}!"\n' ) ;
-		doormen.equals( stringify( new TemplateSentence( 'Hey!\nHello ${name}!' ) , { preferQuotes: true } ) , '$"Hey!\\nHello ${name}!"\n' ) ;
+		expect( stringify( new TemplateSentence( 'Hello ${name}!' ) ) ).to.be( '$> Hello ${name}!\n' ) ;
+		expect( stringify( new TemplateSentence( 'Hey!\nHello ${name}!' ) ) ).to.be( '$> Hey!\n$> Hello ${name}!\n' ) ;
+		expect( stringify( new TemplateSentence( 'Hello ${name}!' ) , { preferQuotes: true } ) ).to.be( '$"Hello ${name}!"\n' ) ;
+		expect( stringify( new TemplateSentence( 'Hey!\nHello ${name}!' ) , { preferQuotes: true } ) ).to.be( '$"Hey!\\nHello ${name}!"\n' ) ;
 		
-		doormen.equals( stringify( { tpl: new TemplateSentence( '' ) } ) , 'tpl: <Sentence>\n' ) ;
-		doormen.equals( stringify( new TemplateSentence( '' ) ) , '<Sentence>\n' ) ;
+		expect( stringify( { tpl: new TemplateSentence( '' ) } ) ).to.be( 'tpl: <Sentence>\n' ) ;
+		expect( stringify( new TemplateSentence( '' ) ) ).to.be( '<Sentence>\n' ) ;
 	} ) ;
 	
 	it( "stringify applicable templates" ) ;
@@ -227,12 +219,10 @@ describe( "KFG stringify" , function() {
 		//console.log( string.escape.control( s ) ) ;
 		//console.log( parse( s ) ) ;
 		
-		var expected = 'attack: (+) 2\ndefense: (-) 1\ntime: (*) 0.9\ndamages: (u-ops) 1.2\n+strange key: 3\n"(another strange key)": 5\n"-hey": 5\n~hey: 5\n(#*>) @@/path/to/*/something/\n(*>) @/path/to/something/\n() @/path/to/something/\n() @@/path/to/something/\nlist:\n\t- one\n\t- two\n\t- @@/path/to/something/\n' ;
-		doormen.equals( s , expected ) ;
+		expect( s ).to.be( 'attack: (+) 2\ndefense: (-) 1\ntime: (*) 0.9\ndamages: (u-ops) 1.2\n+strange key: 3\n"(another strange key)": 5\n"-hey": 5\n~hey: 5\n(#*>) @@/path/to/*/something/\n(*>) @/path/to/something/\n() @/path/to/something/\n() @@/path/to/something/\nlist:\n\t- one\n\t- two\n\t- @@/path/to/something/\n' ) ;
 		
 		// Check that the original object and the stringified/parsed object are equals:
-		//require( 'expect.js' )( o ).to.eql( parse( s ) ) ;
-		doormen.equals( o , parse( s ) ) ;
+		expect( o ).to.equal( parse( s ) ) ;
 	} ) ;
 	
 	it( "stringify an object with special instances (bin, date, regex)" , function() {
@@ -261,8 +251,7 @@ describe( "KFG stringify" , function() {
 		//console.log( string.escape.control( s ) ) ;
 		//console.log( parse( s ) ) ;
 		
-		var expected = 'bin: <bin16> af461e0a\ndate1: <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)\nregex1: <regex> /abc/\narray:\n\t-\t- <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)\n\t\t- <regex> /abc/gi\n\t-\t- <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)\n\t\t- <regex> /abc/gi\nobject:\n\tdate2: <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)\n\tregex2: <regex> /abc/gi\n' ;
-		doormen.equals( s , expected ) ;
+		expect( s ).to.be( 'bin: <bin16> af461e0a\ndate1: <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)\nregex1: <regex> /abc/\narray:\n\t-\t- <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)\n\t\t- <regex> /abc/gi\n\t-\t- <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)\n\t\t- <regex> /abc/gi\nobject:\n\tdate2: <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)\n\tregex2: <regex> /abc/gi\n' ) ;
 		
 		var o2 = parse( s ) ;
 		
@@ -275,7 +264,7 @@ describe( "KFG stringify" , function() {
 		delete o.bin ;
 		delete o2.bin ;
 		
-		doormen.equals( o2 , o ) ;
+		expect( o2 ).to.equal( o ) ;
 	} ) ;
 	
 	it( "stringify an object with special custom instances" , function() {
@@ -311,17 +300,14 @@ describe( "KFG stringify" , function() {
 		} ;
 		
 		//console.log( stringify( o , { classes: stringifier } ) ) ;
-		doormen.equals(
-			stringify( o , { classes: stringifier } ) ,
-			"simple: <Simple> abc\ncomplex: <Complex>\n\tstr: hello\n\tint: 6\n"
-		) ;
+		expect( stringify( o , { classes: stringifier } ) ).to.be( "simple: <Simple> abc\ncomplex: <Complex>\n\tstr: hello\n\tint: 6\n" ) ;
 	} ) ;
 	
 	it( "stringify dynamic instance" , function() {
-		doormen.equals( stringify( parse( "el: $<Atom> $> ${name}" ) ) , "el: $<Atom> $> ${name}\n" ) ;
+		expect( stringify( parse( "el: $<Atom> $> ${name}" ) ) ).to.be( "el: $<Atom> $> ${name}\n" ) ;
 		
 		// This does not make sense for the <Atom> constructor, but we don't care, it's just for the testing purpose
-		doormen.equals( stringify( parse( "el: $<Atom>\n\tbob: true\n\tbill: false" ) ) , "el: $<Atom>\n\tbob: true\n\tbill: false\n" ) ;
+		expect( stringify( parse( "el: $<Atom>\n\tbob: true\n\tbill: false" ) ) ).to.be( "el: $<Atom>\n\tbob: true\n\tbill: false\n" ) ;
 	} ) ;
 	
 	it( "stringify applicable instance of template atoms" ) ;
@@ -332,7 +318,7 @@ describe( "KFG stringify" , function() {
 		var o = parse( content ) ;
 		var s = stringify( o ) ;
 		//console.log( s ) ;
-		doormen.equals( s , expected ) ;
+		expect( s ).to.be( expected ) ;
 	} ) ;
 	
 	it( "stringify an object with tags" , function() {
@@ -355,8 +341,7 @@ describe( "KFG stringify" , function() {
 		//console.log( string.escape.control( s ) ) ;
 		//console.log( parse( s ) ) ;
 		
-		var expected = '[if something > constant]\n\t[do] some tasks\n\t[do] some other tasks\n[else]\n\t[do]\n\t\t[do]\n\t\t\t- one\n\t\t\t- two\n\t\t\t- three\n\t\t[do]\n\t\t\ta: 1\n\t\t\tb: 2\n' ;
-		doormen.equals( s , expected ) ;
+		expect( s ).to.be( '[if something > constant]\n\t[do] some tasks\n\t[do] some other tasks\n[else]\n\t[do]\n\t\t[do]\n\t\t\t- one\n\t\t\t- two\n\t\t\t- three\n\t\t[do]\n\t\t\ta: 1\n\t\t\tb: 2\n' ) ;
 		
 		var o2 = parse( s ) ;
 		
@@ -366,7 +351,7 @@ describe( "KFG stringify" , function() {
 		expect( o2 ).to.be.a( TagContainer ) ;
 		expect( o2.children[ 0 ] ).to.be.a( Tag ) ;
 		
-		doormen.equals( o2 , o ) ;
+		expect( o2 ).to.equal( o ) ;
 	} ) ;
 	
 	it( "stringify an object with tags, featuring custom tags prototype" , function() {
@@ -415,8 +400,7 @@ describe( "KFG stringify" , function() {
 		//console.log( string.escape.control( s ) ) ;
 		//console.log( parse( s ) ) ;
 		
-		var expected = '[if something > constant]\n\t[do] some tasks\n\t[do] some other tasks\n[else]\n\t[do]\n\t\t[do]\n\t\t\t- one\n\t\t\t- two\n\t\t\t- three\n\t\t[do]\n\t\t\ta: 1\n\t\t\tb: 2\n' ;
-		doormen.equals( s , expected ) ;
+		expect( s ).to.be( '[if something > constant]\n\t[do] some tasks\n\t[do] some other tasks\n[else]\n\t[do]\n\t\t[do]\n\t\t\t- one\n\t\t\t- two\n\t\t\t- three\n\t\t[do]\n\t\t\ta: 1\n\t\t\tb: 2\n' ) ;
 		
 		var o2 = parse( s , { tags: { if: IfTag.create } } ) ;
 		//console.log( o2 ) ;
@@ -427,7 +411,7 @@ describe( "KFG stringify" , function() {
 		expect( o2 ).to.be.a( TagContainer ) ;
 		expect( o2.children[ 0 ] ).to.be.a( Tag ) ;
 		
-		doormen.equals( o2 , o ) ;
+		expect( o2 ).to.equal( o ) ;
 	} ) ;
 } ) ;
 
@@ -436,84 +420,84 @@ describe( "KFG stringify" , function() {
 describe( "KFG parse" , function() {
 	
 	it( "parse string at top-level" , function() {
-		doormen.equals( parse( '"Hello World!"' ) , "Hello World!" ) ;
-		doormen.equals( parse( '> Hello World!' ) , "Hello World!" ) ;
-		doormen.equals( parse( '>   Hello World!' ) , "  Hello World!" ) ;
-		doormen.equals( parse( '>   Hello World!  ' ) , "  Hello World!  " ) ;
-		doormen.equals( parse( '> \tHello World!' ) , "\tHello World!" ) ;
-		doormen.equals( parse( '> \t\t\tHello\t\tWorld!' ) , "\t\t\tHello\t\tWorld!" ) ;
-		doormen.equals( parse( 'Hello World!' ) , "Hello World!" ) ;
-		//doormen.equals( parse( '  Hello World!  ' ) , "Hello World!" ) ;	// Do not work with space indentation
-		doormen.equals( parse( '"123"' ) , "123" ) ;
-		doormen.equals( parse( '"123.45"' ) , "123.45" ) ;
-		doormen.equals( parse( '> 123' ) , "123" ) ;
-		doormen.equals( parse( '> 123.45' ) , "123.45" ) ;
-		//doormen.equals( parse( 'this is not: an object' ) , "this is not: an object" ) ;
+		expect( parse( '"Hello World!"' ) ).to.be( "Hello World!" ) ;
+		expect( parse( '> Hello World!' ) ).to.be( "Hello World!" ) ;
+		expect( parse( '>   Hello World!' ) ).to.be( "  Hello World!" ) ;
+		expect( parse( '>   Hello World!  ' ) ).to.be( "  Hello World!  " ) ;
+		expect( parse( '> \tHello World!' ) ).to.be( "\tHello World!" ) ;
+		expect( parse( '> \t\t\tHello\t\tWorld!' ) ).to.be( "\t\t\tHello\t\tWorld!" ) ;
+		expect( parse( 'Hello World!' ) ).to.be( "Hello World!" ) ;
+		//expect( parse( '  Hello World!  ' ) ).to.be( "Hello World!" ) ;	// Do not work with space indentation
+		expect( parse( '"123"' ) ).to.be( "123" ) ;
+		expect( parse( '"123.45"' ) ).to.be( "123.45" ) ;
+		expect( parse( '> 123' ) ).to.be( "123" ) ;
+		expect( parse( '> 123.45' ) ).to.be( "123.45" ) ;
+		//expect( parse( 'this is not: an object' ) ).to.be( "this is not: an object" ) ;
 	} ) ;
 	
 	it( "parse multi-line string at top-level" , function() {
-		doormen.equals( parse( '> Hello\n> World!' ) , "Hello\nWorld!" ) ;
-		//doormen.equals( parse( 'Hello\nWorld!' ) , "Hello\nWorld!" ) ;
+		expect( parse( '> Hello\n> World!' ) ).to.be( "Hello\nWorld!" ) ;
+		//expect( parse( 'Hello\nWorld!' ) ).to.be( "Hello\nWorld!" ) ;
 	} ) ;
 	
 	it( "parse multi-line folding string at top-level" , function() {
-		doormen.equals( parse( '>> Hello\n>> World!' ) , "Hello World!" ) ;
-		doormen.equals( parse( '>>   Hello  \n>>    World!   ' ) , "Hello World!" ) ;
-		doormen.equals( parse( '>> Hello\n>>\n>> World!' ) , "Hello\nWorld!" ) ;
-		doormen.equals( parse( '>> Hello\n>>\n>>\n>> World!' ) , "Hello\n\nWorld!" ) ;
-		doormen.equals( parse( '>>  \t\t Hello \t\t \n>>  \t\t  World! \t\t  ' ) , "Hello World!" ) ;
-		doormen.equals( parse( '>> multi\n>> ple\n>> lines' ) , "multi ple lines" ) ;
-		doormen.equals( parse( '>> multi\n>> ple\n>>\n>> lines' ) , "multi ple\nlines" ) ;
-		doormen.equals( parse( '>> multi\n>> ple\n>> \n>>    \n>>\n>> lines' ) , "multi ple\n\n\nlines" ) ;
+		expect( parse( '>> Hello\n>> World!' ) ).to.be( "Hello World!" ) ;
+		expect( parse( '>>   Hello  \n>>    World!   ' ) ).to.be( "Hello World!" ) ;
+		expect( parse( '>> Hello\n>>\n>> World!' ) ).to.be( "Hello\nWorld!" ) ;
+		expect( parse( '>> Hello\n>>\n>>\n>> World!' ) ).to.be( "Hello\n\nWorld!" ) ;
+		expect( parse( '>>  \t\t Hello \t\t \n>>  \t\t  World! \t\t  ' ) ).to.be( "Hello World!" ) ;
+		expect( parse( '>> multi\n>> ple\n>> lines' ) ).to.be( "multi ple lines" ) ;
+		expect( parse( '>> multi\n>> ple\n>>\n>> lines' ) ).to.be( "multi ple\nlines" ) ;
+		expect( parse( '>> multi\n>> ple\n>> \n>>    \n>>\n>> lines' ) ).to.be( "multi ple\n\n\nlines" ) ;
 	} ) ;
 	
 	it( "parse non-string scalar at top-level" , function() {
-		doormen.equals( parse( 'null' ) , null ) ;
-		doormen.equals( parse( 'true' ) , true ) ;
-		doormen.equals( parse( 'false' ) , false ) ;
-		doormen.equals( parse( '123' ) , 123 ) ;
-		doormen.equals( parse( '123.456' ) , 123.456 ) ;
+		expect( parse( 'null' ) ).to.be( null ) ;
+		expect( parse( 'true' ) ).to.be( true ) ;
+		expect( parse( 'false' ) ).to.be( false ) ;
+		expect( parse( '123' ) ).to.be( 123 ) ;
+		expect( parse( '123.456' ) ).to.be( 123.456 ) ;
 	} ) ;
 	
 	it( "parse instance at top-level" , function() {
-		doormen.equals( JSON.stringify( parse( "<Bin16> 22" ) ) , '{"type":"Buffer","data":[34]}' ) ;
-		doormen.equals( JSON.stringify( parse( "<Object>" ) ) , '{}' ) ;
-		doormen.equals( JSON.stringify( parse( "<Object>\na: 1" ) ) , '{"a":1}' ) ;
-		doormen.equals( parse( "<TemplateSentence> :string" ).toString() , ':string' ) ;
+		expect( JSON.stringify( parse( "<Bin16> 22" ) ) ).to.be( '{"type":"Buffer","data":[34]}' ) ;
+		expect( JSON.stringify( parse( "<Object>" ) ) ).to.be( '{}' ) ;
+		expect( JSON.stringify( parse( "<Object>\na: 1" ) ) ).to.be( '{"a":1}' ) ;
+		expect( parse( "<TemplateSentence> :string" ).toString() ).to.be( ':string' ) ;
 	} ) ;
 		
 	it( "numbers and string ambiguity" , function() {
-		doormen.equals( parse( "v:1" ) , {v:1} ) ;
-		doormen.equals( parse( "v:1l" ) , {v:"1l"} ) ;
-		doormen.equals( parse( "v:10e2" ) , {v:1000} ) ;
-		doormen.equals( parse( "v:123.5" ) , {v:123.5} ) ;
-		doormen.equals( parse( "v:123.e5" ) , {v:"123.e5"} ) ;
+		expect( parse( "v:1" ) ).to.equal( {v:1} ) ;
+		expect( parse( "v:1l" ) ).to.equal( {v:"1l"} ) ;
+		expect( parse( "v:10e2" ) ).to.equal( {v:1000} ) ;
+		expect( parse( "v:123.5" ) ).to.equal( {v:123.5} ) ;
+		expect( parse( "v:123.e5" ) ).to.equal( {v:"123.e5"} ) ;
 	} ) ;
 	
 	it( "constant and string ambiguity" , function() {
-		doormen.equals( parse( "v:true" ) , {v:true} ) ;
-		doormen.equals( parse( "v:true or false" ) , {v:"true or false"} ) ;
+		expect( parse( "v:true" ) ).to.equal( {v:true} ) ;
+		expect( parse( "v:true or false" ) ).to.equal( {v:"true or false"} ) ;
 	} ) ;
 	
 	it( "unquoted key ambiguity" , function() {
-		doormen.equals( parse( "first-name:Joe" ) , {"first-name":"Joe"} ) ;
-		doormen.equals( parse( "first-name :Joe" ) , {"first-name":"Joe"} ) ;
-		doormen.equals( parse( "first-name   :Joe" ) , {"first-name":"Joe"} ) ;
-		doormen.equals( parse( "first-name: Joe" ) , {"first-name":"Joe"} ) ;
-		doormen.equals( parse( "first-name:   Joe" ) , {"first-name":"Joe"} ) ;
-		doormen.equals( parse( "first-name : Joe" ) , {"first-name":"Joe"} ) ;
-		doormen.equals( parse( "first-name   :   Joe" ) , {"first-name":"Joe"} ) ;
+		expect( parse( "first-name:Joe" ) ).to.equal( {"first-name":"Joe"} ) ;
+		expect( parse( "first-name :Joe" ) ).to.equal( {"first-name":"Joe"} ) ;
+		expect( parse( "first-name   :Joe" ) ).to.equal( {"first-name":"Joe"} ) ;
+		expect( parse( "first-name: Joe" ) ).to.equal( {"first-name":"Joe"} ) ;
+		expect( parse( "first-name:   Joe" ) ).to.equal( {"first-name":"Joe"} ) ;
+		expect( parse( "first-name : Joe" ) ).to.equal( {"first-name":"Joe"} ) ;
+		expect( parse( "first-name   :   Joe" ) ).to.equal( {"first-name":"Joe"} ) ;
 		
-		doormen.equals( parse( "first name: Joe" ) , {"first name":"Joe"} ) ;
-		doormen.equals( parse( "first name   :   Joe" ) , {"first name":"Joe"} ) ;
+		expect( parse( "first name: Joe" ) ).to.equal( {"first name":"Joe"} ) ;
+		expect( parse( "first name   :   Joe" ) ).to.equal( {"first name":"Joe"} ) ;
 		
-		doormen.equals( parse( "null: Joe" ) , {"null":"Joe"} ) ;
-		doormen.equals( parse( "true: Joe" ) , {"true":"Joe"} ) ;
-		doormen.equals( parse( "false: Joe" ) , {"false":"Joe"} ) ;
+		expect( parse( "null: Joe" ) ).to.equal( {"null":"Joe"} ) ;
+		expect( parse( "true: Joe" ) ).to.equal( {"true":"Joe"} ) ;
+		expect( parse( "false: Joe" ) ).to.equal( {"false":"Joe"} ) ;
 	} ) ;
 	
 	it( "quoted key" , function() {
-		doormen.equals( parse( '"some:\\"bizarre:\\nkey" : value' ) , {"some:\"bizarre:\nkey":"value"} ) ;
+		expect( parse( '"some:\\"bizarre:\\nkey" : value' ) ).to.equal( {"some:\"bizarre:\nkey":"value"} ) ;
 	} ) ;
 	
 	it( "unquoted tabs should not be parsed as string but as undefined" , function() {
@@ -521,26 +505,26 @@ describe( "KFG parse" , function() {
 		
 		o = parse( "object:\t\t\t\n\ta: 1" ) ;
 		//console.log( o ) ;
-		doormen.equals( o , { object: { a: 1 } } ) ;
+		expect( o ).to.equal( { object: { a: 1 } } ) ;
 		
 		o = parse( "[tag]\t\t\t\n\ta: 1" ) ;
 		//console.log( o ) ; console.log( JSON.stringify( o ) ) ;
-		doormen.equals( JSON.stringify( o ) , '{"children":[{"name":"tag","content":{"a":1},"attributes":null}]}' ) ;
+		expect( JSON.stringify( o ) ).to.be( '{"children":[{"name":"tag","content":{"a":1},"attributes":null}]}' ) ;
 	} ) ;
 	
 	it( "comment ambiguity" , function() {
-		doormen.equals( parse( "#comment\nkey: value" ) , { key: "value" } ) ;
-		doormen.equals( parse( "key: value # comment" ) , { key: "value # comment" } ) ;
-		doormen.equals( parse( "object:\n\t# comment\n\tkey: value" ) , { object: { key: "value" } } ) ;
-		doormen.equals( parse( "object:\n# comment\n\tkey: value" ) , { object: { key: "value" } } ) ;
-		doormen.equals( parse( "object:\n\t\t# comment\n\tkey: value" ) , { object: { key: "value" } } ) ;
+		expect( parse( "#comment\nkey: value" ) ).to.equal( { key: "value" } ) ;
+		expect( parse( "key: value # comment" ) ).to.equal( { key: "value # comment" } ) ;
+		expect( parse( "object:\n\t# comment\n\tkey: value" ) ).to.equal( { object: { key: "value" } } ) ;
+		expect( parse( "object:\n# comment\n\tkey: value" ) ).to.equal( { object: { key: "value" } } ) ;
+		expect( parse( "object:\n\t\t# comment\n\tkey: value" ) ).to.equal( { object: { key: "value" } } ) ;
 	} ) ;
 	
 	it( "parse a basic file" , function() {
 		
 		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/simple.kfg' , 'utf8' ) ) ;
 		
-		doormen.equals( o , {
+		expect( o ).to.equal( {
 			a: 1,
 			b: 2,
 			c: 3,
@@ -581,14 +565,14 @@ describe( "KFG parse" , function() {
 		} ) ;
 		
 		//console.log( kungFig.getMeta( o ).getFirstTag( 'meta' ).content ) ;
-		doormen.equals( kungFig.getMeta( o ).getFirstTag( 'meta' ).content , { content: "test" } ) ;
+		expect( kungFig.getMeta( o ).getFirstTag( 'meta' ).content ).to.equal( { content: "test" } ) ;
 	} ) ;
 	
 	it( "parse a file using 4-spaces to indent" , function() {
 		
 		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/spaces-indent.kfg' , 'utf8' ) ) ;
 		
-		doormen.equals( o , {
+		expect( o ).to.equal( {
 			a: 1,
 			b: 2,
 			c: 3,
@@ -629,7 +613,7 @@ describe( "KFG parse" , function() {
 		} ) ;
 		
 		//console.log( kungFig.getMeta( o ).getFirstTag( 'meta' ).content ) ;
-		doormen.equals( kungFig.getMeta( o ).getFirstTag( 'meta' ).content , { content: "test" } ) ;
+		expect( kungFig.getMeta( o ).getFirstTag( 'meta' ).content ).to.equal( { content: "test" } ) ;
 	} ) ;
 	
 	it( "parse ref" , function() {
@@ -637,16 +621,16 @@ describe( "KFG parse" , function() {
 		var ctx = { name: "Bob" , bob: { age: 43 } } ;
 		
 		o = parse( "ref: <Ref>" ) ;
-		doormen.equals( o.ref.get() , undefined ) ;
+		expect( o.ref.get() ).to.be( undefined ) ;
 		
 		o = parse( "ref: $name" ) ;
-		doormen.equals( o.ref.get() , undefined ) ;
+		expect( o.ref.get() ).to.be( undefined ) ;
 		
 		o = parse( "ref: $name\nref2: $bob.age" ) ;
-		doormen.equals( o.ref.get( ctx ) , "Bob" ) ;
-		doormen.equals( o.ref.toString( ctx ) , "Bob" ) ;
-		doormen.equals( o.ref2.get( ctx ) , 43 ) ;
-		doormen.equals( o.ref2.toString( ctx ) , "43" ) ;
+		expect( o.ref.get( ctx ) ).to.be( "Bob" ) ;
+		expect( o.ref.toString( ctx ) ).to.be( "Bob" ) ;
+		expect( o.ref2.get( ctx ) ).to.be( 43 ) ;
+		expect( o.ref2.toString( ctx ) ).to.be( "43" ) ;
 	} ) ;
 	
 	it( "parse applicable ref" , function() {
@@ -654,11 +638,11 @@ describe( "KFG parse" , function() {
 		var ctx = { name: "Bob" , bob: { age: 43 } } ;
 		
 		o = parse( "ref: $$name\nref2: $$bob.age" ) ;
-		doormen.equals( o.ref.get( ctx ) , o.ref ) ;
-		doormen.equals( o.ref2.get( ctx ) , o.ref2 ) ;
+		expect( o.ref.get( ctx ) ).to.be( o.ref ) ;
+		expect( o.ref2.get( ctx ) ).to.be( o.ref2 ) ;
 		
-		doormen.equals( o.ref.apply( ctx ) , "Bob" ) ;
-		doormen.equals( o.ref2.apply( ctx ) , 43 ) ;
+		expect( o.ref.apply( ctx ) ).to.be( "Bob" ) ;
+		expect( o.ref2.apply( ctx ) ).to.be( 43 ) ;
 	} ) ;
 	
 	it( "parse expressions" , function() {
@@ -666,55 +650,55 @@ describe( "KFG parse" , function() {
 		var ctx = { name: "Bob" , bob: { age: 43 } , bill: { age: 37 } } ;
 		
 		//o = parse( "exp: <Expression>" ) ;
-		//doormen.equals( o.exp , undefined ) ;
+		//expect( o.exp ).to.be( undefined ) ;
 		
 		o = parse( "exp: $= $name" ) ;
-		doormen.equals( o.exp.getFinalValue( ctx ) , "Bob" ) ;
+		expect( o.exp.getFinalValue( ctx ) ).to.be( "Bob" ) ;
 		
 		o = parse( "exp: $= $bob.age" ) ;
-		doormen.equals( o.exp.getFinalValue( ctx ) , 43 ) ;
+		expect( o.exp.getFinalValue( ctx ) ).to.be( 43 ) ;
 		
 		o = parse( "exp: $= $bob.age + 2" ) ;
-		doormen.equals( o.exp.getFinalValue( ctx ) , 45 ) ;
+		expect( o.exp.getFinalValue( ctx ) ).to.be( 45 ) ;
 		
 		o = parse( "exp: $= 5 + $bob.age" ) ;
-		doormen.equals( o.exp.getFinalValue( ctx ) , 48 ) ;
+		expect( o.exp.getFinalValue( ctx ) ).to.be( 48 ) ;
 		
 		o = parse( "exp: $=5 + $bob.age" ) ;
-		doormen.equals( o.exp.getFinalValue( ctx ) , 48 ) ;
+		expect( o.exp.getFinalValue( ctx ) ).to.be( 48 ) ;
 		
 		o = parse( "exp: $= $bob.age - $bill.age" ) ;
-		doormen.equals( o.exp.getFinalValue( ctx ) , 6 ) ;
+		expect( o.exp.getFinalValue( ctx ) ).to.be( 6 ) ;
 		
 		o = parse( "exp: $= - $bill.age" ) ;
-		doormen.equals( o.exp.getFinalValue( ctx ) , -37 ) ;
+		expect( o.exp.getFinalValue( ctx ) ).to.be( -37 ) ;
 		
 		o = parse( "exp: $= ( $bill.age + 3 ) / 10" ) ;
-		doormen.equals( o.exp.getFinalValue( ctx ) , 4 ) ;
+		expect( o.exp.getFinalValue( ctx ) ).to.be( 4 ) ;
 		
 		o = parse( "exp: $= $bill.age < $bob.age" ) ;
-		doormen.equals( o.exp.getFinalValue( ctx ) , true ) ;
+		expect( o.exp.getFinalValue( ctx ) ).to.be( true ) ;
 		
 		o = parse( "exp: $= $bill.age > $bob.age" ) ;
-		doormen.equals( o.exp.getFinalValue( ctx ) , false ) ;
+		expect( o.exp.getFinalValue( ctx ) ).to.be( false ) ;
 		
 		o = parse( "exp: $= $bill.age == $bob.age" ) ;
-		doormen.equals( o.exp.getFinalValue( ctx ) , false ) ;
+		expect( o.exp.getFinalValue( ctx ) ).to.be( false ) ;
 		
 		o = parse( "exp: $= ( $bill.age + 6 ) == $bob.age" ) ;
-		doormen.equals( o.exp.getFinalValue( ctx ) , true ) ;
+		expect( o.exp.getFinalValue( ctx ) ).to.be( true ) ;
 		
 		o = parse( "exp: $= $bill.age != $bob.age" ) ;
-		doormen.equals( o.exp.getFinalValue( ctx ) , true ) ;
+		expect( o.exp.getFinalValue( ctx ) ).to.be( true ) ;
 		
 		o = parse( "exp: $= ( $bill.age + 6 ) != $bob.age" ) ;
-		doormen.equals( o.exp.getFinalValue( ctx ) , false ) ;
+		expect( o.exp.getFinalValue( ctx ) ).to.be( false ) ;
 		
 		o = parse( "exp: $= ! ( $bill.age == $bob.age )" ) ;
-		doormen.equals( o.exp.getFinalValue( ctx ) , true ) ;
+		expect( o.exp.getFinalValue( ctx ) ).to.be( true ) ;
 		
 		o = parse( "exp: $= ! ( ( $bill.age + 6 ) == $bob.age )" ) ;
-		doormen.equals( o.exp.getFinalValue( ctx ) , false ) ;
+		expect( o.exp.getFinalValue( ctx ) ).to.be( false ) ;
 	} ) ;
 	
 	it( "parse multi-line expressions" , function() {
@@ -722,13 +706,13 @@ describe( "KFG parse" , function() {
 		var ctx = { name: "Bob" , bob: { age: 43 } , bill: { age: 37 } } ;
 		
 		o = parse( "exp:\n\t$= $bob.age + 2" ) ;
-		doormen.equals( o.exp.getFinalValue( ctx ) , 45 ) ;
+		expect( o.exp.getFinalValue( ctx ) ).to.be( 45 ) ;
 		
 		o = parse( "exp:\n\t$= $bob.age\n\t$= + 2" ) ;
-		doormen.equals( o.exp.getFinalValue( ctx ) , 45 ) ;
+		expect( o.exp.getFinalValue( ctx ) ).to.be( 45 ) ;
 		
 		o = parse( "exp:\n\t$=  $bob.age  \n\t$=   +  \n\t\n\t$=\n\t$= \n\t$=    \n\t$=  2  " ) ;
-		doormen.equals( o.exp.getFinalValue( ctx ) , 45 ) ;
+		expect( o.exp.getFinalValue( ctx ) ).to.be( 45 ) ;
 		
 		// Try with custom operators
 		var operators = {
@@ -736,7 +720,7 @@ describe( "KFG parse" , function() {
 		} ;
 		
 		o = parse( "exp:\n\t$=  triple  \n\t\n\t$=\n\t$= \n\t$=    \n\t$=  $bob.age  " , { operators: operators } ) ;
-		doormen.equals( o.exp.getFinalValue( ctx ) , 129 ) ;
+		expect( o.exp.getFinalValue( ctx ) ).to.be( 129 ) ;
 	} ) ;
 	
 	it( "parse applicable expressions" , function() {
@@ -744,8 +728,8 @@ describe( "KFG parse" , function() {
 		var ctx = { name: "Bob" , bob: { age: 43 } , bill: { age: 37 } } ;
 		
 		o = parse( "exp: $$= $bob.age + 2" ) ;
-		doormen.equals( o.exp.getFinalValue( ctx ) , o.exp ) ;
-		doormen.equals( o.exp.apply( ctx ) , 45 ) ;
+		expect( o.exp.getFinalValue( ctx ) ).to.be( o.exp ) ;
+		expect( o.exp.apply( ctx ) ).to.be( 45 ) ;
 	} ) ;
 	
 	it( "parse templates" , function() {
@@ -756,55 +740,55 @@ describe( "KFG parse" , function() {
 		// console.log( o.tpl.toString( { name: "Bob" } ) ) ;
 		
 		o = parse( "tpl: <TemplateSentence>" ) ;
-		doormen.equals( o.tpl.toString() , '' ) ;
+		expect( o.tpl.toString() ).to.be( '' ) ;
 		
 		o = parse( "tpl: $> Hello ${name}!" ) ;
-		doormen.equals( o.tpl.toString() , 'Hello (undefined)!' ) ;
-		doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello Bob!' ) ;
+		expect( o.tpl.toString() ).to.be( 'Hello (undefined)!' ) ;
+		expect( o.tpl.toString( { name: "Bob" } ) ).to.be( 'Hello Bob!' ) ;
 		
 		o = parse( "tpl:\n\t$> Hello ${name}!" ) ;
-		doormen.equals( o.tpl.toString() , 'Hello (undefined)!' ) ;
-		doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello Bob!' ) ;
+		expect( o.tpl.toString() ).to.be( 'Hello (undefined)!' ) ;
+		expect( o.tpl.toString( { name: "Bob" } ) ).to.be( 'Hello Bob!' ) ;
 		
 		o = parse( "tpl:\n\t$> Hello ${name}!\n\t$> How are you ${name}?" ) ;
-		doormen.equals( o.tpl.toString() , 'Hello (undefined)!\nHow are you (undefined)?' ) ;
-		doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello Bob!\nHow are you Bob?' ) ;
+		expect( o.tpl.toString() ).to.be( 'Hello (undefined)!\nHow are you (undefined)?' ) ;
+		expect( o.tpl.toString( { name: "Bob" } ) ).to.be( 'Hello Bob!\nHow are you Bob?' ) ;
 		
 		o = parse( 'tpl: $"Hello ${name}!"' ) ;
-		doormen.equals( o.tpl.toString() , 'Hello (undefined)!' ) ;
-		doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello Bob!' ) ;
+		expect( o.tpl.toString() ).to.be( 'Hello (undefined)!' ) ;
+		expect( o.tpl.toString( { name: "Bob" } ) ).to.be( 'Hello Bob!' ) ;
 		
 		// Top-level templates
 		o = parse( "<TemplateSentence>" ) ;
-		doormen.equals( o.toString() , '' ) ;
+		expect( o.toString() ).to.be( '' ) ;
 		
 		o = parse( '$"Hello ${name}!"' ) ;
-		doormen.equals( o.toString() , 'Hello (undefined)!' ) ;
-		doormen.equals( o.toString( { name: "Bob" } ) , 'Hello Bob!' ) ;
+		expect( o.toString() ).to.be( 'Hello (undefined)!' ) ;
+		expect( o.toString( { name: "Bob" } ) ).to.be( 'Hello Bob!' ) ;
 		
 		o = parse( '$> Hello ${name}!' ) ;
-		doormen.equals( o.toString() , 'Hello (undefined)!' ) ;
-		doormen.equals( o.toString( { name: "Bob" } ) , 'Hello Bob!' ) ;
+		expect( o.toString() ).to.be( 'Hello (undefined)!' ) ;
+		expect( o.toString( { name: "Bob" } ) ).to.be( 'Hello Bob!' ) ;
 		
 		o = parse( '$> Hey!\n$> Hello ${name}!' ) ;
-		doormen.equals( o.toString() , 'Hey!\nHello (undefined)!' ) ;
-		doormen.equals( o.toString( { name: "Bob" } ) , 'Hey!\nHello Bob!' ) ;
+		expect( o.toString() ).to.be( 'Hey!\nHello (undefined)!' ) ;
+		expect( o.toString( { name: "Bob" } ) ).to.be( 'Hey!\nHello Bob!' ) ;
 	} ) ;
 	
 	it( "parse applicable templates" , function() {
 		var o ;
 		
 		o = parse( "tpl: $$> Hello ${name}!" ) ;
-		doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello ${name}!' ) ;
-		doormen.equals( o.tpl.apply( { name: "Bob" } ) , 'Hello Bob!' ) ;
+		expect( o.tpl.toString( { name: "Bob" } ) ).to.be( 'Hello ${name}!' ) ;
+		expect( o.tpl.apply( { name: "Bob" } ) ).to.be( 'Hello Bob!' ) ;
 		
 		o = parse( "tpl:\n\t$$> Hello ${name}!" ) ;
-		doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello ${name}!' ) ;
-		doormen.equals( o.tpl.apply( { name: "Bob" } ) , 'Hello Bob!' ) ;
+		expect( o.tpl.toString( { name: "Bob" } ) ).to.be( 'Hello ${name}!' ) ;
+		expect( o.tpl.apply( { name: "Bob" } ) ).to.be( 'Hello Bob!' ) ;
 		
 		o = parse( 'tpl: $$"Hello ${name}!"' ) ;
-		doormen.equals( o.tpl.toString( { name: "Bob" } ) , 'Hello ${name}!' ) ;
-		doormen.equals( o.tpl.apply( { name: "Bob" } ) , 'Hello Bob!' ) ;
+		expect( o.tpl.toString( { name: "Bob" } ) ).to.be( 'Hello ${name}!' ) ;
+		expect( o.tpl.apply( { name: "Bob" } ) ).to.be( 'Hello Bob!' ) ;
 	} ) ;
 	
 	/*
@@ -813,31 +797,31 @@ describe( "KFG parse" , function() {
 		
 		o = parse( "el: $%> horse" ) ;
 		console.log( 'o:' , o ) ;
-		surfaceEquals( o.el , { k: "horse" } ) ;
-		doormen.equals( o.el.toString() , 'horse' ) ;
+		expect( o.el ).to.be.like( { k: "horse" } ) ;
+		expect( o.el.toString() ).to.be( 'horse' ) ;
 		
 		o = parse( 'el: $%"horse"' ) ;
-		surfaceEquals( o.el , { k: "horse" } ) ;
-		doormen.equals( o.el.toString() , 'horse' ) ;
+		expect( o.el ).to.be.like( { k: "horse" } ) ;
+		expect( o.el.toString() ).to.be( 'horse' ) ;
 		
 		o = parse( "el: $%> horse[n?horse|horses]" ) ;
-		surfaceEquals( o.el , { k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
-		doormen.equals( o.el.toString() , 'horse' ) ;
+		expect( o.el ).to.be.like( { k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
+		expect( o.el.toString() ).to.be( 'horse' ) ;
 		
 		o = parse( "el:\n\t$%> horse[n?horse|horses]" ) ;
-		surfaceEquals( o.el , { k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
-		doormen.equals( o.el.toString() , 'horse' ) ;
+		expect( o.el ).to.be.like( { k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
+		expect( o.el.toString() ).to.be( 'horse' ) ;
 		
 		o = parse( "el: $%> horse[n?horse|horses]" ) ;
-		surfaceEquals( o.el , { k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
-		doormen.equals( o.el.toString() , 'horse' ) ;
+		expect( o.el ).to.be.like( { k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
+		expect( o.el.toString() ).to.be( 'horse' ) ;
 		
 		o = parse( 'el: $%"horse[n?horse|horses]"' ) ;
-		surfaceEquals( o.el , { k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
-		doormen.equals( o.el.toString() , 'horse' ) ;
+		expect( o.el ).to.be.like( { k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
+		expect( o.el.toString() ).to.be( 'horse' ) ;
 		
 		o2 = parse( '$> I like ${el}[n:many]!' ) ;
-		doormen.equals( o2.toString( o ) , 'I like horses!' ) ;
+		expect( o2.toString( o ) ).to.be( 'I like horses!' ) ;
 	} ) ;
 	*/
 	
@@ -846,27 +830,27 @@ describe( "KFG parse" , function() {
 		
 		o = parse( "el: <Atom> horse" ) ;
 		console.log( 'o:' , o ) ;
-		surfaceEquals( o.el , { k: "horse" } ) ;
-		doormen.equals( o.el.toString() , 'horse' ) ;
+		expect( o.el ).to.be.like( { k: "horse" } ) ;
+		expect( o.el.toString() ).to.be( 'horse' ) ;
 		
 		o = parse( 'el: <Atom> "horse"' ) ;
-		surfaceEquals( o.el , { k: "horse" } ) ;
-		doormen.equals( o.el.toString() , 'horse' ) ;
+		expect( o.el ).to.be.like( { k: "horse" } ) ;
+		expect( o.el.toString() ).to.be( 'horse' ) ;
 		
 		o = parse( "el: <Atom> horse[n?horse|horses]" ) ;
-		surfaceEquals( o.el , { k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
-		doormen.equals( o.el.toString() , 'horse' ) ;
+		expect( o.el ).to.be.like( { k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
+		expect( o.el.toString() ).to.be( 'horse' ) ;
 		
 		o = parse( 'el: <Atom> "horse[n?horse|horses]"' ) ;
-		surfaceEquals( o.el , { k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
-		doormen.equals( o.el.toString() , 'horse' ) ;
+		expect( o.el ).to.be.like( { k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
+		expect( o.el.toString() ).to.be( 'horse' ) ;
 		
 		o = parse( "el: <Atom>\n\t> horse[n?horse|horses]" ) ;
-		surfaceEquals( o.el , { k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
-		doormen.equals( o.el.toString() , 'horse' ) ;
+		expect( o.el ).to.be.like( { k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
+		expect( o.el.toString() ).to.be( 'horse' ) ;
 		
 		o2 = parse( '$> I like ${el}[n:many]!' ) ;
-		doormen.equals( o2.toString( o ) , 'I like horses!' ) ;
+		expect( o2.toString( o ) ).to.be( 'I like horses!' ) ;
 	} ) ;
 	
 	it( "parse dynamic instance" , function() {
@@ -875,7 +859,7 @@ describe( "KFG parse" , function() {
 		o = parse( "el: $<Atom> $> ${name}" ) ;
 		//console.log( o.el ) ;
 		//deb( o.el.getValue( { name: 'bob' } ) ) ;
-		surfaceEquals( o.el.getValue( { name: 'bob' } ) , { k: 'bob' } ) ;
+		expect( o.el.getValue( { name: 'bob' } ) ).to.be.like( { k: 'bob' } ) ;
 	} ) ;
 	
 	it( "parse applicable instance" , function() {
@@ -884,8 +868,8 @@ describe( "KFG parse" , function() {
 		o = parse( "el: $$<Atom> $> ${name}" ) ;
 		//console.log( o.el ) ;
 		//deb( o.el.getValue( { name: 'bob' } ) ) ;
-		doormen.equals( o.el.getValue( { name: 'bob' } ) , o.el ) ;
-		surfaceEquals( o.el.apply( { name: 'bob' } ) , { k: 'bob' } ) ;
+		expect( o.el.getValue( { name: 'bob' } ) ).to.be( o.el ) ;
+		expect( o.el.apply( { name: 'bob' } ) ).to.be.like( { k: 'bob' } ) ;
 	} ) ;
 	
 	/*
@@ -893,12 +877,12 @@ describe( "KFG parse" , function() {
 		var o , o2 ;
 		
 		o = parse( "el: $$%> horse[n?horse|horses]" ) ;
-		surfaceEquals( o.el , { __isApplicable__: true , __isDynamic__: false , k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
-		doormen.equals( o.el.apply() , 'horse' ) ;
+		expect( o.el ).to.be.like( { __isApplicable__: true , __isDynamic__: false , k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
+		expect( o.el.apply() ).to.be( 'horse' ) ;
 		
 		o = parse( "el:\n\t$$%> horse[n?horse|horses]" ) ;
-		surfaceEquals( o.el , { __isApplicable__: true , __isDynamic__: false , k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
-		doormen.equals( o.el.apply() , 'horse' ) ;
+		expect( o.el ).to.be.like( { __isApplicable__: true , __isDynamic__: false , k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
+		expect( o.el.apply() ).to.be( 'horse' ) ;
 	} )
 	*/
 	
@@ -936,31 +920,31 @@ describe( "KFG parse" , function() {
 		
 		// Using Babel fr
 		o = parse( "el: <Atom> horse" ) ;
-		surfaceEquals( o.el , { k: "horse" } ) ;
-		doormen.equals( o.el.toString( babelFr ) , 'cheval' ) ;
+		expect( o.el ).to.be.like( { k: "horse" } ) ;
+		expect( o.el.toString( babelFr ) ).to.be( 'cheval' ) ;
 		
 		o = parse( "el: <Atom> horse[n?horse|horses]" ) ;
-		surfaceEquals( o.el , { k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
-		doormen.equals( o.el.toString( babelFr ) , 'cheval' ) ;
+		expect( o.el ).to.be.like( { k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
+		expect( o.el.toString( babelFr ) ).to.be( 'cheval' ) ;
 		
 		o.__babel = babelFr ;
 		
 		o2 = parse( '$> I like ${el}[n:many]!' ) ;
-		doormen.equals( o2.toString( o ) , "J'aime les chevaux!" ) ;
+		expect( o2.toString( o ) ).to.be( "J'aime les chevaux!" ) ;
 		
 		o2 = parse( '$> I like ${el}[n:many/g:f]!' ) ;
-		doormen.equals( o2.toString( o ) , "J'aime les juments!" ) ;
+		expect( o2.toString( o ) ).to.be( "J'aime les juments!" ) ;
 		
 		o.el.g = 'f' ;
 		o2 = parse( '$> I like ${el}[n:many]!' ) ;
-		doormen.equals( o2.toString( o ) , "J'aime les juments!" ) ;
+		expect( o2.toString( o ) ).to.be( "J'aime les juments!" ) ;
 	} ) ;
 	
 	it( "parse a file with operators" , function() {
 		
 		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/ops.kfg' , 'utf8' ) ) ;
 		
-		doormen.equals( o , {
+		expect( o ).to.equal( {
 			'+attack': 2,
 			'+defense': -1,
 			'*time': 0.9,
@@ -985,18 +969,17 @@ describe( "KFG parse" , function() {
 		
 		//console.log( JSON.stringify( o ) ) ;
 		
-		doormen.equals(
-			JSON.stringify( o ) ,
+		expect( JSON.stringify( o ) ).to.be(
 			'{"a":1234,"bin":{"type":"Buffer","data":[253,16,75,25]},"date1":"2016-04-29T10:08:14.000Z","date2":"2016-04-29T10:08:08.645Z","b":"toto","regex1":{},"sub":{"sub":{"date3":"1970-01-01T00:00:01.000Z","regex2":{}}},"d":2,"json":{"a":1,"b":2,"array":[1,2,"three"]}}'
 		) ;
 		
-		doormen.equals( o.regex1 instanceof RegExp , true ) ;
-		doormen.equals( o.regex1.toString() , "/abc/" ) ;
+		expect( o.regex1 ).to.be.a( RegExp ) ;
+		expect( o.regex1.toString() ).to.be( "/abc/" ) ;
 		
-		doormen.equals( o.sub.sub.regex2 instanceof RegExp , true ) ;
-		doormen.equals( o.sub.sub.regex2.toString() , "/abc/m" ) ;
+		expect( o.sub.sub.regex2 ).to.be.a( RegExp ) ;
+		expect( o.sub.sub.regex2.toString() ).to.be( "/abc/m" ) ;
 		
-		doormen.equals( o.bin.toString( 'hex' ) , "fd104b19" ) ;
+		expect( o.bin.toString( 'hex' ) ).to.be( "fd104b19" ) ;
 	} ) ;
 	
 	it( "parse a file with ordered object" , function() {
@@ -1005,23 +988,22 @@ describe( "KFG parse" , function() {
 		
 		//console.log( JSON.stringify( o ) ) ;
 		
-		doormen.equals(
-			JSON.stringify( o ) ,
+		expect( JSON.stringify( o ) ).to.be(
 			// Without _keys
 			'{"top":{"name":"John","_index":0},"sub":{"_index":1,"one":{"name":"Bob","_index":0},"two":{"name":"Bill","_index":1},"three":{"name":"Jack","_index":2}}}'
 			// With _keys
 			//'{"_keys":["top","sub"],"top":{"name":"John","_index":0},"sub":{"_keys":["one","two","three"],"_index":1,"one":{"name":"Bob","_index":0},"two":{"name":"Bill","_index":1},"three":{"name":"Jack","_index":2}}}'
 		) ;
 		
-		doormen.equals( o instanceof kungFig.OrderedObject , true ) ;
-		doormen.equals( o.sub instanceof kungFig.OrderedObject , true ) ;
-		doormen.equals( o._keys , [ 'top' , 'sub' ] ) ;
-		doormen.equals( o.top._key , 'top' ) ;
-		doormen.equals( o.sub._key , 'sub' ) ;
-		doormen.equals( o.sub._keys , [ 'one' , 'two' , 'three' ] ) ;
-		doormen.equals( o.sub.one._key , 'one' ) ;
-		doormen.equals( o.sub.two._key , 'two' ) ;
-		doormen.equals( o.sub.three._key , 'three' ) ;
+		expect( o ).to.be.a( kungFig.OrderedObject ) ;
+		expect( o.sub ).to.be.a( kungFig.OrderedObject ) ;
+		expect( o._keys ).to.equal( [ 'top' , 'sub' ] ) ;
+		expect( o.top._key ).to.be( 'top' ) ;
+		expect( o.sub._key ).to.be( 'sub' ) ;
+		expect( o.sub._keys ).to.equal( [ 'one' , 'two' , 'three' ] ) ;
+		expect( o.sub.one._key ).to.be( 'one' ) ;
+		expect( o.sub.two._key ).to.be( 'two' ) ;
+		expect( o.sub.three._key ).to.be( 'three' ) ;
 	} ) ;
 	
 	it( "parse a file with special custom instances" , function() {
@@ -1051,20 +1033,20 @@ describe( "KFG parse" , function() {
 		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/custom-instances.kfg' , 'utf8' ) , options ) ;
 		
 		//console.log( o ) ;
-		doormen.equals( JSON.stringify( o ) , '{"simple":{"str":"abc"},"complex":{"str":"hello","int":6}}' ) ;
+		expect( JSON.stringify( o ) ).to.be( '{"simple":{"str":"abc"},"complex":{"str":"hello","int":6}}' ) ;
 	} ) ;
 	
 	it( "parse tags" , function() {
 		
-		doormen.equals( JSON.stringify( parse( '[tag]' ) ) , '{"children":[{"name":"tag","attributes":null}]}' ) ;
-		doormen.equals( JSON.stringify( parse( '[tag] text' ) ) , '{"children":[{"name":"tag","content":"text","attributes":null}]}' ) ;
-		doormen.equals( JSON.stringify( parse( '[tag] "text"' ) ) , '{"children":[{"name":"tag","content":"text","attributes":null}]}' ) ;
-		doormen.equals( JSON.stringify( parse( '[tag] > text' ) ) , '{"children":[{"name":"tag","content":"text","attributes":null}]}' ) ;
-		doormen.equals( JSON.stringify( parse( '[tag]\n\t> text' ) ) , '{"children":[{"name":"tag","content":"text","attributes":null}]}' ) ;
-		doormen.equals( JSON.stringify( parse( '[tag] true' ) ) , '{"children":[{"name":"tag","content":true,"attributes":null}]}' ) ;
-		doormen.equals( JSON.stringify( parse( '[tag] 123' ) ) , '{"children":[{"name":"tag","content":123,"attributes":null}]}' ) ;
-		doormen.equals( JSON.stringify( parse( '[tag] <Object>' ) ) , '{"children":[{"name":"tag","content":{},"attributes":null}]}' ) ;
-		doormen.equals( JSON.stringify( parse( '[tag] <Object>\n\ta: 1\n\tb: 2' ) ) , '{"children":[{"name":"tag","content":{"a":1,"b":2},"attributes":null}]}' ) ;
+		expect( JSON.stringify( parse( '[tag]' ) ) ).to.be( '{"children":[{"name":"tag","attributes":null}]}' ) ;
+		expect( JSON.stringify( parse( '[tag] text' ) ) ).to.be( '{"children":[{"name":"tag","content":"text","attributes":null}]}' ) ;
+		expect( JSON.stringify( parse( '[tag] "text"' ) ) ).to.be( '{"children":[{"name":"tag","content":"text","attributes":null}]}' ) ;
+		expect( JSON.stringify( parse( '[tag] > text' ) ) ).to.be( '{"children":[{"name":"tag","content":"text","attributes":null}]}' ) ;
+		expect( JSON.stringify( parse( '[tag]\n\t> text' ) ) ).to.be( '{"children":[{"name":"tag","content":"text","attributes":null}]}' ) ;
+		expect( JSON.stringify( parse( '[tag] true' ) ) ).to.be( '{"children":[{"name":"tag","content":true,"attributes":null}]}' ) ;
+		expect( JSON.stringify( parse( '[tag] 123' ) ) ).to.be( '{"children":[{"name":"tag","content":123,"attributes":null}]}' ) ;
+		expect( JSON.stringify( parse( '[tag] <Object>' ) ) ).to.be( '{"children":[{"name":"tag","content":{},"attributes":null}]}' ) ;
+		expect( JSON.stringify( parse( '[tag] <Object>\n\ta: 1\n\tb: 2' ) ) ).to.be( '{"children":[{"name":"tag","content":{"a":1,"b":2},"attributes":null}]}' ) ;
 	} ) ;
 	
 	it( "parse a file containing tags" , function() {
@@ -1076,12 +1058,12 @@ describe( "KFG parse" , function() {
 		//console.log( string.escape.control( JSON.stringify( o ) ) ) ;
 		//console.log( JSON.stringify( o ) ) ;
 		
-		doormen.equals( JSON.stringify( o ) , '{"children":[{"name":"tag","content":{"some":"value","another":"one"},"attributes":"id1"},{"name":"tag","content":{"some":"other value","nested":{"a":1,"b":2,"c":{"children":[{"name":"if","content":{"children":[{"name":"do","content":"some work","attributes":null}]},"attributes":"something > constant"},{"name":"else","content":{"children":[{"name":"do","content":"something else","attributes":null}]},"attributes":null}]}}},"attributes":"id2"},{"name":"container","content":{"children":[{"name":"tag","attributes":null},{"name":"anothertag","attributes":null},{"name":"complex","attributes":"tag hello=\\"<world]]]\\\\\\"!\\" some[3].path[6]"}]},"attributes":null}]}' ) ;
+		expect( JSON.stringify( o ) ).to.be( '{"children":[{"name":"tag","content":{"some":"value","another":"one"},"attributes":"id1"},{"name":"tag","content":{"some":"other value","nested":{"a":1,"b":2,"c":{"children":[{"name":"if","content":{"children":[{"name":"do","content":"some work","attributes":null}]},"attributes":"something > constant"},{"name":"else","content":{"children":[{"name":"do","content":"something else","attributes":null}]},"attributes":null}]}}},"attributes":"id2"},{"name":"container","content":{"children":[{"name":"tag","attributes":null},{"name":"anothertag","attributes":null},{"name":"complex","attributes":"tag hello=\\"<world]]]\\\\\\"!\\" some[3].path[6]"}]},"attributes":null}]}' ) ;
 		
 		//console.log( o.children[ 2 ].content.children[ 0 ].parent ) ;
 		//console.log( o.children[ 2 ].content.children[ 0 ].getParentTag() ) ;
-		doormen.equals( o.children[ 2 ].getParentTag() , null ) ;
-		doormen.equals( o.children[ 2 ] === o.children[ 2 ].content.children[ 0 ].getParentTag() , true ) ;
+		expect( o.children[ 2 ].getParentTag() ).to.be( null ) ;
+		expect( o.children[ 2 ] ).to.be( o.children[ 2 ].content.children[ 0 ].getParentTag() ) ;
 	} ) ;
 	
 	it( "parse a file containing tags, with custom tags prototypes" , function() {
@@ -1117,7 +1099,7 @@ describe( "KFG parse" , function() {
 		//console.log( string.inspect( { style: 'color' , depth: 15 } , o ) ) ;
 		//console.log( string.escape.control( JSON.stringify( o ) ) ) ;
 		
-		doormen.equals( JSON.stringify( o ) , '{"children":[{"name":"tag","content":{"some":"value","another":"one"},"attributes":"id1"},{"name":"tag","content":{"some":"other value","nested":{"a":1,"b":2,"c":{"children":[{"name":"if","content":{"children":[{"name":"do","content":"some work","attributes":null}]},"attributes":{"left":"something","operator":">","right":"constant"}},{"name":"else","content":{"children":[{"name":"do","content":"something else","attributes":null}]},"attributes":null}]}}},"attributes":"id2"},{"name":"container","content":{"children":[{"name":"tag","attributes":null},{"name":"anothertag","attributes":null},{"name":"complex","attributes":"tag hello=\\"<world]]]\\\\\\"!\\" some[3].path[6]"}]},"attributes":null}]}' ) ;
+		expect( JSON.stringify( o ) ).to.be( '{"children":[{"name":"tag","content":{"some":"value","another":"one"},"attributes":"id1"},{"name":"tag","content":{"some":"other value","nested":{"a":1,"b":2,"c":{"children":[{"name":"if","content":{"children":[{"name":"do","content":"some work","attributes":null}]},"attributes":{"left":"something","operator":">","right":"constant"}},{"name":"else","content":{"children":[{"name":"do","content":"something else","attributes":null}]},"attributes":null}]}}},"attributes":"id2"},{"name":"container","content":{"children":[{"name":"tag","attributes":null},{"name":"anothertag","attributes":null},{"name":"complex","attributes":"tag hello=\\"<world]]]\\\\\\"!\\" some[3].path[6]"}]},"attributes":null}]}' ) ;
 	} ) ;
 } ) ;
 	
@@ -1133,11 +1115,11 @@ describe( "Meta-Tag" , function() {
 		console.log( kungFig.getMeta( o ) ) ;
 		console.log( kungFig.getMeta( o ).getTags( 'meta' )[ 0 ] ) ;
 		*/
-		doormen.equals( o , { some: "data" } ) ;
-		doormen.equals( kungFig.getMeta( o ).getTags( 'meta' )[ 0 ].content , { author: "Joe Doe" , copyright: 2016 } ) ;
+		expect( o ).to.equal( { some: "data" } ) ;
+		expect( kungFig.getMeta( o ).getTags( 'meta' )[ 0 ].content ).to.equal( { author: "Joe Doe" , copyright: 2016 } ) ;
 		
 		//console.log( stringify( o ) ) ;
-		doormen.equals( stringify( o ) , '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\n\nsome: data\n' ) ;
+		expect( stringify( o ) ).to.be( '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\n\nsome: data\n' ) ;
 	} ) ;
 	
 	it( "stringify meta-tag" , function() {
@@ -1146,7 +1128,7 @@ describe( "Meta-Tag" , function() {
 		kungFig.setMeta( o , [ new Tag( 'meta' , undefined , { author: "Joe Doe" , copyright: 2016 } ) ] ) ;
 		
 		//console.log( stringify( o ) ) ;
-		doormen.equals( stringify( o ) , '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\n\nsome: data\n' ) ;
+		expect( stringify( o ) ).to.be( '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\n\nsome: data\n' ) ;
 	} ) ;
 	
 	it( "meta doctype filtering" , function() {
@@ -1155,24 +1137,24 @@ describe( "Meta-Tag" , function() {
 		kfg = '[[doctype supadoc]]\nsome: data' ;
 		
 		o = parse( kfg ) ;
-		doormen.equals( kungFig.getMeta( o ).getTags( "doctype" )[ 0 ].attributes , "supadoc" ) ;
-		doormen.equals( o , { some: "data" } ) ;
+		expect( kungFig.getMeta( o ).getTags( "doctype" )[ 0 ].attributes ).to.be( "supadoc" ) ;
+		expect( o ).to.equal( { some: "data" } ) ;
 		
 		o = parse( kfg , { doctype: "supadoc" } ) ;
-		doormen.equals( kungFig.getMeta( o ).getTags( "doctype" )[ 0 ].attributes , "supadoc" ) ;
-		doormen.equals( o , { some: "data" } ) ;
+		expect( kungFig.getMeta( o ).getTags( "doctype" )[ 0 ].attributes ).to.be( "supadoc" ) ;
+		expect( o ).to.equal( { some: "data" } ) ;
 		
-		doormen.shouldThrow( () => parse( kfg , { doctype: "baddoc" } ) ) ;
+		expect( () => parse( kfg , { doctype: "baddoc" } ) ).to.throw() ;
 		
 		o = parse( kfg , { doctype: [ "cooldoc" , "supadoc" ] } ) ;
-		doormen.equals( kungFig.getMeta( o ).getTags( "doctype" )[ 0 ].attributes , "supadoc" ) ;
-		doormen.equals( o , { some: "data" } ) ;
+		expect( kungFig.getMeta( o ).getTags( "doctype" )[ 0 ].attributes ).to.be( "supadoc" ) ;
+		expect( o ).to.equal( { some: "data" } ) ;
 		
-		doormen.shouldThrow( () => parse( kfg , { doctype: [ "baddoc" , "wrongdoc" ] } ) ) ;
+		expect( () => parse( kfg , { doctype: [ "baddoc" , "wrongdoc" ] } ) ).to.throw() ;
 		
 		kfg = '\nsome: data' ;
-		doormen.shouldThrow( () => parse( kfg , { doctype: "supadoc" } ) ) ;
-		doormen.shouldThrow( () => parse( kfg , { doctype: [ "supadoc" , "cooldoc" ] } ) ) ;
+		expect( () => parse( kfg , { doctype: "supadoc" } ) ).to.throw() ;
+		expect( () => parse( kfg , { doctype: [ "supadoc" , "cooldoc" ] } ) ).to.throw() ;
 	} ) ;
 	
 	it( "parse meta-tag, with meta hook" , function() {
@@ -1181,7 +1163,7 @@ describe( "Meta-Tag" , function() {
 		var options = {
 			metaHook: function( meta ) {
 				//console.log( "Received meta: " , meta.getTags( 'meta' )[ 0 ].content ) ;
-				doormen.equals( meta.getTags( 'meta' )[ 0 ].content , { author: "Joe Doe" , copyright: 2016 } ) ;
+				expect( meta.getTags( 'meta' )[ 0 ].content ).to.equal( { author: "Joe Doe" , copyright: 2016 } ) ;
 				hookTriggered ++ ;
 			}
 		} ;
@@ -1194,18 +1176,16 @@ describe( "Meta-Tag" , function() {
 		console.log( kungFig.getMeta( o ).getTags( 'meta' )[ 0 ] ) ;
 		*/
 		
-		doormen.equals( hookTriggered , 1 ) ;
-		doormen.equals( o , { some: "data" } ) ;
-		doormen.equals( kungFig.getMeta( o ).getTags( 'meta' )[ 0 ].content , { author: "Joe Doe" , copyright: 2016 } ) ;
+		expect( hookTriggered ).to.be( 1 ) ;
+		expect( o ).to.equal( { some: "data" } ) ;
+		expect( kungFig.getMeta( o ).getTags( 'meta' )[ 0 ].content ).to.equal( { author: "Joe Doe" , copyright: 2016 } ) ;
 		
 		//console.log( stringify( o ) ) ;
-		doormen.equals( stringify( o ) , '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\n\nsome: data\n' ) ;
+		expect( stringify( o ) ).to.be( '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\n\nsome: data\n' ) ;
 	} ) ;
 	
 	it( "meta tag after body started should throw" , function() {
-		doormen.shouldThrow( function() {
-			parse( '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\nsome: data\n[[meta]]' ) ;
-		} ) ;
+		expect( () => parse( '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\nsome: data\n[[meta]]' ) ).to.throw() ;
 	} ) ;
 	
 	it( "meta hook & loading (include, ...)" , function() {
@@ -1216,11 +1196,10 @@ describe( "Meta-Tag" , function() {
 				//if ( meta ) { console.log( "Received meta: " , meta , "\n>>>" , meta.getFirstTag( 'meta' ).content ) ; }
 				//else { console.log( "No meta" ) ; }
 				
-				//doormen.equals( meta.getTags( 'meta' )[ 0 ].content , { author: "Joe Doe" , copyright: 2016 } ) ;
+				//expect( meta.getTags( 'meta' )[ 0 ].content ).to.equal( { author: "Joe Doe" , copyright: 2016 } ) ;
 				hookTriggered ++ ;
 				
-				if ( [ "meta-hook.kfg" , "meta-hook-include.kfg" ].indexOf( pathModule.basename( options.file ) ) === -1 )
-				{
+				if ( [ "meta-hook.kfg" , "meta-hook-include.kfg" ].indexOf( pathModule.basename( options.file ) ) === -1 ) {
 					throw new Error( "Bad options.file" ) ;
 				}
 				
@@ -1234,11 +1213,11 @@ describe( "Meta-Tag" , function() {
 		//console.log( "data:" , o ) ;
 		//console.log( "meta:" , kungFig.getMeta( o ) , "\n###" , kungFig.getMeta( o ).getFirstTag( 'meta' ).content ) ;
 		
-		doormen.equals( hookTriggered , 2 ) ;
-		doormen.equals( includeHookTriggered , 1 ) ;
-		doormen.equals( nonIncludeHookTriggered , 1 ) ;
-		doormen.equals( o , { include: { some: { more: "content"  } } , some: "content" } ) ;
-		doormen.equals( kungFig.getMeta( o ).getFirstTag( 'meta' ).content , "master" ) ;
+		expect( hookTriggered ).to.be( 2 ) ;
+		expect( includeHookTriggered ).to.be( 1 ) ;
+		expect( nonIncludeHookTriggered ).to.be( 1 ) ;
+		expect( o ).to.equal( { include: { some: { more: "content"  } } , some: "content" } ) ;
+		expect( kungFig.getMeta( o ).getFirstTag( 'meta' ).content ).to.be( "master" ) ;
 	} ) ;
 } ) ;
 
@@ -1249,27 +1228,13 @@ describe( "LabelTag" , function() {
 	var LabelTag = kungFig.LabelTag ;
 	
 	it( "label attributes parse" , function() {
-		doormen.equals(
-			LabelTag.parseAttributes( 'label' ) ,
-			'label'
-		) ;
-		
-		doormen.equals(
-			LabelTag.parseAttributes( '' ) ,
-			''
-		) ;
+		expect( LabelTag.parseAttributes( 'label' ) ).to.be( 'label' ) ;
+		expect( LabelTag.parseAttributes( '' ) ).to.be( '' ) ;
 	} ) ;
 	
 	it( "label attributes stringify" , function() {
-		doormen.equals(
-			LabelTag.stringifyAttributes( 'label' ) ,
-			'label'
-		) ;
-		
-		doormen.equals(
-			LabelTag.stringifyAttributes( 'label[]' ) ,
-			'"label[]"'
-		) ;
+		expect( LabelTag.stringifyAttributes( 'label' ) ).to.be( 'label' ) ;
+		expect( LabelTag.stringifyAttributes( 'label[]' ) ).to.be( '"label[]"' ) ;
 	} ) ;
 	
 	
@@ -1279,7 +1244,7 @@ describe( "LabelTag" , function() {
 		//console.log( "parsed:" , o ) ;
 		
 		// Doormen fails with constructors ATM
-		doormen.equals( JSON.parse( JSON.stringify( o ) ) , {
+		expect( JSON.parse( JSON.stringify( o ) ) ).to.equal( {
 			children: [
 				{
 					name: 'LabelTag' ,
@@ -1310,28 +1275,28 @@ describe( "ClassicTag" , function() {
 	var ClassicTag = kungFig.ClassicTag ;
 	
 	it( "classic attributes parse" , function() {
-		doormen.equals(
-			ClassicTag.parseAttributes( 'width=1280 height=1024 src="/css/main.css" active' ) ,
+		expect(
+			ClassicTag.parseAttributes( 'width=1280 height=1024 src="/css/main.css" active' ) ).to.equal(
 			{ width: 1280, height: 1024, src: '/css/main.css', active: true }
 		) ;
 		
-		doormen.equals(
-			ClassicTag.parseAttributes( 'active width=1280 height=1024 src="/css/main.css"' ) ,
+		expect(
+			ClassicTag.parseAttributes( 'active width=1280 height=1024 src="/css/main.css"' ) ).to.equal(
 			{ width: 1280, height: 1024, src: '/css/main.css', active: true }
 		) ;
 		
-		doormen.equals(
-			ClassicTag.parseAttributes( '  width=1280  height = 1024  src="/css/main.css" active ' ) ,
+		expect(
+			ClassicTag.parseAttributes( '  width=1280  height = 1024  src="/css/main.css" active ' ) ).to.equal(
 			{ width: 1280, height: 1024, src: '/css/main.css', active: true }
 		) ;
 		
-		doormen.equals(
-			ClassicTag.parseAttributes( 'width=1280 height=1024 src="/css/main.css" active empty=""' ) ,
+		expect(
+			ClassicTag.parseAttributes( 'width=1280 height=1024 src="/css/main.css" active empty=""' ) ).to.equal(
 			{ width: 1280, height: 1024, src: '/css/main.css', active: true , empty: '' }
 		) ;
 		
-		doormen.equals(
-			ClassicTag.parseAttributes( 'width:1280 height:1024 src:"/css/main.css" active' , ':' ) ,
+		expect(
+			ClassicTag.parseAttributes( 'width:1280 height:1024 src:"/css/main.css" active' , ':' ) ).to.equal(
 			{ width: 1280, height: 1024, src: '/css/main.css', active: true }
 		) ;
 	} ) ;
@@ -1339,8 +1304,8 @@ describe( "ClassicTag" , function() {
 	it( "classic attributes stringify" , function() {
 		//console.log( ClassicTag.stringifyAttributes( { width: 1280, height: 1024, src: '/css/main.css', active: true } ) ) ;
 		
-		doormen.equals(
-			ClassicTag.stringifyAttributes( { width: 1280, height: 1024, src: '/css/main.css', active: true } ) ,
+		expect(
+			ClassicTag.stringifyAttributes( { width: 1280, height: 1024, src: '/css/main.css', active: true } ) ).to.be(
 			'width=1280 height=1024 src="/css/main.css" active' 
 		) ;
 	} ) ;
@@ -1351,7 +1316,7 @@ describe( "ClassicTag" , function() {
 		//console.log( "parsed:" , o ) ;
 		
 		// Doormen fails with constructors ATM
-		doormen.equals( JSON.parse( JSON.stringify( o ) ) , {
+		expect( JSON.parse( JSON.stringify( o ) ) ).to.equal( {
 			children: [
 				{
 					name: 'ClassicTag' ,
@@ -1362,7 +1327,7 @@ describe( "ClassicTag" , function() {
 		} ) ;
 		
 		/*
-		doormen.equals( o , {
+		expect( o , {
 			children: [
 				{
 					name: 'ClassicTag' ,
@@ -1381,7 +1346,7 @@ describe( "ClassicTag" , function() {
 		
 		//console.log( o ) ;
 		
-		doormen.equals( stringify( o ) , '[ClassicTag width=1280 height=1024 src="/css/main.css" active]\n' ) ;
+		expect( stringify( o ) ).to.be( '[ClassicTag width=1280 height=1024 src="/css/main.css" active]\n' ) ;
 		
 		o = new TagContainer( [
 			new ClassicTag( 'ClassicTag' , { width: 1280, height: 1024, src: '/css/main.css', active: true } ) ,
@@ -1390,8 +1355,7 @@ describe( "ClassicTag" , function() {
 		
 		//console.log( o ) ;
 		
-		doormen.equals(
-			stringify( o ) ,
+		expect( stringify( o ) ).to.be(
 			'[ClassicTag width=1280 height=1024 src="/css/main.css" active]\n' +
 			'[ClassicTag fullscreen]\n'
 		) ;
@@ -1405,8 +1369,8 @@ describe( "ClassicTag" , function() {
 		
 		//console.log( o ) ;
 		
-		doormen.equals(
-			stringify( o ) ,
+		expect(
+			stringify( o ) ).to.be(
 			'[ClassicTag width=1280 height=1024 src="/css/main.css" active]\n' +
 			'\thello: world!\n' +
 			'[ClassicTag fullscreen]\n'
@@ -1427,7 +1391,7 @@ describe( "ExpressionTag" , function() {
 		//console.log( "parsed:" , o ) ;
 		
 		// Doormen fails with constructors ATM
-		doormen.equals( JSON.parse( JSON.stringify( o ) ) , {
+		expect( JSON.parse( JSON.stringify( o ) ) ).to.equal( {
 			children: [
 				{
 					name: 'ExpressionTag' ,
@@ -1442,23 +1406,23 @@ describe( "ExpressionTag" , function() {
 			] 
 		} ) ;
 		
-		doormen.equals( typeof o.children[ 0 ].attributes.fnOperator === 'function' , true ) ;
-		doormen.equals( o.children[0].attributes.getFinalValue( ctx ) , true ) ;
+		expect( typeof o.children[ 0 ].attributes.fnOperator === 'function' , true ) ;
+		expect( o.children[0].attributes.getFinalValue( ctx ) ).to.be( true ) ;
 		ctx.a = 2 ;
-		doormen.equals( o.children[0].attributes.getFinalValue( ctx ) , false ) ;
+		expect( o.children[0].attributes.getFinalValue( ctx ) ).to.be( false ) ;
 		
 		
 		o = parse( '[ExpressionTag 3 <= ( round 3.3 )]' , { tags: { ExpressionTag: ExpressionTag } } ) ;
-		doormen.equals( o.children[0].attributes.getFinalValue( ctx ) , true ) ;
+		expect( o.children[0].attributes.getFinalValue( ctx ) ).to.be( true ) ;
 		
 		o = parse( '[ExpressionTag 4 < ( round 3.3 )]' , { tags: { ExpressionTag: ExpressionTag } } ) ;
-		doormen.equals( o.children[0].attributes.getFinalValue( ctx ) , false ) ;
+		expect( o.children[0].attributes.getFinalValue( ctx ) ).to.be( false ) ;
 		
 		o = parse( '[ExpressionTag ( round 3.3 ) >= 3]' , { tags: { ExpressionTag: ExpressionTag } } ) ;
-		doormen.equals( o.children[0].attributes.getFinalValue( ctx ) , true ) ;
+		expect( o.children[0].attributes.getFinalValue( ctx ) ).to.be( true ) ;
 		
 		o = parse( '[ExpressionTag ( round 3.3 ) >= 4]' , { tags: { ExpressionTag: ExpressionTag } } ) ;
-		doormen.equals( o.children[0].attributes.getFinalValue( ctx ) , false ) ;
+		expect( o.children[0].attributes.getFinalValue( ctx ) ).to.be( false ) ;
 	} ) ;
 	
 	it( "ExpressionTag parse with custom operators" , function () {
@@ -1470,9 +1434,9 @@ describe( "ExpressionTag" , function() {
 		
 		var o = parse( '[ExpressionTag triple $a]' , { tags: { ExpressionTag: ExpressionTag } , operators: operators } ) ;
 		
-		doormen.equals( o.children[0].attributes.getFinalValue( ctx ) , 12 ) ;
+		expect( o.children[0].attributes.getFinalValue( ctx ) ).to.be( 12 ) ;
 		ctx.a = 2 ;
-		doormen.equals( o.children[0].attributes.getFinalValue( ctx ) , 6 ) ;
+		expect( o.children[0].attributes.getFinalValue( ctx ) ).to.be( 6 ) ;
 	} ) ;
 	
 	it( "ExpressionTag stringify" ) ;
@@ -1488,7 +1452,7 @@ describe( "Historical bugs" , function() {
 		var o = parse( content ) ;
 		var s = kungFig.saveKfg( o , __dirname + '/sample/output.kfg' ) ;
 		//console.log( s ) ;
-		doormen.equals( s , expected ) ;
+		expect( s ).to.be( expected ) ;
 	} ) ;
 } ) ;
 	

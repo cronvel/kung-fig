@@ -24,8 +24,7 @@
 	SOFTWARE.
 */
 
-/* jshint unused:false */
-/* global describe, it, before, after */
+/* global describe, it, expect */
 
 "use strict" ;
 
@@ -35,23 +34,17 @@ var fs = require( 'fs' ) ;
 var tree = require( 'tree-kit' ) ;
 
 var kungFig = require( '../lib/kungFig.js' ) ;
-var doormen = require( 'doormen' ) ;
 
 
 
 describe( "Loading a config" , function() {
 	
 	it( "when trying to load an unexistant file, it should throw" , function() {
-		
-		doormen.shouldThrow( function() { kungFig.load( __dirname + '/sample/unexistant.json' ) ; } ) ;
+		expect( () => kungFig.load( __dirname + '/sample/unexistant.json' ) ).to.throw() ;
 	} ) ;
 	
 	it( "should load a simple JSON file without dependency" , function() {
-		
-		doormen.equals(
-			kungFig.load( __dirname + '/sample/simple.json' ) ,
-			{ just: 'a', simple: { test: '!' } }
-		) ;
+		expect( kungFig.load( __dirname + '/sample/simple.json' ) ).to.equal( { just: 'a', simple: { test: '!' } } ) ;
 	} ) ;
 	
 	it( "should load a simple KFG file without dependency" , function() {
@@ -59,8 +52,7 @@ describe( "Loading a config" , function() {
 		//console.log( require( 'util' ).inspect( kungFig.parse( fs.readFileSync( __dirname + '/sample/kfg/katana.kfg' , 'utf8' ) ) , { depth: 10 } ) ) ;
 		//console.log( require( 'util' ).inspect( kungFig.load( __dirname + '/sample/kfg/katana.kfg' ) , { depth: 10 } ) ) ;
 		
-		doormen.equals(
-			kungFig.load( __dirname + '/sample/kfg/katana.kfg' ) , {
+		expect( kungFig.load( __dirname + '/sample/kfg/katana.kfg' ) ).to.equal( {
 				class: 'katana',
 				generic: 'saber',
 				hands: 2,
@@ -84,18 +76,13 @@ describe( "Loading a config" , function() {
 	} ) ;
 	
 	it( "should load a simple txt file" , function() {
-		
-		doormen.equals(
-			kungFig.load( __dirname + '/sample/txt/lorem.txt' ) ,
-			"Lorem ipsum dolor."
-		) ;
+		expect( kungFig.load( __dirname + '/sample/txt/lorem.txt' ) ).to.be( "Lorem ipsum dolor." ) ;
 	} ) ;
 	
 	it( "should load a simple JSON file without dependency, containing an array" , function() {
 		
 		//console.log( kungFig.load( __dirname + '/sample/simpleWithArrays.json' ) ) ;
-		doormen.equals(
-			kungFig.load( __dirname + '/sample/simpleWithArrays.json' ) ,
+		expect( kungFig.load( __dirname + '/sample/simpleWithArrays.json' ) ).to.equal(
 			{ just: [ 'a' , 'simple' , [ 'test' , '!' ] ] }
 		) ;
 	} ) ;
@@ -103,21 +90,18 @@ describe( "Loading a config" , function() {
 	it( "should load a simple JSON file without dependency, which is an array" , function() {
 		
 		//console.log( kungFig.load( __dirname + '/sample/simpleArray.json' ) ) ;
-		doormen.equals(
-			kungFig.load( __dirname + '/sample/simpleArray.json' ) ,
+		expect( kungFig.load( __dirname + '/sample/simpleArray.json' ) ).to.equal(
 			[ 'a' , 'simple' , [ 'test' , '!' ] ]
 		) ;
 	} ) ;
 	
 	it( "when loading a file with an unexistant dependency using the '@@', it should throw" , function() {
-		
-		doormen.shouldThrow( function() { kungFig.load( __dirname + '/sample/withUnexistantInclude.json' ) ; } ) ;
+		expect( () => kungFig.load( __dirname + '/sample/withUnexistantInclude.json' ) ).to.throw() ;
 	} ) ;
 	
 	it( "when loading a file with an unexistant dependency using the '@', it should not throw" , function() {
 		
-		doormen.equals(
-			kungFig.load( __dirname + '/sample/withUnexistantOptionalInclude.json' ) ,
+		expect( kungFig.load( __dirname + '/sample/withUnexistantOptionalInclude.json' ) ).to.equal(
 			{
 				simple: "test",
 				unexistant: {}
@@ -126,15 +110,12 @@ describe( "Loading a config" , function() {
 	} ) ;
 	
 	it( "when loading a file with a bad JSON content dependency using the '@', it should throw" , function() {
-		
-		doormen.shouldThrow( function() { kungFig.load( __dirname + '/sample/withBadOptionalInclude.json' ) ; } ) ;
-		//kungFig.load( __dirname + '/sample/withBadOptionalInclude.json' ) ;
+		expect( () => kungFig.load( __dirname + '/sample/withBadOptionalInclude.json' ) ).to.throw() ;
 	} ) ;
 	
 	it( "when loading a file, all Tree-Ops should be reduced" , function() {
 		
-		doormen.equals(
-			kungFig.load( __dirname + '/sample/withTreeOps.json' ) ,
+		expect( kungFig.load( __dirname + '/sample/withTreeOps.json' ) ).to.equal(
 			{
 				simple: "test",
 				int: 7
@@ -144,8 +125,7 @@ describe( "Loading a config" , function() {
 	
 	it( "when loading a file and explicitly turning the 'reduce' option off, Tree Operations should not be reduced" , function() {
 		
-		doormen.equals(
-			kungFig.load( __dirname + '/sample/withTreeOps.json' , { reduce: false } ) ,
+		expect( kungFig.load( __dirname + '/sample/withTreeOps.json' , { reduce: false } ) ).to.equal(
 			{
 				simple: "test",
 				int: 5,
@@ -156,8 +136,7 @@ describe( "Loading a config" , function() {
 	
 	it( "should load a JSON file with a txt dependency" , function() {
 		
-		doormen.equals(
-			kungFig.load( __dirname + '/sample/withTxtInclude.json' ) ,
+		expect( kungFig.load( __dirname + '/sample/withTxtInclude.json' ) ).to.equal(
 			{
 				"simple": "test",
 				"firstInclude": "Lorem ipsum dolor.",
@@ -170,8 +149,7 @@ describe( "Loading a config" , function() {
 	
 	it( "should load a JSON file with many relative dependencies" , function() {
 		
-		doormen.equals(
-			kungFig.load( __dirname + '/sample/withIncludes.json' ) ,
+		expect( kungFig.load( __dirname + '/sample/withIncludes.json' ) ).to.equal(
 			{
 				simple: 'test',
 				firstInclude: {
@@ -200,8 +178,7 @@ describe( "Loading a config" , function() {
 	
 	it( "should load a JSON file with a glob dependency" , function() {
 		
-		doormen.equals(
-			kungFig.load( __dirname + '/sample/withGlobIncludes.json' ) ,
+		expect( kungFig.load( __dirname + '/sample/withGlobIncludes.json' ) ).to.equal(
 			{
 				simple: 'test',
 				globInclude: [
@@ -230,8 +207,7 @@ describe( "Loading a config" , function() {
 	
 	it( "should load a JSON file with a glob+merge dependency" , function() {
 		
-		doormen.equals(
-			kungFig.load( __dirname + '/sample/withGlobMerge.json' ) ,
+		expect( kungFig.load( __dirname + '/sample/withGlobMerge.json' ) ).to.equal(
 			{
 				a: "A" ,
 				a2: 12 ,
@@ -250,8 +226,7 @@ describe( "Loading a config" , function() {
 	
 	it( "should load a JSON file with a glob dependency that resolve to no files" , function() {
 		
-		doormen.equals(
-			kungFig.load( __dirname + '/sample/withUnexistantGlobInclude.json' ) ,
+		expect( kungFig.load( __dirname + '/sample/withUnexistantGlobInclude.json' ) ).to.equal(
 			{
 				simple: 'test',
 				globInclude: []
@@ -265,7 +240,7 @@ describe( "Loading a config" , function() {
 		var shouldBe = { "a": "A" } ;
 		shouldBe.b = shouldBe ;
 		
-		doormen.equals( kungFig.load( __dirname + '/sample/circular.json' ) , shouldBe ) ;
+		expect( kungFig.load( __dirname + '/sample/circular.json' ) ).to.equal( shouldBe ) ;
 	} ) ;
 	
 	it( "should RE-load flawlessly a config with a circular include to itself" , function() {
@@ -274,7 +249,7 @@ describe( "Loading a config" , function() {
 		var shouldBe = { "a": "A" } ;
 		shouldBe.b = shouldBe ;
 		
-		doormen.equals( kungFig.load( __dirname + '/sample/circular.json' ) , shouldBe ) ;
+		expect( kungFig.load( __dirname + '/sample/circular.json' ) ).to.equal( shouldBe ) ;
 	} ) ;
 	
 	it( "should load flawlessly a config with many circular includes" , function() {
@@ -290,7 +265,7 @@ describe( "Loading a config" , function() {
 		shouldBe.circularOne = a ;
 		shouldBe.circularTwo = b ;
 		
-		doormen.equals( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) , shouldBe ) ;
+		expect( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) ).to.equal( shouldBe ) ;
 	} ) ;
 	
 	it( "should RE-load flawlessly a config with many circular includes" , function() {
@@ -306,13 +281,12 @@ describe( "Loading a config" , function() {
 		shouldBe.circularOne = a ;
 		shouldBe.circularTwo = b ;
 		
-		doormen.equals( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) , shouldBe ) ;
+		expect( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) ).to.equal( shouldBe ) ;
 	} ) ;
 	
 	it( "should load flawlessly a config with a reference to itself" , function() {
 		
-		doormen.equals(
-			kungFig.load( __dirname + '/sample/selfReference.json' ) ,
+		expect( kungFig.load( __dirname + '/sample/selfReference.json' ) ).to.equal(
 			{
 				"a": "A",
 				"sub": {
@@ -330,8 +304,7 @@ describe( "Loading a config" , function() {
 	
 	it( "should load a JSON file with many relative dependencies and sub-references" , function() {
 		
-		doormen.equals(
-			kungFig.load( __dirname + '/sample/withIncludesRef.json' ) ,
+		expect( kungFig.load( __dirname + '/sample/withIncludesRef.json' ) ).to.equal(
 			{
 				simple: 'test',
 				firstInclude: {
@@ -366,13 +339,12 @@ describe( "Loading a config" , function() {
 		
 		shouldBe.sub.ref = shouldBe ;
 		
-		doormen.equals( kungFig.load( __dirname + '/sample/selfCircularReference.json' ) , shouldBe ) ;
+		expect( kungFig.load( __dirname + '/sample/selfCircularReference.json' ) ).to.equal( shouldBe ) ;
 	} ) ;
 	
 	it( "recursive parent search: path containing .../", () => {
 		
-		doormen.equals(
-			kungFig.load( __dirname + '/sample/kfg/recursive/recursive/recursive.kfg' ) ,
+		expect( kungFig.load( __dirname + '/sample/kfg/recursive/recursive/recursive.kfg' ) ).to.equal(
 			{
 				one: "oneoneone" ,
 				two: {
@@ -408,8 +380,8 @@ describe( "Saving a config" , function() {
 		} ;
 		
 		//console.log( kungFig.saveKfg( conf ).replace( /\n/g , () => '\\n' ).replace( /\t/g , () => '\\t' ) ) ;
-		doormen.equals( kungFig.saveJson( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!"\n  }\n}' ) ;
-		doormen.equals( kungFig.saveKfg( conf ) , 'a: Haha!\nb: Bee!\nsub:\n\tc: See!\n' ) ;
+		expect( kungFig.saveJson( conf ) ).to.be( '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!"\n  }\n}' ) ;
+		expect( kungFig.saveKfg( conf ) ).to.be( 'a: Haha!\nb: Bee!\nsub:\n\tc: See!\n' ) ;
 	} ) ;
 	
 	it( "should stringify a config that have circular references" , function() {
@@ -426,8 +398,8 @@ describe( "Saving a config" , function() {
 		
 		//console.log( kungFig.saveJson( conf ).replace( /\n/g , () => '\\n' ).replace( /\t/g , () => '\\t' ) ) ;
 		//console.log( kungFig.saveKfg( conf ).replace( /\n/g , () => '\\n' ).replace( /\t/g , () => '\\t' ) ) ;
-		doormen.equals( kungFig.saveJson( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!",\n    "@@circular": "#"\n  }\n}' ) ;
-		doormen.equals( kungFig.saveKfg( conf ) , 'a: Haha!\nb: Bee!\nsub:\n\tc: See!\n\tcircular: @@#\n' ) ;
+		expect( kungFig.saveJson( conf ) ).to.be( '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!",\n    "@@circular": "#"\n  }\n}' ) ;
+		expect( kungFig.saveKfg( conf ) ).to.be( 'a: Haha!\nb: Bee!\nsub:\n\tc: See!\n\tcircular: @@#\n' ) ;
 		
 		
 		var conf = {
@@ -441,8 +413,8 @@ describe( "Saving a config" , function() {
 		conf.sub.circular = conf.sub ;
 		
 		//console.log( kungFig.saveKfg( conf ).replace( /\n/g , () => '\\n' ).replace( /\t/g , () => '\\t' ) ) ;
-		doormen.equals( kungFig.saveJson( conf ) , '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!",\n    "@@circular": "#sub"\n  }\n}' ) ;
-		doormen.equals( kungFig.saveKfg( conf ) , 'a: Haha!\nb: Bee!\nsub:\n\tc: See!\n\tcircular: @@#sub\n' ) ;
+		expect( kungFig.saveJson( conf ) ).to.be( '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!",\n    "@@circular": "#sub"\n  }\n}' ) ;
+		expect( kungFig.saveKfg( conf ) ).to.be( 'a: Haha!\nb: Bee!\nsub:\n\tc: See!\n\tcircular: @@#sub\n' ) ;
 		
 		
 		var conf = {
@@ -458,11 +430,10 @@ describe( "Saving a config" , function() {
 		conf.sub.sub.circular = conf.sub.sub ;
 		
 		//console.log( kungFig.saveKfg( conf ).replace( /\n/g , () => '\\n' ).replace( /\t/g , () => '\\t' ) ) ;
-		doormen.equals(
-			kungFig.saveJson( conf ) , 
+		expect( kungFig.saveJson( conf ) ).to.be( 
 			'{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "sub": {\n      "c": "See!",\n      "@@circular": "#sub.sub"\n    }\n  }\n}'
 		) ;
-		doormen.equals( kungFig.saveKfg( conf ) , 'a: Haha!\nb: Bee!\nsub:\n\tsub:\n\t\tc: See!\n\t\tcircular: @@#sub.sub\n' ) ;
+		expect( kungFig.saveKfg( conf ) ).to.be( 'a: Haha!\nb: Bee!\nsub:\n\tsub:\n\t\tc: See!\n\t\tcircular: @@#sub.sub\n' ) ;
 	} ) ;
 	
 	it( "should load and save flawlessly a config with many circular includes" , function() {
@@ -471,12 +442,12 @@ describe( "Saving a config" , function() {
 		
 		str = kungFig.saveJson( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) ) ;
 		//console.log( str ) ;
-		doormen.equals( str , '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "@@toBe": "#circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "@@toA": "#circularOne"\n  }\n}' ) ;
+		expect( str ).to.be( '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "@@toBe": "#circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "@@toA": "#circularOne"\n  }\n}' ) ;
 		
 		str = kungFig.saveKfg( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) ) ;
 		//console.log( str ) ;
 		//console.log( str.replace( /\n/g , () => '\\n' ).replace( /\t/g , () => '\\t' ) ) ;
-		doormen.equals( str , "hello: world!\ncircularOne:\n\tsome: data\n\ttoBe: @@#circularTwo\ncircularTwo:\n\tmore: data\n\ttoA: @@#circularOne\n" ) ;
+		expect( str ).to.be( "hello: world!\ncircularOne:\n\tsome: data\n\ttoBe: @@#circularTwo\ncircularTwo:\n\tmore: data\n\ttoA: @@#circularOne\n" ) ;
 	} ) ;
 	
 	it( "should load and save to disk flawlessly a config with many circular includes" , function() {
@@ -486,13 +457,13 @@ describe( "Saving a config" , function() {
 		kungFig.saveJson( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) , __dirname + '/output.json' ) ;
 		str = fs.readFileSync( __dirname + '/output.json' ).toString() ;
 		//console.log( str ) ;
-		doormen.equals( str , '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "@@toBe": "#circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "@@toA": "#circularOne"\n  }\n}' ) ;
+		expect( str ).to.be( '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "@@toBe": "#circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "@@toA": "#circularOne"\n  }\n}' ) ;
 		fs.unlinkSync( __dirname + '/output.json' ) ;
 		
 		kungFig.saveKfg( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) , __dirname + '/output.kfg' ) ;
 		str = fs.readFileSync( __dirname + '/output.kfg' ).toString() ;
 		//console.log( str ) ;
-		doormen.equals( str , "hello: world!\ncircularOne:\n\tsome: data\n\ttoBe: @@#circularTwo\ncircularTwo:\n\tmore: data\n\ttoA: @@#circularOne\n" ) ;
+		expect( str ).to.be( "hello: world!\ncircularOne:\n\tsome: data\n\ttoBe: @@#circularTwo\ncircularTwo:\n\tmore: data\n\ttoA: @@#circularOne\n" ) ;
 		fs.unlinkSync( __dirname + '/output.kfg' ) ;
 	} ) ;
 } ) ;
@@ -505,10 +476,10 @@ describe( "Load meta" , function() {
 		var meta ;
 		
 		meta = kungFig.loadMeta( __dirname + '/sample/kfg/meta-hook.kfg' ) ;
-		doormen.equals( meta.getFirstTag( 'meta' ).content , "master" ) ;
+		expect( meta.getFirstTag( 'meta' ).content ).to.be( "master" ) ;
 		
 		meta = kungFig.loadMeta( __dirname + '/sample/kfg/katana.kfg' ) ;
-		doormen.equals( meta , null ) ;
+		expect( meta ).to.be( null ) ;
 	} ) ;
 } ) ;
 
@@ -518,29 +489,19 @@ describe( "JS modules" , function() {
 	
 	it( "should load a JS module" , function() {
 		
-		doormen.equals(
-			kungFig.load( __dirname + '/sample/js/one.js' ) ,
+		expect( kungFig.load( __dirname + '/sample/js/one.js' ) ).to.equal(
 			require(  __dirname + '/sample/js/one.js' )
 		) ;
 	} ) ;
 	
 	it( "should load a JS module exporting a function" , function() {
-		
-		doormen.equals(
-			typeof kungFig.load( __dirname + '/sample/function.js' ) ,
-			'function'
-		) ;
-		
-		doormen.equals(
-			kungFig.load( __dirname + '/sample/function.js' )() ,
-			'world'
-		) ;
+		expect( kungFig.load( __dirname + '/sample/function.js' ) ).to.be.a( 'function' ) ;
+		expect( kungFig.load( __dirname + '/sample/function.js' )() ).to.be( 'world' ) ;
 	} ) ;
 	
 	it( "should load a JSON file with many relative dependencies and sub-references to a JS module" , function() {
 		
-		doormen.equals(
-			kungFig.load( __dirname + '/sample/withJsIncludesRef.json' ) ,
+		expect( kungFig.load( __dirname + '/sample/withJsIncludesRef.json' ) ).to.equal(
 			{
 				simple: 'test',
 				firstInclude: require(  __dirname + '/sample/js/one.js' ) ,
@@ -563,14 +524,14 @@ describe( "Array references" , function() {
 		
 		var o = kungFig.load( __dirname + '/sample/simpleArrayRef.json' ) ;
 		//console.log( JSON.stringify( o , null , '  ' ) ) ;
-		doormen.equals( o , {
+		expect( o ).to.equal( {
 			array: [
 				{ just: "a", simple: { test: "!" } },
 				[ 1,2,3 ]
 			],
 			refArray: [ 1,2,3 ]
 		} ) ;
-		doormen.equals( o.array[ 1 ] === o.refArray , true ) ;
+		expect( o.array[ 1 ] ).to.be( o.refArray ) ;
 	} ) ;
 	
 	it( "should load flawlessly a config which is an array with many circular includes" , function() {
@@ -588,13 +549,12 @@ describe( "Array references" , function() {
 		shouldBe[ 1 ] = a ;
 		shouldBe[ 2 ] = b ;
 		
-		doormen.equals( o , shouldBe ) ;
+		expect( o ).to.equal( shouldBe ) ;
 	} ) ;
 	
 	it( "should load flawlessly a config which is an array with a reference to itself" , function() {
 		
-		doormen.equals(
-			kungFig.load( __dirname + '/sample/selfReferenceArray.json' ) ,
+		expect( kungFig.load( __dirname + '/sample/selfReferenceArray.json' ) ).to.equal(
 			[
 				"A",
 				[
@@ -613,8 +573,7 @@ describe( "Array references" , function() {
 	it( "should load a JSON file which is an array with many relative dependencies and sub-references" , function() {
 		
 		//console.log( kungFig.load( __dirname + '/sample/withIncludesRefArray.json' ) ) ;
-		doormen.equals(
-			kungFig.load( __dirname + '/sample/withIncludesRefArray.json' ) ,
+		expect( kungFig.load( __dirname + '/sample/withIncludesRefArray.json' ) ).to.equal(
 			[
 				'test',
 				[
@@ -644,7 +603,7 @@ describe( "Array references" , function() {
 		var shouldBe = [ "A" , [ "value" ] ] ;
 		shouldBe[ 1 ][ 1 ] = shouldBe ;
 		
-		doormen.equals( kungFig.load( __dirname + '/sample/selfCircularReferenceArray.json' ) , shouldBe ) ;
+		expect( kungFig.load( __dirname + '/sample/selfCircularReferenceArray.json' ) ).to.equal( shouldBe ) ;
 	} ) ;
 	
 	it( "should stringify a config of arrays" , function() {
@@ -653,7 +612,7 @@ describe( "Array references" , function() {
 		
 		str = kungFig.saveJson( kungFig.load( __dirname + '/sample/withIncludesRefArray.json' ) ) ;
 		//console.log( str ) ;
-		doormen.equals( str , '[\n  "test",\n  [\n    3,\n    [\n      "hello",\n      "world!"\n    ],\n    {\n      "just": "a",\n      "simple": {\n        "test": "!"\n      }\n    }\n  ],\n  [\n    "world!",\n    "hello",\n    3\n  ]\n]' ) ;
+		expect( str ).to.be( '[\n  "test",\n  [\n    3,\n    [\n      "hello",\n      "world!"\n    ],\n    {\n      "just": "a",\n      "simple": {\n        "test": "!"\n      }\n    }\n  ],\n  [\n    "world!",\n    "hello",\n    3\n  ]\n]' ) ;
 	} ) ;
 	
 	it( "should load and save flawlessly a config which is an array with many circular includes" , function() {
@@ -665,7 +624,7 @@ describe( "Array references" , function() {
 		str = kungFig.saveJson( o ) ;
 		//console.log( str ) ;
 		//console.log( str.replace( /\n/g , () => '\\n' ) ) ;
-		doormen.equals( str , '[\n  "world!",\n  [\n    "data",\n    {\n      "@@": "#[2]"\n    }\n  ],\n  [\n    "data",\n    {\n      "@@": "#[1]"\n    }\n  ]\n]' ) ;
+		expect( str ).to.be( '[\n  "world!",\n  [\n    "data",\n    {\n      "@@": "#[2]"\n    }\n  ],\n  [\n    "data",\n    {\n      "@@": "#[1]"\n    }\n  ]\n]' ) ;
 	} ) ;
 } ) ;
 	
@@ -673,64 +632,56 @@ describe( "Array references" , function() {
 
 describe( "Async file loading" , () => {
 	
-	it( "load a KFG file asynchronously" , done => {
+	it( "load a KFG file asynchronously" , async () => {
+		var object = await kungFig.loadAsync( __dirname + '/sample/kfg/simple.kfg' , 'utf8' ) ;
 		
-		kungFig.loadAsync( __dirname + '/sample/kfg/simple.kfg' , 'utf8' )
-		.then( object => {
-			doormen.equals( object , {
-				a: 1,
-				b: 2,
-				c: 3,
-				'some key': 'some value',
-				d: null,
-				e1: true,
-				e2: true,
-				e3: true,
-				f1: false,
-				f2: false,
-				f3: false,
-				g: NaN,
-				h: Infinity,
-				i: -Infinity,
-				j1: {},
-				j2: [],
-				sub: 
-					{ sub: { 'another key': 'another value' },
-					k: 1,
-					l: 2,
-					sub2: { subway: 'no!' } },
-				sub2: { no: 'way' },
-				sub3: { nooo: 'wai!' },
-				text: "A cool story:\n\nIt all started a Friday..." ,
-				"inline-string": "This is an inline string!" ,
-				list: [ 'one', 'two', 'three' ],
-				'list embedded': 
-					[ { 'first name': 'Bill', 'last name': 'Baroud' },
-					{ 'first name': 'Joe', 'last name': 'Doe' },
-					[ [ 'one', 'two', 'three' ],
-					[ 'four', 'five' ],
-					[ 'six', 'seven' ] ],
-					{ 'first name': 'Bill', 'last name': 'Baroud' },
-					{ 'first name': 'Joe', 'last name': 'Doe' },
-					[ [ 'one', 'two', 'three' ],
-					[ 'four', 'five' ],
-					[ 'six', 'seven' ] ] ]
-			} ) ;
-			
-			//console.log( kungFig.getMeta( object ).getFirstTag( 'meta' ).content ) ;
-			doormen.equals( kungFig.getMeta( object ).getFirstTag( 'meta' ).content , { content: "test" } ) ;
-		} )
-		.callback( done ) ;
+		expect( object ).to.equal( {
+			a: 1,
+			b: 2,
+			c: 3,
+			'some key': 'some value',
+			d: null,
+			e1: true,
+			e2: true,
+			e3: true,
+			f1: false,
+			f2: false,
+			f3: false,
+			g: NaN,
+			h: Infinity,
+			i: -Infinity,
+			j1: {},
+			j2: [],
+			sub: 
+				{ sub: { 'another key': 'another value' },
+				k: 1,
+				l: 2,
+				sub2: { subway: 'no!' } },
+			sub2: { no: 'way' },
+			sub3: { nooo: 'wai!' },
+			text: "A cool story:\n\nIt all started a Friday..." ,
+			"inline-string": "This is an inline string!" ,
+			list: [ 'one', 'two', 'three' ],
+			'list embedded': 
+				[ { 'first name': 'Bill', 'last name': 'Baroud' },
+				{ 'first name': 'Joe', 'last name': 'Doe' },
+				[ [ 'one', 'two', 'three' ],
+				[ 'four', 'five' ],
+				[ 'six', 'seven' ] ],
+				{ 'first name': 'Bill', 'last name': 'Baroud' },
+				{ 'first name': 'Joe', 'last name': 'Doe' },
+				[ [ 'one', 'two', 'three' ],
+				[ 'four', 'five' ],
+				[ 'six', 'seven' ] ] ]
+		} ) ;
+		
+		//console.log( kungFig.getMeta( object ).getFirstTag( 'meta' ).content ) ;
+		expect( kungFig.getMeta( object ).getFirstTag( 'meta' ).content ).to.equal( { content: "test" } ) ;
 	} ) ;
 	
-	it( "load meta of a KFG file asynchronously" , done => {
-		
-		kungFig.loadMetaAsync( __dirname + '/sample/kfg/simple.kfg' , 'utf8' )
-		.then( meta => {
-			//console.log( kungFig.getMeta( object ).getFirstTag( 'meta' ).content ) ;
-			doormen.equals( meta.getFirstTag( 'meta' ).content , { content: "test" } ) ;
-		} )
-		.callback( done ) ;
+	it( "load meta of a KFG file asynchronously" , async () => {
+		var meta = await kungFig.loadMetaAsync( __dirname + '/sample/kfg/simple.kfg' , 'utf8' ) ;
+		expect( meta.getFirstTag( 'meta' ).content ).to.equal( { content: "test" } ) ;
 	} ) ;
 } ) ;
 

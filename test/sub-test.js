@@ -28,10 +28,12 @@
 
 
 
-// Here we require test of kung-fig-* package
+// Here we require tests of all kung-fig-* packages
 
-require( 'kung-fig-common-parsers/test/common-parsers-test.js' ) ;
+require( 'kung-fig-common/test/common-test.js' ) ;
 require( 'kung-fig-dynamic/test/dynamic-test.js' ) ;
 require( 'kung-fig-ref/test/ref-test.js' ) ;
 require( 'kung-fig-expression/test/expression-test.js' ) ;
 require( 'kung-fig-template/test/template-test.js' ) ;
+require( 'kung-fig-tree-ops/test/tree-ops-test.js' ) ;
+

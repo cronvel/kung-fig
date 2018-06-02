@@ -37,9 +37,6 @@ var Ref = kungFig.Ref ;
 var Expression = kungFig.Expression ;
 var TemplateSentence = kungFig.TemplateSentence ;
 
-var doormen = require( 'doormen' ) ;
-var expect = require( 'expect.js' ) ;
-
 
 
 function deb( v )
@@ -61,8 +58,8 @@ describe( "TemplateSentence" , function() {
 		ctx.b = Ref.create( '$a' ) ;
 		ctx.c = TemplateSentence.create( "Hello, I'm ${a}." ) ;
 		ctx.d = TemplateSentence.create( "Hello, I'm ${b}." ) ;
-		doormen.equals( ctx.c.getFinalValue( ctx ) , "Hello, I'm 42." ) ;
-		doormen.equals( ctx.d.getFinalValue( ctx ) , "Hello, I'm 42." ) ;
+		expect( ctx.c.getFinalValue( ctx ) ).to.be( "Hello, I'm 42." ) ;
+		expect( ctx.d.getFinalValue( ctx ) ).to.be( "Hello, I'm 42." ) ;
 	} ) ;
 } ) ;
 
@@ -89,13 +86,13 @@ describe( "Expression" , function() {
 		
 		parsed = Expression.parse( '$regexp.filter -> $array' ) ;
 		//deb( parsed ) ;
-		doormen.equals( parsed.getFinalValue( ctx ) , [ 'hello' , 'hello world!' ] ) ;
+		expect( parsed.getFinalValue( ctx ) ).to.equal( [ 'hello' , 'hello world!' ] ) ;
 		
 		kungFig.parse.builtin.regex.toSubstitution( regexp , 'hi' ) ;
 		
 		parsed = Expression.parse( '$regexp.substitute -> $str' ) ;
 		//deb( parsed ) ;
-		doormen.equals( parsed.getFinalValue( ctx ) , 'hi world!' ) ;
+		expect( parsed.getFinalValue( ctx ) ).to.be( 'hi world!' ) ;
 	} ) ;
 } ) ;
 
@@ -114,16 +111,16 @@ describe( "Dynamic.getRecursiveFinalValue()" , function() {
 		ctx.c = tpl1 = TemplateSentence.create( "Hello, I'm ${a}." ) ;
 		ctx.d = tpl2 = TemplateSentence.create( "Hello, I'm ${b}." ) ;
 		
-		doormen.equals( Dynamic.getRecursiveFinalValue( ctx , ctx ) , {
+		expect( Dynamic.getRecursiveFinalValue( ctx , ctx ) ).to.equal( {
 			a: 42 ,
 			b: 42 ,
 			c: "Hello, I'm 42." ,
 			d: "Hello, I'm 42."
 		} ) ;
 		
-		doormen.equals( ctx.b === ref1 , true ) ;
-		doormen.equals( ctx.c === tpl1 , true ) ;
-		doormen.equals( ctx.d === tpl2 , true ) ;
+		expect( ctx.b ).to.be( ref1 ) ;
+		expect( ctx.c ).to.be( tpl1 ) ;
+		expect( ctx.d ).to.be( tpl2 ) ;
 	} ) ;
 	
 	it( "Historical cloning bug" , function() {
@@ -152,15 +149,15 @@ describe( "Dynamic.getRecursiveFinalValue()" , function() {
 		v1.array.push( 4 ) ;
 		v2.array.push( 5 ) ;
 		
-		doormen.equals( v1 === v2 , true ) ;
+		expect( v1 ).to.be( v2 ) ;
 		
-		doormen.equals( v1 , {
+		expect( v1 ).to.equal( {
 			a: 42 ,
 			array: [ 1 , 2 , 3 , 4 , 5 ]
 		} ) ;
 		
-		doormen.equals( v1.array === ctx.array , true ) ;
-		doormen.equals( v1.array === ctx.object.array , true ) ;
+		expect( v1.array ).to.be( ctx.array ) ;
+		expect( v1.array ).to.be( ctx.object.array ) ;
 	} ) ;
 } ) ;
 

@@ -1,6 +1,6 @@
 {
   "name": "kung-fig",
-  "version": "0.45.3",
+  "version": "0.46.0",
   "engines": {
     "node": ">=6.0.0"
   },
@@ -11,22 +11,20 @@
   },
   "dependencies": {
     "glob": "^7.1.2",
-    "hash-kit": "^0.3.1",
-    "kung-fig-common-parsers": "^0.41.9",
-    "kung-fig-common-stringifiers": "^0.44.2",
-    "kung-fig-dynamic": "^0.41.10",
-    "kung-fig-dynamic-instance": "^0.42.2",
-    "kung-fig-expression": "^0.42.1",
-    "kung-fig-ref": "^0.42.1",
-    "kung-fig-template": "^0.46.1",
-    "seventh": "^0.6.5",
-    "string-kit": "^0.6.11",
-    "tree-kit": "^0.5.26"
+    "hash-kit": "^0.3.2",
+    "kung-fig-common": "^0.42.0",
+    "kung-fig-dynamic": "^0.41.11",
+    "kung-fig-dynamic-instance": "^0.42.3",
+    "kung-fig-expression": "^0.42.2",
+    "kung-fig-ref": "^0.42.2",
+    "kung-fig-template": "^0.46.2",
+    "kung-fig-tree-ops": "^0.45.4",
+    "seventh": "^0.7.8",
+    "string-kit": "^0.7.4",
+    "tree-kit": "^0.5.27"
   },
   "devDependencies": {
-    "babel-tower": "^0.17.1",
-    "doormen": "^0.6.10",
-    "expect.js": "^0.3.1"
+    "babel-tower": "^0.17.1"
   },
   "scripts": {
     "test": "tea-time -R dot"
@@ -36,9 +34,14 @@
     "url": "https://github.com/cronvel/kung-fig.git"
   },
   "keywords": [
-    "JSON",
     "config",
-    "loader"
+    "file",
+    "kfg",
+    "tag",
+    "parse",
+    "stringify",
+    "loader",
+    "JSON"
   ],
   "author": "Cédric Ronvel",
   "license": "MIT",
