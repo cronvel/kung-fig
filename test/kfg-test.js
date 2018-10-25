@@ -59,9 +59,9 @@ function debfn( v ) {
 
 
 
-describe( "KFG stringify" , function() {
+describe( "KFG stringify" , () => {
 	
-	it( "stringify string" , function() {
+	it( "stringify string" , () => {
 		expect( stringify( "Hello World!" ) ).to.be( 'Hello World!\n' ) ;
 		expect( stringify( "a:1" ) ).to.be( '> a:1\n' ) ;
 		expect( stringify( "123" ) ).to.be( '> 123\n' ) ;
@@ -78,7 +78,7 @@ describe( "KFG stringify" , function() {
 		expect( stringify( "One...\n\tTwo...\n\nThree!" ) ).to.be( '> One...\n> \tTwo...\n> \n> Three!\n' ) ;
 	} ) ;
 		
-	it( "stringify string with option 'preferQuotes'" , function() {
+	it( "stringify string with option 'preferQuotes'" , () => {
 		expect( stringify( "Hello World!" , { preferQuotes: true } ) ).to.be( 'Hello World!\n' ) ;
 		expect( stringify( "a:1" , { preferQuotes: true } ) ).to.be( '"a:1"\n' ) ;
 		expect( stringify( "123" , { preferQuotes: true } ) ).to.be( '"123"\n' ) ;
@@ -95,7 +95,7 @@ describe( "KFG stringify" , function() {
 		expect( stringify( "One...\n\tTwo...\n\nThree!" , { preferQuotes: true } ) ).to.be( '"One...\\n\\tTwo...\\n\\nThree!"\n' ) ;
 	} ) ;
 		
-	it( "stringify non-string scalar" , function() {
+	it( "stringify non-string scalar" , () => {
 		expect( stringify( undefined ) ).to.be( "null\n" ) ;
 		expect( stringify( null ) ).to.be( "null\n" ) ;
 		expect( stringify( true ) ).to.be( "true\n" ) ;
@@ -104,18 +104,18 @@ describe( "KFG stringify" , function() {
 		expect( stringify( 123.456 ) ).to.be( "123.456\n" ) ;
 	} ) ;
 	
-	it( "stringify empty object/array" , function() {
+	it( "stringify empty object/array" , () => {
 		expect( stringify( [] ) ).to.be( '<Array>\n' ) ;
 		expect( stringify( {} ) ).to.be( '<Object>\n' ) ;
 		expect( stringify( new TagContainer() ) ).to.be( '<TagContainer>\n' ) ;
 	} ) ;
 	
-	it( "undefined value" , function() {
+	it( "undefined value" , () => {
 		expect( stringify( {a:{},b:undefined,c:{d:undefined}} ) ).to.be( 'a: <Object>\nc: <Object>\n' ) ;
 		expect( stringify( [{},undefined,{d:undefined}] ) ).to.be( '- <Object>\n- null\n- <Object>\n' ) ;
 	} ) ;
 	
-	it( "stringify a basic object" , function() {
+	it( "stringify a basic object" , () => {
 		var o = {
 			a: 1 ,
 			b: "bob" ,
@@ -163,24 +163,24 @@ describe( "KFG stringify" , function() {
 		expect( o ).to.equal( parse( s ) ) ;
 	} ) ;
 	
-	it( "stringify ref" , function() {
+	it( "stringify ref" , () => {
 		expect( stringify( new Ref( '$path.to.var' ) ) ).to.be( '$path.to.var\n' ) ;
 		expect( stringify( { ref: new Ref( '$path.to.var' ) } ) ).to.be( 'ref: $path.to.var\n' ) ;
 	} ) ;
 	
 	it( "stringify applicable ref" ) ;
 	
-	it( "stringify expression" , function() {
+	it( "stringify expression" , () => {
 		expect( stringify( parse( '$= 1 + ( 2 * ( 3 * $path.to.my.var ) )' ) ) ).to.be( '$= 1 + ( 2 * ( 3 * $path.to.my.var ) )\n' ) ;
 		expect( stringify( parse( 'expression: $= 1 + ( 2 * ( 3 * $path.to.my.var ) )' ) ) ).to.be( 'expression: $= 1 + ( 2 * ( 3 * $path.to.my.var ) )\n' ) ;
 		expect( stringify( parse( 'expression: $= $path.to.my.var ??? "bob" "bill" "jack"' ) ) ).to.be( 'expression: $= $path.to.my.var ??? "bob" "bill" "jack"\n' ) ;
 	} ) ;
 	
-	it.skip( "stringify applicable expression" , function() {
+	it.skip( "stringify applicable expression" , () => {
 		throw new Error( "Not coded" ) ;
 	} ) ;
 	
-	it( "stringify templates" , function() {
+	it( "stringify templates" , () => {
 		expect( stringify( { tpl: new TemplateSentence( 'Hello ${name}!' ) } ) ).to.be( 'tpl: $> Hello ${name}!\n' ) ;
 		expect( stringify( { tpl: new TemplateSentence( 'Hey!\nHello ${name}!' ) } ) ).to.be( 'tpl: \n\t$> Hey!\n\t$> Hello ${name}!\n' ) ;
 		expect( stringify( { tpl: new TemplateSentence( 'Hello ${name}!' ) } , { preferQuotes: true } ) ).to.be( 'tpl: $"Hello ${name}!"\n' ) ;
@@ -197,7 +197,7 @@ describe( "KFG stringify" , function() {
 	
 	it( "stringify applicable templates" ) ;
 	
-	it( "stringify an object with operators" , function() {
+	it( "stringify an object with operators" , () => {
 		var o = {
 			'+attack': 2,
 			'-defense': 1,
@@ -225,7 +225,7 @@ describe( "KFG stringify" , function() {
 		expect( o ).to.equal( parse( s ) ) ;
 	} ) ;
 	
-	it( "stringify an object with special instances (bin, date, regex)" , function() {
+	it( "stringify an object with special instances (bin, date, regex)" , () => {
 		var o = {
 			bin: new Buffer( 'af461e0a' , 'hex' ) ,
 			date1: new Date( 123456789 ) ,
@@ -267,7 +267,7 @@ describe( "KFG stringify" , function() {
 		expect( o2 ).to.equal( o ) ;
 	} ) ;
 	
-	it( "stringify an object with special custom instances" , function() {
+	it( "stringify an object with special custom instances" , () => {
 		
 		function Simple( value )
 		{
@@ -303,7 +303,7 @@ describe( "KFG stringify" , function() {
 		expect( stringify( o , { classes: stringifier } ) ).to.be( "simple: <Simple> abc\ncomplex: <Complex>\n\tstr: hello\n\tint: 6\n" ) ;
 	} ) ;
 	
-	it( "stringify dynamic instance" , function() {
+	it( "stringify dynamic instance" , () => {
 		expect( stringify( parse( "el: $<Atom> $> ${name}" ) ) ).to.be( "el: $<Atom> $> ${name}\n" ) ;
 		
 		// This does not make sense for the <Atom> constructor, but we don't care, it's just for the testing purpose
@@ -312,7 +312,7 @@ describe( "KFG stringify" , function() {
 	
 	it( "stringify applicable instance of template atoms" ) ;
 	
-	it( "stringify an object with tags" , function() {
+	it( "stringify an object with tags" , () => {
 		var content = fs.readFileSync( __dirname + '/sample/kfg/tag.kfg' , 'utf8' ) ;
 		var expected = fs.readFileSync( __dirname + '/sample/kfg/tag.expected.kfg' , 'utf8' ) ;
 		var o = parse( content ) ;
@@ -321,7 +321,7 @@ describe( "KFG stringify" , function() {
 		expect( s ).to.be( expected ) ;
 	} ) ;
 	
-	it( "stringify an object with tags" , function() {
+	it( "stringify an object with tags" , () => {
 		var o = new TagContainer( [
 			new Tag( 'if' , 'something > constant' , new TagContainer( [
 				new Tag( 'do' , null , 'some tasks' ) ,
@@ -354,7 +354,7 @@ describe( "KFG stringify" , function() {
 		expect( o2 ).to.equal( o ) ;
 	} ) ;
 	
-	it( "stringify an object with tags, featuring custom tags prototype" , function() {
+	it( "stringify an object with tags, featuring custom tags prototype" , () => {
 		
 		function IfTag() {}
 		IfTag.prototype = Object.create( Tag.prototype ) ;
@@ -417,9 +417,9 @@ describe( "KFG stringify" , function() {
 
 
 
-describe( "KFG parse" , function() {
+describe( "KFG parse" , () => {
 	
-	it( "parse string at top-level" , function() {
+	it( "parse string at top-level" , () => {
 		expect( parse( '"Hello World!"' ) ).to.be( "Hello World!" ) ;
 		expect( parse( '> Hello World!' ) ).to.be( "Hello World!" ) ;
 		expect( parse( '>   Hello World!' ) ).to.be( "  Hello World!" ) ;
@@ -435,12 +435,12 @@ describe( "KFG parse" , function() {
 		//expect( parse( 'this is not: an object' ) ).to.be( "this is not: an object" ) ;
 	} ) ;
 	
-	it( "parse multi-line string at top-level" , function() {
+	it( "parse multi-line string at top-level" , () => {
 		expect( parse( '> Hello\n> World!' ) ).to.be( "Hello\nWorld!" ) ;
 		//expect( parse( 'Hello\nWorld!' ) ).to.be( "Hello\nWorld!" ) ;
 	} ) ;
 	
-	it( "parse multi-line folding string at top-level" , function() {
+	it( "parse multi-line folding string at top-level" , () => {
 		expect( parse( '>> Hello\n>> World!' ) ).to.be( "Hello World!" ) ;
 		expect( parse( '>>   Hello  \n>>    World!   ' ) ).to.be( "Hello World!" ) ;
 		expect( parse( '>> Hello\n>>\n>> World!' ) ).to.be( "Hello\nWorld!" ) ;
@@ -451,7 +451,7 @@ describe( "KFG parse" , function() {
 		expect( parse( '>> multi\n>> ple\n>> \n>>    \n>>\n>> lines' ) ).to.be( "multi ple\n\n\nlines" ) ;
 	} ) ;
 	
-	it( "parse non-string scalar at top-level" , function() {
+	it( "parse non-string scalar at top-level" , () => {
 		expect( parse( 'null' ) ).to.be( null ) ;
 		expect( parse( 'true' ) ).to.be( true ) ;
 		expect( parse( 'false' ) ).to.be( false ) ;
@@ -459,14 +459,14 @@ describe( "KFG parse" , function() {
 		expect( parse( '123.456' ) ).to.be( 123.456 ) ;
 	} ) ;
 	
-	it( "parse instance at top-level" , function() {
+	it( "parse instance at top-level" , () => {
 		expect( JSON.stringify( parse( "<Bin16> 22" ) ) ).to.be( '{"type":"Buffer","data":[34]}' ) ;
 		expect( JSON.stringify( parse( "<Object>" ) ) ).to.be( '{}' ) ;
 		expect( JSON.stringify( parse( "<Object>\na: 1" ) ) ).to.be( '{"a":1}' ) ;
 		expect( parse( "<TemplateSentence> :string" ).toString() ).to.be( ':string' ) ;
 	} ) ;
 		
-	it( "numbers and string ambiguity" , function() {
+	it( "numbers and string ambiguity" , () => {
 		expect( parse( "v:1" ) ).to.equal( {v:1} ) ;
 		expect( parse( "v:1l" ) ).to.equal( {v:"1l"} ) ;
 		expect( parse( "v:10e2" ) ).to.equal( {v:1000} ) ;
@@ -474,12 +474,12 @@ describe( "KFG parse" , function() {
 		expect( parse( "v:123.e5" ) ).to.equal( {v:"123.e5"} ) ;
 	} ) ;
 	
-	it( "constant and string ambiguity" , function() {
+	it( "constant and string ambiguity" , () => {
 		expect( parse( "v:true" ) ).to.equal( {v:true} ) ;
 		expect( parse( "v:true or false" ) ).to.equal( {v:"true or false"} ) ;
 	} ) ;
 	
-	it( "unquoted key ambiguity" , function() {
+	it( "unquoted key ambiguity" , () => {
 		expect( parse( "first-name:Joe" ) ).to.equal( {"first-name":"Joe"} ) ;
 		expect( parse( "first-name :Joe" ) ).to.equal( {"first-name":"Joe"} ) ;
 		expect( parse( "first-name   :Joe" ) ).to.equal( {"first-name":"Joe"} ) ;
@@ -496,11 +496,18 @@ describe( "KFG parse" , function() {
 		expect( parse( "false: Joe" ) ).to.equal( {"false":"Joe"} ) ;
 	} ) ;
 	
-	it( "quoted key" , function() {
+	it( "quoted key" , () => {
 		expect( parse( '"some:\\"bizarre:\\nkey" : value' ) ).to.equal( {"some:\"bizarre:\nkey":"value"} ) ;
 	} ) ;
 	
-	it( "unquoted tabs should not be parsed as string but as undefined" , function() {
+	it( "section or dict key/value mode" , () => {
+		//expect( parse( '<: Hello Bob!\n:> Bonjour Bob !' ) ).to.be.like( { "Hello Bob!": "Bonjour Bob !" } ) ;
+		expect( [ ... parse( '<: Hello Bob!\n:> Bonjour Bob !' ) ] ).to.equal( [
+			[ "Hello Bob!" , "Bonjour Bob !" ]
+		] ) ;
+	} ) ;
+	
+	it( "unquoted tabs should not be parsed as string but as undefined" , () => {
 		var o ;
 		
 		o = parse( "object:\t\t\t\n\ta: 1" ) ;
@@ -512,7 +519,7 @@ describe( "KFG parse" , function() {
 		expect( JSON.stringify( o ) ).to.be( '{"children":[{"name":"tag","content":{"a":1},"attributes":null}]}' ) ;
 	} ) ;
 	
-	it( "comment ambiguity" , function() {
+	it( "comment ambiguity" , () => {
 		expect( parse( "#comment\nkey: value" ) ).to.equal( { key: "value" } ) ;
 		expect( parse( "key: value # comment" ) ).to.equal( { key: "value # comment" } ) ;
 		expect( parse( "object:\n\t# comment\n\tkey: value" ) ).to.equal( { object: { key: "value" } } ) ;
@@ -520,7 +527,7 @@ describe( "KFG parse" , function() {
 		expect( parse( "object:\n\t\t# comment\n\tkey: value" ) ).to.equal( { object: { key: "value" } } ) ;
 	} ) ;
 	
-	it( "parse a basic file" , function() {
+	it( "parse a basic file" , () => {
 		
 		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/simple.kfg' , 'utf8' ) ) ;
 		
@@ -568,7 +575,7 @@ describe( "KFG parse" , function() {
 		expect( kungFig.getMeta( o ).getFirstTag( 'meta' ).content ).to.equal( { content: "test" } ) ;
 	} ) ;
 	
-	it( "parse a file using 4-spaces to indent" , function() {
+	it( "parse a file using 4-spaces to indent" , () => {
 		
 		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/spaces-indent.kfg' , 'utf8' ) ) ;
 		
@@ -616,7 +623,7 @@ describe( "KFG parse" , function() {
 		expect( kungFig.getMeta( o ).getFirstTag( 'meta' ).content ).to.equal( { content: "test" } ) ;
 	} ) ;
 	
-	it( "parse ref" , function() {
+	it( "parse ref" , () => {
 		var o ;
 		var ctx = { name: "Bob" , bob: { age: 43 } } ;
 		
@@ -633,7 +640,7 @@ describe( "KFG parse" , function() {
 		expect( o.ref2.toString( ctx ) ).to.be( "43" ) ;
 	} ) ;
 	
-	it( "parse applicable ref" , function() {
+	it( "parse applicable ref" , () => {
 		var o ;
 		var ctx = { name: "Bob" , bob: { age: 43 } } ;
 		
@@ -645,7 +652,7 @@ describe( "KFG parse" , function() {
 		expect( o.ref2.apply( ctx ) ).to.be( 43 ) ;
 	} ) ;
 	
-	it( "parse expressions" , function() {
+	it( "parse expressions" , () => {
 		var o ;
 		var ctx = { name: "Bob" , bob: { age: 43 } , bill: { age: 37 } } ;
 		
@@ -701,7 +708,7 @@ describe( "KFG parse" , function() {
 		expect( o.exp.getFinalValue( ctx ) ).to.be( false ) ;
 	} ) ;
 	
-	it( "parse multi-line expressions" , function() {
+	it( "parse multi-line expressions" , () => {
 		var o ;
 		var ctx = { name: "Bob" , bob: { age: 43 } , bill: { age: 37 } } ;
 		
@@ -723,7 +730,7 @@ describe( "KFG parse" , function() {
 		expect( o.exp.getFinalValue( ctx ) ).to.be( 129 ) ;
 	} ) ;
 	
-	it( "parse applicable expressions" , function() {
+	it( "parse applicable expressions" , () => {
 		var o ;
 		var ctx = { name: "Bob" , bob: { age: 43 } , bill: { age: 37 } } ;
 		
@@ -732,7 +739,7 @@ describe( "KFG parse" , function() {
 		expect( o.exp.apply( ctx ) ).to.be( 45 ) ;
 	} ) ;
 	
-	it( "parse templates" , function() {
+	it( "parse templates" , () => {
 		var o ;
 		
 		// console.log( o.tpl ) ;
@@ -775,7 +782,7 @@ describe( "KFG parse" , function() {
 		expect( o.toString( { name: "Bob" } ) ).to.be( 'Hey!\nHello Bob!' ) ;
 	} ) ;
 	
-	it( "parse applicable templates" , function() {
+	it( "parse applicable templates" , () => {
 		var o ;
 		
 		o = parse( "tpl: $$> Hello ${name}!" ) ;
@@ -792,7 +799,7 @@ describe( "KFG parse" , function() {
 	} ) ;
 	
 	/*
-	it( "parse template atoms" , function() {
+	it( "parse template atoms" , () => {
 		var o , o2 ;
 		
 		o = parse( "el: $%> horse" ) ;
@@ -825,7 +832,7 @@ describe( "KFG parse" , function() {
 	} ) ;
 	*/
 	
-	it( "parse template atoms" , function() {
+	it( "parse template atoms" , () => {
 		var o , o2 ;
 		
 		o = parse( "el: <Atom> horse" ) ;
@@ -853,7 +860,7 @@ describe( "KFG parse" , function() {
 		expect( o2.toString( o ) ).to.be( 'I like horses!' ) ;
 	} ) ;
 	
-	it( "parse dynamic instance" , function() {
+	it( "parse dynamic instance" , () => {
 		var o ;
 		
 		o = parse( "el: $<Atom> $> ${name}" ) ;
@@ -862,7 +869,7 @@ describe( "KFG parse" , function() {
 		expect( o.el.getValue( { name: 'bob' } ) ).to.be.like( { k: 'bob' } ) ;
 	} ) ;
 	
-	it( "parse applicable instance" , function() {
+	it( "parse applicable instance" , () => {
 		var o ;
 		
 		o = parse( "el: $$<Atom> $> ${name}" ) ;
@@ -873,7 +880,7 @@ describe( "KFG parse" , function() {
 	} ) ;
 	
 	/*
-	it( "parse applicable template atoms" , function() {
+	it( "parse applicable template atoms" , () => {
 		var o , o2 ;
 		
 		o = parse( "el: $$%> horse[n?horse|horses]" ) ;
@@ -886,7 +893,7 @@ describe( "KFG parse" , function() {
 	} )
 	*/
 	
-	it( "parse template sentence and atom, and use a babel instance to localize it" , function() {
+	it( "parse template sentence and atom, and use a babel instance to localize it" , () => {
 		var o , o2 ;
 		
 		var babel = new Babel() ;
@@ -940,7 +947,7 @@ describe( "KFG parse" , function() {
 		expect( o2.toString( o ) ).to.be( "J'aime les juments!" ) ;
 	} ) ;
 	
-	it( "parse a file with operators" , function() {
+	it( "parse a file with operators" , () => {
 		
 		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/ops.kfg' , 'utf8' ) ) ;
 		
@@ -963,7 +970,7 @@ describe( "KFG parse" , function() {
 		} ) ;
 	} ) ;
 	
-	it( "parse a file with special instances (json, bin, date, regex)" , function() {
+	it( "parse a file with special instances (json, bin, date, regex)" , () => {
 		
 		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/instances.kfg' , 'utf8' ) ) ;
 		
@@ -982,7 +989,7 @@ describe( "KFG parse" , function() {
 		expect( o.bin.toString( 'hex' ) ).to.be( "fd104b19" ) ;
 	} ) ;
 	
-	it( "parse a file with ordered object" , function() {
+	it( "parse a file with ordered object" , () => {
 		
 		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/ordered-object.kfg' , 'utf8' ) ) ;
 		
@@ -1006,7 +1013,7 @@ describe( "KFG parse" , function() {
 		expect( o.sub.three._key ).to.be( 'three' ) ;
 	} ) ;
 	
-	it( "parse a file with special custom instances" , function() {
+	it( "parse a file with special custom instances" , () => {
 		
 		function Simple( value )
 		{
@@ -1036,7 +1043,7 @@ describe( "KFG parse" , function() {
 		expect( JSON.stringify( o ) ).to.be( '{"simple":{"str":"abc"},"complex":{"str":"hello","int":6}}' ) ;
 	} ) ;
 	
-	it( "parse tags" , function() {
+	it( "parse tags" , () => {
 		
 		expect( JSON.stringify( parse( '[tag]' ) ) ).to.be( '{"children":[{"name":"tag","attributes":null}]}' ) ;
 		expect( JSON.stringify( parse( '[tag] text' ) ) ).to.be( '{"children":[{"name":"tag","content":"text","attributes":null}]}' ) ;
@@ -1049,7 +1056,7 @@ describe( "KFG parse" , function() {
 		expect( JSON.stringify( parse( '[tag] <Object>\n\ta: 1\n\tb: 2' ) ) ).to.be( '{"children":[{"name":"tag","content":{"a":1,"b":2},"attributes":null}]}' ) ;
 	} ) ;
 	
-	it( "parse a file containing tags" , function() {
+	it( "parse a file containing tags" , () => {
 		
 		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/tag.kfg' , 'utf8' ) ) ;
 		
@@ -1066,7 +1073,7 @@ describe( "KFG parse" , function() {
 		expect( o.children[ 2 ] ).to.be( o.children[ 2 ].content.children[ 0 ].getParentTag() ) ;
 	} ) ;
 	
-	it( "parse a file containing tags, with custom tags prototypes" , function() {
+	it( "parse a file containing tags, with custom tags prototypes" , () => {
 		
 		function IfTag() {}
 		IfTag.prototype = Object.create( Tag.prototype ) ;
@@ -1105,9 +1112,9 @@ describe( "KFG parse" , function() {
 	
 
 
-describe( "Meta-Tag" , function() {
+describe( "Meta-Tag" , () => {
 	
-	it( "parse meta-tag" , function() {
+	it( "parse meta-tag" , () => {
 		var o ;
 		o = parse( '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\nsome: data' ) ;
 		/*
@@ -1122,7 +1129,7 @@ describe( "Meta-Tag" , function() {
 		expect( stringify( o ) ).to.be( '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\n\nsome: data\n' ) ;
 	} ) ;
 	
-	it( "stringify meta-tag" , function() {
+	it( "stringify meta-tag" , () => {
 		var o ;
 		o = { some: "data" } ;
 		kungFig.setMeta( o , [ new Tag( 'meta' , undefined , { author: "Joe Doe" , copyright: 2016 } ) ] ) ;
@@ -1131,7 +1138,7 @@ describe( "Meta-Tag" , function() {
 		expect( stringify( o ) ).to.be( '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\n\nsome: data\n' ) ;
 	} ) ;
 	
-	it( "meta doctype filtering" , function() {
+	it( "meta doctype filtering" , () => {
 		var o , kfg ;
 		
 		kfg = '[[doctype supadoc]]\nsome: data' ;
@@ -1157,7 +1164,7 @@ describe( "Meta-Tag" , function() {
 		expect( () => parse( kfg , { doctype: [ "supadoc" , "cooldoc" ] } ) ).to.throw() ;
 	} ) ;
 	
-	it( "parse meta-tag, with meta hook" , function() {
+	it( "parse meta-tag, with meta hook" , () => {
 		var o , hookTriggered = 0 ;
 		
 		var options = {
@@ -1184,11 +1191,11 @@ describe( "Meta-Tag" , function() {
 		expect( stringify( o ) ).to.be( '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\n\nsome: data\n' ) ;
 	} ) ;
 	
-	it( "meta tag after body started should throw" , function() {
+	it( "meta tag after body started should throw" , () => {
 		expect( () => parse( '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\nsome: data\n[[meta]]' ) ).to.throw() ;
 	} ) ;
 	
-	it( "meta hook & loading (include, ...)" , function() {
+	it( "meta hook & loading (include, ...)" , () => {
 		var o , hookTriggered = 0 , nonIncludeHookTriggered = 0 , includeHookTriggered = 0 ;
 		
 		var options = {
@@ -1223,22 +1230,22 @@ describe( "Meta-Tag" , function() {
 
 
 
-describe( "LabelTag" , function() {
+describe( "LabelTag" , () => {
 	
 	var LabelTag = kungFig.LabelTag ;
 	
-	it( "label attributes parse" , function() {
+	it( "label attributes parse" , () => {
 		expect( LabelTag.parseAttributes( 'label' ) ).to.be( 'label' ) ;
 		expect( LabelTag.parseAttributes( '' ) ).to.be( '' ) ;
 	} ) ;
 	
-	it( "label attributes stringify" , function() {
+	it( "label attributes stringify" , () => {
 		expect( LabelTag.stringifyAttributes( 'label' ) ).to.be( 'label' ) ;
 		expect( LabelTag.stringifyAttributes( 'label[]' ) ).to.be( '"label[]"' ) ;
 	} ) ;
 	
 	
-	it( "LabelTag parse" , function() {
+	it( "LabelTag parse" , () => {
 		var o = parse( '[LabelTag my-label]' , { tags: { LabelTag: LabelTag } } ) ;
 		
 		//console.log( "parsed:" , o ) ;
@@ -1260,7 +1267,7 @@ describe( "LabelTag" , function() {
 
 
 
-describe( "VarTag" , function() {
+describe( "VarTag" , () => {
 	
 	var LabelTag = kungFig.LabelTag ;
 	
@@ -1270,11 +1277,11 @@ describe( "VarTag" , function() {
 
 
 
-describe( "ClassicTag" , function() {
+describe( "ClassicTag" , () => {
 	
 	var ClassicTag = kungFig.ClassicTag ;
 	
-	it( "classic attributes parse" , function() {
+	it( "classic attributes parse" , () => {
 		expect(
 			ClassicTag.parseAttributes( 'width=1280 height=1024 src="/css/main.css" active' ) ).to.equal(
 			{ width: 1280, height: 1024, src: '/css/main.css', active: true }
@@ -1301,7 +1308,7 @@ describe( "ClassicTag" , function() {
 		) ;
 	} ) ;
 	
-	it( "classic attributes stringify" , function() {
+	it( "classic attributes stringify" , () => {
 		//console.log( ClassicTag.stringifyAttributes( { width: 1280, height: 1024, src: '/css/main.css', active: true } ) ) ;
 		
 		expect(
@@ -1310,7 +1317,7 @@ describe( "ClassicTag" , function() {
 		) ;
 	} ) ;
 	
-	it( "ClassicTag parse" , function() {
+	it( "ClassicTag parse" , () => {
 		var o = parse( '[ClassicTag width=1280 height=1024 src="/css/main.css" active]' , { tags: { ClassicTag: ClassicTag } } ) ;
 		
 		//console.log( "parsed:" , o ) ;
@@ -1339,7 +1346,7 @@ describe( "ClassicTag" , function() {
 		*/
 	} ) ;
 	
-	it( "ClassicTag stringify" , function() {
+	it( "ClassicTag stringify" , () => {
 		var o = new TagContainer( [
 			new ClassicTag( 'ClassicTag' , { width: 1280, height: 1024, src: '/css/main.css', active: true } ) 
 		] ) ;
@@ -1380,7 +1387,7 @@ describe( "ClassicTag" , function() {
 
 
 
-describe( "ExpressionTag" , function() {
+describe( "ExpressionTag" , () => {
 	
 	var ExpressionTag = kungFig.ExpressionTag ;
 	
@@ -1444,9 +1451,9 @@ describe( "ExpressionTag" , function() {
 
 
 
-describe( "Historical bugs" , function() {
+describe( "Historical bugs" , () => {
 	
-	it( ".saveKfg() bug with tags" , function() {
+	it( ".saveKfg() bug with tags" , () => {
 		var content = fs.readFileSync( __dirname + '/sample/kfg/tag.kfg' , 'utf8' ) ;
 		var expected = fs.readFileSync( __dirname + '/sample/kfg/tag.expected.kfg' , 'utf8' ) ;
 		var o = parse( content ) ;
