@@ -500,9 +500,36 @@ describe( "KFG parse" , () => {
 		expect( parse( '"some:\\"bizarre:\\nkey" : value' ) ).to.equal( {"some:\"bizarre:\nkey":"value"} ) ;
 	} ) ;
 	
-	it( "section or dict key/value mode" , () => {
-		//expect( parse( '<: Hello Bob!\n:> Bonjour Bob !' ) ).to.be.like( { "Hello Bob!": "Bonjour Bob !" } ) ;
-		expect( [ ... parse( '<: Hello Bob!\n:> Bonjour Bob !' ) ] ).to.equal( [
+	it( "map keys and values" , () => {
+		expect( parse( '<: Hello Bob!\n:> Bonjour Bob !' ) ).to.map( [
+			[ "Hello Bob!" , "Bonjour Bob !" ]
+		] ) ;
+		expect( parse( '<: Hello Bob!\n:> Bonjour Bob !\n<: How are you?\n:> Comment vas-tu ?' ) ).to.map( [
+			[ "Hello Bob!" , "Bonjour Bob !" ] ,
+			[ "How are you?" , "Comment vas-tu ?" ]
+		] ) ;
+		expect( parse( '<: true\n:> Bonjour Bob !' ) ).to.map( [
+			[ true , "Bonjour Bob !" ]
+		] ) ;
+		expect( parse( '<: Hello Bob!\n:>\n\t- 1' ) ).to.map( [
+			[ "Hello Bob!" , [1] ]
+		] ) ;
+		expect( parse( '<:\n\t- 1\n:> Bonjour Bob !' ) ).to.map( [
+			[ [1] , "Bonjour Bob !" ]
+		] ) ;
+		expect( parse( '<:\n\ta: 1\n:> Bonjour Bob !' ) ).to.map( [
+			[ {a:1} , "Bonjour Bob !" ]
+		] ) ;
+		expect( parse( '<:\n\ta: 1\n\tb: 2\n:> Bonjour Bob !' ) ).to.map( [
+			[ {a:1,b:2} , "Bonjour Bob !" ]
+		] ) ;
+		expect( parse( '<:\ta: 1\n\tb: 2\n:> Bonjour Bob !' ) ).to.map( [
+			[ {a:1,b:2} , "Bonjour Bob !" ]
+		] ) ;
+	} ) ;
+	
+	it.opt( "Babel translation file shorthand syntax for map" , () => {
+		expect( parse( '<<: Hello Bob!\n:>> Bonjour Bob !' ) ).to.map( [
 			[ "Hello Bob!" , "Bonjour Bob !" ]
 		] ) ;
 	} ) ;
