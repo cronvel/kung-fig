@@ -514,8 +514,28 @@ describe( "KFG parse" , () => {
 		expect( parse( '<: Hello Bob!\n:>\n\t- 1' ) ).to.map( [
 			[ "Hello Bob!" , [1] ]
 		] ) ;
+		expect( parse( '<: Hello Bob!\n:>\n\t- 1\n\t- 2' ) ).to.map( [
+			[ "Hello Bob!" , [1,2] ]
+		] ) ;
+		// Compact-list
+		expect( parse( '<: Hello Bob!\n:>\t- 1\n\t- 2' ) ).to.map( [
+			[ "Hello Bob!" , [1,2] ]
+		] ) ;
+		expect( parse( '<: Hello Bob!\n:>\n\ta: 1' ) ).to.map( [
+			[ "Hello Bob!" , {a:1} ]
+		] ) ;
+		expect( parse( '<: Hello Bob!\n:>\n\ta: 1\n\tb: 2' ) ).to.map( [
+			[ "Hello Bob!" , {a:1,b:2} ]
+		] ) ;
+		// Compact-list
+		expect( parse( '<: Hello Bob!\n:>\ta: 1\n\tb: 2' ) ).to.map( [
+			[ "Hello Bob!" , {a:1,b:2} ]
+		] ) ;
 		expect( parse( '<:\n\t- 1\n:> Bonjour Bob !' ) ).to.map( [
 			[ [1] , "Bonjour Bob !" ]
+		] ) ;
+		expect( parse( '<:\n\t- 1\n\t- 2\n:> Bonjour Bob !' ) ).to.map( [
+			[ [1,2] , "Bonjour Bob !" ]
 		] ) ;
 		expect( parse( '<:\n\ta: 1\n:> Bonjour Bob !' ) ).to.map( [
 			[ {a:1} , "Bonjour Bob !" ]
