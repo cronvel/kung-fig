@@ -546,9 +546,30 @@ describe( "KFG parse" , () => {
 		expect( parse( '<:\ta: 1\n\tb: 2\n:> Bonjour Bob !' ) ).to.map( [
 			[ {a:1,b:2} , "Bonjour Bob !" ]
 		] ) ;
+		expect( parse( 'translate:\n\t<: Hello Bob!\n\t:> Bonjour Bob !' ).translate ).to.map( [
+			[ "Hello Bob!" , "Bonjour Bob !" ]
+		] ) ;
+	} ) ;
+
+	it( "map to object" , () => {
+		expect( parse( 'translate: <Object>\n\t<: Hello Bob!\n\t:> Bonjour Bob !' ) ).to.equal( {
+			translate: {
+				"Hello Bob!": "Bonjour Bob !"
+			}
+		} ) ;
 	} ) ;
 	
-	it.opt( "Babel translation file shorthand syntax for map" , () => {
+	it( "Babel translation file shorthand syntax for map" , () => {
+		expect( parse( '<: Hello Bob!\n:>> Bonjour Bob !' ) ).to.map( [
+			[ "Hello Bob!" , "Bonjour Bob !" ]
+		] ) ;
+		expect( parse( '<: Hello Bob!\n:>\n\t> Bonjour Bob !\n\t> Comment ça va ?' ) ).to.map( [
+			[ "Hello Bob!" , "Bonjour Bob !\nComment ça va ?" ]
+		] ) ;
+		expect( parse( '<: Hello Bob!\n:>> Bonjour Bob !\n:>> Comment ça va ?' ) ).to.map( [
+			[ "Hello Bob!" , "Bonjour Bob !\nComment ça va ?" ]
+		] ) ;
+		return ;
 		expect( parse( '<<: Hello Bob!\n:>> Bonjour Bob !' ) ).to.map( [
 			[ "Hello Bob!" , "Bonjour Bob !" ]
 		] ) ;
