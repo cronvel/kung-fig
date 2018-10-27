@@ -110,6 +110,10 @@ describe( "KFG stringify" , () => {
 		expect( stringify( new TagContainer() ) ).to.be( '<TagContainer>\n' ) ;
 	} ) ;
 	
+	it.skip( "stringify map" , () => {
+		throw new Error( "Not coded" ) ;
+	} ) ;
+	
 	it( "undefined value" , () => {
 		expect( stringify( {a:{},b:undefined,c:{d:undefined}} ) ).to.be( 'a: <Object>\nc: <Object>\n' ) ;
 		expect( stringify( [{},undefined,{d:undefined}] ) ).to.be( '- <Object>\n- null\n- <Object>\n' ) ;
