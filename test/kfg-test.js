@@ -592,6 +592,11 @@ describe( "KFG parse" , () => {
 		expect( parse( '<<: Hello Bob!\n<<: How are you?\n<<: Fine?\n:>> Bonjour Bob !\n:>> Comment ça va ?\n:>> Bien ?' ) ).to.map( [
 			[ "Hello Bob!\nHow are you?\nFine?" , "Bonjour Bob !\nComment ça va ?\nBien ?" ]
 		] ) ;
+
+		expect( parse( '<<: Hello Bob!\n:>> Bonjour Bob !\n<<: Hi Bob!\n:>> Salut Bob !' ) ).to.map( [
+			[ "Hello Bob!" , "Bonjour Bob !" ] ,
+			[ "Hi Bob!" , "Salut Bob !" ]
+		] ) ;
 	} ) ;
 	
 	it( "Dictionnaries/translation file shorthand syntax for map, with folding" , () => {
