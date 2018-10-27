@@ -594,6 +594,21 @@ describe( "KFG parse" , () => {
 		] ) ;
 	} ) ;
 	
+	it( "Dictionnaries/translation file shorthand syntax for map, with folding" , () => {
+		expect( parse( '<<<: Hello Bob!\n<<<: How are you?\n:>>> Bonjour Bob !\n:>>> Comment ça va ?' ) ).to.map( [
+			[ "Hello Bob! How are you?" , "Bonjour Bob ! Comment ça va ?" ]
+		] ) ;
+		expect( parse( '<<<: Hello Bob!\n<<<: How are you?\n<<<: Fine?\n:>>> Bonjour Bob !\n:>>> Comment ça va ?\n:>>> Bien ?' ) ).to.map( [
+			[ "Hello Bob! How are you? Fine?" , "Bonjour Bob ! Comment ça va ? Bien ?" ]
+		] ) ;
+		expect( parse( '<<<: Hello Bob!\n<<<:\n<<<: How are you?\n<<<: Fine?\n:>>> Bonjour Bob !\n:>>> Comment ça va ?\n:>>>\n:>>> Bien ?' ) ).to.map( [
+			[ "Hello Bob!\nHow are you? Fine?" , "Bonjour Bob ! Comment ça va ?\nBien ?" ]
+		] ) ;
+		expect( parse( '<<<: Hello Bob!\n<<<:\n<<<:\n<<<: How are you?\n<<<: Fine?\n:>>> Bonjour Bob !\n:>>> Comment ça va ?\n:>>>\n:>>>\n:>>> Bien ?' ) ).to.map( [
+			[ "Hello Bob!\n\nHow are you? Fine?" , "Bonjour Bob ! Comment ça va ?\n\nBien ?" ]
+		] ) ;
+	} ) ;
+	
 	it( "unquoted tabs should not be parsed as string but as undefined" , () => {
 		var o ;
 		
