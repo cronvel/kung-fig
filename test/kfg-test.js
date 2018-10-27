@@ -563,7 +563,7 @@ describe( "KFG parse" , () => {
 		} ) ;
 	} ) ;
 	
-	it( "Babel translation file shorthand syntax for map" , () => {
+	it( "Dictionnaries/translation file shorthand syntax for map" , () => {
 		expect( parse( '<: Hello Bob!\n:>> Bonjour Bob !' ) ).to.map( [
 			[ "Hello Bob!" , "Bonjour Bob !" ]
 		] ) ;
@@ -573,9 +573,24 @@ describe( "KFG parse" , () => {
 		expect( parse( '<: Hello Bob!\n:>> Bonjour Bob !\n:>> Comment ça va ?' ) ).to.map( [
 			[ "Hello Bob!" , "Bonjour Bob !\nComment ça va ?" ]
 		] ) ;
-		return ;
+		
+		
+		expect( parse( '<<: Hello Bob!\n:> Bonjour Bob !' ) ).to.map( [
+			[ "Hello Bob!" , "Bonjour Bob !" ]
+		] ) ;
 		expect( parse( '<<: Hello Bob!\n:>> Bonjour Bob !' ) ).to.map( [
 			[ "Hello Bob!" , "Bonjour Bob !" ]
+		] ) ;
+		expect( parse( '<<: Hello Bob!\n<<: How are you?\n:>> Bonjour Bob !' ) ).to.map( [
+			[ "Hello Bob!\nHow are you?" , "Bonjour Bob !" ]
+		] ) ;
+		
+		
+		expect( parse( '<<: Hello Bob!\n<<: How are you?\n:>> Bonjour Bob !\n:>> Comment ça va ?' ) ).to.map( [
+			[ "Hello Bob!\nHow are you?" , "Bonjour Bob !\nComment ça va ?" ]
+		] ) ;
+		expect( parse( '<<: Hello Bob!\n<<: How are you?\n<<: Fine?\n:>> Bonjour Bob !\n:>> Comment ça va ?\n:>> Bien ?' ) ).to.map( [
+			[ "Hello Bob!\nHow are you?\nFine?" , "Bonjour Bob !\nComment ça va ?\nBien ?" ]
 		] ) ;
 	} ) ;
 	
