@@ -504,6 +504,11 @@ describe( "KFG parse" , () => {
 		expect( parse( '"some:\\"bizarre:\\nkey" : value' ) ).to.equal( {"some:\"bizarre:\nkey":"value"} ) ;
 	} ) ;
 	
+	it( "section" , () => {
+		expect( parse( '--- section1 ---\nvalue' ) ).to.equal( {section1:"value"} ) ;
+		expect( parse( '--- section1 ---\nvalue1\n--- section2 ---\nvalue2' ) ).to.equal( {section1:"value1",section2:"value2"} ) ;
+	} ) ;
+	
 	it( "map keys and values" , () => {
 		expect( parse( '<: Hello Bob!\n:> Bonjour Bob !' ) ).to.map( [
 			[ "Hello Bob!" , "Bonjour Bob !" ]
