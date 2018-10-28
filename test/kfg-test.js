@@ -678,6 +678,7 @@ describe( "KFG parse" , () => {
 				[ 'six', 'seven' ] ] ]
 		} ) ;
 		
+		//console.log( kungFig.getMeta( o ) ) ;
 		//console.log( kungFig.getMeta( o ).getFirstTag( 'meta' ).content ) ;
 		expect( kungFig.getMeta( o ).getFirstTag( 'meta' ).content ).to.equal( { content: "test" } ) ;
 	} ) ;
@@ -1151,7 +1152,6 @@ describe( "KFG parse" , () => {
 	} ) ;
 	
 	it( "parse tags" , () => {
-		
 		expect( JSON.stringify( parse( '[tag]' ) ) ).to.be( '{"children":[{"name":"tag","attributes":null}]}' ) ;
 		expect( JSON.stringify( parse( '[tag] text' ) ) ).to.be( '{"children":[{"name":"tag","content":"text","attributes":null}]}' ) ;
 		expect( JSON.stringify( parse( '[tag] "text"' ) ) ).to.be( '{"children":[{"name":"tag","content":"text","attributes":null}]}' ) ;
