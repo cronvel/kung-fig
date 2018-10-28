@@ -531,6 +531,7 @@ describe( "KFG parse" , () => {
 		expect( parse( '<: Hello Bob!\n:>\n\ta: 1\n\tb: 2' ) ).to.map( [
 			[ "Hello Bob!" , {a:1,b:2} ]
 		] ) ;
+	
 		// Compact-list
 		expect( parse( '<: Hello Bob!\n:>\ta: 1\n\tb: 2' ) ).to.map( [
 			[ "Hello Bob!" , {a:1,b:2} ]
