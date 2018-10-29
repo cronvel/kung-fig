@@ -1,4 +1,11 @@
 
+v0.47.0
+-------
+
+Big KFG parser refacto
+support for Map, dictionnary/translation table and section added
+
+
 v0.46.3
 -------
 

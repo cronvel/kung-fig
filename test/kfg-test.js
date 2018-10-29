@@ -504,9 +504,40 @@ describe( "KFG parse" , () => {
 		expect( parse( '"some:\\"bizarre:\\nkey" : value' ) ).to.equal( {"some:\"bizarre:\nkey":"value"} ) ;
 	} ) ;
 	
-	it( "section" , () => {
+	it( "sections as array's elements" , () => {
+		expect( parse( '---\nvalue' ) ).to.equal( ["value"] ) ;
+		expect( parse( '----\nvalue' ) ).to.equal( ["value"] ) ;
+		expect( parse( '---------\nvalue' ) ).to.equal( ["value"] ) ;
+		expect( () => parse( '--\nvalue' ) ).to.throw( SyntaxError ) ;
+		expect( parse( '---\nvalue1\n---\nvalue2' ) ).to.equal( ["value1","value2"] ) ;
+		expect( parse( '---\nvalue1\n---\nvalue2\n---\n3' ) ).to.equal( ["value1","value2",3] ) ;
+		expect( parse( '---\nvalue1\n---\nvalue2\n---\n3\n---\na: 1\nb: 2' ) ).to.equal( ["value1","value2",3,{a:1,b:2}] ) ;
+		expect( parse( '---\nvalue1\n---\nvalue2\n---\n3\n---\na: 1\nb: 2\n---\nfour' ) ).to.equal( ["value1","value2",3,{a:1,b:2},"four"] ) ;
+	} ) ;
+	
+	it( "sections as object's keys" , () => {
 		expect( parse( '--- section1 ---\nvalue' ) ).to.equal( {section1:"value"} ) ;
+		expect( parse( '---- section1 ---\nvalue' ) ).to.equal( {section1:"value"} ) ;
+		expect( parse( '--- section1 ----\nvalue' ) ).to.equal( {section1:"value"} ) ;
+		expect( parse( '------ section1 --------\nvalue' ) ).to.equal( {section1:"value"} ) ;
+		expect( () => parse( '-- section1 ---\nvalue' ) ).to.throw( SyntaxError ) ;
+		expect( () => parse( '--- section1 --\nvalue' ) ).to.throw( SyntaxError ) ;
+		expect( () => parse( '--- section1 -\nvalue' ) ).to.throw( SyntaxError ) ;
+		expect( () => parse( '--- section1 \nvalue' ) ).to.throw( SyntaxError ) ;
+		expect( () => parse( '--- section1\nvalue' ) ).to.throw( SyntaxError ) ;
 		expect( parse( '--- section1 ---\nvalue1\n--- section2 ---\nvalue2' ) ).to.equal( {section1:"value1",section2:"value2"} ) ;
+		expect( parse( '--- section1 ---\nvalue1\n--- section2 ---\nvalue2\n--- section three ---\n3' ) ).to.equal( {section1:"value1",section2:"value2","section three":3} ) ;
+		
+		expect( parse( 'a: 1\nb: 2\n--- section1 ---\nvalue1\n--- section2 ---\nvalue2\n--- section three ---\n3' ) ).to.equal(
+			{a:1,b:2,section1:"value1",section2:"value2","section three":3}
+		) ;
+		expect( () => parse( 'a: 1\nb: 2\n--- section1 ---\nvalue1\n--- section2 ---\nvalue2\n--- section three ---\n3\n\nd:4' ) ).to.throw( SyntaxError ) ;
+		expect( parse( 'a: 1\nb: 2\n--- section1 ---\nvalue1\n--- section2 ---\nvalue2\n--- section three ---\nd:4\ne:5' ) ).to.equal(
+			{a:1,b:2,section1:"value1",section2:"value2","section three":{d:4,e:5}}
+		) ;
+		expect( parse( 'a: 1\nb: 2\n--- section1 ---\nvalue1\n--- section2 ---\nvalue2\n--- section three ---\nd:4\ne:5\n--- section four ---\nf: 6' ) ).to.equal(
+			{a:1,b:2,section1:"value1",section2:"value2","section three":{d:4,e:5},"section four":{f:6}}
+		) ;
 	} ) ;
 	
 	it( "map keys and values" , () => {
@@ -950,7 +981,7 @@ describe( "KFG parse" , () => {
 		var o , o2 ;
 		
 		o = parse( "el: <Atom> horse" ) ;
-		console.log( 'o:' , o ) ;
+		//console.log( 'o:' , o ) ;
 		expect( o.el ).to.be.like( { k: "horse" } ) ;
 		expect( o.el.toString() ).to.be( 'horse' ) ;
 		
