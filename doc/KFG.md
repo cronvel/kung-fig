@@ -80,18 +80,18 @@ if it had comments support and would be less nitpicky with commas.
 
 He ends up writting a parser for a human-friendly format, being like JSON without braces, brackets and commas, with optional double-quotes,
 relying on indentation for hierarchical data representation, very close to YAML (also it's worth noting that it was done *before* being aware
-of the very existence of YAML), and a simple syntax to perform operation.
+of the very existence of YAML), and a simple syntax to perform operations.
 
 That very first KFG implementation was written for PHP and was not publicly released.
 
-* In 2014, the KFG file format resurrected: it was ported to Node.js, it was part of some obscure project.
+* In 2014, the KFG file format resurrected: it was ported to Node.js, it was part of some obscure vaporware projects.
 * It undergoes fundamental redesign in 2015, then was publicly released for the first time.
 * The addition of **custom classes/constructors** appears in 2015.
 * The addition of **tags** appears in 2016 to support creation of simple scripting language.
 * The addition of **refs**, **templates** and **expressions** appears in 2016 to support creation of simple scripting language.
 * The addition of **section**, **map/dictionnary** syntax appears in 2018 to ease creation of localization langpack.
 
-The Philosophy of KFG focus on human-friendly and intuitive syntax, coverage of all kind of data-model, and line-based.
+The Philosophy of KFG focus on human-friendly, intuitive and natural syntax, coverage of all kind of data-model, and line-based.
 Each line of KFG can be parsed as a stand-alone line, except for the hierarchical reconnection.
 
 
@@ -148,7 +148,7 @@ without newline folding:
 
 ```
 string1: This is an implicit string.
-string2: "This is a quoted string.\nThis is on a new lines."
+string2: "This is a quoted string.\nThis is on a new line."
 string3: > This is a litteral string. \n <-- this 'anti-slash n' is litteral and does not produce a newline.
 string4:
 	> This is a multi-line string.
@@ -157,7 +157,7 @@ string4:
 	> The previous line is blank.
 string5:
 	>> This is a multi-line string, with newline folding.
-	>> This is on the same first line.
+	>> This is on the first line, not on the second one.
 	>>
 	>> This is on a new line, but there is no blank line in between.
 	>>
@@ -165,8 +165,8 @@ string5:
 	>> This is on a new line, there is only one blank line in between.
 ```
 
-Implicit string (i.e. string without markup) should not be a constant or a number, in that case use one
-of the explicit syntax to disambiguate it.
+Implicit string (i.e. string without markup) should not be a constant or a number, in that case,
+you should use one of the explicit syntax to disambiguate it.
 
 But KFG can do a lot more! **Using few built-in constructors, we can store date or binary:**
 
@@ -772,8 +772,8 @@ and followed by the data to use as the key,
 while the value associated with that key is introduced by a colon followed by a *'greater than'* `:>` followed by a space ` `
 and followed by the data to use as the value.
 
-If you pay attention, the first markup `<:` graphical meaning is: left-hand-side part of an assignment (i.e. the key),
-while the second markup `:>` graphical meaning is: right-hand-side of an assignment (i.e. the value).
+If you pay attention, the first markup `<:` graphical meaning is: left-hand-side part (`<`) of an assignment (`:`), i.e.: the key.
+The second markup `:>` graphical meaning is: right-hand-side (`>`) of an assignment (`:`), i.e.: the value.
 
 Inside a map, you **MUST** alternate key and value, starting with a key.
 It does not make any sense to start with a value, or to have consecutive keys or consecutive values.
@@ -948,7 +948,7 @@ and it's equivalent to:
 	last-name: Doe
 ```
 
-This syntax start to be interesting for bigger files with more indentation, or if the file has to emphasize on the top-level structure,
+This syntax starts to be interesting for bigger files with more indentation, or if the file has to emphasize on the top-level structure,
 e.g.: if the whole file is a collection of documents (in a database sense).
 
 More than three hyphens can be used, for cosmetics:
@@ -1018,7 +1018,7 @@ net:
 	bindIp: 127.0.0.1,::1
 ```
 
-Again, this syntax start to be interesting for bigger files with more indentation, or if the file has to emphasize on the top-level structure.
+Again, this syntax starts to be interesting for bigger files with more indentation, or if the file has to emphasize on the top-level structure.
 Interesting for configuration files, since people are used to the INI format that uses a similar section concept.
 
 More than three hyphens can be used, for cosmetics:
