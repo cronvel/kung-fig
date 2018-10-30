@@ -467,6 +467,7 @@ describe( "KFG parse" , () => {
 		expect( JSON.stringify( parse( "<Bin16> 22" ) ) ).to.be( '{"type":"Buffer","data":[34]}' ) ;
 		expect( JSON.stringify( parse( "<Object>" ) ) ).to.be( '{}' ) ;
 		expect( JSON.stringify( parse( "<Object>\na: 1" ) ) ).to.be( '{"a":1}' ) ;
+		expect( parse( "<Map>" ) ).to.be.a( Map ) ;
 		expect( parse( "<TemplateSentence> :string" ).toString() ).to.be( ':string' ) ;
 	} ) ;
 		
@@ -557,19 +558,10 @@ describe( "KFG parse" , () => {
 		expect( parse( '<: Hello Bob!\n:>\n\t- 1\n\t- 2' ) ).to.map( [
 			[ "Hello Bob!" , [1,2] ]
 		] ) ;
-		// Compact-list
-		expect( parse( '<: Hello Bob!\n:>\t- 1\n\t- 2' ) ).to.map( [
-			[ "Hello Bob!" , [1,2] ]
-		] ) ;
 		expect( parse( '<: Hello Bob!\n:>\n\ta: 1' ) ).to.map( [
 			[ "Hello Bob!" , {a:1} ]
 		] ) ;
 		expect( parse( '<: Hello Bob!\n:>\n\ta: 1\n\tb: 2' ) ).to.map( [
-			[ "Hello Bob!" , {a:1,b:2} ]
-		] ) ;
-	
-		// Compact-list
-		expect( parse( '<: Hello Bob!\n:>\ta: 1\n\tb: 2' ) ).to.map( [
 			[ "Hello Bob!" , {a:1,b:2} ]
 		] ) ;
 		expect( parse( '<:\n\t- 1\n:> Bonjour Bob !' ) ).to.map( [
@@ -584,12 +576,38 @@ describe( "KFG parse" , () => {
 		expect( parse( '<:\n\ta: 1\n\tb: 2\n:> Bonjour Bob !' ) ).to.map( [
 			[ {a:1,b:2} , "Bonjour Bob !" ]
 		] ) ;
-		expect( parse( '<:\ta: 1\n\tb: 2\n:> Bonjour Bob !' ) ).to.map( [
-			[ {a:1,b:2} , "Bonjour Bob !" ]
-		] ) ;
 		expect( parse( 'translate:\n\t<: Hello Bob!\n\t:> Bonjour Bob !' ).translate ).to.map( [
 			[ "Hello Bob!" , "Bonjour Bob !" ]
 		] ) ;
+		expect( parse( '<:\n\ta: 1\n\tb: 2\n:>\n\t- 1\n\t- 2' ) ).to.map( [
+			[ {a:1,b:2} , [1,2] ]
+		] ) ;
+		expect( parse( '<:\n\t- 1\n\t- 2\n:>\n\ta: 1\n\tb: 2' ) ).to.map( [
+			[ [1,2] , {a:1,b:2} ]
+		] ) ;
+		
+		// Compact-list
+		expect( parse( '<: Hello Bob!\n:>\t- 1\n\t- 2' ) ).to.map( [
+			[ "Hello Bob!" , [1,2] ]
+		] ) ;
+		expect( parse( '<: Hello Bob!\n:>\ta: 1\n\tb: 2' ) ).to.map( [
+			[ "Hello Bob!" , {a:1,b:2} ]
+		] ) ;
+		expect( parse( '<:\ta: 1\n\tb: 2\n:> Bonjour Bob !' ) ).to.map( [
+			[ {a:1,b:2} , "Bonjour Bob !" ]
+		] ) ;
+		expect( parse( '<:\t- 1\n\t- 2\n:>\ta: 1\n\tb: 2' ) ).to.map( [
+			[ [1,2] , {a:1,b:2} ]
+		] ) ;
+
+		// Compact-list with spaces
+		expect( parse( '<:  - 1\n\t- 2\n:>  a: 1\n\tb: 2' ) ).to.map( [
+			[ [1,2] , {a:1,b:2} ]
+		] ) ;
+		expect( () => parse( '<:   - 1\n\t- 2\n:>  a: 1\n\tb: 2' ) ).to.throw.a( SyntaxError ) ;
+		expect( () => parse( '<:    - 1\n\t- 2\n:>  a: 1\n\tb: 2' ) ).to.throw.a( SyntaxError ) ;
+		expect( () => parse( '<:  - 1\n\t- 2\n:>   a: 1\n\tb: 2' ) ).to.throw.a( SyntaxError ) ;
+		expect( () => parse( '<:  - 1\n\t- 2\n:>    a: 1\n\tb: 2' ) ).to.throw.a( SyntaxError ) ;
 	} ) ;
 
 	it( "map to object" , () => {
@@ -598,6 +616,12 @@ describe( "KFG parse" , () => {
 				"Hello Bob!": "Bonjour Bob !"
 			}
 		} ) ;
+	} ) ;
+	
+	it( "object to map" , () => {
+		expect( parse( '<Map>\nkey: value' ) ).to.map( [
+			[ "key" , "value" ]
+		] ) ;
 	} ) ;
 	
 	it( "Dictionnaries/translation file shorthand syntax for map" , () => {

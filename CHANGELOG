@@ -1,4 +1,11 @@
 
+v0.47.1
+-------
+
+Documentation updated with the latest features: map, dictionnaries and sections
+Compact-list fixed for Map ; Added missing Map constructor
+
+
 v0.47.0
 -------
 

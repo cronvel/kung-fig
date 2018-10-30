@@ -49,6 +49,11 @@ Stop using JSON for configuration files, use KFG now!
 * [Hierarchical Data Representation - Containers](#ref.hierarchical)
 * [Arrays](#ref.arrays)
 * [Objects](#ref.objects)
+* [Maps](#ref.maps)
+	* [Dictionnaries](#ref.dictionnaries)
+* [Sections](#ref.sections)
+	* [Array's Element Sections](#ref.sections.array)
+	* [Object's Key/Value Sections](#ref.sections.object)
 * [Classes/Constructors](#ref.constructors)
 	* [Built-in constructors](#ref.builtin-constructors)
 * [Tags](#ref.tags)
@@ -183,7 +188,7 @@ Using the map/dictionnary syntax, localization files could be written like this:
 :>> Comment vas-tu ?
 ```
 
-The parser will produce a Javascript `Map()` instance, with the english strings as keys, and the french translations as values.
+The parser will produce a Javascript `Map` instance, with the english strings as keys, and the french translations as values.
 
 Any map could be produced:
 
@@ -506,9 +511,20 @@ description:
 	>> 
 	>> Once you start using it, you won't use anything else!
 ```
+
 The first 3 lines are merged, but not the last one.
 
-So... if an empty line is needed, two consecutive *empty text lines* should be written.
+So... if an empty line is needed, two consecutive *empty text lines* should be written, e.g.:
+
+```
+description:
+	>> The KFG format is the Kung-Fig file format.
+	>> It does wonders for all your config files.
+	>> It's like .cfg on steroid!
+	>> 
+	>> 
+	>> Once you start using it, you won't use anything else!
+```
 
 
 
@@ -516,10 +532,11 @@ So... if an empty line is needed, two consecutive *empty text lines* should be w
 ## Hierarchical Data Representation - Containers
 
 Non-scalar value are called *containers*.
-There are three *container* type in KFG:
+There are four *container* types in KFG:
 
-* [Arrays](#ref.arrays): an ordered list of elements
-* [Objects](#ref.objects): a map of key/value pairs
+* [Arrays](#ref.arrays): an ordered list of elements, it generates a Javascript Array instance
+* [Objects](#ref.objects): an object is a kind of map of key/value pairs, where the key is a string, it generates a Javascript Object instance
+* [Map](#ref.maps): a true map of key/value pairs, where the key can be of any type, it generates a Map instance
 * [Tag Containers](#ref.tags): an ordered list of tags
 
 The indentation is used to denote structure, to express the nested/embedded relationship: any part that is
@@ -567,8 +584,10 @@ Is this document a tag container? An object? An array? This doesn't make any sen
 <a name="ref.arrays"></a>
 ## Arrays
 
-The array presentation in KFG is simply a list where each item/element is introduced by a hyphen `-` followed by a space ` `.
+The array representation in KFG is simply a list where each item/element is introduced by a hyphen `-` followed by a space ` `.
 One item/element per line.
+
+The hyphen `-` is usually well understood as a list's item introducer in various format.
 
 For example, this would produce `[ "banana" , "apple" , "pear" ]`:
 
@@ -625,7 +644,7 @@ However, the KFG supports this neat *compact syntax* inspired by YAML:
 	- nine
 ```
 
-That's it: if an element/item of an array is a container (array or object), its first child can be put on the same line.
+That's it: if an element/item of an array is a container (array/object/map), its first child can be put on the same line.
 For that purpose, **a tab should be inserted right after the hyphen** `-`.
 
 If you have insisted on using spaces instead of tabs for indentation (something that is **not** recommended),
@@ -642,15 +661,18 @@ The same syntax with objects inside the array:
 	last-name: Doe
 ```
 
+This would produce:
+`[ { "first-name": "Joe" , "last-name": "Doe" } , { "first-name": "Bill" , "last-name": "Baroud" } , { "first-name": "Jane" , "last-name": "Doe" } ]`.
+
 
 
 <a name="ref.objects"></a>
 ## Objects
 
-The object presentation in KFG is simply a list of key, followed by a colon `:` followed by the value.
+The object representation in KFG is simply a list of key, followed by a colon `:` followed by the value.
 There can be any number of spaces before and after the colon.
 
-The syntax is similar to the array syntax, the hyphen `-` being replaced by the property's key and the colon:
+The syntax is similar to the array syntax, the hyphen being replaced by the property's key and the colon:
 one property per line.
 
 For example, this would produce `{ "first-name": "Joe" , "last-name": "Doe" , "job": "developer" }`:
@@ -688,7 +710,12 @@ address:
 
 Note that unlike arrays, there is **no** *compact syntax* for object of objects.
 
-Keys should not start with:
+A key should not contain:
+
+- colon `:`
+- controle chars
+
+Moreover a key should not start with:
 
 - spaces and tabs (they are trimmed out)
 - double-quote `"`
@@ -700,11 +727,6 @@ Keys should not start with:
 
 Trailing spaces and tabs are trimmed out too.
 
-A key should not contain:
-
-- colon `:`
-- controle chars
-
 **If the key should contain any of this, it should be quoted** using the [quoted strings rules](#ref.strings.quoted).
 
 E.g.:
@@ -713,7 +735,7 @@ E.g.:
 "#strange:key\n": value
 ```
 
-Unquoted key can contain spaces between words, so this is perfectly legit:
+Unquoted keys can contain spaces between words, so this is perfectly legit:
 
 ```
 first name: Joe
@@ -742,6 +764,286 @@ text: I just want to say: hello!
 
 
 
+<a name="ref.maps"></a>
+## Maps
+
+In the map representation in KFG, a key is introduced by a *'lesser than'* followed by a colon `<:` followed by a space ` `
+and followed by the data to use as the key,
+while the value associated with that key is introduced by a colon followed by a *'greater than'* `:>` followed by a space ` `
+and followed by the data to use as the value.
+
+If you pay attention, the first markup `<:` graphical meaning is: left-hand-side part of an assignment (i.e. the key),
+while the second markup `:>` graphical meaning is: right-hand-side of an assignment (i.e. the value).
+
+Inside a map, you **MUST** alternate key and value, starting with a key.
+It does not make any sense to start with a value, or to have consecutive keys or consecutive values.
+
+Example:
+
+```
+<: first-name
+:> Joe
+<: last-name
+:> Doe
+```
+
+This would produce a Map instance with those associations:
+* "first-name" => "Joe"
+* "last-name" => "Doe"
+
+It is not much useful here, and the object syntax would be better.
+But now look at this:
+
+```
+<:
+	first-name: Joe
+	last-name: Doe
+:>
+	first-name: Jane
+	last-name: Doe
+```
+
+Here we have associated this object `{ "first-name": "Joe" , "last-name": "Doe" }` to this object `{ "first-name": "Jane" , "last-name": "Doe" }`.
+
+Like objects, **maps are implicit**: a *node* is a map as soon as it contains map key or map value markups.
+
+Thus an empty map cannot be declared implicitly -- it has no key/value pair!
+So they should be declared explicitly with the [constructor syntax](#ref.contructors).
+
+E.g.:
+
+```
+<Map>
+```
+... would produce an empty Map instance.
+
+Like arrays, there is a *compact syntax*, the example above associating objects can be rewritten like this:
+
+```
+<:	first-name: Joe
+	last-name: Doe
+:>	first-name: Jane
+	last-name: Doe
+```
+
+That's it: if a key or value is a container (array/object/map), its first child can be put on the same line.
+For that purpose, **a tab should be inserted right after the key or value markup** `<:` or `:>`.
+
+Again, if you have insisted on using spaces instead of tabs for indentation (something that is **not** recommended),
+you should insert exactly 2 spaces (not 4, for alignment reasons) right after the key or value markup.
+
+
+
+<a name="ref.dictionnaries"></a>
+### Dictionnaries
+
+A dictionnaries is a kind of Map having only strings as keys and values.
+Actually, there is no difference between a dictionnary and a regular map, they both produce a Map instance.
+
+The `<<:` markup introduces a string key, so there is no need for extra string markup,
+while the `:>>` markup introduces a string value, with the same benefits.
+
+So dictionnaries are essentially syntactic sugar, and it comes really handy for localization files.
+
+Furthermore, this syntax supports multi-line strings: multiple consecutive `<<:` lines does not declare multiple keys,
+but one multi-line key. The same apply for multiple consecutive `:>>` lines for a multi-line value.
+
+There is also the newline-folding variant: `<<<:` and `:>>>`.
+
+Compare this basic map syntax:
+
+```
+<: > Hi Bob!
+:> > Salut Bob !
+<: > How are you?
+:> > Comment vas-tu ?
+```
+
+... to this: 
+
+```
+<<: Hi Bob!
+:>> Salut Bob !
+<<: How are you?
+:>> Comment vas-tu ?
+```
+
+And, if **multi-line** strings are involved, compare this:
+
+```
+<:
+	> Hi Bob!
+	> How are you?
+:>
+	> Salut Bob !
+	> Comment vas-tu ?
+```
+
+... to this: 
+
+```
+<<: Hi Bob!
+<<: How are you?
+:>> Salut Bob !
+:>> Comment vas-tu ?
+```
+
+The syntax is neat, intuitive, self-explanatory, and suitable for large localization files.
+
+Finally, if you need newline folding:
+
+```
+<<<: Hi Bob!
+<<<: How are you?
+:>>> Salut Bob !
+:>>> Comment vas-tu ?
+```
+
+This will simply make this association: "Hi Bob! How are you?" => "Salut Bob ! Comment vas-tu ?".
+The rules for key/value newline-folding is the same than for [multi-line folded strings](#ref.strings.multiline-folded).
+
+
+
+<a name="ref.sections"></a>
+## Sections
+
+Sections are essentially syntactic sugar and/or style/cosmetic.
+
+A section starts with at least three hyphens `---` **at the begining of the line** (no indentation).
+More than three hyphens can be used for cosmetics.
+
+After that, there are two variants: if there is nothing more on that line, it's an array's element section,
+if there is a key followed by at least three more hyphens `---` ending the line, it's an object's key/value section.
+
+After entering a section **once**, the file will need one level of indentation **less**, and this is **irreversible**.
+
+
+
+<a name="ref.sections.array"></a>
+### Array's Element Sections
+
+Example:
+
+```
+---
+first-name: Joe
+last-name: Doe
+---
+first-name: Jane
+last-name: Doe
+---
+first-name: Bobby
+last-name: Doe
+```
+
+This will produce `[ { "first-name": "Joe" , "last-name": "Doe" } , { "first-name": "Jane" , "last-name": "Doe" } , { "first-name": "Bobby" , "last-name": "Doe" } ]`,
+and it's equivalent to:
+
+```
+-	first-name: Joe
+	last-name: Doe
+-	first-name: Jane
+	last-name: Doe
+-	first-name: Bobby
+	last-name: Doe
+```
+
+This syntax start to be interesting for bigger files with more indentation, or if the file has to emphasize on the top-level structure,
+e.g.: if the whole file is a collection of documents (in a database sense).
+
+More than three hyphens can be used, for cosmetics:
+
+```
+----------------------
+first-name: Joe
+last-name: Doe
+----------------------
+first-name: Jane
+last-name: Doe
+----------------------
+first-name: Bobby
+last-name: Doe
+```
+
+
+
+<a name="ref.sections.object"></a>
+### Object's Key/Value Sections
+
+Example:
+
+```
+--- log ---
+
+verbosity: 2
+path: /var/log/myapp/myapp.log
+logAppend: true
+logRotate: reopen
+
+--- process ---
+
+fork: true
+pidFilePath: /var/run/myapp/myapp.pid
+
+--- net ---
+
+port: 27017
+bindIp: 127.0.0.1,::1
+```
+
+This will produce:
+```
+{
+	"log": { "verbosity": 2 , "path": "/var/log/myapp/myapp.log" , "logAppend": true , "logRotate": "reopen" } ,
+	"process": { "fork": true , "pidFilePath": "/var/run/myapp/myapp.pid" } ,
+	"net": { "port": 27017 , "bindIp": "127.0.0.1,::1" }
+}
+```
+
+and it's equivalent to:
+
+```
+log:
+	verbosity: 2
+	path: /var/log/myapp/myapp.log
+	logAppend: true
+	logRotate: reopen
+
+process:
+	fork: true
+	pidFilePath: /var/run/myapp/myapp.pid
+
+net:
+	port: 27017
+	bindIp: 127.0.0.1,::1
+```
+
+Again, this syntax start to be interesting for bigger files with more indentation, or if the file has to emphasize on the top-level structure.
+Interesting for configuration files, since people are used to the INI format that uses a similar section concept.
+
+More than three hyphens can be used, for cosmetics:
+
+```
+---------- log ----------
+
+verbosity: 2
+path: /var/log/myapp/myapp.log
+logAppend: true
+logRotate: reopen
+
+-------- process --------
+
+fork: true
+pidFilePath: /var/run/myapp/myapp.pid
+
+---------- net ----------
+
+port: 27017
+bindIp: 127.0.0.1,::1
+```
+
+
+
 <a name="ref.constructors"></a>
 ## Classes/Constructors
 
@@ -761,14 +1063,19 @@ item: <Item>
 
 Unknown class/constructor will **throw** an error: for any non-built-in class you use, there **MUST** be a userland constructor.
 
+
+
 <a name="ref.builtin-constructors"></a>
 ### Built-in Classes/Constructors
 
-* `<Object>`, `<object>`: Object constructor. Object are implicit in KFG, there is only one case where this constructor is needed:
-  when we want to create an empty object.
+* `<Object>`, `<object>`: Object constructor. Object are implicit in KFG, there is only few cases where this constructor is needed:
+  when we want to create an empty object, or when we want to use the Map syntax to actually create Objects.
 
 * `<Array>`, `<array>`: Array constructor. Array are implicit in KFG, there is only one case where this constructor is needed:
   when we want to create an empty array.
+
+* `<Map>`, `<map>`: Map constructor. Map are implicit in KFG, there is only few cases where this constructor is needed:
+  when we want to create an empty map, or when we want to create a Map out of the Object or Array syntax (which is not recommended).
 
 * `<TagContainer>`, `<tagContainer>`: TagContainer constructor. TagContainer are implicit, there is only one case where this
   constructor is needed: when we want to create an empty TagContainer.
