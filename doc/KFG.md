@@ -3,21 +3,23 @@
 
 The **KFG** format is the **Kung-Fig** file format, and it does wonders for all your config and data files.
 It's like .cfg on steroid!
-Once you start using it, you won't use anything else anymore!
+Once you start using it, **you won't use anything else anymore!**
 
 **KFG** is primarily a **human-friendly format for describing data**
 (i.e. a [data serialization language](https://en.wikipedia.org/wiki/Serialization))
 but with an impressive list of features:
 
-* Human friendly data structure representation (similar to YAML)
+* Human friendly data structure representation (similar to YAML, but potentially better)
 * Comments support
-* Multi-line strings support
+* Multi-line strings support, with or without newline **folding**
+* Sections
+* Nice Map and dictionnary syntax
 * Classes/Constructors (date, binary data, regular expression, and custom constructors!)
-* Including files (.kfg, .json, .js, .txt, etc), featuring globs and recursive parent search
+* Including files (.kfg, .json, .js, .txt, etc), featuring **globs** and **recursive parent search**
 * Relational data representation support
 * Meta-tags (headers)
 * Tags (to build scripting language on top of KFG)
-* References
+* References (i.e. referencing a part of the document from elsewhere)
 * Template strings and internationalization/localization
 * Expressions (arithmetic, logic, maths, etc)
 * Tree operations syntax (merge, combine, etc)
@@ -68,16 +70,24 @@ Stop using JSON for configuration files, use KFG now!
 <a name="history"></a>
 ## A Bit of History
 
-It all started back in 2009, when Cédric Ronvel was bored by the fact that JSON would be a great format to write config file
-if it had comments support and would be less nitpicking with commas.
+It all started back in 2009, when *Cédric Ronvel* was bored by the fact that JSON would be a great format to write config file
+if it had comments support and would be less nitpicky with commas.
 
-It ends up being like JSON without braces, brackets and commas, optional double-quotes, relying on indentation for hierarchical
-data representation, very close to YAML (also it's worth noting that it was done *before* being aware of the existence of YAML),
-and a simple syntax to perform operation.
+He ends up writting a parser for a human-friendly format, being like JSON without braces, brackets and commas, with optional double-quotes,
+relying on indentation for hierarchical data representation, very close to YAML (also it's worth noting that it was done *before* being aware
+of the very existence of YAML), and a simple syntax to perform operation.
 
+That very first KFG implementation was written for PHP and was not publicly released.
+
+* In 2014, the KFG file format resurrected: it was ported to Node.js, it was part of some obscure project.
+* It undergoes fundamental redesign in 2015, then was publicly released for the first time.
 * The addition of **custom classes/constructors** appears in 2015.
 * The addition of **tags** appears in 2016 to support creation of simple scripting language.
 * The addition of **refs**, **templates** and **expressions** appears in 2016 to support creation of simple scripting language.
+* The addition of **section**, **map/dictionnary** syntax appears in 2018 to ease creation of localization langpack.
+
+The Philosophy of KFG focus on human-friendly and intuitive syntax, coverage of all kind of data-model, and line-based.
+Each line of KFG can be parsed as a stand-alone line, except for the hierarchical reconnection.
 
 
 
@@ -108,12 +118,50 @@ Here the array is the child of the *fruits* property of the top-level object.
 
 Note that **tabs SHOULD be used** to indent in KFG. This is the **recommended** way. One tab per depth-level.
 
-If you really insist with spaces, KFG only supports the 4-spaces indentation. But this is not recommended.
+If you really insist with spaces, KFG only supports the 4-spaces indentation. But this is *not* recommended.
 
 Note how objects and arrays are implicit in KFG.
 
 A *node* is an object if it contains a key followed by a `:` colon.
 A *node* is an array if it contains array element introduced by a hyphen `-`.
+
+Some supported scalar type are:
+
+```
+number: 123.456
+true-boolean1: true
+true-boolean2: yes
+true-boolean3: on
+false-boolean1: false
+false-boolean2: no
+false-boolean3: off
+null-value: null
+```
+
+There are many way to enter string: implicit mode, quoted string, introduced string, multi-line string with or
+without newline folding:
+
+```
+string1: This is an implicit string.
+string2: "This is a quoted string.\nThis is on a new lines."
+string3: > This is a litteral string. \n <-- this 'anti-slash n' is litteral and does not produce a newline.
+string4:
+	> This is a multi-line string.
+	> This is on a new line.
+	>
+	> The previous line is blank.
+string5:
+	>> This is a multi-line string, with newline folding.
+	>> This is on the same first line.
+	>>
+	>> This is on a new line, but there is no blank line in between.
+	>>
+	>>
+	>> This is on a new line, there is only one blank line in between.
+```
+
+Implicit string (i.e. string without markup) should not be a constant or a number, in that case use one
+of the explicit syntax to disambiguate it.
 
 But KFG can do a lot more! **Using few built-in constructors, we can store date or binary:**
 
@@ -125,6 +173,45 @@ bin: <bin16> af461e0a
 ... will produce an object, with 2 properties, the *date* property will contain a Javascript `Date` object,
 and the *bin* property will contain a `Buffer` instance created from the hexadecimal string.
 By the way the *date* constructor accepts a lot of input format, like timestamp, ISO, ...
+
+Using the map/dictionnary syntax, localization files could be written like this:
+
+```
+<<: Hello World!
+:>> Salut tout le monde !
+<<: How are you?
+:>> Comment vas-tu ?
+```
+
+The parser will produce a Javascript `Map()` instance, with the english strings as keys, and the french translations as values.
+
+Any map could be produced:
+
+```
+<:	first-name: Joe
+	last-name: Doe
+:>	first-name: Jane
+	last-name: Doe
+```
+
+This will produce a map with `{ "first-name": "Joe" , "last-name": "Doe" }` as the key and `{ "first-name": "Jane" , "last-name": "Doe" }` as the value.
+
+For localization files, multi-line with or without newline folding is supported:
+
+```
+<<: Hi Bob!
+<<: How are you?
+:>> Salut Bob !
+:>> Comment vas-tu ?
+<<<: Hi Alice!
+<<<: How are you?
+:>>> Salut Alice !
+:>>> Comment vas-tu ?
+```
+
+This will produce a map with those entries:
+* "Hi Bob!\nHow are you?" => "Salut Bob !\nComment vas-tu ?"
+* "Hi Alice! How are you?" => "Salut Alice ! Comment vas-tu ?"
 
 **What is wonderful about KFG is that it supports file inclusions:**
 
@@ -179,8 +266,7 @@ A comment **MUST** be on its own line: it cannot be placed after any content, or
 
 A comment can be indented, and can even lie at a nonsensical depth.
 
-So a comment is basically some indentations, followed by a hash sign `#`,
-followed by anything until the end of the line.
+So a comment is basically some indentations, followed by a hash sign `#`, followed by anything until the end of the line.
 
 The whole line will be ignored, so any chars are accepted, even non-printable/controle chars (except, of course, the newline char).
 
@@ -198,7 +284,7 @@ users:
 	-	first-name: Joe
 		# This is a valid comment
 		last-name: Doe
-	# This is a valid comment, it does not 'close' the current object
+	# This is a valid comment, abd it does *NOT* 'close' the current object
 		job: developer # This is NOT comment! It will be included in the string!
 ```
 
@@ -276,11 +362,12 @@ name: Joe Doe
 ```
 
 Implicit strings are fine, however they should not collide with an existing [constants](#ref.constants),
-should not be a valid number and should not start with a symbole used by the Spellcast syntax, like:
+should not be a valid number and should not start with a symbole used by the KFG syntax, like:
 
 - spaces and tabs (they are trimmed out)
 - double-quote `"`
 - lesser than `<` or greater than `>`
+- colon `:`
 - opening parenthesis `(`
 - at sign `@`
 - dollar `$`
@@ -319,7 +406,7 @@ Backslash escape sequence:
 - `\r` for the *carriage return* controle char
 - `\t` for the *tab* controle char
 - `\\` for a single *backslash* `\` char
-- `\/` for a single *slash* `\` char (escaping slashes is **optional** and **not recommended**)
+- `\/` for a single *slash* `/` char (escaping slashes is **optional** and **not recommended**)
 - `\"` for the *double-quote* `"` char
 - `\uXXXX` for writing a char using its unicode code point, where *XXXX* is the hexedecimal unicode code point,
   this is **optional**, KFG support UTF-8 out of the box, so it should be used only if one want to avoid
