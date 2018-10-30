@@ -21,18 +21,21 @@ It is **great** for:
 
 Now, look at this **impressive** list of features:
 
-* Human friendly data structure representation (similar to YAML)
+* Human friendly data structure representation (similar to YAML, but potentially better)
 * Comments support
-* Multi-line strings support
+* Multi-line strings support, with or without newline **folding**
+* Sections
+* Nice Map and dictionnary syntax
 * Classes/Constructors (date, binary data, regular expression, and custom constructors!)
-* Including files (.kfg, .json, .js, .txt, etc), featuring globs and recursive parent search
+* Including files (.kfg, .json, .js, .txt, etc), featuring **globs** and **recursive parent search**
 * Relational data representation support
 * Meta-tags (headers)
 * Tags (to build scripting language on top of KFG)
-* References
+* References (i.e. referencing a part of the document from elsewhere)
 * Template strings and internationalization/localization
 * Expressions (arithmetic, logic, maths, etc)
-* Tree operations (merge, combine, etc)
+* Tree operations syntax (merge, combine, etc)
+* *... and many more!*
 
 Official support of the [Atom editor](https://atom.io):
 * [KFG and Spellcast! language package](https://atom.io/packages/language-kfg)
@@ -43,7 +46,7 @@ Official support of the [Atom editor](https://atom.io):
 
 ### A KFG Primer
 
-Example of document:
+Example of simple document:
 
 ```
 # This is a comment!
