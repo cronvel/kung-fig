@@ -1,4 +1,11 @@
 
+v0.47.3
+-------
+
+Fixed unit test for Node.js 10
+Now stringify() has the option 'hasOperators'
+
+
 v0.47.2
 -------
 

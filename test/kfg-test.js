@@ -229,6 +229,33 @@ describe( "KFG stringify" , () => {
 		expect( o ).to.equal( parse( s ) ) ;
 	} ) ;
 	
+	it( "stringify an object, turning off operators" , () => {
+		var o = {
+			'+attack': 2,
+			'-defense': 1,
+			'*time': 0.9,
+			'(u-ops)damages': 1.2,
+			'()+strange key': 3,
+			'()(another strange key)': 5,
+			'()-hey': 5,
+			'~hey': 5,
+			'@@#*>': '/path/to/*/something/',
+			'@*>': '/path/to/something/',
+			'@': '/path/to/something/',
+			'@@': '/path/to/something/',
+			list: [ 'one' , 'two' , { "@@": '/path/to/something/' } ] ,
+		} ;
+		
+		var s = stringify( o , { hasOperators: false } ) ;
+		
+		expect( s ).to.be( '+attack: 2\n"-defense": 1\n*time: 0.9\n"(u-ops)damages": 1.2\n"()+strange key": 3\n"()(another strange key)": 5\n"()-hey": 5\n~hey: 5\n"@@#*>": /path/to/*/something/\n"@*>": /path/to/something/\n"@": /path/to/something/\n"@@": /path/to/something/\nlist:\n\t- one\n\t- two\n\t-\t"@@": /path/to/something/\n' ) ;
+		
+		// There is no 'hasOperators' options for the parser, so we can't check that part ATM
+		
+		// Check that the original object and the stringified/parsed object are equals:
+		//expect( o ).to.equal( parse( s ) ) ;
+	} ) ;
+	
 	it( "stringify an object with special instances (bin, date, regex)" , () => {
 		var o = {
 			bin: new Buffer( 'af461e0a' , 'hex' ) ,
@@ -255,7 +282,7 @@ describe( "KFG stringify" , () => {
 		//console.log( string.escape.control( s ) ) ;
 		//console.log( parse( s ) ) ;
 		
-		expect( s ).to.be( 'bin: <bin16> af461e0a\ndate1: <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)\nregex1: <regex> /abc/\narray:\n\t-\t- <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)\n\t\t- <regex> /abc/gi\n\t-\t- <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)\n\t\t- <regex> /abc/gi\nobject:\n\tdate2: <date> Fri Jan 02 1970 11:17:36 GMT+0100 (CET)\n\tregex2: <regex> /abc/gi\n' ) ;
+		expect( s ).to.be( 'bin: <bin16> af461e0a\ndate1: <date> Fri Jan 02 1970 11:17:36 GMT+0100 (Central European Standard Time)\nregex1: <regex> /abc/\narray:\n\t-\t- <date> Fri Jan 02 1970 11:17:36 GMT+0100 (Central European Standard Time)\n\t\t- <regex> /abc/gi\n\t-\t- <date> Fri Jan 02 1970 11:17:36 GMT+0100 (Central European Standard Time)\n\t\t- <regex> /abc/gi\nobject:\n\tdate2: <date> Fri Jan 02 1970 11:17:36 GMT+0100 (Central European Standard Time)\n\tregex2: <regex> /abc/gi\n' ) ;
 		
 		var o2 = parse( s ) ;
 		
