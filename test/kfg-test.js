@@ -258,7 +258,7 @@ describe( "KFG stringify" , () => {
 	
 	it( "stringify an object with special instances (bin, date, regex)" , () => {
 		var o = {
-			bin: new Buffer( 'af461e0a' , 'hex' ) ,
+			bin: Buffer.from( 'af461e0a' , 'hex' ) ,
 			date1: new Date( 123456789 ) ,
 			regex1: /abc/ ,
 			array: [
@@ -767,8 +767,8 @@ describe( "KFG parse" , () => {
 		} ) ;
 		
 		//console.log( kungFig.getMeta( o ) ) ;
-		//console.log( kungFig.getMeta( o ).getFirstTag( 'meta' ).content ) ;
-		expect( kungFig.getMeta( o ).getFirstTag( 'meta' ).content ).to.equal( { content: "test" } ) ;
+		//console.log( kungFig.getMeta( o ).tags.getFirstTag( 'meta' ).content ) ;
+		expect( kungFig.getMeta( o ).tags.getFirstTag( 'meta' ).content ).to.equal( { content: "test" } ) ;
 	} ) ;
 	
 	it( "parse a file using 4-spaces to indent" , () => {
@@ -815,8 +815,8 @@ describe( "KFG parse" , () => {
 				[ 'six', 'seven' ] ] ]
 		} ) ;
 		
-		//console.log( kungFig.getMeta( o ).getFirstTag( 'meta' ).content ) ;
-		expect( kungFig.getMeta( o ).getFirstTag( 'meta' ).content ).to.equal( { content: "test" } ) ;
+		//console.log( kungFig.getMeta( o ).tags.getFirstTag( 'meta' ).content ) ;
+		expect( kungFig.getMeta( o ).tags.getFirstTag( 'meta' ).content ).to.equal( { content: "test" } ) ;
 	} ) ;
 	
 	it( "parse ref" , () => {
@@ -1315,10 +1315,10 @@ describe( "Meta-Tag" , () => {
 		/*
 		console.log( o ) ;
 		console.log( kungFig.getMeta( o ) ) ;
-		console.log( kungFig.getMeta( o ).getTags( 'meta' )[ 0 ] ) ;
+		console.log( kungFig.getMeta( o ).tags.getTags( 'meta' )[ 0 ] ) ;
 		*/
 		expect( o ).to.equal( { some: "data" } ) ;
-		expect( kungFig.getMeta( o ).getTags( 'meta' )[ 0 ].content ).to.equal( { author: "Joe Doe" , copyright: 2016 } ) ;
+		expect( kungFig.getMeta( o ).tags.getTags( 'meta' )[ 0 ].content ).to.equal( { author: "Joe Doe" , copyright: 2016 } ) ;
 		
 		//console.log( stringify( o ) ) ;
 		expect( stringify( o ) ).to.be( '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\n\nsome: data\n' ) ;
@@ -1327,7 +1327,7 @@ describe( "Meta-Tag" , () => {
 	it( "stringify meta-tag" , () => {
 		var o ;
 		o = { some: "data" } ;
-		kungFig.setMeta( o , [ new Tag( 'meta' , undefined , { author: "Joe Doe" , copyright: 2016 } ) ] ) ;
+		kungFig.setMeta( o , { tags: [ new Tag( 'meta' , undefined , { author: "Joe Doe" , copyright: 2016 } ) ] } ) ;
 		
 		//console.log( stringify( o ) ) ;
 		expect( stringify( o ) ).to.be( '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\n\nsome: data\n' ) ;
@@ -1339,17 +1339,17 @@ describe( "Meta-Tag" , () => {
 		kfg = '[[doctype supadoc]]\nsome: data' ;
 		
 		o = parse( kfg ) ;
-		expect( kungFig.getMeta( o ).getTags( "doctype" )[ 0 ].attributes ).to.be( "supadoc" ) ;
+		expect( kungFig.getMeta( o ).tags.getTags( "doctype" )[ 0 ].attributes ).to.be( "supadoc" ) ;
 		expect( o ).to.equal( { some: "data" } ) ;
 		
 		o = parse( kfg , { doctype: "supadoc" } ) ;
-		expect( kungFig.getMeta( o ).getTags( "doctype" )[ 0 ].attributes ).to.be( "supadoc" ) ;
+		expect( kungFig.getMeta( o ).tags.getTags( "doctype" )[ 0 ].attributes ).to.be( "supadoc" ) ;
 		expect( o ).to.equal( { some: "data" } ) ;
 		
 		expect( () => parse( kfg , { doctype: "baddoc" } ) ).to.throw() ;
 		
 		o = parse( kfg , { doctype: [ "cooldoc" , "supadoc" ] } ) ;
-		expect( kungFig.getMeta( o ).getTags( "doctype" )[ 0 ].attributes ).to.be( "supadoc" ) ;
+		expect( kungFig.getMeta( o ).tags.getTags( "doctype" )[ 0 ].attributes ).to.be( "supadoc" ) ;
 		expect( o ).to.equal( { some: "data" } ) ;
 		
 		expect( () => parse( kfg , { doctype: [ "baddoc" , "wrongdoc" ] } ) ).to.throw() ;
@@ -1365,7 +1365,7 @@ describe( "Meta-Tag" , () => {
 		var options = {
 			metaHook: function( meta ) {
 				//console.log( "Received meta: " , meta.getTags( 'meta' )[ 0 ].content ) ;
-				expect( meta.getTags( 'meta' )[ 0 ].content ).to.equal( { author: "Joe Doe" , copyright: 2016 } ) ;
+				expect( meta.tags.getTags( 'meta' )[ 0 ].content ).to.equal( { author: "Joe Doe" , copyright: 2016 } ) ;
 				hookTriggered ++ ;
 			}
 		} ;
@@ -1375,12 +1375,12 @@ describe( "Meta-Tag" , () => {
 		/*
 		console.log( o ) ;
 		console.log( kungFig.getMeta( o ) ) ;
-		console.log( kungFig.getMeta( o ).getTags( 'meta' )[ 0 ] ) ;
+		console.log( kungFig.getMeta( o ).tags.getTags( 'meta' )[ 0 ] ) ;
 		*/
 		
 		expect( hookTriggered ).to.be( 1 ) ;
 		expect( o ).to.equal( { some: "data" } ) ;
-		expect( kungFig.getMeta( o ).getTags( 'meta' )[ 0 ].content ).to.equal( { author: "Joe Doe" , copyright: 2016 } ) ;
+		expect( kungFig.getMeta( o ).tags.getTags( 'meta' )[ 0 ].content ).to.equal( { author: "Joe Doe" , copyright: 2016 } ) ;
 		
 		//console.log( stringify( o ) ) ;
 		expect( stringify( o ) ).to.be( '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\n\nsome: data\n' ) ;
@@ -1413,13 +1413,13 @@ describe( "Meta-Tag" , () => {
 		o = kungFig.load( __dirname + '/sample/kfg/meta-hook.kfg' , options ) ;
 		
 		//console.log( "data:" , o ) ;
-		//console.log( "meta:" , kungFig.getMeta( o ) , "\n###" , kungFig.getMeta( o ).getFirstTag( 'meta' ).content ) ;
+		//console.log( "meta:" , kungFig.getMeta( o ) , "\n###" , kungFig.getMeta( o ).tags.getFirstTag( 'meta' ).content ) ;
 		
 		expect( hookTriggered ).to.be( 2 ) ;
 		expect( includeHookTriggered ).to.be( 1 ) ;
 		expect( nonIncludeHookTriggered ).to.be( 1 ) ;
 		expect( o ).to.equal( { include: { some: { more: "content"  } } , some: "content" } ) ;
-		expect( kungFig.getMeta( o ).getFirstTag( 'meta' ).content ).to.be( "master" ) ;
+		expect( kungFig.getMeta( o ).tags.getFirstTag( 'meta' ).content ).to.be( "master" ) ;
 	} ) ;
 } ) ;
 

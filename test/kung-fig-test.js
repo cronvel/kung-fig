@@ -476,10 +476,10 @@ describe( "Load meta" , function() {
 		var meta ;
 		
 		meta = kungFig.loadMeta( __dirname + '/sample/kfg/meta-hook.kfg' ) ;
-		expect( meta.getFirstTag( 'meta' ).content ).to.be( "master" ) ;
+		expect( meta.tags.getFirstTag( 'meta' ).content ).to.be( "master" ) ;
 		
 		meta = kungFig.loadMeta( __dirname + '/sample/kfg/katana.kfg' ) ;
-		expect( meta ).to.be( null ) ;
+		expect( meta.tags.children ).to.equal( [] ) ;
 	} ) ;
 } ) ;
 
@@ -676,12 +676,12 @@ describe( "Async file loading" , () => {
 		} ) ;
 		
 		//console.log( kungFig.getMeta( object ).getFirstTag( 'meta' ).content ) ;
-		expect( kungFig.getMeta( object ).getFirstTag( 'meta' ).content ).to.equal( { content: "test" } ) ;
+		expect( kungFig.getMeta( object ).tags.getFirstTag( 'meta' ).content ).to.equal( { content: "test" } ) ;
 	} ) ;
 	
 	it( "load meta of a KFG file asynchronously" , async () => {
 		var meta = await kungFig.loadMetaAsync( __dirname + '/sample/kfg/simple.kfg' , 'utf8' ) ;
-		expect( meta.getFirstTag( 'meta' ).content ).to.equal( { content: "test" } ) ;
+		expect( meta.tags.getFirstTag( 'meta' ).content ).to.equal( { content: "test" } ) ;
 	} ) ;
 } ) ;
 
