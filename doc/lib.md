@@ -6,7 +6,7 @@
 * [The Wonderful KFG Format](KFG.md)
 * [Basic Module Methods](#ref.basic)
 	* [.load()](#ref.load)
-	* [.loadMeta()](#ref.loadMeta)
+	* [.loadMetaTags()](#ref.loadMetaTags)
 	* [.saveJson()](#ref.saveJson)
 	* [.saveKfg()](#ref.saveKfg)
 * [The Dynamic Interface](#ref.Dynamic)
@@ -77,7 +77,7 @@ are methods of the `kungFig` object.
 	* kfgFiles `object` where:
 		* extname `array` of `string` the extension list (without the initial dot) that should be treated as KFG files
 		* basename `array` of `string` the filename list (including the extension part) that should be treated as KFG files
-	* metaHook `function( metaContainer , options )` (KFG only) a callback triggered once the header part of the file
+	* metaTagsHook `function( metaContainer , options )` (KFG only) a callback triggered once the header part of the file
 	  is parsed, where:
 		* metaContainer `TagContainer` the meta-tag container, see [TagContainer](#ref.TagContainer)
 		* options `object` mostly reserved, where:
@@ -137,8 +137,8 @@ var document = kungFig.load( 'path/to/my/document.kfg' ) ;
 
 
 
-<a name="ref.loadMeta"></a>
-### .loadMeta( filePath , [options] )
+<a name="ref.loadMetaTags"></a>
+### .loadMetaTags( filePath , [options] )
 
 * filePath `string` the path of the file
 * options `object` (optional) an object of options, see [.load()](#ref.load)

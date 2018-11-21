@@ -470,16 +470,16 @@ describe( "Saving a config" , function() {
 
 
 	
-describe( "Load meta" , function() {
+describe( "Load meta tags" , function() {
 	
-	it( "should only load meta" , function() {
-		var meta ;
+	it( "should only load meta tags" , function() {
+		var metaTags ;
 		
-		meta = kungFig.loadMeta( __dirname + '/sample/kfg/meta-hook.kfg' ) ;
-		expect( meta.tags.getFirstTag( 'meta' ).content ).to.be( "master" ) ;
+		metaTags = kungFig.loadMetaTags( __dirname + '/sample/kfg/meta-hook.kfg' ) ;
+		expect( metaTags.getFirstTag( 'meta' ).content ).to.be( "master" ) ;
 		
-		meta = kungFig.loadMeta( __dirname + '/sample/kfg/katana.kfg' ) ;
-		expect( meta.tags.children ).to.equal( [] ) ;
+		metaTags = kungFig.loadMetaTags( __dirname + '/sample/kfg/katana.kfg' ) ;
+		expect( metaTags.children ).to.equal( [] ) ;
 	} ) ;
 } ) ;
 
@@ -680,8 +680,8 @@ describe( "Async file loading" , () => {
 	} ) ;
 	
 	it( "load meta of a KFG file asynchronously" , async () => {
-		var meta = await kungFig.loadMetaAsync( __dirname + '/sample/kfg/simple.kfg' , 'utf8' ) ;
-		expect( meta.tags.getFirstTag( 'meta' ).content ).to.equal( { content: "test" } ) ;
+		var metaTags = await kungFig.loadMetaTagsAsync( __dirname + '/sample/kfg/simple.kfg' , 'utf8' ) ;
+		expect( metaTags.getFirstTag( 'meta' ).content ).to.equal( { content: "test" } ) ;
 	} ) ;
 } ) ;
 

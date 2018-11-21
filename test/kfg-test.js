@@ -1363,9 +1363,9 @@ describe( "Meta-Tag" , () => {
 		var o , hookTriggered = 0 ;
 		
 		var options = {
-			metaHook: function( meta ) {
+			metaTagsHook: function( metaTags ) {
 				//console.log( "Received meta: " , meta.getTags( 'meta' )[ 0 ].content ) ;
-				expect( meta.tags.getTags( 'meta' )[ 0 ].content ).to.equal( { author: "Joe Doe" , copyright: 2016 } ) ;
+				expect( metaTags.getTags( 'meta' )[ 0 ].content ).to.equal( { author: "Joe Doe" , copyright: 2016 } ) ;
 				hookTriggered ++ ;
 			}
 		} ;
@@ -1394,11 +1394,11 @@ describe( "Meta-Tag" , () => {
 		var o , hookTriggered = 0 , nonIncludeHookTriggered = 0 , includeHookTriggered = 0 ;
 		
 		var options = {
-			metaHook: function( meta , options ) {
-				//if ( meta ) { console.log( "Received meta: " , meta , "\n>>>" , meta.getFirstTag( 'meta' ).content ) ; }
+			metaTagsHook: function( metaTags , options ) {
+				//if ( metaTags ) { console.log( "Received metaTags: " , metaTags , "\n>>>" , metaTags.getFirstTag( 'meta' ).content ) ; }
 				//else { console.log( "No meta" ) ; }
 				
-				//expect( meta.getTags( 'meta' )[ 0 ].content ).to.equal( { author: "Joe Doe" , copyright: 2016 } ) ;
+				//expect( metaTags.getTags( 'meta' )[ 0 ].content ).to.equal( { author: "Joe Doe" , copyright: 2016 } ) ;
 				hookTriggered ++ ;
 				
 				if ( [ "meta-hook.kfg" , "meta-hook-include.kfg" ].indexOf( pathModule.basename( options.file ) ) === -1 ) {
