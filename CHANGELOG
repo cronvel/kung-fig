@@ -1,4 +1,10 @@
 
+v0.47.6
+-------
+
+Now .load() and .loadAsync() throw when the path is falsy or not a string
+
+
 v0.47.5
 -------
 
