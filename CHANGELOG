@@ -1,4 +1,10 @@
 
+v0.48.0
+-------
+
+BREAKING CHANGE: Expression syntax CHANGED -- now the parens meaning cannot be used for array/object creation, parens create a 'stack', array and object are created using either the operator or the dedicated [] and {} syntax... Much cleaner syntax
+
+
 v0.47.6
 -------
 
