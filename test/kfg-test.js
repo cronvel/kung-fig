@@ -919,7 +919,7 @@ describe( "KFG parse" , () => {
 		
 		// Try with custom operators
 		var operators = {
-			triple: function( args ) { return args[ 0 ] * 3 ; }
+			triple: function( arg ) { return arg * 3 ; }
 		} ;
 		
 		o = parse( "exp:\n\t$=  triple  \n\t\n\t$=\n\t$= \n\t$=    \n\t$=  $bob.age  " , { operators: operators } ) ;
@@ -929,6 +929,9 @@ describe( "KFG parse" , () => {
 	it( "parse applicable expressions" , () => {
 		var o ;
 		var ctx = { name: "Bob" , bob: { age: 43 } , bill: { age: 37 } } ;
+		
+		o = parse( "exp: $= $bob.age + 2" ) ;
+		expect( o.exp.getFinalValue( ctx ) ).to.be( 45 ) ;
 		
 		o = parse( "exp: $$= $bob.age + 2" ) ;
 		expect( o.exp.getFinalValue( ctx ) ).to.be( o.exp ) ;
@@ -1631,7 +1634,7 @@ describe( "ExpressionTag" , () => {
 		var ctx = { a: 4 , b: 1 } ;
 		
 		var operators = {
-			triple: function( args ) { return args[ 0 ] * 3 ; }
+			triple: function( arg ) { return arg * 3 ; }
 		} ;
 		
 		var o = parse( '[ExpressionTag triple $a]' , { tags: { ExpressionTag: ExpressionTag } , operators: operators } ) ;

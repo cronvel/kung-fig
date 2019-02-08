@@ -1,4 +1,11 @@
 
+v0.49.0
+-------
+
+BREAKING: custom operator function signature changed for Expression
+support for named parameters
+
+
 v0.48.0
 -------
 
