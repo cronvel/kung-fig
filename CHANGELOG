@@ -1,4 +1,10 @@
 
+v0.50.0
+-------
+
+BREAKING: Expression strcat operator is now .. (double-dot) instead of . (single-dot), the single-dot is now used for the object navigation operator
+
+
 v0.49.2
 -------
 
