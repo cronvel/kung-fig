@@ -1,4 +1,29 @@
 
+v0.50.0
+-------
+
+BREAKING: Expression strcat operator is now .. (double-dot) instead of . (single-dot), the single-dot is now used for the object navigation operator
+
+
+v0.49.2
+-------
+
+Kung-fig expression: support for spread operator
+
+
+v0.49.1
+-------
+
+Kung-fig expression dependency
+
+
+v0.49.0
+-------
+
+BREAKING: custom operator function signature changed for Expression
+support for named parameters
+
+
 v0.48.0
 -------
 
