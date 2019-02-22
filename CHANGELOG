@@ -1,4 +1,10 @@
 
+v0.50.2
+-------
+
+Fix big bug with falsy values in expression
+
+
 v0.50.1
 -------
 
