@@ -1,4 +1,10 @@
 
+v0.50.1
+-------
+
+New: Expression and Ref now support JS compilation
+
+
 v0.50.0
 -------
 
