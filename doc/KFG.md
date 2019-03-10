@@ -666,6 +666,21 @@ This would produce:
 
 
 
+## Element repetition
+
+To repeat one element *n* times, put immediately after the hyphen an integer, followed by a `x` and a colon `:` **WITHOUT ANY SPACES**:
+```
+-3x: Alice
+-2x: Bob
+```
+
+This would produce:
+`[ "Alice" , "Alice" , "Alice" , "Bob" , "Bob" ]`.
+
+If the element to be repeated is an object, those elements will share the same references to that object.
+
+
+
 <a name="ref.objects"></a>
 ## Objects
 
