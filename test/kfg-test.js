@@ -1,20 +1,20 @@
 /*
 	Kung Fig
-	
-	Copyright (c) 2015 - 2018 Cédric Ronvel
-	
+
+	Copyright (c) 2015 - 2019 Cédric Ronvel
+
 	The MIT License (MIT)
-	
+
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
 	in the Software without restriction, including without limitation the rights
 	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 	copies of the Software, and to permit persons to whom the Software is
 	furnished to do so, subject to the following conditions:
-	
+
 	The above copyright notice and this permission notice shall be included in all
 	copies or substantial portions of the Software.
-	
+
 	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -532,6 +532,24 @@ describe( "KFG parse" , () => {
 		expect( parse( '"some:\\"bizarre:\\nkey" : value' ) ).to.equal( {"some:\"bizarre:\nkey":"value"} ) ;
 	} ) ;
 	
+	it( "parse array" , () => {
+		expect( parse( '- one\n- two\n- three' ) ).to.equal( [ 'one' , 'two' , 'three' ] ) ;
+		expect( parse( '-\n\tname: Bob\n-\n\tname: Jim\n-\n\tname: Jack' ) ).to.equal( [ { name: "Bob" } , { name: "Jim" } , { name: "Jack" } ] ) ;
+	} ) ;
+	
+	it( "parse array element repetition" , () => {
+		expect( parse( '- one\n-3x: two\n- three' ) ).to.equal( [ 'one' , 'two' , 'two' , 'two' , 'three' ] ) ;
+		expect( parse( '-1x: one\n-3x: two\n-2x: three' ) ).to.equal( [ 'one' , 'two' , 'two' , 'two' , 'three' , 'three' ] ) ;
+
+		expect( parse( '-\n\tname: Bob\n-3x:\n\tname: Jim\n-\n\tname: Jack' ) ).to.equal( [ { name: "Bob" } , { name: "Jim" } , { name: "Jim" } , { name: "Jim" } , { name: "Jack" } ] ) ;
+		expect( parse( '-1x:\n\tname: Bob\n-3x:\n\tname: Jim\n-2x:\n\tname: Jack' ) ).to.equal( [ { name: "Bob" } , { name: "Jim" } , { name: "Jim" } , { name: "Jim" } , { name: "Jack" } , { name: "Jack" } ] ) ;
+
+		var o = parse( '-\n\tname: Bob\n-3x:\n\tname: Jim\n\tpseudo: J.\n-\n\tname: Jack' ) ;
+		expect( o ).to.equal( [ { name: "Bob" } , { name: "Jim" , pseudo: "J." } , { name: "Jim" , pseudo: "J." } , { name: "Jim" , pseudo: "J." } , { name: "Jack" } ] ) ;
+		expect( o[ 1 ] ).to.be( o[ 2 ] ) ;
+		expect( o[ 1 ] ).to.be( o[ 3 ] ) ;
+	} ) ;
+	
 	it( "sections as array's elements" , () => {
 		expect( parse( '---\nvalue' ) ).to.equal( ["value"] ) ;
 		expect( parse( '----\nvalue' ) ).to.equal( ["value"] ) ;
@@ -723,7 +741,6 @@ describe( "KFG parse" , () => {
 	} ) ;
 	
 	it( "parse a basic file" , () => {
-		
 		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/simple.kfg' , 'utf8' ) ) ;
 		
 		expect( o ).to.equal( {
@@ -772,7 +789,6 @@ describe( "KFG parse" , () => {
 	} ) ;
 	
 	it( "parse a file using 4-spaces to indent" , () => {
-		
 		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/spaces-indent.kfg' , 'utf8' ) ) ;
 		
 		expect( o ).to.equal( {
@@ -1147,7 +1163,6 @@ describe( "KFG parse" , () => {
 	} ) ;
 	
 	it( "parse a file with operators" , () => {
-		
 		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/ops.kfg' , 'utf8' ) ) ;
 		
 		expect( o ).to.equal( {
@@ -1170,7 +1185,6 @@ describe( "KFG parse" , () => {
 	} ) ;
 	
 	it( "parse a file with special instances (json, bin, date, regex)" , () => {
-		
 		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/instances.kfg' , 'utf8' ) ) ;
 		
 		//console.log( JSON.stringify( o ) ) ;
@@ -1189,7 +1203,6 @@ describe( "KFG parse" , () => {
 	} ) ;
 	
 	it( "parse a file with ordered object" , () => {
-		
 		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/ordered-object.kfg' , 'utf8' ) ) ;
 		
 		//console.log( JSON.stringify( o ) ) ;
@@ -1213,7 +1226,6 @@ describe( "KFG parse" , () => {
 	} ) ;
 	
 	it( "parse a file with special custom instances" , () => {
-		
 		function Simple( value )
 		{
 			var self = Object.create( Simple.prototype ) ;
@@ -1272,7 +1284,6 @@ describe( "KFG parse" , () => {
 	} ) ;
 	
 	it( "parse a file containing tags, with custom tags prototypes" , () => {
-		
 		function IfTag() {}
 		IfTag.prototype = Object.create( Tag.prototype ) ;
 		IfTag.prototype.constructor = IfTag ;
