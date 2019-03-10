@@ -540,8 +540,14 @@ describe( "KFG parse" , () => {
 	it( "parse array element repetition" , () => {
 		expect( parse( '- one\n-3x: two\n- three' ) ).to.equal( [ 'one' , 'two' , 'two' , 'two' , 'three' ] ) ;
 		expect( parse( '-1x: one\n-3x: two\n-2x: three' ) ).to.equal( [ 'one' , 'two' , 'two' , 'two' , 'three' , 'three' ] ) ;
+
 		expect( parse( '-\n\tname: Bob\n-3x:\n\tname: Jim\n-\n\tname: Jack' ) ).to.equal( [ { name: "Bob" } , { name: "Jim" } , { name: "Jim" } , { name: "Jim" } , { name: "Jack" } ] ) ;
 		expect( parse( '-1x:\n\tname: Bob\n-3x:\n\tname: Jim\n-2x:\n\tname: Jack' ) ).to.equal( [ { name: "Bob" } , { name: "Jim" } , { name: "Jim" } , { name: "Jim" } , { name: "Jack" } , { name: "Jack" } ] ) ;
+
+		var o = parse( '-\n\tname: Bob\n-3x:\n\tname: Jim\n\tpseudo: J.\n-\n\tname: Jack' ) ;
+		expect( o ).to.equal( [ { name: "Bob" } , { name: "Jim" , pseudo: "J." } , { name: "Jim" , pseudo: "J." } , { name: "Jim" , pseudo: "J." } , { name: "Jack" } ] ) ;
+		expect( o[ 1 ] ).to.be( o[ 2 ] ) ;
+		expect( o[ 1 ] ).to.be( o[ 3 ] ) ;
 	} ) ;
 	
 	it( "sections as array's elements" , () => {
