@@ -114,7 +114,7 @@ Async loading fixed
 v0.46.0
 -------
 
-Move tree-ops in its own module: kung-fig-tree-ops ; dependencies upgraded ; all kung-fig-* unit tests now used Tea-time's expect
+Move tree-ops in its own module: kung-fig-tree-ops ; dependencies upgraded ; all kung-fig-* unit tests now use Tea-time's expect
 
 
 v0.45.3
