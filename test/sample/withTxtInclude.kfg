@@ -1,0 +1,4 @@
+simple: test
+firstInclude: @@txt/lorem.txt
+nested:
+	secondInclude: @@txt/lorem.txt

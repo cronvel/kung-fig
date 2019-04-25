@@ -1,0 +1,5 @@
+one: 1
+two:
+	three: 3
+	four: @@two.kfg
+	five: @@../simple.kfg
