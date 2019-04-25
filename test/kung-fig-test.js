@@ -392,6 +392,10 @@ describe( "zzz Dependencies aka includes" , () => {
 			}
 		} ) ;
 	} ) ;
+	
+	it( "Continue patching unit tests after that (currently working on new includes/meta interface)" , () => {
+		throw new Error( "Continue patching unit tests after that (currently working on new includes/meta interface)" ) ;
+	} ) ;
 
 	it( "should load a KFG file with many relative dependencies" , () => {
 		expect( kungFig.load( __dirname + '/sample/withIncludes.kfg' ) ).to.equal( {
