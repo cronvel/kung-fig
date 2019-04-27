@@ -1,4 +1,4 @@
 simple: test
-firstInclude: @@includes/one.json
+firstInclude: @@includes/one.kfg
 nested:
-	secondInclude: @@includes/two.json
+	secondInclude: @@includes/two.kfg

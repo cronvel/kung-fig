@@ -393,10 +393,6 @@ describe( "zzz Dependencies aka includes" , () => {
 		} ) ;
 	} ) ;
 	
-	it( "Continue patching unit tests after that (currently working on new includes/meta interface)" , () => {
-		throw new Error( "Continue patching unit tests after that (currently working on new includes/meta interface)" ) ;
-	} ) ;
-
 	it( "should load a KFG file with many relative dependencies" , () => {
 		expect( kungFig.load( __dirname + '/sample/withIncludes.kfg' ) ).to.equal( {
 			simple: 'test' ,
@@ -449,24 +445,8 @@ describe( "zzz Dependencies aka includes" , () => {
 		} ) ;
 	} ) ;
 
-	it( "should load a JSON file with a glob+merge dependency" , () => {
-		expect( kungFig.load( __dirname + '/sample/withGlobMerge.json' ) ).to.equal( {
-			a: "A" ,
-			a2: 12 ,
-			sub: {
-				b: "two" ,
-				b2: "two-two" ,
-				subsub: {
-					c: 3 ,
-					c2: "C2" ,
-					c3: "C3"
-				}
-			}
-		} ) ;
-	} ) ;
-
-	it( "should load a JSON file with a glob dependency that resolve to no files" , () => {
-		expect( kungFig.load( __dirname + '/sample/withUnexistantGlobInclude.json' ) ).to.equal( {
+	it( "should load a KFG file with a glob dependency that resolve to no files" , () => {
+		expect( kungFig.load( __dirname + '/sample/withUnexistantGlobInclude.kfg' ) ).to.equal( {
 			simple: 'test' ,
 			globInclude: []
 		} ) ;
@@ -477,15 +457,11 @@ describe( "zzz Dependencies aka includes" , () => {
 		var shouldBe = { "a": "A" } ;
 		shouldBe.b = shouldBe ;
 
-		expect( kungFig.load( __dirname + '/sample/circular.json' ) ).to.equal( shouldBe ) ;
-	} ) ;
+		expect( kungFig.load( __dirname + '/sample/circular.kfg' ) ).to.equal( shouldBe ) ;
 
-	it( "should RE-load flawlessly a config with a circular include to itself" , () => {
-		// Build the circular config here
-		var shouldBe = { "a": "A" } ;
-		shouldBe.b = shouldBe ;
-
-		expect( kungFig.load( __dirname + '/sample/circular.json' ) ).to.equal( shouldBe ) ;
+		// Should be able to reload it (cache bug test)
+		expect( kungFig.load( __dirname + '/sample/circular.kfg' ) ).to.equal( shouldBe ) ;
+		expect( kungFig.load( __dirname + '/sample/circular.kfg' ) ).to.equal( shouldBe ) ;
 	} ) ;
 
 	it( "should load flawlessly a config with many circular includes" , () => {
@@ -500,26 +476,15 @@ describe( "zzz Dependencies aka includes" , () => {
 		shouldBe.circularOne = a ;
 		shouldBe.circularTwo = b ;
 
-		expect( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) ).to.equal( shouldBe ) ;
-	} ) ;
+		expect( kungFig.load( __dirname + '/sample/withCircularIncludes.kfg' ) ).to.equal( shouldBe ) ;
 
-	it( "should RE-load flawlessly a config with many circular includes" , () => {
-		// Build the circular config here
-		var shouldBe = { "hello": "world!" } ;
-
-		var a = { "some": "data" } ;
-		var b = { "more": "data" } ;
-		a.toBe = b ;
-		b.toA = a ;
-
-		shouldBe.circularOne = a ;
-		shouldBe.circularTwo = b ;
-
-		expect( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) ).to.equal( shouldBe ) ;
+		// Should be able to reload it (cache bug test)
+		expect( kungFig.load( __dirname + '/sample/withCircularIncludes.kfg' ) ).to.equal( shouldBe ) ;
+		expect( kungFig.load( __dirname + '/sample/withCircularIncludes.kfg' ) ).to.equal( shouldBe ) ;
 	} ) ;
 
 	it( "should load flawlessly a config with a reference to itself" , () => {
-		expect( kungFig.load( __dirname + '/sample/selfReference.json' ) ).to.equal( {
+		var shouldBe = {
 			"a": "A" ,
 			"sub": {
 				"key": "value" ,
@@ -530,11 +495,17 @@ describe( "zzz Dependencies aka includes" , () => {
 				"refA": "A"
 			} ,
 			"refC": "value"
-		} ) ;
+		} ;
+		
+		expect( kungFig.load( __dirname + '/sample/selfReference.kfg' ) ).to.equal( shouldBe ) ;
+
+		// Should be able to reload it (cache bug test)
+		expect( kungFig.load( __dirname + '/sample/selfReference.kfg' ) ).to.equal( shouldBe ) ;
+		expect( kungFig.load( __dirname + '/sample/selfReference.kfg' ) ).to.equal( shouldBe ) ;
 	} ) ;
 
-	it( "should load a JSON file with many relative dependencies and sub-references" , () => {
-		expect( kungFig.load( __dirname + '/sample/withIncludesRef.json' ) ).to.equal( {
+	it( "should load a KFG file with many relative dependencies and sub-references" , () => {
+		var shouldBe = {
 			simple: 'test' ,
 			firstInclude: {
 				three: 3 ,
@@ -552,10 +523,16 @@ describe( "zzz Dependencies aka includes" , () => {
 				secondInclude: 'world!' ,
 				thirdInclude: 3
 			}
-		} ) ;
+		} ;
+		
+		expect( kungFig.load( __dirname + '/sample/withIncludesRef.kfg' ) ).to.equal( shouldBe ) ;
+
+		// Should be able to reload it (cache bug test)
+		expect( kungFig.load( __dirname + '/sample/withIncludesRef.kfg' ) ).to.equal( shouldBe ) ;
+		expect( kungFig.load( __dirname + '/sample/withIncludesRef.kfg' ) ).to.equal( shouldBe ) ;
 	} ) ;
 
-	it( "should load flawlessly a config with a circular reference to itself" , () => {
+	it( "should load flawlessly a config with a circular reference to itself [cache bug test off]" , () => {
 		// Build the circular config here
 		var shouldBe = {
 			"a": "A" ,
@@ -566,7 +543,29 @@ describe( "zzz Dependencies aka includes" , () => {
 
 		shouldBe.sub.ref = shouldBe ;
 
-		expect( kungFig.load( __dirname + '/sample/selfCircularReference.json' ) ).to.equal( shouldBe ) ;
+		expect( kungFig.load( __dirname + '/sample/selfCircularReference.kfg' ) ).to.equal( shouldBe ) ;
+
+		// Should be able to reload it (cache bug test)
+		//expect( kungFig.load( __dirname + '/sample/selfCircularReference.kfg' ) ).to.equal( shouldBe ) ;
+		//expect( kungFig.load( __dirname + '/sample/selfCircularReference.kfg' ) ).to.equal( shouldBe ) ;
+	} ) ;
+
+	it.opt( "should load flawlessly a config with a circular reference to itself [cache bug test on]" , () => {
+		// Build the circular config here
+		var shouldBe = {
+			"a": "A" ,
+			"sub": {
+				"key": "value"
+			}
+		} ;
+
+		shouldBe.sub.ref = shouldBe ;
+
+		expect( kungFig.load( __dirname + '/sample/selfCircularReference.kfg' ) ).to.equal( shouldBe ) ;
+
+		// Should be able to reload it (cache bug test)
+		expect( kungFig.load( __dirname + '/sample/selfCircularReference.kfg' ) ).to.equal( shouldBe ) ;
+		expect( kungFig.load( __dirname + '/sample/selfCircularReference.kfg' ) ).to.equal( shouldBe ) ;
 	} ) ;
 
 	it( "recursive parent search: path containing .../" , () => {
@@ -575,6 +574,22 @@ describe( "zzz Dependencies aka includes" , () => {
 			two: {
 				four: "4!" ,
 				three: "3!"
+			}
+		} ) ;
+	} ) ;
+
+	it( "should load a KFG file with a glob+merge dependency" , () => {
+		expect( kungFig.load( __dirname + '/sample/withGlobMerge.kfg' ) ).to.equal( {
+			a: "A" ,
+			a2: 12 ,
+			sub: {
+				b: "two" ,
+				b2: "two-two" ,
+				subsub: {
+					c: 3 ,
+					c2: "C2" ,
+					c3: "C3"
+				}
 			}
 		} ) ;
 	} ) ;
