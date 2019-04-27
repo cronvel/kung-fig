@@ -40,7 +40,7 @@ var kungFig = require( '../lib/kungFig.js' ) ;
 describe( "Loading a config" , () => {
 
 	it( "when trying to load an unexistant file, it should throw" , () => {
-		expect( () => kungFig.load( __dirname + '/sample/unexistant.json' ) ).to.throw() ;
+		expect( () => kungFig.load( __dirname + '/sample/unexistant.kfg' ) ).to.throw() ;
 	} ) ;
 
 	it( "should load a simple JSON file without dependency" , () => {
@@ -118,7 +118,7 @@ describe( "Loading a config" , () => {
 
 
 
-describe( "Dependencies aka includes" , () => {
+describe( "Dependencies (aka includes) and references" , () => {
 	it( "when loading a file with an unexistant dependency using the '@@', it should throw" , () => {
 		expect( () => kungFig.load( __dirname + '/sample/withUnexistantInclude.kfg' ) ).to.throw() ;
 	} ) ;
@@ -184,7 +184,7 @@ describe( "Dependencies aka includes" , () => {
 		} ) ;
 	} ) ;
 
-	it( "should load a JSON file with a glob dependency" , () => {
+	it( "should load a KFG file with a glob dependency" , () => {
 		expect( kungFig.load( __dirname + '/sample/withGlobIncludes.kfg' ) ).to.equal( {
 			simple: 'test' ,
 			globInclude: [
@@ -297,25 +297,7 @@ describe( "Dependencies aka includes" , () => {
 		expect( kungFig.load( __dirname + '/sample/withIncludesRef.kfg' ) ).to.equal( shouldBe ) ;
 	} ) ;
 
-	it( "should load flawlessly a config with a circular reference to itself [cache bug test off]" , () => {
-		// Build the circular config here
-		var shouldBe = {
-			"a": "A" ,
-			"sub": {
-				"key": "value"
-			}
-		} ;
-
-		shouldBe.sub.ref = shouldBe ;
-
-		expect( kungFig.load( __dirname + '/sample/selfCircularReference.kfg' ) ).to.equal( shouldBe ) ;
-
-		// Should be able to reload it (cache bug test)
-		//expect( kungFig.load( __dirname + '/sample/selfCircularReference.kfg' ) ).to.equal( shouldBe ) ;
-		//expect( kungFig.load( __dirname + '/sample/selfCircularReference.kfg' ) ).to.equal( shouldBe ) ;
-	} ) ;
-
-	it.opt( "should load flawlessly a config with a circular reference to itself [cache bug test on]" , () => {
+	it( "should load flawlessly a config with a circular reference to itself" , () => {
 		// Build the circular config here
 		var shouldBe = {
 			"a": "A" ,
@@ -357,6 +339,111 @@ describe( "Dependencies aka includes" , () => {
 				}
 			}
 		} ) ;
+	} ) ;
+
+	it( "should load flawlessly a config which is an array with simple includes" , () => {
+		var o = kungFig.load( __dirname + '/sample/simpleArrayRef.kfg' ) ;
+		//console.log( JSON.stringify( o , null , '  ' ) ) ;
+		expect( o ).to.equal( {
+			array: [
+				{ just: "a" , simple: { test: "!" } } ,
+				[ 1 , 2 , 3 ]
+			] ,
+			refArray: [ 1 , 2 , 3 ]
+		} ) ;
+		expect( o.array[ 1 ] ).to.be( o.refArray ) ;
+	} ) ;
+
+	it( "should load flawlessly a config which is an array with many circular includes" , () => {
+		var o = kungFig.load( __dirname + '/sample/withCircularIncludesArray.kfg' ) ;
+
+		// Build the circular config here
+		var shouldBe = [ "world!" ] ;
+
+		var a = [ "data" ] ;
+		var b = [ "data" ] ;
+		a[ 1 ] = b ;
+		b[ 1 ] = a ;
+
+		shouldBe[ 1 ] = a ;
+		shouldBe[ 2 ] = b ;
+
+		expect( o ).to.equal( shouldBe ) ;
+		
+		// Should be able to reload it (cache bug test)
+		expect( o ).to.equal( shouldBe ) ;
+		expect( o ).to.equal( shouldBe ) ;
+	} ) ;
+
+	it( "should load flawlessly a config which is an array with a reference to itself" , () => {
+		var shouldBe = [
+			"A" ,
+			[
+				"value" ,
+				"A"
+			] ,
+			[
+				"value" ,
+				"A"
+			] ,
+			"value"
+		] ;
+		
+		expect( kungFig.load( __dirname + '/sample/selfReferenceArray.kfg' ) ).to.equal( shouldBe ) ;
+
+		// Should be able to reload it (cache bug test)
+		expect( kungFig.load( __dirname + '/sample/selfReferenceArray.kfg' ) ).to.equal( shouldBe ) ;
+		expect( kungFig.load( __dirname + '/sample/selfReferenceArray.kfg' ) ).to.equal( shouldBe ) ;
+	} ) ;
+
+	it( "should load a JSON file which is an array with many relative dependencies and sub-references" , () => {
+		var shouldBe = [
+			'test' ,
+			[
+				3 ,
+				[ 'hello' , 'world!' ] ,
+				{
+					just: 'a' ,
+					simple: {
+						test: '!'
+					}
+				}
+			] ,
+			[
+				'world!' ,
+				'hello' ,
+				3
+			]
+		] ;
+		
+		expect( kungFig.load( __dirname + '/sample/withIncludesRefArray.kfg' ) ).to.equal( shouldBe ) ;
+		
+		// Should be able to reload it (cache bug test)
+		expect( kungFig.load( __dirname + '/sample/withIncludesRefArray.kfg' ) ).to.equal( shouldBe ) ;
+		expect( kungFig.load( __dirname + '/sample/withIncludesRefArray.kfg' ) ).to.equal( shouldBe ) ;
+	} ) ;
+
+	it( "should load flawlessly a config which is an array with a circular reference to itself" , () => {
+		// Build the circular config here
+		var shouldBe = [ "A" , [ "value" ] ] ;
+		shouldBe[ 1 ][ 1 ] = shouldBe ;
+
+		expect( kungFig.load( __dirname + '/sample/selfCircularReferenceArray.kfg' ) ).to.equal( shouldBe ) ;
+		
+		// Should be able to reload it (cache bug test)
+		expect( kungFig.load( __dirname + '/sample/selfCircularReferenceArray.kfg' ) ).to.equal( shouldBe ) ;
+		expect( kungFig.load( __dirname + '/sample/selfCircularReferenceArray.kfg' ) ).to.equal( shouldBe ) ;
+	} ) ;
+
+	it( "should load and save flawlessly a config which is an array with many circular includes" , () => {
+		var o , str ;
+
+		o = kungFig.load( __dirname + '/sample/withCircularIncludesArray.kfg' ) ;
+		//console.log( o ) ;
+		str = kungFig.saveJson( o ) ;
+		//console.log( str ) ;
+		//console.log( str.replace( /\n/g , () => '\\n' ) ) ;
+		expect( str ).to.be( '[\n  "world!",\n  [\n    "data",\n    {\n      "@@": "#[2]"\n    }\n  ],\n  [\n    "data",\n    {\n      "@@": "#[1]"\n    }\n  ]\n]' ) ;
 	} ) ;
 
 	it( "recursive parent search with fixed part (i.e.: .../ in the middle of the path)" ) ;
@@ -440,11 +527,11 @@ describe( "Saving a config" , () => {
 	it( "should load and save flawlessly a config with many circular includes" , () => {
 		var str ;
 
-		str = kungFig.saveJson( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) ) ;
+		str = kungFig.saveJson( kungFig.load( __dirname + '/sample/withCircularIncludes.kfg' ) ) ;
 		//console.log( str ) ;
 		expect( str ).to.be( '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "@@toBe": "#circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "@@toA": "#circularOne"\n  }\n}' ) ;
 
-		str = kungFig.saveKfg( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) ) ;
+		str = kungFig.saveKfg( kungFig.load( __dirname + '/sample/withCircularIncludes.kfg' ) ) ;
 		//console.log( str ) ;
 		//console.log( str.replace( /\n/g , () => '\\n' ).replace( /\t/g , () => '\\t' ) ) ;
 		expect( str ).to.be( "hello: world!\ncircularOne:\n\tsome: data\n\ttoBe: @@#circularTwo\ncircularTwo:\n\tmore: data\n\ttoA: @@#circularOne\n" ) ;
@@ -453,17 +540,25 @@ describe( "Saving a config" , () => {
 	it( "should load and save to disk flawlessly a config with many circular includes" , () => {
 		var str ;
 
-		kungFig.saveJson( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) , __dirname + '/output.json' ) ;
+		kungFig.saveJson( kungFig.load( __dirname + '/sample/withCircularIncludes.kfg' ) , __dirname + '/output.json' ) ;
 		str = fs.readFileSync( __dirname + '/output.json' ).toString() ;
 		//console.log( str ) ;
 		expect( str ).to.be( '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "@@toBe": "#circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "@@toA": "#circularOne"\n  }\n}' ) ;
 		fs.unlinkSync( __dirname + '/output.json' ) ;
 
-		kungFig.saveKfg( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) , __dirname + '/output.kfg' ) ;
+		kungFig.saveKfg( kungFig.load( __dirname + '/sample/withCircularIncludes.kfg' ) , __dirname + '/output.kfg' ) ;
 		str = fs.readFileSync( __dirname + '/output.kfg' ).toString() ;
 		//console.log( str ) ;
 		expect( str ).to.be( "hello: world!\ncircularOne:\n\tsome: data\n\ttoBe: @@#circularTwo\ncircularTwo:\n\tmore: data\n\ttoA: @@#circularOne\n" ) ;
 		fs.unlinkSync( __dirname + '/output.kfg' ) ;
+	} ) ;
+
+	it( "should stringify a config of arrays" , () => {
+		var str ;
+
+		str = kungFig.saveJson( kungFig.load( __dirname + '/sample/withIncludesRefArray.kfg' ) ) ;
+		//console.log( str ) ;
+		expect( str ).to.be( '[\n  "test",\n  [\n    3,\n    [\n      "hello",\n      "world!"\n    ],\n    {\n      "just": "a",\n      "simple": {\n        "test": "!"\n      }\n    }\n  ],\n  [\n    "world!",\n    "hello",\n    3\n  ]\n]' ) ;
 	} ) ;
 } ) ;
 
@@ -487,7 +582,6 @@ describe( "Load meta tags" , () => {
 describe( "JS modules" , () => {
 
 	it( "should load a JS module" , () => {
-
 		expect( kungFig.load( __dirname + '/sample/js/one.js' ) ).to.equal(
 			require(  __dirname + '/sample/js/one.js' )
 		) ;
@@ -499,17 +593,14 @@ describe( "JS modules" , () => {
 	} ) ;
 
 	it( "should load a JSON file with many relative dependencies and sub-references to a JS module" , () => {
-
-		expect( kungFig.load( __dirname + '/sample/withJsIncludesRef.json' ) ).to.equal(
-			{
-				simple: 'test' ,
-				firstInclude: require(  __dirname + '/sample/js/one.js' ) ,
-				nested: {
-					secondInclude: require(  __dirname + '/sample/js/one.js' ).helloFunc ,
-					thirdInclude: require(  __dirname + '/sample/js/one.js' ).awesomeFunc
-				}
+		expect( kungFig.load( __dirname + '/sample/withJsIncludesRef.kfg' ) ).to.equal( {
+			simple: 'test' ,
+			firstInclude: require(  __dirname + '/sample/js/one.js' ) ,
+			nested: {
+				secondInclude: require(  __dirname + '/sample/js/one.js' ).helloFunc ,
+				thirdInclude: require(  __dirname + '/sample/js/one.js' ).awesomeFunc
 			}
-		) ;
+		} ) ;
 	} ) ;
 
 	it( "Save JS modules" ) ;
@@ -519,112 +610,6 @@ describe( "JS modules" , () => {
 
 describe( "Array references" , () => {
 
-	it( "should load flawlessly a config which is an array with simple includes" , () => {
-
-		var o = kungFig.load( __dirname + '/sample/simpleArrayRef.json' ) ;
-		//console.log( JSON.stringify( o , null , '  ' ) ) ;
-		expect( o ).to.equal( {
-			array: [
-				{ just: "a" , simple: { test: "!" } } ,
-				[ 1 , 2 , 3 ]
-			] ,
-			refArray: [ 1 , 2 , 3 ]
-		} ) ;
-		expect( o.array[ 1 ] ).to.be( o.refArray ) ;
-	} ) ;
-
-	it( "should load flawlessly a config which is an array with many circular includes" , () => {
-
-		var o = kungFig.load( __dirname + '/sample/withCircularIncludesArray.json' ) ;
-
-		// Build the circular config here
-		var shouldBe = [ "world!" ] ;
-
-		var a = [ "data" ] ;
-		var b = [ "data" ] ;
-		a[ 1 ] = b ;
-		b[ 1 ] = a ;
-
-		shouldBe[ 1 ] = a ;
-		shouldBe[ 2 ] = b ;
-
-		expect( o ).to.equal( shouldBe ) ;
-	} ) ;
-
-	it( "should load flawlessly a config which is an array with a reference to itself" , () => {
-
-		expect( kungFig.load( __dirname + '/sample/selfReferenceArray.json' ) ).to.equal(
-			[
-				"A" ,
-				[
-					"value" ,
-					"A"
-				] ,
-				[
-					"value" ,
-					"A"
-				] ,
-				"value"
-			]
-		) ;
-	} ) ;
-
-	it( "should load a JSON file which is an array with many relative dependencies and sub-references" , () => {
-
-		//console.log( kungFig.load( __dirname + '/sample/withIncludesRefArray.json' ) ) ;
-		expect( kungFig.load( __dirname + '/sample/withIncludesRefArray.json' ) ).to.equal(
-			[
-				'test' ,
-				[
-					3 ,
-					[ 'hello' , 'world!' ] ,
-					{
-						just: 'a' ,
-						simple: {
-							test: '!'
-						}
-					}
-				] ,
-				[
-					'world!' ,
-					'hello' ,
-					3
-				]
-			]
-		) ;
-	} ) ;
-
-	it( "should load flawlessly a config which is an array with a circular reference to itself" , () => {
-
-		//console.log( kungFig.load( __dirname + '/sample/selfCircularReferenceArray.json' ) ) ;
-
-		// Build the circular config here
-		var shouldBe = [ "A" , [ "value" ] ] ;
-		shouldBe[ 1 ][ 1 ] = shouldBe ;
-
-		expect( kungFig.load( __dirname + '/sample/selfCircularReferenceArray.json' ) ).to.equal( shouldBe ) ;
-	} ) ;
-
-	it( "should stringify a config of arrays" , () => {
-
-		var str ;
-
-		str = kungFig.saveJson( kungFig.load( __dirname + '/sample/withIncludesRefArray.json' ) ) ;
-		//console.log( str ) ;
-		expect( str ).to.be( '[\n  "test",\n  [\n    3,\n    [\n      "hello",\n      "world!"\n    ],\n    {\n      "just": "a",\n      "simple": {\n        "test": "!"\n      }\n    }\n  ],\n  [\n    "world!",\n    "hello",\n    3\n  ]\n]' ) ;
-	} ) ;
-
-	it( "should load and save flawlessly a config which is an array with many circular includes" , () => {
-
-		var o , str ;
-
-		o = kungFig.load( __dirname + '/sample/withCircularIncludesArray.json' ) ;
-		//console.log( o ) ;
-		str = kungFig.saveJson( o ) ;
-		//console.log( str ) ;
-		//console.log( str.replace( /\n/g , () => '\\n' ) ) ;
-		expect( str ).to.be( '[\n  "world!",\n  [\n    "data",\n    {\n      "@@": "#[2]"\n    }\n  ],\n  [\n    "data",\n    {\n      "@@": "#[1]"\n    }\n  ]\n]' ) ;
-	} ) ;
 } ) ;
 
 

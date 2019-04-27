@@ -1,0 +1,5 @@
+- test
+- @@includesArray/one.kfg#[1]
+-	- @@includesArray/two.kfg#[1]
+	- @@includesArray/two.kfg#[0]
+	- @@includesArray/one.kfg#[1][0]

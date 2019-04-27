@@ -3,4 +3,4 @@ sub:
 	b: 2
 	subsub:
 		c:3
-(#*>) @@merge/*.json
+(#*>) @@merge/*.kfg

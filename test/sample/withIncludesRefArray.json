@@ -1,9 +1,0 @@
-[
-	"test",
-	{ "@@": "includesArray/one.json#[1]" },
-	[
-		{ "@@": "includesArray/two.json#[1]" },
-		{ "@@": "includesArray/two.json#[0]" },
-		{ "@@": "includesArray/one.json#[1][0]" }
-	]
-]

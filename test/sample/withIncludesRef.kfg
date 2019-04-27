@@ -1,5 +1,5 @@
 simple: test
-firstInclude: @@includes/one.json#two
+firstInclude: @@includes/one.kfg#two
 nested:
-	secondInclude: @@includes/two.json#hello
-	thirdInclude: @@includes/one.json#two.three
+	secondInclude: @@includes/two.kfg#hello
+	thirdInclude: @@includes/one.kfg#two.three

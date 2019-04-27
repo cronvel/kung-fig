@@ -1,0 +1,7 @@
+array:
+	- @@simple.kfg
+	- @@#refArray
+refArray:
+	- 1
+	- 2
+	- 3
