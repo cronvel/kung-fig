@@ -1,4 +1,0 @@
-{
-	"simple": "test",
-	"@@globInclude": "unexistant/*.json"
-}

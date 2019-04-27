@@ -48,10 +48,10 @@ describe( "Loading a config" , () => {
 	} ) ;
 
 	it( "should load a simple KFG file without dependency" , () => {
+		expect( kungFig.load( __dirname + '/sample/simple.kfg' ) ).to.equal( { just: 'a' , simple: { test: '!' } } ) ;
+	} ) ;
 
-		//console.log( require( 'util' ).inspect( kungFig.parse( fs.readFileSync( __dirname + '/sample/kfg/katana.kfg' , 'utf8' ) ) , { depth: 10 } ) ) ;
-		//console.log( require( 'util' ).inspect( kungFig.load( __dirname + '/sample/kfg/katana.kfg' ) , { depth: 10 } ) ) ;
-
+	it( "should load a small KFG file without dependency" , () => {
 		expect( kungFig.load( __dirname + '/sample/kfg/katana.kfg' ) ).to.equal( {
 			class: 'katana' ,
 			generic: 'saber' ,
@@ -79,26 +79,21 @@ describe( "Loading a config" , () => {
 		expect( kungFig.load( __dirname + '/sample/txt/lorem.txt' ) ).to.be( "Lorem ipsum dolor." ) ;
 	} ) ;
 
-	it( "should load a simple JSON file without dependency, containing an array" , () => {
-
-		//console.log( kungFig.load( __dirname + '/sample/simpleWithArrays.json' ) ) ;
-		expect( kungFig.load( __dirname + '/sample/simpleWithArrays.json' ) ).to.equal(
+	it( "should load a simple KFG file without dependency, containing an array" , () => {
+		expect( kungFig.load( __dirname + '/sample/simpleWithArrays.kfg' ) ).to.equal(
 			{ just: [ 'a' , 'simple' , [ 'test' , '!' ] ] }
 		) ;
 	} ) ;
 
 	it( "should load a simple JSON file without dependency, which is an array" , () => {
-
-		//console.log( kungFig.load( __dirname + '/sample/simpleArray.json' ) ) ;
-		expect( kungFig.load( __dirname + '/sample/simpleArray.json' ) ).to.equal(
+		expect( kungFig.load( __dirname + '/sample/simpleArray.kfg' ) ).to.equal(
 			[ 'a' , 'simple' , [ 'test' , '!' ] ]
 		) ;
 	} ) ;
 
 
 	it( "when loading a file, all Tree-Ops should be reduced" , () => {
-
-		expect( kungFig.load( __dirname + '/sample/withTreeOps.json' ) ).to.equal(
+		expect( kungFig.load( __dirname + '/sample/withTreeOps.kfg' ) ).to.equal(
 			{
 				simple: "test" ,
 				int: 7
@@ -107,8 +102,7 @@ describe( "Loading a config" , () => {
 	} ) ;
 
 	it( "when loading a file and explicitly turning the 'reduce' option off, Tree Operations should not be reduced" , () => {
-
-		expect( kungFig.load( __dirname + '/sample/withTreeOps.json' , { reduce: false } ) ).to.equal(
+		expect( kungFig.load( __dirname + '/sample/withTreeOps.kfg' , { reduce: false } ) ).to.equal(
 			{
 				simple: "test" ,
 				int: 5 ,
@@ -124,236 +118,7 @@ describe( "Loading a config" , () => {
 
 
 
-describe( "Dependencies aka includes (with JSON) [DEPRECATED]" , () => {
-	it( "when loading a file with an unexistant dependency using the '@@', it should throw [DEPRECATED]" , () => {
-		expect( () => kungFig.load( __dirname + '/sample/withUnexistantInclude.json' ) ).to.throw() ;
-	} ) ;
-
-	it( "when loading a file with an unexistant dependency using the '@', it should not throw [DEPRECATED]" , () => {
-		expect( kungFig.load( __dirname + '/sample/withUnexistantOptionalInclude.json' ) ).to.equal(
-			{
-				simple: "test" ,
-				unexistant: {}
-			}
-		) ;
-	} ) ;
-
-	it( "when loading a file with a bad JSON content dependency using the '@', it should throw" , () => {
-		expect( () => kungFig.load( __dirname + '/sample/withBadOptionalInclude.json' ) ).to.throw() ;
-	} ) ;
-
-	it( "should load a JSON file with a txt dependency" , () => {
-		expect( kungFig.load( __dirname + '/sample/withTxtInclude.json' ) ).to.equal(
-			{
-				"simple": "test" ,
-				"firstInclude": "Lorem ipsum dolor." ,
-				"nested": {
-					"secondInclude": "Lorem ipsum dolor."
-				}
-			}
-		) ;
-	} ) ;
-
-	it( "should load a JSON file with many relative dependencies" , () => {
-		expect( kungFig.load( __dirname + '/sample/withIncludes.json' ) ).to.equal(
-			{
-				simple: 'test' ,
-				firstInclude: {
-					one: 1 ,
-					two: {
-						three: 3 ,
-						four: {
-							hello: 'world!'
-						} ,
-						five: {
-							just: 'a' ,
-							simple: {
-								test: '!'
-							}
-						}
-					}
-				} ,
-				nested: {
-					secondInclude: {
-						hello: 'world!'
-					}
-				}
-			}
-		) ;
-	} ) ;
-
-	it( "should load a JSON file with a glob dependency" , () => {
-		expect( kungFig.load( __dirname + '/sample/withGlobIncludes.json' ) ).to.equal(
-			{
-				simple: 'test' ,
-				globInclude: [
-					{
-						one: 1 ,
-						two: {
-							five: {
-								just: "a" ,
-								simple: {
-									test: "!"
-								}
-							} ,
-							four: {
-								hello: "world!"
-							} ,
-							three: 3
-						}
-					} ,
-					{
-						hello: "world!"
-					}
-				]
-			}
-		) ;
-	} ) ;
-
-	it( "should load a JSON file with a glob+merge dependency" , () => {
-		expect( kungFig.load( __dirname + '/sample/withGlobMerge.json' ) ).to.equal(
-			{
-				a: "A" ,
-				a2: 12 ,
-				sub: {
-					b: "two" ,
-					b2: "two-two" ,
-					subsub: {
-						c: 3 ,
-						c2: "C2" ,
-						c3: "C3"
-					}
-				}
-			}
-		) ;
-	} ) ;
-
-	it( "should load a JSON file with a glob dependency that resolve to no files" , () => {
-		expect( kungFig.load( __dirname + '/sample/withUnexistantGlobInclude.json' ) ).to.equal(
-			{
-				simple: 'test' ,
-				globInclude: []
-			}
-		) ;
-	} ) ;
-
-	it( "should load flawlessly a config with a circular include to itself" , () => {
-		// Build the circular config here
-		var shouldBe = { "a": "A" } ;
-		shouldBe.b = shouldBe ;
-
-		expect( kungFig.load( __dirname + '/sample/circular.json' ) ).to.equal( shouldBe ) ;
-	} ) ;
-
-	it( "should RE-load flawlessly a config with a circular include to itself" , () => {
-		// Build the circular config here
-		var shouldBe = { "a": "A" } ;
-		shouldBe.b = shouldBe ;
-
-		expect( kungFig.load( __dirname + '/sample/circular.json' ) ).to.equal( shouldBe ) ;
-	} ) ;
-
-	it( "should load flawlessly a config with many circular includes" , () => {
-		// Build the circular config here
-		var shouldBe = { "hello": "world!" } ;
-
-		var a = { "some": "data" } ;
-		var b = { "more": "data" } ;
-		a.toBe = b ;
-		b.toA = a ;
-
-		shouldBe.circularOne = a ;
-		shouldBe.circularTwo = b ;
-
-		expect( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) ).to.equal( shouldBe ) ;
-	} ) ;
-
-	it( "should RE-load flawlessly a config with many circular includes" , () => {
-		// Build the circular config here
-		var shouldBe = { "hello": "world!" } ;
-
-		var a = { "some": "data" } ;
-		var b = { "more": "data" } ;
-		a.toBe = b ;
-		b.toA = a ;
-
-		shouldBe.circularOne = a ;
-		shouldBe.circularTwo = b ;
-
-		expect( kungFig.load( __dirname + '/sample/withCircularIncludes.json' ) ).to.equal( shouldBe ) ;
-	} ) ;
-
-	it( "should load flawlessly a config with a reference to itself" , () => {
-		expect( kungFig.load( __dirname + '/sample/selfReference.json' ) ).to.equal(
-			{
-				"a": "A" ,
-				"sub": {
-					"key": "value" ,
-					"refA": "A"
-				} ,
-				"refB": {
-					"key": "value" ,
-					"refA": "A"
-				} ,
-				"refC": "value"
-			}
-		) ;
-	} ) ;
-
-	it( "should load a JSON file with many relative dependencies and sub-references" , () => {
-		expect( kungFig.load( __dirname + '/sample/withIncludesRef.json' ) ).to.equal(
-			{
-				simple: 'test' ,
-				firstInclude: {
-					three: 3 ,
-					four: {
-						hello: 'world!'
-					} ,
-					five: {
-						just: 'a' ,
-						simple: {
-							test: '!'
-						}
-					}
-				} ,
-				nested: {
-					secondInclude: 'world!' ,
-					thirdInclude: 3
-				}
-			}
-		) ;
-	} ) ;
-
-	it( "should load flawlessly a config with a circular reference to itself" , () => {
-		// Build the circular config here
-		var shouldBe = {
-			"a": "A" ,
-			"sub": {
-				"key": "value"
-			}
-		} ;
-
-		shouldBe.sub.ref = shouldBe ;
-
-		expect( kungFig.load( __dirname + '/sample/selfCircularReference.json' ) ).to.equal( shouldBe ) ;
-	} ) ;
-
-	it( "recursive parent search: path containing .../" , () => {
-		expect( kungFig.load( __dirname + '/sample/kfg/recursive/recursive/recursive.kfg' ) ).to.equal(
-			{
-				one: "oneoneone" ,
-				two: {
-					four: "4!" ,
-					three: "3!"
-				}
-			}
-		) ;
-	} ) ;
-} ) ;
-
-
-
-describe( "zzz Dependencies aka includes" , () => {
+describe( "Dependencies aka includes" , () => {
 	it( "when loading a file with an unexistant dependency using the '@@', it should throw" , () => {
 		expect( () => kungFig.load( __dirname + '/sample/withUnexistantInclude.kfg' ) ).to.throw() ;
 	} ) ;

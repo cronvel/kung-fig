@@ -1,0 +1,6 @@
+a: 1
+sub:
+	b: 2
+	subsub:
+		c:3
+(#*>) @@merge/*.json

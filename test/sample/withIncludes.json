@@ -1,7 +1,0 @@
-{
-	"simple": "test",
-	"@@firstInclude": "includes/one.json",
-	"nested": {
-		"@@secondInclude": "includes/two.json"
-	}
-}

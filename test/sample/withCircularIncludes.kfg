@@ -1,0 +1,3 @@
+hello: world!
+circularOne: @@circularIncludes/a.kfg
+circularTwo: @@circularIncludes/b.kfg
