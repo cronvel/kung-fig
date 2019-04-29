@@ -134,7 +134,7 @@ describe( "Dependencies (aka includes) and references" , () => {
 		expect( () => kungFig.load( __dirname + '/sample/withBadOptionalInclude.kfg' ) ).to.throw() ;
 	} ) ;
 
-	it( "should load a KFG file with a txt dependency" , () => {
+	it( "zzz should load a KFG file with a txt dependency" , () => {
 		expect( kungFig.load( __dirname + '/sample/withTxtInclude.kfg' ) ).to.equal( {
 			"simple": "test" ,
 			"firstInclude": "Lorem ipsum dolor." ,
@@ -608,12 +608,6 @@ describe( "JS modules" , () => {
 
 
 
-describe( "Array references" , () => {
-
-} ) ;
-
-
-
 describe( "Async file loading" , () => {
 
 	it( "load a KFG file asynchronously" , async() => {
@@ -670,5 +664,4 @@ describe( "Async file loading" , () => {
 		expect( metaTags.getFirstTag( 'meta' ).content ).to.equal( { content: "test" } ) ;
 	} ) ;
 } ) ;
-
 
