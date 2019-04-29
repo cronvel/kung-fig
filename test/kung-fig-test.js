@@ -118,7 +118,7 @@ describe( "Loading a config" , () => {
 
 
 
-describe( "Dependencies (aka includes) and references" , () => {
+describe( "zzz Dependencies (aka includes) and references" , () => {
 	it( "when loading a file with an unexistant dependency using the '@@', it should throw" , () => {
 		expect( () => kungFig.load( __dirname + '/sample/withUnexistantInclude.kfg' ) ).to.throw() ;
 	} ) ;
@@ -134,7 +134,7 @@ describe( "Dependencies (aka includes) and references" , () => {
 		expect( () => kungFig.load( __dirname + '/sample/withBadOptionalInclude.kfg' ) ).to.throw() ;
 	} ) ;
 
-	it( "zzz should load a KFG file with a txt dependency" , () => {
+	it( "should load a KFG file with a txt dependency" , () => {
 		expect( kungFig.load( __dirname + '/sample/withTxtInclude.kfg' ) ).to.equal( {
 			"simple": "test" ,
 			"firstInclude": "Lorem ipsum dolor." ,
