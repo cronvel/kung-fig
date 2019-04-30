@@ -118,7 +118,7 @@ describe( "Loading a config" , () => {
 
 
 
-describe( "zzz Dependencies (aka includes) and references" , () => {
+describe( "xxx Dependencies (aka includes) and references" , () => {
 	it( "when loading a file with an unexistant dependency using the '@@', it should throw" , () => {
 		expect( () => kungFig.load( __dirname + '/sample/withUnexistantInclude.kfg' ) ).to.throw() ;
 	} ) ;
@@ -150,7 +150,7 @@ describe( "zzz Dependencies (aka includes) and references" , () => {
 		} ) ;
 	} ) ;
 
-	it( "should load a KFG file with is dependency not after a key" , () => {
+	it( "should load a KFG file with a dependency not after a key" , () => {
 		expect( kungFig.load( __dirname + '/sample/notAfterKeyDependency.kfg' ) ).to.equal( {
 			"sub": {
 				"hello": "world!"
@@ -217,7 +217,7 @@ describe( "zzz Dependencies (aka includes) and references" , () => {
 		} ) ;
 	} ) ;
 
-	it( "should load flawlessly a config with a circular include to itself" , () => {
+	it( "should load flawlessly a config with a circular include to itself (its root)" , () => {
 		// Build the circular config here
 		var shouldBe = { "a": "A" } ;
 		shouldBe.b = shouldBe ;
@@ -229,7 +229,7 @@ describe( "zzz Dependencies (aka includes) and references" , () => {
 		expect( kungFig.load( __dirname + '/sample/circular.kfg' ) ).to.equal( shouldBe ) ;
 	} ) ;
 
-	it( "should load flawlessly a config with many circular includes" , () => {
+	it( "zzz should load flawlessly a config with many circular includes" , () => {
 		// Build the circular config here
 		var shouldBe = { "hello": "world!" } ;
 
