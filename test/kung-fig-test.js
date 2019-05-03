@@ -134,7 +134,57 @@ describe( "xxx Dependencies (aka includes) and references" , () => {
 		expect( () => kungFig.load( __dirname + '/sample/withBadOptionalInclude.kfg' ) ).to.throw() ;
 	} ) ;
 
-	it( "should load a KFG file with a txt dependency" , () => {
+	it( "should load a KFG file with a dependency as a property" , () => {
+		expect( kungFig.load( __dirname + '/sample/dependencyAsProperty.kfg' ) ).to.equal( {
+			simple: "test" ,
+			firstInclude: { just: "a" , simple: { test: "!" } } ,
+			nested: {
+				secondInclude: { just: "a" , simple: { test: "!" } }
+			}
+		} ) ;
+	} ) ;
+	
+	it( "should load a KFG file with a dependency as an element" , () => {
+		expect( kungFig.load( __dirname + '/sample/dependencyAsElement.kfg' ) ).to.equal( [
+			"test" ,
+			{ just: "a" , simple: { test: "!" } } ,
+			[ { just: "a" , simple: { test: "!" } } ] ,
+		] ) ;
+	} ) ;
+	
+	it( "should load a KFG file with a dependency as value" , () => {
+		expect( kungFig.load( __dirname + '/sample/dependencyAsValue.kfg' ) ).to.equal( {
+			sub: { just: "a" , simple: { test: "!" } }
+		} ) ;
+	} ) ;
+	
+	it( "should load a KFG file which is a top-level dependency" , () => {
+		expect( kungFig.load( __dirname + '/sample/topLevelDependency.kfg' ) ).to.equal( {
+			"hello": "world!"
+		} ) ;
+	} ) ;
+
+	it( "should load a KFG file with a KFG dependency" , () => {
+		expect( kungFig.load( __dirname + '/sample/withKfgInclude.kfg' ) ).to.equal( {
+			simple: "test" ,
+			firstInclude: { just: "a" , simple: { test: "!" } } ,
+			nested: {
+				secondInclude: { just: "a" , simple: { test: "!" } }
+			}
+		} ) ;
+	} ) ;
+	
+	it( "should load a KFG file with a JSON dependency" , () => {
+		expect( kungFig.load( __dirname + '/sample/withJsonInclude.kfg' ) ).to.equal( {
+			simple: "test" ,
+			firstInclude: { just: "a" , simple: { test: "!" } } ,
+			nested: {
+				secondInclude: { just: "a" , simple: { test: "!" } }
+			}
+		} ) ;
+	} ) ;
+	
+	it( "should load a KFG file with a TXT dependency" , () => {
 		expect( kungFig.load( __dirname + '/sample/withTxtInclude.kfg' ) ).to.equal( {
 			"simple": "test" ,
 			"firstInclude": "Lorem ipsum dolor." ,
@@ -144,20 +194,6 @@ describe( "xxx Dependencies (aka includes) and references" , () => {
 		} ) ;
 	} ) ;
 
-	it( "should load a KFG file which is a top-level dependency" , () => {
-		expect( kungFig.load( __dirname + '/sample/topLevelDependency.kfg' ) ).to.equal( {
-			"hello": "world!"
-		} ) ;
-	} ) ;
-
-	it( "should load a KFG file with a dependency not after a key" , () => {
-		expect( kungFig.load( __dirname + '/sample/notAfterKeyDependency.kfg' ) ).to.equal( {
-			"sub": {
-				"hello": "world!"
-			}
-		} ) ;
-	} ) ;
-	
 	it( "should load a KFG file with many relative dependencies" , () => {
 		expect( kungFig.load( __dirname + '/sample/withIncludes.kfg' ) ).to.equal( {
 			simple: 'test' ,

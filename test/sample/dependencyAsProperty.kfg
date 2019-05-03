@@ -1,0 +1,4 @@
+simple: test
+firstInclude: @@simple.kfg
+nested:
+	secondInclude: @@simple.kfg

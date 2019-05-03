@@ -1,0 +1,4 @@
+simple: test
+firstInclude: @@simple.json
+nested:
+	secondInclude: @@simple.json
