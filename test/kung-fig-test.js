@@ -164,6 +164,12 @@ describe( "xxx Dependencies (aka includes) and references" , () => {
 		} ) ;
 	} ) ;
 
+	it( "zzz should load a KFG file with a dependency that merge with existing properties" , () => {
+		expect( kungFig.load( __dirname + '/sample/dependencyMerge.kfg' ) ).to.equal( {
+			sub: { just: "a" , simple: { test: "!" } , extra: "value" }
+		} ) ;
+	} ) ;
+	
 	it( "should load a KFG file with a KFG dependency" , () => {
 		expect( kungFig.load( __dirname + '/sample/withKfgInclude.kfg' ) ).to.equal( {
 			simple: "test" ,
@@ -265,7 +271,7 @@ describe( "xxx Dependencies (aka includes) and references" , () => {
 		expect( kungFig.load( __dirname + '/sample/circular.kfg' ) ).to.equal( shouldBe ) ;
 	} ) ;
 
-	it( "zzz should load flawlessly a config with many circular includes" , () => {
+	it( "should load flawlessly a config with many circular includes" , () => {
 		// Build the circular config here
 		var shouldBe = { "hello": "world!" } ;
 

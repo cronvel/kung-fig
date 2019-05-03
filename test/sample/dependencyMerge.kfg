@@ -1,0 +1,3 @@
+sub:
+	extra: value
+	@@simple.kfg
