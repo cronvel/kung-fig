@@ -166,7 +166,7 @@ describe( "xxx Dependencies (aka includes) and references" , () => {
 
 	it( "zzz should load a KFG file with a dependency that merge with existing properties" , () => {
 		expect( kungFig.load( __dirname + '/sample/dependencyMerge.kfg' ) ).to.equal( {
-			sub: { just: "a" , simple: { test: "!" } , extra: "value" }
+			sub: { just: "a" , simple: { test: "!" , and: "test" } , extra: "value" }
 		} ) ;
 	} ) ;
 	

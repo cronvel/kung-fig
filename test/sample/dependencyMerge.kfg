@@ -1,3 +1,6 @@
 sub:
 	extra: value
+	just: the
+	simple:
+		and: test
 	@@simple.kfg
