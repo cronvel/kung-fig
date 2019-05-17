@@ -1,8 +1,7 @@
 sub:
 	@@simple.kfg
-	bob: ross
-#	extra: value
-#	just: the
-#	simple:
-#		test: "?"
-#		and: test
+	extra: value
+	just: the
+	simple:
+		test: "?"
+		and: test
