@@ -741,9 +741,11 @@ describe( "KFG parse" , () => {
 	} ) ;
 	
 	it( "parse a basic file" , () => {
-		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/simple.kfg' , 'utf8' ) ) ;
+		var kfg = parse( fs.readFileSync( __dirname + '/sample/kfg/simple.kfg' , 'utf8' ) , null , true ) ;
 		
-		expect( o ).to.equal( {
+		expect( kfg ).to.be.a( kungFig.kfgCommon.KFG ) ;
+		
+		expect( kfg.data ).to.equal( {
 			a: 1,
 			b: 2,
 			c: 3,
@@ -783,15 +785,15 @@ describe( "KFG parse" , () => {
 				[ 'six', 'seven' ] ] ]
 		} ) ;
 		
-		//console.log( kungFig.getMeta( o ) ) ;
-		//console.log( kungFig.getMeta( o ).tags.getFirstTag( 'meta' ).content ) ;
-		expect( kungFig.getMeta( o ).tags.getFirstTag( 'meta' ).content ).to.equal( { content: "test" } ) ;
+		expect( kfg.meta.tags.getFirstTag( 'meta' ).content ).to.equal( { content: "test" } ) ;
 	} ) ;
 	
 	it( "parse a file using 4-spaces to indent" , () => {
-		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/spaces-indent.kfg' , 'utf8' ) ) ;
+		var kfg = parse( fs.readFileSync( __dirname + '/sample/kfg/spaces-indent.kfg' , 'utf8' ) , null , true ) ;
 		
-		expect( o ).to.equal( {
+		expect( kfg ).to.be.a( kungFig.kfgCommon.KFG ) ;
+		
+		expect( kfg.data ).to.equal( {
 			a: 1,
 			b: 2,
 			c: 3,
@@ -831,8 +833,7 @@ describe( "KFG parse" , () => {
 				[ 'six', 'seven' ] ] ]
 		} ) ;
 		
-		//console.log( kungFig.getMeta( o ).tags.getFirstTag( 'meta' ).content ) ;
-		expect( kungFig.getMeta( o ).tags.getFirstTag( 'meta' ).content ).to.equal( { content: "test" } ) ;
+		expect( kfg.meta.tags.getFirstTag( 'meta' ).content ).to.equal( { content: "test" } ) ;
 	} ) ;
 	
 	it( "parse ref" , () => {
@@ -1324,18 +1325,19 @@ describe( "KFG parse" , () => {
 describe( "Meta-Tag" , () => {
 	
 	it( "parse meta-tag" , () => {
-		var o ;
-		o = parse( '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\nsome: data' ) ;
+		var kfg ;
+		kfg = parse( '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\nsome: data' , null , true ) ;
+		expect( kfg ).to.be.a( kungFig.kfgCommon.KFG ) ;
 		/*
 		console.log( o ) ;
 		console.log( kungFig.getMeta( o ) ) ;
 		console.log( kungFig.getMeta( o ).tags.getTags( 'meta' )[ 0 ] ) ;
 		*/
-		expect( o ).to.equal( { some: "data" } ) ;
-		expect( kungFig.getMeta( o ).tags.getTags( 'meta' )[ 0 ].content ).to.equal( { author: "Joe Doe" , copyright: 2016 } ) ;
+		expect( kfg.data ).to.equal( { some: "data" } ) ;
+		expect( kfg.meta.tags.getTags( 'meta' )[ 0 ].content ).to.equal( { author: "Joe Doe" , copyright: 2016 } ) ;
 		
 		//console.log( stringify( o ) ) ;
-		expect( stringify( o ) ).to.be( '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\n\nsome: data\n' ) ;
+		expect( stringify( kfg.data , { meta: kfg.meta } ) ).to.be( '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\n\nsome: data\n' ) ;
 	} ) ;
 	
 	it( "stringify meta-tag" , () => {
@@ -1348,33 +1350,33 @@ describe( "Meta-Tag" , () => {
 	} ) ;
 	
 	it( "meta doctype filtering" , () => {
-		var o , kfg ;
+		var kfgStr , kfg ;
 		
-		kfg = '[[doctype supadoc]]\nsome: data' ;
+		kfgStr = '[[doctype supadoc]]\nsome: data' ;
 		
-		o = parse( kfg ) ;
-		expect( kungFig.getMeta( o ).tags.getTags( "doctype" )[ 0 ].attributes ).to.be( "supadoc" ) ;
-		expect( o ).to.equal( { some: "data" } ) ;
+		kfg = parse( kfgStr , null , true ) ;
+		expect( kfg.meta.tags.getTags( "doctype" )[ 0 ].attributes ).to.be( "supadoc" ) ;
+		expect( kfg.data ).to.equal( { some: "data" } ) ;
 		
-		o = parse( kfg , { doctype: "supadoc" } ) ;
-		expect( kungFig.getMeta( o ).tags.getTags( "doctype" )[ 0 ].attributes ).to.be( "supadoc" ) ;
-		expect( o ).to.equal( { some: "data" } ) ;
+		kfg = parse( kfgStr , { doctype: "supadoc" } , true ) ;
+		expect( kfg.meta.tags.getTags( "doctype" )[ 0 ].attributes ).to.be( "supadoc" ) ;
+		expect( kfg.data ).to.equal( { some: "data" } ) ;
 		
-		expect( () => parse( kfg , { doctype: "baddoc" } ) ).to.throw() ;
+		expect( () => parse( kfgStr , { doctype: "baddoc" } ) ).to.throw() ;
 		
-		o = parse( kfg , { doctype: [ "cooldoc" , "supadoc" ] } ) ;
-		expect( kungFig.getMeta( o ).tags.getTags( "doctype" )[ 0 ].attributes ).to.be( "supadoc" ) ;
-		expect( o ).to.equal( { some: "data" } ) ;
+		kfg = parse( kfgStr , { doctype: [ "cooldoc" , "supadoc" ] } , true ) ;
+		expect( kfg.meta.tags.getTags( "doctype" )[ 0 ].attributes ).to.be( "supadoc" ) ;
+		expect( kfg.data ).to.equal( { some: "data" } ) ;
 		
-		expect( () => parse( kfg , { doctype: [ "baddoc" , "wrongdoc" ] } ) ).to.throw() ;
+		expect( () => parse( kfgStr , { doctype: [ "baddoc" , "wrongdoc" ] } ) ).to.throw() ;
 		
-		kfg = '\nsome: data' ;
-		expect( () => parse( kfg , { doctype: "supadoc" } ) ).to.throw() ;
-		expect( () => parse( kfg , { doctype: [ "supadoc" , "cooldoc" ] } ) ).to.throw() ;
+		kfgStr = '\nsome: data' ;
+		expect( () => parse( kfgStr , { doctype: "supadoc" } ) ).to.throw() ;
+		expect( () => parse( kfgStr , { doctype: [ "supadoc" , "cooldoc" ] } ) ).to.throw() ;
 	} ) ;
 	
 	it( "parse meta-tag, with meta hook" , () => {
-		var o , hookTriggered = 0 ;
+		var kfg , hookTriggered = 0 ;
 		
 		var options = {
 			metaTagsHook: function( metaTags ) {
@@ -1384,20 +1386,13 @@ describe( "Meta-Tag" , () => {
 			}
 		} ;
 		
-		o = parse( '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\nsome: data' , options ) ;
-		
-		/*
-		console.log( o ) ;
-		console.log( kungFig.getMeta( o ) ) ;
-		console.log( kungFig.getMeta( o ).tags.getTags( 'meta' )[ 0 ] ) ;
-		*/
+		kfg = parse( '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\nsome: data' , options , true ) ;
 		
 		expect( hookTriggered ).to.be( 1 ) ;
-		expect( o ).to.equal( { some: "data" } ) ;
-		expect( kungFig.getMeta( o ).tags.getTags( 'meta' )[ 0 ].content ).to.equal( { author: "Joe Doe" , copyright: 2016 } ) ;
+		expect( kfg.data ).to.equal( { some: "data" } ) ;
+		expect( kfg.meta.tags.getTags( 'meta' )[ 0 ].content ).to.equal( { author: "Joe Doe" , copyright: 2016 } ) ;
 		
-		//console.log( stringify( o ) ) ;
-		expect( stringify( o ) ).to.be( '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\n\nsome: data\n' ) ;
+		expect( stringify( kfg.data , { meta: kfg.meta } ) ).to.be( '[[meta]]\n\tauthor: Joe Doe\n\tcopyright: 2016\n\nsome: data\n' ) ;
 	} ) ;
 	
 	it( "meta tag after body started should throw" , () => {
