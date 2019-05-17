@@ -211,11 +211,7 @@ describe( "KFG stringify" , () => {
 			'()(another strange key)': 5,
 			'()-hey': 5,
 			'~hey': 5,
-			'@@#*>': '/path/to/*/something/',
-			'@*>': '/path/to/something/',
-			'@': '/path/to/something/',
-			'@@': '/path/to/something/',
-			list: [ 'one' , 'two' , { "@@": '/path/to/something/' } ] ,
+			list: [ 'one' , 'two' ]
 		} ;
 		
 		var s = stringify( o ) ;
@@ -223,7 +219,7 @@ describe( "KFG stringify" , () => {
 		//console.log( string.escape.control( s ) ) ;
 		//console.log( parse( s ) ) ;
 		
-		expect( s ).to.be( 'attack: (+) 2\ndefense: (-) 1\ntime: (*) 0.9\ndamages: (u-ops) 1.2\n+strange key: 3\n"(another strange key)": 5\n"-hey": 5\n~hey: 5\n(#*>) @@/path/to/*/something/\n(*>) @/path/to/something/\n() @/path/to/something/\n() @@/path/to/something/\nlist:\n\t- one\n\t- two\n\t- @@/path/to/something/\n' ) ;
+		expect( s ).to.be( 'attack: (+) 2\ndefense: (-) 1\ntime: (*) 0.9\ndamages: (u-ops) 1.2\n+strange key: 3\n"(another strange key)": 5\n"-hey": 5\n~hey: 5\nlist:\n\t- one\n\t- two\n' ) ;
 		
 		// Check that the original object and the stringified/parsed object are equals:
 		expect( o ).to.equal( parse( s ) ) ;
@@ -1173,15 +1169,9 @@ describe( "KFG parse" , () => {
 			'(u-ops)damages': 1.2,
 			'()+strange key': 3,
 			'()(another strange key)': 5,
-			'@include': "path/to/include.kfg",
-			'@@mandatory include': "path/to/mandatory-include.kfg",
-			'@+include2': 'path/to/include.kfg',
-			'@(u-ops)include3': 'path/to/include.kfg',
-			'@@(u-ops)include4': 'path/to/mandatory-include.kfg',
 			'*>merge': { something: 1, 'something else': 12 },
 			'#+foreach': [1,2,3],
-			list: [ 'one' , 'two' , { '@@': 'path/to/include.kfg' } ] ,
-			'@*>': 'path/to/something',
+			list: [ 'one' , 'two' ]
 		} ) ;
 	} ) ;
 	

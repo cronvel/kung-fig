@@ -7,13 +7,6 @@ damages:(u-ops) 1.2
 "+strange key": 3
 "(another strange key)": 5
 
-include: @path/to/include.kfg
-mandatory include: @@path/to/mandatory-include.kfg
-
-include2: (+) @path/to/include.kfg
-include3: (u-ops) @path/to/include.kfg
-include4: (u-ops) @@path/to/mandatory-include.kfg
-
 merge: (*>)
 	something: 1
 	something else: 12
@@ -26,7 +19,4 @@ foreach: (#+)
 list:
 	- one
 	- two
-	- @@path/to/include.kfg
 
-# root merging
-(*>) @path/to/something
