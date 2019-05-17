@@ -164,9 +164,15 @@ describe( "xxx Dependencies (aka includes) and references" , () => {
 		} ) ;
 	} ) ;
 
-	it( "zzz should load a KFG file with a dependency that merge with existing properties" , () => {
-		expect( kungFig.load( __dirname + '/sample/dependencyMerge.kfg' ) ).to.equal( {
+	it( "yyy should load a KFG file with a dependency that merge with existing properties (after)" , () => {
+		expect( kungFig.load( __dirname + '/sample/dependencyMergeAfter.kfg' ) ).to.equal( {
 			sub: { just: "a" , simple: { test: "!" , and: "test" } , extra: "value" }
+		} ) ;
+	} ) ;
+	
+	it( "zzz should load a KFG file with a dependency that merge with existing properties (before)" , () => {
+		expect( kungFig.load( __dirname + '/sample/dependencyMergeBefore.kfg' ) ).to.equal( {
+			sub: { just: "the" , simple: { test: "?" , and: "test" } , extra: "value" }
 		} ) ;
 	} ) ;
 	
