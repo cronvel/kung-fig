@@ -1,4 +1,15 @@
 
+v0.52.0
+-------
+
+BREAKING CHANGE: heavy internal refacto
+syntax: merging dependencies does not need a tree-operator anymore
+all include-ref code have been refactored, more clean and easier to maintain
+no more KFG cache (it had bugs anyway), caching should be done by userland code
+Meta refacto, will be home to many non-data things, both for userland and internal usage (ATM: meta-tags, include-refs, in the future: source code comments)
+no more autoReducing by default
+
+
 v0.51.0
 -------
 
