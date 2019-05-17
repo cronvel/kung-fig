@@ -1,0 +1,4 @@
+sub:
+	@@merge/a.kfg
+	@@merge/b.kfg
+	@@merge/c.kfg

@@ -1,0 +1,9 @@
+sub:
+	a: will be overwritten
+	a3: A3
+	sub:
+		b: will be overwritten
+		b3: B3
+	@@merge/a.kfg
+	@@merge/b.kfg
+	@@merge/c.kfg

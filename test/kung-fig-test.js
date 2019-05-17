@@ -118,15 +118,16 @@ describe( "Loading a config" , () => {
 
 
 
-describe( "xxx Dependencies (aka includes) and references" , () => {
+describe( "Dependencies (aka includes) and references" , () => {
 	it( "when loading a file with an unexistant dependency using the '@@', it should throw" , () => {
 		expect( () => kungFig.load( __dirname + '/sample/withUnexistantInclude.kfg' ) ).to.throw() ;
 	} ) ;
 
 	it( "when loading a file with an unexistant dependency using the '@', it should not throw" , () => {
-		expect( kungFig.load( __dirname + '/sample/withUnexistantOptionalInclude.kfg' ) ).to.equal( {
+		var o = kungFig.load( __dirname + '/sample/withUnexistantOptionalInclude.kfg' ) ;
+		expect( o ).to.equal( {
 			simple: "test" ,
-			unexistant: {}
+			unexistant: null
 		} ) ;
 	} ) ;
 
@@ -164,15 +165,93 @@ describe( "xxx Dependencies (aka includes) and references" , () => {
 		} ) ;
 	} ) ;
 
-	it( "yyy should load a KFG file with a dependency that merge with existing properties (after)" , () => {
+	it( "should load a KFG file with a dependency that merge with existing properties (after)" , () => {
 		expect( kungFig.load( __dirname + '/sample/dependencyMergeAfter.kfg' ) ).to.equal( {
 			sub: { just: "a" , simple: { test: "!" , and: "test" } , extra: "value" }
 		} ) ;
 	} ) ;
 	
-	it( "zzz should load a KFG file with a dependency that merge with existing properties (before)" , () => {
+	it( "should load a KFG file with a dependency that merge with existing properties (before)" , () => {
 		expect( kungFig.load( __dirname + '/sample/dependencyMergeBefore.kfg' ) ).to.equal( {
 			sub: { just: "the" , simple: { test: "?" , and: "test" } , extra: "value" }
+		} ) ;
+	} ) ;
+	
+	it( "should load a KFG file with an overwriting sequence of dependencies" , () => {
+		expect( kungFig.load( __dirname + '/sample/dependencyMergeSequence.kfg' ) ).to.equal( {
+			sub: {
+				a: 15 ,
+				a2: 12 ,
+				sub: {
+					b: "overwrite" ,
+					b2: "two-two" ,
+					subsub: {
+						c2: false ,
+						c3: "C3" ,
+						c4: "C4"
+					}
+				}
+			}
+		} ) ;
+	} ) ;
+	
+	it( "should load a KFG file with an overwriting sequence of dependencies with local data before" , () => {
+		expect( kungFig.load( __dirname + '/sample/dependencyMergeSequenceAndLocalBefore.kfg' ) ).to.equal( {
+			sub: {
+				a: 15 ,
+				a2: 12 ,
+				a3: "A3" ,
+				sub: {
+					b: "overwrite" ,
+					b2: "two-two" ,
+					b3: "B3" ,
+					subsub: {
+						c2: false ,
+						c3: "C3" ,
+						c4: "C4"
+					}
+				}
+			}
+		} ) ;
+	} ) ;
+	
+	it( "should load a KFG file with an overwriting sequence of dependencies with local data after" , () => {
+		expect( kungFig.load( __dirname + '/sample/dependencyMergeSequenceAndLocalAfter.kfg' ) ).to.equal( {
+			sub: {
+				a: "will overwrite" ,
+				a2: 12 ,
+				a3: "A3" ,
+				sub: {
+					b: "will overwrite 2x" ,
+					b2: "two-two" ,
+					b3: "B3" ,
+					subsub: {
+						c2: false ,
+						c3: "C3" ,
+						c4: "C4"
+					}
+				}
+			}
+		} ) ;
+	} ) ;
+	
+	it( "should load a KFG file with an overwriting sequence of dependencies with local data in between" , () => {
+		expect( kungFig.load( __dirname + '/sample/dependencyMergeSequenceAndLocalBetween.kfg' ) ).to.equal( {
+			sub: {
+				a: 15 ,
+				a2: 12 ,
+				a3: "A3" ,
+				sub: {
+					b: "overwrite" ,
+					b2: "will overwrite" ,
+					b3: "B3" ,
+					subsub: {
+						c2: false ,
+						c3: "C3" ,
+						c4: "C4"
+					}
+				}
+			}
 		} ) ;
 	} ) ;
 	
@@ -373,17 +452,18 @@ describe( "xxx Dependencies (aka includes) and references" , () => {
 		} ) ;
 	} ) ;
 
-	it( "should load a KFG file with a glob+merge dependency" , () => {
+	it( "should load a KFG file with a glob+merge dependency (deprecated?)" , () => {
 		expect( kungFig.load( __dirname + '/sample/withGlobMerge.kfg' ) ).to.equal( {
-			a: "A" ,
+			a: 15 ,
 			a2: 12 ,
 			sub: {
-				b: "two" ,
+				b: "overwrite" ,
 				b2: "two-two" ,
 				subsub: {
 					c: 3 ,
-					c2: "C2" ,
-					c3: "C3"
+					c2: false ,
+					c3: "C3" ,
+					c4: "C4"
 				}
 			}
 		} ) ;

@@ -1,0 +1,9 @@
+sub:
+	@@merge/a.kfg
+	@@merge/b.kfg
+	@@merge/c.kfg
+	a: will overwrite
+	a3: A3
+	sub:
+		b: will overwrite 2x
+		b3: B3
