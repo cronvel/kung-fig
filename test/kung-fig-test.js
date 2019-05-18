@@ -159,6 +159,21 @@ describe( "Dependencies (aka includes) and references" , () => {
 		} ) ;
 	} ) ;
 	
+	it( "should load a KFG file with a dependency as a tag content" , () => {
+		expect( kungFig.load( __dirname + '/sample/dependencyAsTagContent.kfg' ) ).to.be.like( {
+			children: [
+				{ name: 'tag', content: undefined, attributes: null } ,
+				{ name: 'module', content: { just: "a" , simple: { test: "!" } } , attributes: null } ,
+				{ name: 'module', content: { just: "a" , simple: { test: "!" } } , attributes: null } ,
+				{ name: 'internal', attributes: null , content: { children: [
+					{ name: 'module', content: { just: "a" , simple: { test: "!" } } , attributes: null }
+				] } }
+			]
+		} ) ;
+	} ) ;
+
+	it( "dependency inside instance [not coded ATM]" ) ;
+	
 	it( "should load a KFG file which is a top-level dependency" , () => {
 		expect( kungFig.load( __dirname + '/sample/topLevelDependency.kfg' ) ).to.equal( {
 			"hello": "world!"

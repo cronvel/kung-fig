@@ -1,0 +1,9 @@
+
+[tag]
+[module] @@simple.kfg
+[module]
+	@@simple.kfg
+
+[internal]
+	[module] @@simple.kfg
+
