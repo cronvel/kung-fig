@@ -1,6 +1,7 @@
 sub:
-	@@simple.kfg
 	extra: value
 	just: the
 	simple:
+		test: "?"
 		and: test
+	@unexistant.kfg

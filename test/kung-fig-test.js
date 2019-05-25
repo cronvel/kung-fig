@@ -186,9 +186,21 @@ describe( "Dependencies (aka includes) and references" , () => {
 		} ) ;
 	} ) ;
 	
+	it( "should load a KFG file with a MISSING dependency that would have merged with existing properties (after)" , () => {
+		expect( kungFig.load( __dirname + '/sample/dependencyMissingMergeAfter.kfg' ) ).to.equal( {
+			sub: { just: "the" , simple: { test: "?" , and: "test" } , extra: "value" }
+		} ) ;
+	} ) ;
+	
 	it( "should load a KFG file with a dependency that merge with existing properties (before)" , () => {
 		expect( kungFig.load( __dirname + '/sample/dependencyMergeBefore.kfg' ) ).to.equal( {
-			sub: { just: "the" , simple: { test: "?" , and: "test" } , extra: "value" }
+			sub: { just: "the" , simple: { test: "!" , and: "test" } , extra: "value" }
+		} ) ;
+	} ) ;
+	
+	it( "should load a KFG file with a MISSING dependency that would have merge with existing properties (before)" , () => {
+		expect( kungFig.load( __dirname + '/sample/dependencyMissingMergeBefore.kfg' ) ).to.equal( {
+			sub: { just: "the" , simple: { and: "test" } , extra: "value" }
 		} ) ;
 	} ) ;
 	

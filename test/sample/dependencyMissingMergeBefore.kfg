@@ -1,5 +1,5 @@
 sub:
-	@@simple.kfg
+	@unexistant.kfg
 	extra: value
 	just: the
 	simple:
