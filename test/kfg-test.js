@@ -30,22 +30,22 @@
 
 
 
-var kungFig = require( '../lib/kungFig.js' ) ;
-var stringify = kungFig.stringify ;
-var parse = kungFig.parse ;
-var Ref = kungFig.Ref ;
-var TemplateSentence = kungFig.TemplateSentence ;
-var TemplateAtom = kungFig.TemplateAtom ;
-var Tag = kungFig.Tag ;
-var TagContainer = kungFig.TagContainer ;
-var OrderedObject = kungFig.OrderedObject ;
+const kungFig = require( '../lib/kungFig.js' ) ;
+const stringify = kungFig.stringify ;
+const parse = kungFig.parse ;
+const Ref = kungFig.Ref ;
+const TemplateSentence = kungFig.TemplateSentence ;
+const TemplateAtom = kungFig.TemplateAtom ;
+const Tag = kungFig.Tag ;
+const TagContainer = kungFig.TagContainer ;
+const OrderedObject = kungFig.OrderedObject ;
 
-var Babel = require( 'babel-tower' ) ;
+const Babel = require( 'babel-tower' ) ;
 
-var string = require( 'string-kit' ) ;
-var tree = require( 'tree-kit' ) ;
-var fs = require( 'fs' ) ;
-var pathModule = require( 'path' ) ;
+const string = require( 'string-kit' ) ;
+const tree = require( 'tree-kit' ) ;
+const fs = require( 'fs' ) ;
+const pathModule = require( 'path' ) ;
 
 
 
@@ -1643,17 +1643,3 @@ describe( "ExpressionTag" , () => {
 	it( "ExpressionTag stringify" ) ;
 } ) ;
 
-
-
-describe( "Historical bugs" , () => {
-	
-	it( ".saveKfg() bug with tags" , () => {
-		var content = fs.readFileSync( __dirname + '/sample/kfg/tag.kfg' , 'utf8' ) ;
-		var expected = fs.readFileSync( __dirname + '/sample/kfg/tag.expected.kfg' , 'utf8' ) ;
-		var o = parse( content ) ;
-		var s = kungFig.saveKfg( o , __dirname + '/sample/output.kfg' ) ;
-		//console.log( s ) ;
-		expect( s ).to.be( expected ) ;
-	} ) ;
-} ) ;
-	

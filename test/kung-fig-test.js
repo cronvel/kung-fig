@@ -30,10 +30,10 @@
 
 
 
-var fs = require( 'fs' ) ;
-var tree = require( 'tree-kit' ) ;
+const fs = require( 'fs' ) ;
+const tree = require( 'tree-kit' ) ;
 
-var kungFig = require( '../lib/kungFig.js' ) ;
+const kungFig = require( '../lib/kungFig.js' ) ;
 
 
 
@@ -820,3 +820,33 @@ describe( "Async file loading" , () => {
 	} ) ;
 } ) ;
 
+
+
+describe( "Historical bugs" , () => {
+	
+	it( ".saveKfg() bug with tags" , () => {
+		var content = fs.readFileSync( __dirname + '/sample/kfg/tag.kfg' , 'utf8' ) ;
+		var expected = fs.readFileSync( __dirname + '/sample/kfg/tag.expected.kfg' , 'utf8' ) ;
+		var o = kungFig.parse( content ) ;
+		var s = kungFig.saveKfg( o , __dirname + '/sample/output.kfg' ) ;
+		//console.log( s ) ;
+		expect( s ).to.be( expected ) ;
+	} ) ;
+
+	it( "array element repetition and includeRef bug" , () => {
+		var o = kungFig.load( __dirname + '/sample/elementRepetition.kfg' ) ;
+		//console.log( o ) ;
+		
+		var e1 = {
+			just: "a" ,
+			simple: {
+				test: "!"
+			}
+		} ;
+		
+		var e2 = [ "a" , "simple" , [ "test" , "!" ] ] ;
+		
+		expect( o ).to.equal( [ e1 , e1 , e2 , e2 , e2 ] ) ;
+	} ) ;
+} ) ;
+	
