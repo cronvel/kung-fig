@@ -1,6 +1,6 @@
 {
   "name": "kung-fig",
-  "version": "0.52.5",
+  "version": "0.52.6",
   "engines": {
     "node": ">=6.0.0"
   },
@@ -15,16 +15,16 @@
     "kung-fig-common": "^0.42.0",
     "kung-fig-dynamic": "^0.41.12",
     "kung-fig-dynamic-instance": "^0.42.3",
-    "kung-fig-expression": "^0.44.5",
+    "kung-fig-expression": "^0.44.6",
     "kung-fig-ref": "^0.42.5",
     "kung-fig-template": "^0.46.4",
     "kung-fig-tree-ops": "^0.45.4",
-    "seventh": "^0.7.23",
-    "string-kit": "^0.9.6",
+    "seventh": "^0.7.28",
+    "string-kit": "^0.9.12",
     "tree-kit": "^0.6.1"
   },
   "devDependencies": {
-    "babel-tower": "^0.18.2"
+    "babel-tower": "^0.18.4"
   },
   "scripts": {
     "test": "tea-time -R dot"

@@ -255,20 +255,20 @@ describe( "KFG stringify" , () => {
 	it( "stringify an object with special instances (bin, date, regex)" , () => {
 		var o = {
 			bin: Buffer.from( 'af461e0a' , 'hex' ) ,
-			date1: new Date( 123456789 ) ,
+			date1: new Date( 123456000 ) ,
 			regex1: /abc/ ,
 			array: [
 				[
-					new Date( 123456789 ) ,
+					new Date( 123456000 ) ,
 					/abc/ig ,
 				] ,
 				[
-					new Date( 123456789 ) ,
+					new Date( 123456000 ) ,
 					/abc/ig ,
 				] ,
 			] ,
 			object: {
-				date2: new Date( 123456789 ) ,
+				date2: new Date( 123456000 ) ,
 				regex2: /abc/ig ,
 			}
 		} ;
