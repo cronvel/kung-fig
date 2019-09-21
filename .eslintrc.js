@@ -6,7 +6,7 @@ module.exports = {
 		'node': true
 	} ,
 	'parserOptions': {
-		'ecmaVersion': 8
+		'ecmaVersion': 2018
 	} ,
 	'extends': [ 'eslint:recommended' ] ,
 	'rules': {
@@ -26,9 +26,10 @@ module.exports = {
 		'no-unneeded-ternary': 'error' ,
 		'no-unused-vars': 'warn' ,	// During development phase, it's boring to clean unused var since they can be used later
 		'no-lonely-if': 'error' ,
-		'no-nested-ternary': 'error' ,
+		'no-nested-ternary': 'off' ,	// Now I use the streamlined ternary operator a lot
 		'no-shadow': 'warn' ,
 		'no-shadow-restricted-names': 'error' ,
+		'require-atomic-updates': 'off' ,	// check for possible race condition on assignment, interesting but too nitpicky
 		
 		
 		
@@ -58,7 +59,10 @@ module.exports = {
 		// Indent & spaces (general)
 		'indent': [ 'error' , 'tab' , {
 			'SwitchCase': 1 ,
-			'MemberExpression': 0 ,
+			'MemberExpression': 1 ,
+		} ] ,
+		'newline-per-chained-call': [ 'error', {
+			'ignoreChainWithDepth': 2 
 		} ] ,
 		'no-multi-spaces': 'off' ,
 		'block-spacing': 'error' ,
@@ -68,7 +72,11 @@ module.exports = {
 		} ] ,
 		'no-whitespace-before-property': 'error' ,
 		'space-before-blocks': 'error' ,
-		'space-before-function-paren': [ 'error' , 'never' ] ,
+		'space-before-function-paren': [ 'error' , {
+			'anonymous': 'never',
+			'named': 'never',
+			'asyncArrow': 'always'
+		} ] ,
 		'space-infix-ops': 'error' ,
 		'space-unary-ops': [ 'error' , {
 			'words': true ,
@@ -121,8 +129,9 @@ module.exports = {
 				'minProperties': 4
 			} ,
 			'ObjectPattern' : {
+				// object destructuring assigment
 				'consistent': true ,
-				'minProperties': 6
+				'minProperties': 8
 			}
 		} ] ,
 		'object-curly-spacing': [ 'error' , 'always' ] ,
