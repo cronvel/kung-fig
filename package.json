@@ -1,6 +1,6 @@
 {
   "name": "kung-fig",
-  "version": "0.52.8",
+  "version": "0.52.9",
   "engines": {
     "node": ">=6.0.0"
   },
@@ -10,8 +10,8 @@
     "test": "test"
   },
   "dependencies": {
-    "glob": "^7.1.4",
-    "hash-kit": "^0.3.2",
+    "glob": "^7.1.6",
+    "hash-kit": "^0.3.3",
     "kung-fig-common": "^0.42.0",
     "kung-fig-dynamic": "^0.41.12",
     "kung-fig-dynamic-instance": "^0.42.3",
@@ -19,9 +19,9 @@
     "kung-fig-ref": "^0.42.5",
     "kung-fig-template": "^0.46.4",
     "kung-fig-tree-ops": "^0.45.4",
-    "seventh": "^0.7.28",
-    "string-kit": "^0.10.1",
-    "tree-kit": "^0.6.1"
+    "seventh": "^0.7.35",
+    "string-kit": "^0.11.6",
+    "tree-kit": "^0.6.2"
   },
   "devDependencies": {
     "babel-tower": "^0.18.4"
