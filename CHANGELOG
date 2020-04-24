@@ -1,4 +1,10 @@
 
+v0.53.0
+-------
+
+Maybe breaking: new [[locale]] builtin meta-tag, all template strings in a file now have a locale from its [[locale]] meta tag
+
+
 v0.52.15
 --------
 

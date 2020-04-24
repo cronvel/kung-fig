@@ -1039,7 +1039,7 @@ describe( "KFG parse" , () => {
 		expect( o.el ).to.be.like( { k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
 		expect( o.el.toString() ).to.be( 'horse' ) ;
 		
-		o2 = parse( '$> I like ${el}[n:many]!' ) ;
+		o2 = parse( '$> I like ${el}[n:++]!' ) ;
 		expect( o2.toString( o ) ).to.be( 'I like horses!' ) ;
 	} ) ;
 	*/
@@ -1067,8 +1067,8 @@ describe( "KFG parse" , () => {
 		o = parse( "el: <Atom>\n\t> horse[n?horse|horses]" ) ;
 		expect( o.el ).to.be.like( { k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
 		expect( o.el.toString() ).to.be( 'horse' ) ;
-		
-		o2 = parse( '$> I like ${el}[n:many]!' ) ;
+
+		o2 = parse( '$> I like ${el}[n:++]!' ) ;
 		expect( o2.toString( o ) ).to.be( 'I like horses!' ) ;
 	} ) ;
 	
@@ -1125,8 +1125,8 @@ describe( "KFG parse" , () => {
 					g: { m: 0 , f: 1 , n: 2 , h: 2 }
 				} ,
 				sentences: {
-					"I like ${el}[n:many]!": "J'aime les ${el}[n:many]!" ,
-					"I like ${el}[n:many/g:f]!": "J'aime les ${el}[n:many/g:f]!" ,
+					"I like ${el}[n:++]!": "J'aime ${el}[+d/a:d/n:++]!" ,
+					"I like ${el}[n:++/g:f]!": "J'aime ${el}[+d/a:d/n:++/g:f]!" ,
 				} ,
 				atoms: {
 					apple: { g:'f', "n?": [ 'pomme' , 'pommes' ] } ,
@@ -1148,14 +1148,14 @@ describe( "KFG parse" , () => {
 		
 		o.__babel = babelFr ;
 		
-		o2 = parse( '$> I like ${el}[n:many]!' ) ;
+		o2 = parse( '$> I like ${el}[n:++]!' ) ;
 		expect( o2.toString( o ) ).to.be( "J'aime les chevaux!" ) ;
 		
-		o2 = parse( '$> I like ${el}[n:many/g:f]!' ) ;
+		o2 = parse( '$> I like ${el}[n:++/g:f]!' ) ;
 		expect( o2.toString( o ) ).to.be( "J'aime les juments!" ) ;
 		
 		o.el.g = 'f' ;
-		o2 = parse( '$> I like ${el}[n:many]!' ) ;
+		o2 = parse( '$> I like ${el}[n:++]!' ) ;
 		expect( o2.toString( o ) ).to.be( "J'aime les juments!" ) ;
 	} ) ;
 	
@@ -1419,6 +1419,29 @@ describe( "Meta-Tag" , () => {
 		expect( nonIncludeHookTriggered ).to.be( 1 ) ;
 		expect( o ).to.equal( { include: { some: { more: "content"  } } , some: "content" } ) ;
 		expect( kungFig.getMeta( o ).tags.getFirstTag( 'meta' ).content ).to.be( "master" ) ;
+	} ) ;
+	
+	it( "using the [[locale]] meta-tag" , () => {
+		var o , o2 ;
+		
+		o = parse( "el: <Atom>\n\t> horse[n?horse|horses]" ) ;
+		expect( o.el ).to.be.like( { k: "horse" , alt: [ "horse" , "horses" ] , ord: ['n'] } ) ;
+		expect( o.el.toString() ).to.be( 'horse' ) ;
+
+		// It doesn't add any determiner because the language is unknown
+		o.el.l = 'en' ;
+		o2 = parse( '$> I like ${el}[+d/a:d/n:++]!' ) ;
+		expect( o2.toString( o ) ).to.be( 'I like horses!' ) ;
+
+		o.__babel = Babel.default.use( 'en' ) ;
+		
+		// Here the source has no locale, so no determiner could be used
+		o2 = parse( '$> I like ${el}[+d/a:d/n:++]!' ) ;
+		expect( o2.toString( o ) ).to.be( 'I like horses!' ) ;
+		
+		// Here the source have a locale, so it works
+		o2 = parse( '[[locale en]]\n$> I like ${el}[+d/a:d/n:++]!' ) ;
+		expect( o2.toString( o ) ).to.be( 'I like the horses!' ) ;
 	} ) ;
 } ) ;
 

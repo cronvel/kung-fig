@@ -55,9 +55,9 @@ describe( "TemplateSentence" , () => {
 
 	it( "TemplateSentence#getFinalValue()" , () => {
 		var ctx = { a: 42 } ;
-		ctx.b = Ref.create( '$a' ) ;
-		ctx.c = TemplateSentence.create( "Hello, I'm ${a}." ) ;
-		ctx.d = TemplateSentence.create( "Hello, I'm ${b}." ) ;
+		ctx.b = new Ref( '$a' ) ;
+		ctx.c = new TemplateSentence( "Hello, I'm ${a}." ) ;
+		ctx.d = new TemplateSentence( "Hello, I'm ${b}." ) ;
 		expect( ctx.c.getFinalValue( ctx ) ).to.be( "Hello, I'm 42." ) ;
 		expect( ctx.d.getFinalValue( ctx ) ).to.be( "Hello, I'm 42." ) ;
 	} ) ;
@@ -107,9 +107,9 @@ describe( "Dynamic.getRecursiveFinalValue()" , () => {
 
 		var ctx = { a: 42 } ;
 
-		ctx.b = ref1 = Ref.create( '$a' ) ;
-		ctx.c = tpl1 = TemplateSentence.create( "Hello, I'm ${a}." ) ;
-		ctx.d = tpl2 = TemplateSentence.create( "Hello, I'm ${b}." ) ;
+		ctx.b = ref1 = new Ref( '$a' ) ;
+		ctx.c = tpl1 = new TemplateSentence( "Hello, I'm ${a}." ) ;
+		ctx.d = tpl2 = new TemplateSentence( "Hello, I'm ${b}." ) ;
 
 		expect( Dynamic.getRecursiveFinalValue( ctx , ctx ) ).to.equal( {
 			a: 42 ,
@@ -135,8 +135,8 @@ describe( "Dynamic.getRecursiveFinalValue()" , () => {
 			}
 		} ;
 
-		ref1 = Ref.create( '$object' ) ;
-		ctx.object.array = Ref.create( '$array' ) ;
+		ref1 = new Ref( '$object' ) ;
+		ctx.object.array = new Ref( '$array' ) ;
 
 		v1 = Dynamic.getRecursiveFinalValue( ref1 , ctx ) ;
 

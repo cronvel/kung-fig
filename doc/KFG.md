@@ -91,7 +91,7 @@ That very first KFG implementation was written for PHP and was not publicly rele
 * The addition of **refs**, **templates** and **expressions** appears in 2016 to support creation of simple scripting language.
 * The addition of **section**, **map/dictionnary** syntax appears in 2018 to ease creation of localization langpack.
 
-The Philosophy of KFG focus on human-friendly, intuitive and natural syntax, coverage of all kind of data-model, and line-based.
+The Philosophy of KFG focuses on human-friendly, intuitive and natural syntax, coverage of all kind of data-model, and line-based.
 Each line of KFG can be parsed as a stand-alone line, except for the hierarchical reconnection.
 
 
@@ -1281,7 +1281,7 @@ with all the meta-tags.
 The hook may throw an error to interrupt the parser if there is something wrong with those meta-tags.
 
 Meta-tags are not part of the document, the parser will not return them.
-Since they are not part of the document, the *siblings should be of the same type* rule does not apply.
+Since they are not part of the document, the *siblings should be of the same type* rule does not apply here.
 
 This is correct:
 
@@ -1311,7 +1311,12 @@ Here is a list of built-in/reserved/standardized meta-tags and their roles:
   Since KFG can describe a wide range of things, and can be extended/customized (tags, operators, etc),
   it is a very important meta-tag. The `doctype` option of [`kungFig.load()`](lib.md#ref.load) can enforce some doctype,
   rejecting KFG files that does not match. It prevents us from loading random/unrelated documents in our app
-  by end-user mistake.
+  by end-user mistakes.
+  E.g.: `[[doctype spellcast/book]]`
+
+* [[locale *locale-name*]]: this meta-tag is a **built-in** meta-tag. If present, all template sentences and
+  template atoms for this whole file will be declared to be written in this locale.
+  E.g. to declare all template strings as written in english add the meta-tag: `[[locale en]]`
 
 * [[locales *path*]]: this meta-tag is not built-in, but **standardized**. It means that KungFig has
   no special treatment for this tag, and that it is the job of the userland code to process it the appropriate way
