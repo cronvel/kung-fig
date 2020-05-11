@@ -1,4 +1,10 @@
 
+v0.53.2
+-------
+
+New itrim string operators, fix a parser bug (Expression with Ref and no space to parens)
+
+
 v0.53.1
 -------
 
