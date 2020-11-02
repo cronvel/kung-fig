@@ -1,4 +1,10 @@
 
+v0.54.0
+-------
+
+Maybe breaking -- Expression -- better handling of native JS method and static: .toJs() produces vanilla JS without the operator call overhead
+
+
 v0.53.3
 -------
 
