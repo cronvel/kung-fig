@@ -1,4 +1,10 @@
 
+v0.54.2
+-------
+
+Kung-fig-expression fix: stop extending native method (minor bug since kung-fig-expression v0.45.0)
+
+
 v0.54.1
 -------
 
