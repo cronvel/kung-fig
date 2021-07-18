@@ -172,7 +172,32 @@ describe( "Dependencies (aka includes) and references" , () => {
 		} ) ;
 	} ) ;
 
-	it( "dependency inside instance [not coded ATM]" ) ;
+	it( "zzz dependency inside instance [not coded ATM]" , () => {
+		function Simple( value ) {
+			var self = Object.create( Simple.prototype ) ;
+			self.str = value ;
+			return self ;
+		}
+		
+		function Complex( value ) {
+			var self = Object.create( Complex.prototype ) ;
+			self.str = value.str ;
+			self.int = value.int ;
+			return self ;
+		}
+		
+		var options = {
+			classes: {
+				simple: Simple ,
+				complex: Complex
+			}
+		} ;
+
+		var o = kungFig.load( __dirname + '/sample/kfg/include-in-custom-instances.kfg' , options ) ;
+
+		console.log( o ) ;
+		expect( JSON.stringify( o ) ).to.be( '{"simple":{"str":"abc"},"complex":{"str":"hello","int":6}}' ) ;
+	} ) ;
 	
 	it( "should load a KFG file which is a top-level dependency" , () => {
 		expect( kungFig.load( __dirname + '/sample/topLevelDependency.kfg' ) ).to.equal( {

@@ -1217,15 +1217,13 @@ describe( "KFG parse" , () => {
 	} ) ;
 	
 	it( "parse a file with special custom instances" , () => {
-		function Simple( value )
-		{
+		function Simple( value ) {
 			var self = Object.create( Simple.prototype ) ;
 			self.str = value ;
 			return self ;
 		}
 		
-		function Complex( value )
-		{
+		function Complex( value ) {
 			var self = Object.create( Complex.prototype ) ;
 			self.str = value.str ;
 			self.int = value.int ;
