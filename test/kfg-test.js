@@ -486,10 +486,15 @@ describe( "KFG parse" , () => {
 		expect( parse( '123.456' ) ).to.be( 123.456 ) ;
 	} ) ;
 	
-	it( "parse instance at top-level" , () => {
-		expect( JSON.stringify( parse( "<Bin16> 22" ) ) ).to.be( '{"type":"Buffer","data":[34]}' ) ;
-		expect( JSON.stringify( parse( "<Object>" ) ) ).to.be( '{}' ) ;
-		expect( JSON.stringify( parse( "<Object>\na: 1" ) ) ).to.be( '{"a":1}' ) ;
+	it( "www parse instance at top-level" , () => {
+		var o ;
+		
+		o = parse( "<Bin16> 22" ) ;
+		expect( o ).to.be.a( Buffer ) ;
+		expect( [ ... o ] ).to.be.like( [ 34 ] ) ;
+
+		expect( parse( "<Object>" ) ).to.equal( {} ) ;
+		expect( parse( "<Object>\na: 1" ) ).to.equal( {a:1} ) ;
 		expect( parse( "<Map>" ) ).to.be.a( Map ) ;
 		expect( parse( "<TemplateSentence> :string" ).toString() ).to.be( ':string' ) ;
 	} ) ;

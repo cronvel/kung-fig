@@ -118,13 +118,14 @@ describe( "Loading a config" , () => {
 
 
 
-describe( "Dependencies (aka includes) and references" , () => {
+describe( "xxx Dependencies (aka includes) and references" , () => {
 	it( "when loading a file with an unexistant dependency using the '@@', it should throw" , () => {
 		expect( () => kungFig.load( __dirname + '/sample/withUnexistantInclude.kfg' ) ).to.throw() ;
 	} ) ;
 
 	it( "when loading a file with an unexistant dependency using the '@', it should not throw" , () => {
 		var o = kungFig.load( __dirname + '/sample/withUnexistantOptionalInclude.kfg' ) ;
+		//console.log( "object:" , o ) ;
 		expect( o ).to.equal( {
 			simple: "test" ,
 			unexistant: null
@@ -192,12 +193,26 @@ describe( "Dependencies (aka includes) and references" , () => {
 				complex: Complex
 			}
 		} ;
+		
+		var object ;
 
-		//var o = kungFig.load( __dirname + '/sample/kfg/custom-instances.kfg' , options ) ;
-		var o = kungFig.load( __dirname + '/sample/kfg/include-in-custom-instances.kfg' , options ) ;
+		object = kungFig.load( __dirname + '/sample/kfg/custom-instances.kfg' , options ) ;
+		expect( object ).to.be.like( {
+			simple: { str: 'abc' } ,
+			complex: { str: 'hello' , int: 6 }
+		} ) ;
+		expect( object.simple ).to.be.a( Simple ) ;
+		expect( object.complex ).to.be.a( Complex ) ;
 
-		console.log( "\n\nFINAL:" , o ) ;
-		expect( JSON.stringify( o ) ).to.be( '{"simple":{"str":"abc"},"complex":{"str":"hello","int":6}}' ) ;
+		object = kungFig.load( __dirname + '/sample/kfg/include-in-custom-instances.kfg' , options ) ;
+
+		console.log( "\n\nFINAL:" , object ) ;
+		expect( object ).to.be.like( {
+			simple: { str: 'def' } ,
+			complex: { str: 'world' , int: 21 }
+		} ) ;
+		expect( object.simple ).to.be.a( Simple ) ;
+		expect( object.complex ).to.be.a( Complex ) ;
 	} ) ;
 	
 	it( "should load a KFG file which is a top-level dependency" , () => {
