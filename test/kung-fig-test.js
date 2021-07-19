@@ -172,7 +172,7 @@ describe( "Dependencies (aka includes) and references" , () => {
 		} ) ;
 	} ) ;
 
-	it( "zzz dependency inside instance [not coded ATM]" , () => {
+	it( "zzz dependencies inside instances" , () => {
 		function Simple( value ) {
 			var self = Object.create( Simple.prototype ) ;
 			self.str = value ;
@@ -193,9 +193,10 @@ describe( "Dependencies (aka includes) and references" , () => {
 			}
 		} ;
 
+		//var o = kungFig.load( __dirname + '/sample/kfg/custom-instances.kfg' , options ) ;
 		var o = kungFig.load( __dirname + '/sample/kfg/include-in-custom-instances.kfg' , options ) ;
 
-		console.log( o ) ;
+		console.log( "\n\nFINAL:" , o ) ;
 		expect( JSON.stringify( o ) ).to.be( '{"simple":{"str":"abc"},"complex":{"str":"hello","int":6}}' ) ;
 	} ) ;
 	

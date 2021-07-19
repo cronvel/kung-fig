@@ -1,2 +1,2 @@
 simple: <simple> @@custom-instances-simple-include.kfg
-complex: <complex> @@custom-instances-complex-include.kfg
+#complex: <complex> @@custom-instances-complex-include.kfg
