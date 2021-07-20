@@ -215,14 +215,7 @@ describe( "Dependencies (aka includes) and references" , () => {
 		expect( object.complex ).to.be.a( Complex ) ;
 	} ) ;
 
-	it.next( "zzz dependencies inside instances with merge" , () => {
-		throw new Error( "Not coded" ) ;
-		function Simple( value ) {
-			var self = Object.create( Simple.prototype ) ;
-			self.str = value ;
-			return self ;
-		}
-		
+	it( "dependencies inside instances with merge" , () => {
 		function Complex( value ) {
 			var self = Object.create( Complex.prototype ) ;
 			self.str = value.str ;
@@ -232,30 +225,66 @@ describe( "Dependencies (aka includes) and references" , () => {
 		
 		var options = {
 			classes: {
-				simple: Simple ,
 				complex: Complex
 			}
 		} ;
 		
 		var object ;
 
-		object = kungFig.load( __dirname + '/sample/kfg/custom-instances.kfg' , options ) ;
+		object = kungFig.load( __dirname + '/sample/kfg/merge-include-in-custom-instances.kfg' , options ) ;
+		
 		expect( object ).to.be.like( {
-			simple: { str: 'abc' } ,
-			complex: { str: 'hello' , int: 6 }
+			"merge-after": { str: 'world' , int: 21 } ,
+			"merge-before": { str: 'some text' , int: 30 } ,
+			"partial-merge-after": { str: 'some text' , int: 21 } ,
+			"partial-merge-before": { str: 'some text' , int: 30 } ,
+			"partial-merge-before2": { str: 'some text' , int: 21 }
 		} ) ;
-		expect( object.simple ).to.be.a( Simple ) ;
-		expect( object.complex ).to.be.a( Complex ) ;
+		expect( object['merge-after'] ).to.be.a( Complex ) ;
+		expect( object['merge-before'] ).to.be.a( Complex ) ;
+		expect( object['partial-merge-after'] ).to.be.a( Complex ) ;
+		expect( object['partial-merge-before'] ).to.be.a( Complex ) ;
+		expect( object['partial-merge-before2'] ).to.be.a( Complex ) ;
+	} ) ;
+	
+	it( "dependencies inside instances with merge" , () => {
+		function Complex( value ) {
+			var self = Object.create( Complex.prototype ) ;
+			self.str = value.str ;
+			self.int = value.int ;
+			self.sub = value.sub ;
+			return self ;
+		}
+		
+		var options = {
+			classes: {
+				complex: Complex
+			}
+		} ;
+		
+		var object ;
 
-		object = kungFig.load( __dirname + '/sample/kfg/include-in-custom-instances.kfg' , options ) ;
-
-		console.log( "\n\nFINAL:" , object ) ;
+		object = kungFig.load( __dirname + '/sample/kfg/include-in-instance-in-include-in-instance.kfg' , options ) ;
+		
 		expect( object ).to.be.like( {
-			simple: { str: 'def' } ,
-			complex: { str: 'world' , int: 21 }
+			complex: {
+				str: 'bob' ,
+				int: 77 ,
+				sub: {
+					"merge-after": { str: 'world' , int: 21 } ,
+					"merge-before": { str: 'some text' , int: 30 } ,
+					"partial-merge-after": { str: 'some text' , int: 21 } ,
+					"partial-merge-before": { str: 'some text' , int: 30 } ,
+					"partial-merge-before2": { str: 'some text' , int: 21 }
+				}
+			}
 		} ) ;
-		expect( object.simple ).to.be.a( Simple ) ;
 		expect( object.complex ).to.be.a( Complex ) ;
+		expect( object.complex.sub['merge-after'] ).to.be.a( Complex ) ;
+		expect( object.complex.sub['merge-before'] ).to.be.a( Complex ) ;
+		expect( object.complex.sub['partial-merge-after'] ).to.be.a( Complex ) ;
+		expect( object.complex.sub['partial-merge-before'] ).to.be.a( Complex ) ;
+		expect( object.complex.sub['partial-merge-before2'] ).to.be.a( Complex ) ;
 	} ) ;
 	
 	it( "should load a KFG file which is a top-level dependency" , () => {

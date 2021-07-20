@@ -1,0 +1,5 @@
+complex: <complex>
+	str: bob
+	int: 77
+	sub: @@merge-include-in-custom-instances.kfg
+

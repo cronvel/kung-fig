@@ -1,0 +1,23 @@
+merge-after: <complex>
+	str: some text
+	int: 30
+	@@custom-instances-complex-include.kfg
+
+merge-before: <complex>
+	@@custom-instances-complex-include.kfg
+	str: some text
+	int: 30
+
+partial-merge-after: <complex>
+	str: some text
+	int: 30
+	@@custom-instances-complex-partial-include.kfg
+
+partial-merge-before: <complex>
+	@@custom-instances-complex-partial-include.kfg
+	str: some text
+	int: 30
+
+partial-merge-before2: <complex>
+	@@custom-instances-complex-partial-include.kfg
+	str: some text
