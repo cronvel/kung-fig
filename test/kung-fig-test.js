@@ -946,7 +946,7 @@ describe( "Historical bugs" , () => {
 		expect( s ).to.be( expected ) ;
 	} ) ;
 
-	it( "array element repetition and includeRef bug" , () => {
+	it( "zzzz array element repetition and includeRef bug" , () => {
 		var o = kungFig.load( __dirname + '/sample/elementRepetition.kfg' ) ;
 		//console.log( o ) ;
 		
