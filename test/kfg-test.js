@@ -535,17 +535,42 @@ describe( "KFG parse" , () => {
 		expect( parse( '-\n\tname: Bob\n-\n\tname: Jim\n-\n\tname: Jack' ) ).to.equal( [ { name: "Bob" } , { name: "Jim" } , { name: "Jack" } ] ) ;
 	} ) ;
 	
-	it( "parse array element repetition" , () => {
+	it( "parse array element repetition with scalars" , () => {
 		expect( parse( '- one\n-3x: two\n- three' ) ).to.equal( [ 'one' , 'two' , 'two' , 'two' , 'three' ] ) ;
 		expect( parse( '-1x: one\n-3x: two\n-2x: three' ) ).to.equal( [ 'one' , 'two' , 'two' , 'two' , 'three' , 'three' ] ) ;
 
 		expect( parse( '-\n\tname: Bob\n-3x:\n\tname: Jim\n-\n\tname: Jack' ) ).to.equal( [ { name: "Bob" } , { name: "Jim" } , { name: "Jim" } , { name: "Jim" } , { name: "Jack" } ] ) ;
 		expect( parse( '-1x:\n\tname: Bob\n-3x:\n\tname: Jim\n-2x:\n\tname: Jack' ) ).to.equal( [ { name: "Bob" } , { name: "Jim" } , { name: "Jim" } , { name: "Jim" } , { name: "Jack" } , { name: "Jack" } ] ) ;
+	} ) ;
 
+	it( "www parse array element repetition with objects" , () => {
 		var o = parse( '-\n\tname: Bob\n-3x:\n\tname: Jim\n\tpseudo: J.\n-\n\tname: Jack' ) ;
 		expect( o ).to.equal( [ { name: "Bob" } , { name: "Jim" , pseudo: "J." } , { name: "Jim" , pseudo: "J." } , { name: "Jim" , pseudo: "J." } , { name: "Jack" } ] ) ;
-		expect( o[ 1 ] ).to.be( o[ 2 ] ) ;
-		expect( o[ 1 ] ).to.be( o[ 3 ] ) ;
+		expect( o[ 1 ] ).not.to.be( o[ 2 ] ) ;
+		expect( o[ 1 ] ).not.to.be( o[ 3 ] ) ;
+		expect( o[ 2 ] ).not.to.be( o[ 3 ] ) ;
+	} ) ;
+	
+	it( "zzz parse array element repetition with instances" , () => {
+		function Custom( value ) {
+			var self = Object.create( Custom.prototype ) ;
+			Object.assign( self , value ) ;
+			return self ;
+		}
+		
+		Custom.clone = value => new Clone( value ) ;
+
+		var options = { classes: { custom: Custom } } ;
+		
+		var o = parse( '-\n\tname: Bob\n-3x: <custom>\n\tname: Jim\n\tpseudo: J.\n-\n\tname: Jack' , options ) ;
+		console.log( "final:" , o ) ;
+		expect( o ).to.be.like( [ { name: "Bob" } , { name: "Jim" , pseudo: "J." } , { name: "Jim" , pseudo: "J." } , { name: "Jim" , pseudo: "J." } , { name: "Jack" } ] ) ;
+		expect( o[ 1 ] ).to.be.a( Custom ) ;
+		expect( o[ 2 ] ).to.be.a( Custom ) ;
+		expect( o[ 3 ] ).to.be.a( Custom ) ;
+		expect( o[ 1 ] ).not.to.be( o[ 2 ] ) ;
+		expect( o[ 1 ] ).not.to.be( o[ 3 ] ) ;
+		expect( o[ 2 ] ).not.to.be( o[ 3 ] ) ;
 	} ) ;
 	
 	it( "sections as array's elements" , () => {
