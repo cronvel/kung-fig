@@ -118,7 +118,7 @@ describe( "Loading a config" , () => {
 
 
 
-describe( "xxx Dependencies (aka includes) and references" , () => {
+describe( "Dependencies (aka includes) and references" , () => {
 	it( "when loading a file with an unexistant dependency using the '@@', it should throw" , () => {
 		expect( () => kungFig.load( __dirname + '/sample/withUnexistantInclude.kfg' ) ).to.throw() ;
 	} ) ;
@@ -173,7 +173,50 @@ describe( "xxx Dependencies (aka includes) and references" , () => {
 		} ) ;
 	} ) ;
 
-	it( "zzz dependencies inside instances" , () => {
+	it( "dependencies inside instances" , () => {
+		function Simple( value ) {
+			var self = Object.create( Simple.prototype ) ;
+			self.str = value ;
+			return self ;
+		}
+		
+		function Complex( value ) {
+			var self = Object.create( Complex.prototype ) ;
+			self.str = value.str ;
+			self.int = value.int ;
+			return self ;
+		}
+		
+		var options = {
+			classes: {
+				simple: Simple ,
+				complex: Complex
+			}
+		} ;
+		
+		var object ;
+
+		object = kungFig.load( __dirname + '/sample/kfg/custom-instances.kfg' , options ) ;
+		expect( object ).to.be.like( {
+			simple: { str: 'abc' } ,
+			complex: { str: 'hello' , int: 6 }
+		} ) ;
+		expect( object.simple ).to.be.a( Simple ) ;
+		expect( object.complex ).to.be.a( Complex ) ;
+
+		object = kungFig.load( __dirname + '/sample/kfg/include-in-custom-instances.kfg' , options ) ;
+
+		console.log( "\n\nFINAL:" , object ) ;
+		expect( object ).to.be.like( {
+			simple: { str: 'def' } ,
+			complex: { str: 'world' , int: 21 }
+		} ) ;
+		expect( object.simple ).to.be.a( Simple ) ;
+		expect( object.complex ).to.be.a( Complex ) ;
+	} ) ;
+
+	it.next( "zzz dependencies inside instances with merge" , () => {
+		throw new Error( "Not coded" ) ;
 		function Simple( value ) {
 			var self = Object.create( Simple.prototype ) ;
 			self.str = value ;

@@ -295,16 +295,13 @@ describe( "KFG stringify" , () => {
 	} ) ;
 	
 	it( "stringify an object with special custom instances" , () => {
-		
-		function Simple( value )
-		{
+		function Simple( value ) {
 			var self = Object.create( Simple.prototype ) ;
 			self.str = value ;
 			return self ;
 		}
 		
-		function Complex( value )
-		{
+		function Complex( value ) {
 			var self = Object.create( Complex.prototype ) ;
 			self.str = value.str ;
 			self.int = value.int ;
@@ -486,7 +483,7 @@ describe( "KFG parse" , () => {
 		expect( parse( '123.456' ) ).to.be( 123.456 ) ;
 	} ) ;
 	
-	it( "www parse instance at top-level" , () => {
+	it( "parse instance at top-level" , () => {
 		var o ;
 		
 		o = parse( "<Bin16> 22" ) ;
@@ -1245,19 +1242,64 @@ describe( "KFG parse" , () => {
 		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/custom-instances.kfg' , 'utf8' ) , options ) ;
 		
 		//console.log( o ) ;
-		expect( JSON.stringify( o ) ).to.be( '{"simple":{"str":"abc"},"complex":{"str":"hello","int":6}}' ) ;
+		expect( o ).to.be.like( {simple:{str:"abc"},complex:{str:"hello",int:6}} ) ;
+		expect( o.simple ).to.be.a( Simple ) ;
+		expect( o.complex ).to.be.a( Complex ) ;
+	} ) ;
+	
+	it( "parse instances inside instances" , () => {
+		function Simple( value ) {
+			var self = Object.create( Simple.prototype ) ;
+			self.str = value ;
+			return self ;
+		}
+		
+		function Complex( value ) {
+			var self = Object.create( Complex.prototype ) ;
+			self.str = value.str ;
+			self.int = value.int ;
+			self.sub = value.sub ;
+			return self ;
+		}
+		
+		var options = {
+			classes: {
+				simple: Simple ,
+				complex: Complex
+			}
+		} ;
+		
+		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/instances-in-instances.kfg' , 'utf8' ) , options ) ;
+		
+		expect( o ).to.be.like( {
+			simple: { str: "abc" } ,
+			complex: {
+				str: "hello" ,
+				int:6 ,
+				sub: {
+					s2: { str: "def" } ,
+					c2: { str: "world" , int: 21 , sub: { str: "ghi" } }
+				}
+			}
+		} ) ;
+		expect( o.simple ).to.be.a( Simple ) ;
+		expect( o.complex ).to.be.a( Complex ) ;
+		expect( o.complex.sub ).to.be.an( Object ) ;
+		expect( o.complex.sub.s2 ).to.be.a( Simple ) ;
+		expect( o.complex.sub.c2 ).to.be.a( Complex ) ;
+		expect( o.complex.sub.c2.sub ).to.be.a( Simple ) ;
 	} ) ;
 	
 	it( "parse tags" , () => {
-		expect( JSON.stringify( parse( '[tag]' ) ) ).to.be( '{"children":[{"name":"tag","attributes":null}]}' ) ;
-		expect( JSON.stringify( parse( '[tag] text' ) ) ).to.be( '{"children":[{"name":"tag","content":"text","attributes":null}]}' ) ;
-		expect( JSON.stringify( parse( '[tag] "text"' ) ) ).to.be( '{"children":[{"name":"tag","content":"text","attributes":null}]}' ) ;
-		expect( JSON.stringify( parse( '[tag] > text' ) ) ).to.be( '{"children":[{"name":"tag","content":"text","attributes":null}]}' ) ;
-		expect( JSON.stringify( parse( '[tag]\n\t> text' ) ) ).to.be( '{"children":[{"name":"tag","content":"text","attributes":null}]}' ) ;
-		expect( JSON.stringify( parse( '[tag] true' ) ) ).to.be( '{"children":[{"name":"tag","content":true,"attributes":null}]}' ) ;
-		expect( JSON.stringify( parse( '[tag] 123' ) ) ).to.be( '{"children":[{"name":"tag","content":123,"attributes":null}]}' ) ;
-		expect( JSON.stringify( parse( '[tag] <Object>' ) ) ).to.be( '{"children":[{"name":"tag","content":{},"attributes":null}]}' ) ;
-		expect( JSON.stringify( parse( '[tag] <Object>\n\ta: 1\n\tb: 2' ) ) ).to.be( '{"children":[{"name":"tag","content":{"a":1,"b":2},"attributes":null}]}' ) ;
+		expect( parse( '[tag]' ) ).to.be.like( {children:[{name:"tag",attributes:null}]} ) ;
+		expect( parse( '[tag] text' ) ).to.be.like( {children:[{name:"tag",content:"text",attributes:null}]} ) ;
+		expect( parse( '[tag] "text"' ) ).to.be.like( {children:[{name:"tag",content:"text",attributes:null}]} ) ;
+		expect( parse( '[tag] > text' ) ).to.be.like( {children:[{name:"tag",content:"text",attributes:null}]} ) ;
+		expect( parse( '[tag]\n\t> text' ) ).to.be.like( {children:[{name:"tag",content:"text",attributes:null}]} ) ;
+		expect( parse( '[tag] true' ) ).to.be.like( {children:[{name:"tag",content:true,attributes:null}]} ) ;
+		expect( parse( '[tag] 123' ) ).to.be.like( {children:[{name:"tag",content:123,attributes:null}]} ) ;
+		expect( parse( '[tag] <Object>' ) ).to.be.like( {children:[{name:"tag",content:{},attributes:null}]} ) ;
+		expect( parse( '[tag] <Object>\n\ta: 1\n\tb: 2' ) ).to.be.like( {children:[{name:"tag",content:{a:1,b:2},attributes:null}]} ) ;
 	} ) ;
 	
 	it( "parse a file containing tags" , () => {

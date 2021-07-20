@@ -1,0 +1,13 @@
+
+simple: <simple> abc
+
+complex: <complex>
+	str: hello
+	int: 6
+	sub: <object>
+		s2: <simple> def
+		c2: <complex>
+			str: world
+			int: 21
+			sub: <simple> ghi
+
