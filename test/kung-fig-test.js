@@ -948,7 +948,7 @@ describe( "Historical bugs" , () => {
 
 	it( "zzzz array element repetition and includeRef bug" , () => {
 		var o = kungFig.load( __dirname + '/sample/elementRepetition.kfg' ) ;
-		//console.log( o ) ;
+		console.log( "FINAL:" , o ) ;
 		
 		var e1 = {
 			just: "a" ,
