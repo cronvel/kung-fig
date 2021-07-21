@@ -571,6 +571,20 @@ describe( "KFG parse" , () => {
 		expect( o[ 1 ] ).not.to.be( o[ 2 ] ) ;
 		expect( o[ 1 ] ).not.to.be( o[ 3 ] ) ;
 		expect( o[ 2 ] ).not.to.be( o[ 3 ] ) ;
+
+		// Repetition in repetition
+		o = parse( '-\n\tname: Bob\n-3x:\n\t-2x: <custom>\n\t\tname: Jim\n\t\tpseudo: J.\n-\n\tname: Jack' , options ) ;
+		console.log( "final:" , o ) ;
+		expect( o ).to.be.like( [ { name: "Bob" } , [ { name: "Jim" , pseudo: "J." } , { name: "Jim" , pseudo: "J." } ] , [ { name: "Jim" , pseudo: "J." } , { name: "Jim" , pseudo: "J." } ] , [ { name: "Jim" , pseudo: "J." } , { name: "Jim" , pseudo: "J." } ] , { name: "Jack" } ] ) ;
+		
+		// Check that they are all different
+		var instances = [ o[ 1 ][ 0 ] , o[ 1 ][ 1 ] , o[ 2 ][ 0 ] , o[ 2 ][ 1 ] , o[ 3 ][ 0 ] , o[ 3 ][ 1 ] ] ;
+		for ( let i = 0 ; i < instances.length ; i ++ ) {
+			expect( instances[ i ] ).to.be.a( Custom ) ;
+			for ( let j = i + 1 ; j < instances.length ; j ++ ) {
+				expect( instances[ i ] ).not.to.be( instances[ j ] ) ;
+			}
+		}
 	} ) ;
 	
 	it( "sections as array's elements" , () => {
