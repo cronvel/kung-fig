@@ -551,7 +551,7 @@ describe( "KFG parse" , () => {
 		expect( o[ 2 ] ).not.to.be( o[ 3 ] ) ;
 	} ) ;
 	
-	it( "zzz parse array element repetition with instances" , () => {
+	it( "parse array element repetition with instances" , () => {
 		function Custom( value ) {
 			var self = Object.create( Custom.prototype ) ;
 			Object.assign( self , value ) ;
@@ -563,28 +563,46 @@ describe( "KFG parse" , () => {
 		var options = { classes: { custom: Custom } } ;
 		
 		var o = parse( '-\n\tname: Bob\n-3x: <custom>\n\tname: Jim\n\tpseudo: J.\n-\n\tname: Jack' , options ) ;
-		console.log( "final:" , o ) ;
 		expect( o ).to.be.like( [ { name: "Bob" } , { name: "Jim" , pseudo: "J." } , { name: "Jim" , pseudo: "J." } , { name: "Jim" , pseudo: "J." } , { name: "Jack" } ] ) ;
-		expect( o[ 1 ] ).to.be.a( Custom ) ;
-		expect( o[ 2 ] ).to.be.a( Custom ) ;
-		expect( o[ 3 ] ).to.be.a( Custom ) ;
-		expect( o[ 1 ] ).not.to.be( o[ 2 ] ) ;
-		expect( o[ 1 ] ).not.to.be( o[ 3 ] ) ;
-		expect( o[ 2 ] ).not.to.be( o[ 3 ] ) ;
+		expect.each( o.slice( 1 , 4 ) ).to.be.a( Custom ) ;
+		expect( o.slice( 1 , 4 ) ).to.only.contain.unique.values() ;
 
 		// Repetition in repetition
 		o = parse( '-\n\tname: Bob\n-3x:\n\t-2x: <custom>\n\t\tname: Jim\n\t\tpseudo: J.\n-\n\tname: Jack' , options ) ;
-		console.log( "final:" , o ) ;
 		expect( o ).to.be.like( [ { name: "Bob" } , [ { name: "Jim" , pseudo: "J." } , { name: "Jim" , pseudo: "J." } ] , [ { name: "Jim" , pseudo: "J." } , { name: "Jim" , pseudo: "J." } ] , [ { name: "Jim" , pseudo: "J." } , { name: "Jim" , pseudo: "J." } ] , { name: "Jack" } ] ) ;
 		
 		// Check that they are all different
 		var instances = [ o[ 1 ][ 0 ] , o[ 1 ][ 1 ] , o[ 2 ][ 0 ] , o[ 2 ][ 1 ] , o[ 3 ][ 0 ] , o[ 3 ][ 1 ] ] ;
-		for ( let i = 0 ; i < instances.length ; i ++ ) {
-			expect( instances[ i ] ).to.be.a( Custom ) ;
-			for ( let j = i + 1 ; j < instances.length ; j ++ ) {
-				expect( instances[ i ] ).not.to.be( instances[ j ] ) ;
-			}
-		}
+		expect( instances ).to.only.contain.unique.values() ;
+	} ) ;
+
+	it( "element repetition should clone OrderedObject" , () => {
+		var o = parse( '-3x: <OrderedObject>\n\ta: Bob\n\tb: Jim\n\tc: Jack' ) ;
+		console.log("final:" , o ) ;
+		expect( o ).to.be.like( [ { a: "Bob" , b: "Jim" , c: "Jack" } , { a: "Bob" , b: "Jim" , c: "Jack" } , { a: "Bob" , b: "Jim" , c: "Jack" } ] ) ;
+		expect.each( o ).to.be.an( OrderedObject ) ;
+		expect( o ).to.only.contain.unique.values() ;
+
+		// Repetition in repetition
+		o = parse( '-3x:\n\t-2x: <OrderedObject>\n\t\ta: Bob\n\t\tb: Jim\n\t\tc: Jack' ) ;
+		console.log( "final:" , o ) ;
+		expect( o ).to.be.like( [
+			[ { a: "Bob" , b: "Jim" , c: "Jack" } , { a: "Bob" , b: "Jim" , c: "Jack" } ] ,
+			[ { a: "Bob" , b: "Jim" , c: "Jack" } , { a: "Bob" , b: "Jim" , c: "Jack" } ] ,
+			[ { a: "Bob" , b: "Jim" , c: "Jack" } , { a: "Bob" , b: "Jim" , c: "Jack" } ]
+		] ) ;
+		var oos = [ o[ 0 ][ 0 ] , o[ 0 ][ 1 ] , o[ 1 ][ 0 ] , o[ 1 ][ 1 ] , o[ 2 ][ 0 ] , o[ 2 ][ 1 ] ] ;
+		expect.each( oos ).to.be.an( OrderedObject ) ;
+		expect( oos ).to.only.contain.unique.values() ;
+
+		// Sub-objects
+		o = parse( '-3x: <OrderedObject>\n\ta: Bob\n\tb: Jim\n\tsub:\n\t\tc: Jack\n\t\td: Joe' ) ;
+		//o = parse( '-3x: \n\ta: Bob\n\tb: Jim\n\tsub:\n\t\tc: Jack\n\t\td: Joe' ) ;
+		console.log("final:" , o ) ;
+		expect( o ).to.be.like( [ { a: "Bob" , b: "Jim" , sub: { _index: 2 , c: "Jack" , d: "Joe" } } , { a: "Bob" , b: "Jim" , sub: { _index: 2 , c: "Jack" , d: "Joe" } } , { a: "Bob" , b: "Jim" , sub: { _index: 2 , c: "Jack" , d: "Joe" } } ] ) ;
+		expect.each( o ).to.be.an( OrderedObject ) ;
+		expect( o ).to.only.contain.unique.values() ;
+		expect( o.map( o => o.sub ) ).to.only.contain.unique.values() ;
 	} ) ;
 	
 	it( "sections as array's elements" , () => {

@@ -946,9 +946,8 @@ describe( "Historical bugs" , () => {
 		expect( s ).to.be( expected ) ;
 	} ) ;
 
-	it( "zzzz array element repetition and includeRef bug" , () => {
+	it( "array element repetition and includeRef bug" , () => {
 		var o = kungFig.load( __dirname + '/sample/elementRepetition.kfg' ) ;
-		console.log( "FINAL:" , o ) ;
 		
 		var e1 = {
 			just: "a" ,
@@ -960,6 +959,19 @@ describe( "Historical bugs" , () => {
 		var e2 = [ "a" , "simple" , [ "test" , "!" ] ] ;
 		
 		expect( o ).to.equal( [ e1 , e1 , e2 , e2 , e2 ] ) ;
+
+		o = kungFig.load( __dirname + '/sample/elementRepetitionInRepetition.kfg' ) ;
+		
+		var e1 = {
+			just: "a" ,
+			simple: {
+				test: "!"
+			}
+		} ;
+		
+		var e2 = [ "a" , "simple" , [ "test" , "!" ] ] ;
+		
+		expect( o ).to.equal( [ [ e1 , e1 , e1 , e2 , e2 ] , [ e1 , e1 , e1 , e2 , e2 ] ] ) ;
 	} ) ;
 } ) ;
 	
