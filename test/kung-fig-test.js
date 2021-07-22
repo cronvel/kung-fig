@@ -591,23 +591,6 @@ describe( "Dependencies (aka includes) and references" , () => {
 		} ) ;
 	} ) ;
 
-	it( "should load a KFG file with a glob+merge dependency (deprecated?)" , () => {
-		expect( kungFig.load( __dirname + '/sample/withGlobMerge.kfg' ) ).to.equal( {
-			a: 15 ,
-			a2: 12 ,
-			sub: {
-				b: "overwrite" ,
-				b2: "two-two" ,
-				subsub: {
-					c: 3 ,
-					c2: false ,
-					c3: "C3" ,
-					c4: "C4"
-				}
-			}
-		} ) ;
-	} ) ;
-
 	it( "should load flawlessly a config which is an array with simple includes" , () => {
 		var o = kungFig.load( __dirname + '/sample/simpleArrayRef.kfg' ) ;
 		//console.log( JSON.stringify( o , null , '  ' ) ) ;
@@ -707,10 +690,11 @@ describe( "Dependencies (aka includes) and references" , () => {
 
 		o = kungFig.load( __dirname + '/sample/withCircularIncludesArray.kfg' ) ;
 		//console.log( o ) ;
-		str = kungFig.saveJson( o ) ;
-		//console.log( str ) ;
-		//console.log( str.replace( /\n/g , () => '\\n' ) ) ;
-		expect( str ).to.be( '[\n  "world!",\n  [\n    "data",\n    {\n      "@@": "#[2]"\n    }\n  ],\n  [\n    "data",\n    {\n      "@@": "#[1]"\n    }\n  ]\n]' ) ;
+		str = kungFig.saveKFG( o ) ;
+		//console.log( "Final:" , str ) ;
+		console.log( str.replace( /\n/g , () => '\\n' ).replace( /\t/g , () => '\\t' ) ) ;
+		//expect( str ).to.be( '[\n  "world!",\n  [\n    "data",\n    {\n      "@@": "#[2]"\n    }\n  ],\n  [\n    "data",\n    {\n      "@@": "#[1]"\n    }\n  ]\n]' ) ;
+		expect( str ).to.be( '- world!\n-\t- data\n\t- @#[2]\n-\t- data\n\t- @#[1]\n' ) ;
 	} ) ;
 
 	it( "recursive parent search with fixed part (i.e.: .../ in the middle of the path)" ) ;
