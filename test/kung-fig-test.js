@@ -206,7 +206,6 @@ describe( "Dependencies (aka includes) and references" , () => {
 
 		object = kungFig.load( __dirname + '/sample/kfg/include-in-custom-instances.kfg' , options ) ;
 
-		console.log( "\n\nFINAL:" , object ) ;
 		expect( object ).to.be.like( {
 			simple: { str: 'def' } ,
 			complex: { str: 'world' , int: 21 }

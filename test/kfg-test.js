@@ -543,7 +543,7 @@ describe( "KFG parse" , () => {
 		expect( parse( '-1x:\n\tname: Bob\n-3x:\n\tname: Jim\n-2x:\n\tname: Jack' ) ).to.equal( [ { name: "Bob" } , { name: "Jim" } , { name: "Jim" } , { name: "Jim" } , { name: "Jack" } , { name: "Jack" } ] ) ;
 	} ) ;
 
-	it( "www parse array element repetition with objects" , () => {
+	it( "parse array element repetition with objects" , () => {
 		var o = parse( '-\n\tname: Bob\n-3x:\n\tname: Jim\n\tpseudo: J.\n-\n\tname: Jack' ) ;
 		expect( o ).to.equal( [ { name: "Bob" } , { name: "Jim" , pseudo: "J." } , { name: "Jim" , pseudo: "J." } , { name: "Jim" , pseudo: "J." } , { name: "Jack" } ] ) ;
 		expect( o[ 1 ] ).not.to.be( o[ 2 ] ) ;
@@ -578,14 +578,12 @@ describe( "KFG parse" , () => {
 
 	it( "element repetition should clone OrderedObject" , () => {
 		var o = parse( '-3x: <OrderedObject>\n\ta: Bob\n\tb: Jim\n\tc: Jack' ) ;
-		console.log("final:" , o ) ;
 		expect( o ).to.be.like( [ { a: "Bob" , b: "Jim" , c: "Jack" } , { a: "Bob" , b: "Jim" , c: "Jack" } , { a: "Bob" , b: "Jim" , c: "Jack" } ] ) ;
 		expect.each( o ).to.be.an( OrderedObject ) ;
 		expect( o ).to.only.contain.unique.values() ;
 
 		// Repetition in repetition
 		o = parse( '-3x:\n\t-2x: <OrderedObject>\n\t\ta: Bob\n\t\tb: Jim\n\t\tc: Jack' ) ;
-		console.log( "final:" , o ) ;
 		expect( o ).to.be.like( [
 			[ { a: "Bob" , b: "Jim" , c: "Jack" } , { a: "Bob" , b: "Jim" , c: "Jack" } ] ,
 			[ { a: "Bob" , b: "Jim" , c: "Jack" } , { a: "Bob" , b: "Jim" , c: "Jack" } ] ,
@@ -598,7 +596,6 @@ describe( "KFG parse" , () => {
 		// Sub-objects
 		o = parse( '-3x: <OrderedObject>\n\ta: Bob\n\tb: Jim\n\tsub:\n\t\tc: Jack\n\t\td: Joe' ) ;
 		//o = parse( '-3x: \n\ta: Bob\n\tb: Jim\n\tsub:\n\t\tc: Jack\n\t\td: Joe' ) ;
-		console.log("final:" , o ) ;
 		expect( o ).to.be.like( [ { a: "Bob" , b: "Jim" , sub: { _index: 2 , c: "Jack" , d: "Joe" } } , { a: "Bob" , b: "Jim" , sub: { _index: 2 , c: "Jack" , d: "Joe" } } , { a: "Bob" , b: "Jim" , sub: { _index: 2 , c: "Jack" , d: "Joe" } } ] ) ;
 		expect.each( o ).to.be.an( OrderedObject ) ;
 		expect( o ).to.only.contain.unique.values() ;
