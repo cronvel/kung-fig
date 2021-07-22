@@ -1765,3 +1765,19 @@ describe( "ExpressionTag" , () => {
 	it( "ExpressionTag stringify" ) ;
 } ) ;
 
+
+
+describe( "Stats Modifiers" , () => {
+
+	it( "zzz should parse a StatsTable" , () => {
+		var o = parse( '<StatsTable>\nstrength: 12\ndexterity: 15\nhp: 20\n' ) ;
+		console.log( "final:" , o ) ;
+	} ) ;
+
+	it( "zzz should parse a ModifersTable" , () => {
+		var o = parse( '<ModifiersTable>\nid: staff\nstrength: (+) 5\ndexterity: (*) 0.8\n' ) ;
+		console.log( "final:" , o ) ;
+		console.log( "final:" , o.strength.plus ) ;
+	} ) ;
+} ) ;
+

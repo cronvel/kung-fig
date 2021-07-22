@@ -35,5 +35,5 @@ require( 'kung-fig-dynamic/test/dynamic-test.js' ) ;
 require( 'kung-fig-ref/test/ref-test.js' ) ;
 require( 'kung-fig-expression/test/expression-test.js' ) ;
 require( 'kung-fig-template/test/template-test.js' ) ;
-require( 'kung-fig-tree-ops/test/tree-ops-test.js' ) ;
+require( 'stats-modifiers/test/stats-modifiers-test.js' ) ;
 
