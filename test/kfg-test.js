@@ -201,57 +201,6 @@ describe( "KFG stringify" , () => {
 	
 	it( "stringify applicable templates" ) ;
 	
-	it( "stringify an object with operators" , () => {
-		var o = {
-			'+attack': 2,
-			'-defense': 1,
-			'*time': 0.9,
-			'(u-ops)damages': 1.2,
-			'()+strange key': 3,
-			'()(another strange key)': 5,
-			'()-hey': 5,
-			'~hey': 5,
-			list: [ 'one' , 'two' ]
-		} ;
-		
-		var s = stringify( o ) ;
-		//console.log( s ) ;
-		//console.log( string.escape.control( s ) ) ;
-		//console.log( parse( s ) ) ;
-		
-		expect( s ).to.be( 'attack: (+) 2\ndefense: (-) 1\ntime: (*) 0.9\ndamages: (u-ops) 1.2\n+strange key: 3\n"(another strange key)": 5\n"-hey": 5\n~hey: 5\nlist:\n\t- one\n\t- two\n' ) ;
-		
-		// Check that the original object and the stringified/parsed object are equals:
-		expect( o ).to.equal( parse( s ) ) ;
-	} ) ;
-	
-	it( "stringify an object, turning off operators" , () => {
-		var o = {
-			'+attack': 2,
-			'-defense': 1,
-			'*time': 0.9,
-			'(u-ops)damages': 1.2,
-			'()+strange key': 3,
-			'()(another strange key)': 5,
-			'()-hey': 5,
-			'~hey': 5,
-			'@@#*>': '/path/to/*/something/',
-			'@*>': '/path/to/something/',
-			'@': '/path/to/something/',
-			'@@': '/path/to/something/',
-			list: [ 'one' , 'two' , { "@@": '/path/to/something/' } ] ,
-		} ;
-		
-		var s = stringify( o , { hasOperators: false } ) ;
-		
-		expect( s ).to.be( '+attack: 2\n"-defense": 1\n*time: 0.9\n"(u-ops)damages": 1.2\n"()+strange key": 3\n"()(another strange key)": 5\n"()-hey": 5\n~hey: 5\n"@@#*>": /path/to/*/something/\n"@*>": /path/to/something/\n"@": /path/to/something/\n"@@": /path/to/something/\nlist:\n\t- one\n\t- two\n\t-\t"@@": /path/to/something/\n' ) ;
-		
-		// There is no 'hasOperators' options for the parser, so we can't check that part ATM
-		
-		// Check that the original object and the stringified/parsed object are equals:
-		//expect( o ).to.equal( parse( s ) ) ;
-	} ) ;
-	
 	it( "stringify an object with special instances (bin, date, regex)" , () => {
 		var o = {
 			bin: Buffer.from( 'af461e0a' , 'hex' ) ,
@@ -1215,22 +1164,6 @@ describe( "KFG parse" , () => {
 		expect( o2.toString( o ) ).to.be( "J'aime les juments!" ) ;
 	} ) ;
 	
-	it( "parse a file with operators" , () => {
-		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/ops.kfg' , 'utf8' ) ) ;
-		
-		expect( o ).to.equal( {
-			'+attack': 2,
-			'+defense': -1,
-			'*time': 0.9,
-			'(u-ops)damages': 1.2,
-			'()+strange key': 3,
-			'()(another strange key)': 5,
-			'*>merge': { something: 1, 'something else': 12 },
-			'#+foreach': [1,2,3],
-			list: [ 'one' , 'two' ]
-		} ) ;
-	} ) ;
-	
 	it( "parse a file with special instances (json, bin, date, regex)" , () => {
 		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/instances.kfg' , 'utf8' ) ) ;
 		
@@ -1769,15 +1702,30 @@ describe( "ExpressionTag" , () => {
 
 describe( "Stats Modifiers" , () => {
 
-	it( "zzz should parse a StatsTable" , () => {
+	it( "should parse a StatsTable" , () => {
 		var o = parse( '<StatsTable>\nstrength: 12\ndexterity: 15\nhp: 20\n' ) ;
-		console.log( "final:" , o ) ;
+		//console.log( "final:" , o ) ;
+		expect( o.strength.base ).to.be( 12 ) ;
+		expect( o.strength.actual ).to.be( 12 ) ;
+		expect( o.dexterity.base ).to.be( 15 ) ;
+		expect( o.dexterity.actual ).to.be( 15 ) ;
+		expect( o.hp.base ).to.be( 20 ) ;
+		expect( o.hp.actual ).to.be( 20 ) ;
 	} ) ;
 
-	it( "zzz should parse a ModifersTable" , () => {
+	it( "should parse a ModifiersTable" , () => {
 		var o = parse( '<ModifiersTable>\nid: staff\nstrength: (+) 5\ndexterity: (*) 0.8\n' ) ;
-		console.log( "final:" , o ) ;
-		console.log( "final:" , o.strength.plus ) ;
+		//console.log( "final:" , o ) ;
+		//console.log( "final:" , o.strength.plus ) ;
+		expect( o.strength.plus.operand ).to.be( 5 ) ;
+		expect( o.dexterity.multiply.operand ).to.be( 0.8 ) ;
+
+		o = parse( '<ModifiersTable>\nid: staff\nstrength: (+) 5\ndexterity:\n\t- (*) 0.8\n\t- (-) 2\n' ) ;
+		//console.log( "final:" , o ) ;
+		//console.log( "final:" , o.dexterity.plus ) ;
+		expect( o.strength.plus.operand ).to.be( 5 ) ;
+		expect( o.dexterity.multiply.operand ).to.be( 0.8 ) ;
+		expect( o.dexterity.plus.operand ).to.be( -2 ) ;
 	} ) ;
 } ) ;
 

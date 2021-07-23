@@ -52,7 +52,7 @@ describe( "Loading a config" , () => {
 	} ) ;
 
 	it( "should load a small KFG file without dependency" , () => {
-		expect( kungFig.load( __dirname + '/sample/kfg/katana.kfg' ) ).to.equal( {
+		expect( kungFig.load( __dirname + '/sample/kfg/katana.kfg' ) ).to.be.like( {
 			class: 'katana' ,
 			generic: 'saber' ,
 			hands: 2 ,
@@ -60,14 +60,14 @@ describe( "Loading a config" , () => {
 			description: 'This is a wonderful katana with a blueish blade!\nThis is a two-handed weapon.' ,
 			durability: 24 ,
 			melee: {
-				'+toHit': -2 ,
-				'+attack': 6 ,
-				'*AT': 12 ,
-				'+reach': 7 ,
+				toHit: { operator: '+' , operand: -2 } ,
+				attack: { operator: '+' , operand: 6 } ,
+				AT: { operator: '*' , operand: 12 } ,
+				reach: { operator: '+' , operand: 7 } ,
 				size: 4 ,
-				'+power': 3 ,
+				power: { operator: '+' , operand: 3 } ,
 				damages: [
-					{ type: 'cutting' , '+damage': 14 } ,
+					{ type: 'cutting' , damage: { operator: '+' , operand: 14 } } ,
 					{ type: 'fire' , damage: 10 }
 				]
 			}
@@ -88,26 +88,6 @@ describe( "Loading a config" , () => {
 	it( "should load a simple JSON file without dependency, which is an array" , () => {
 		expect( kungFig.load( __dirname + '/sample/simpleArray.kfg' ) ).to.equal(
 			[ 'a' , 'simple' , [ 'test' , '!' ] ]
-		) ;
-	} ) ;
-
-
-	it( "when loading a file, all Tree-Ops should be reduced" , () => {
-		expect( kungFig.load( __dirname + '/sample/withTreeOps.kfg' ) ).to.equal(
-			{
-				simple: "test" ,
-				int: 7
-			}
-		) ;
-	} ) ;
-
-	it( "when loading a file and explicitly turning the 'reduce' option off, Tree Operations should not be reduced" , () => {
-		expect( kungFig.load( __dirname + '/sample/withTreeOps.kfg' , { reduce: false } ) ).to.equal(
-			{
-				simple: "test" ,
-				int: 5 ,
-				"+int": 2
-			}
 		) ;
 	} ) ;
 
@@ -694,7 +674,7 @@ describe( "Dependencies (aka includes) and references" , () => {
 		//console.log( "Final:" , str ) ;
 		console.log( str.replace( /\n/g , () => '\\n' ).replace( /\t/g , () => '\\t' ) ) ;
 		//expect( str ).to.be( '[\n  "world!",\n  [\n    "data",\n    {\n      "@@": "#[2]"\n    }\n  ],\n  [\n    "data",\n    {\n      "@@": "#[1]"\n    }\n  ]\n]' ) ;
-		expect( str ).to.be( '- world!\n-\t- data\n\t- @#[2]\n-\t- data\n\t- @#[1]\n' ) ;
+		expect( str ).to.be( '- world!\n-\t- data\n\t- @@#[2]\n-\t- data\n\t- @@#[1]\n' ) ;
 	} ) ;
 
 	it( "recursive parent search with fixed part (i.e.: .../ in the middle of the path)" ) ;
@@ -737,7 +717,7 @@ describe( "Saving a config" , () => {
 
 		//console.log( kungFig.saveJson( conf ).replace( /\n/g , () => '\\n' ).replace( /\t/g , () => '\\t' ) ) ;
 		//console.log( kungFig.saveKfg( conf ).replace( /\n/g , () => '\\n' ).replace( /\t/g , () => '\\t' ) ) ;
-		expect( kungFig.saveJson( conf ) ).to.be( '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!",\n    "@@circular": "#"\n  }\n}' ) ;
+		//expect( kungFig.saveJson( conf ) ).to.be( '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!",\n    "@@circular": "#"\n  }\n}' ) ;
 		expect( kungFig.saveKfg( conf ) ).to.be( 'a: Haha!\nb: Bee!\nsub:\n\tc: See!\n\tcircular: @@#\n' ) ;
 
 
@@ -752,7 +732,7 @@ describe( "Saving a config" , () => {
 		conf.sub.circular = conf.sub ;
 
 		//console.log( kungFig.saveKfg( conf ).replace( /\n/g , () => '\\n' ).replace( /\t/g , () => '\\t' ) ) ;
-		expect( kungFig.saveJson( conf ) ).to.be( '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!",\n    "@@circular": "#sub"\n  }\n}' ) ;
+		//expect( kungFig.saveJson( conf ) ).to.be( '{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "c": "See!",\n    "@@circular": "#sub"\n  }\n}' ) ;
 		expect( kungFig.saveKfg( conf ) ).to.be( 'a: Haha!\nb: Bee!\nsub:\n\tc: See!\n\tcircular: @@#sub\n' ) ;
 
 
@@ -769,9 +749,7 @@ describe( "Saving a config" , () => {
 		conf.sub.sub.circular = conf.sub.sub ;
 
 		//console.log( kungFig.saveKfg( conf ).replace( /\n/g , () => '\\n' ).replace( /\t/g , () => '\\t' ) ) ;
-		expect( kungFig.saveJson( conf ) ).to.be(
-			'{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "sub": {\n      "c": "See!",\n      "@@circular": "#sub.sub"\n    }\n  }\n}'
-		) ;
+		//expect( kungFig.saveJson( conf ) ).to.be('{\n  "a": "Haha!",\n  "b": "Bee!",\n  "sub": {\n    "sub": {\n      "c": "See!",\n      "@@circular": "#sub.sub"\n    }\n  }\n}' ) ;
 		expect( kungFig.saveKfg( conf ) ).to.be( 'a: Haha!\nb: Bee!\nsub:\n\tsub:\n\t\tc: See!\n\t\tcircular: @@#sub.sub\n' ) ;
 	} ) ;
 
