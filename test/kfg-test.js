@@ -1713,6 +1713,17 @@ describe( "Stats Modifiers" , () => {
 		expect( o.hp.actual ).to.be( 20 ) ;
 	} ) ;
 
+	it( "should parse a StatsTable with compound stat" , () => {
+		var o = parse( '<StatsTable>\nreflex: 16\ndexterity: 10\ndefense: (average)\n\t- reflex\n\t- dexterity\n' ) ;
+		//console.log( "final:" , o ) ;
+		expect( o.reflex.base ).to.be( 16 ) ;
+		expect( o.reflex.actual ).to.be( 16 ) ;
+		expect( o.dexterity.base ).to.be( 10 ) ;
+		expect( o.dexterity.actual ).to.be( 10 ) ;
+		expect( o.defense.base ).to.be( null ) ;
+		expect( o.defense.actual ).to.be( 13 ) ;
+	} ) ;
+
 	it( "should parse a ModifiersTable" , () => {
 		var o = parse( '<ModifiersTable>\nid: staff\nstrength: (+) 5\ndexterity: (*) 0.8\n' ) ;
 		//console.log( "final:" , o ) ;
