@@ -756,9 +756,9 @@ describe( "Saving a config" , () => {
 	it( "should load and save flawlessly a config with many circular includes" , () => {
 		var str ;
 
-		str = kungFig.saveJson( kungFig.load( __dirname + '/sample/withCircularIncludes.kfg' ) ) ;
+		//str = kungFig.saveJson( kungFig.load( __dirname + '/sample/withCircularIncludes.kfg' ) ) ;
 		//console.log( str ) ;
-		expect( str ).to.be( '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "@@toBe": "#circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "@@toA": "#circularOne"\n  }\n}' ) ;
+		//expect( str ).to.be( '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "@@toBe": "#circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "@@toA": "#circularOne"\n  }\n}' ) ;
 
 		str = kungFig.saveKfg( kungFig.load( __dirname + '/sample/withCircularIncludes.kfg' ) ) ;
 		//console.log( str ) ;
@@ -769,11 +769,11 @@ describe( "Saving a config" , () => {
 	it( "should load and save to disk flawlessly a config with many circular includes" , () => {
 		var str ;
 
-		kungFig.saveJson( kungFig.load( __dirname + '/sample/withCircularIncludes.kfg' ) , __dirname + '/output.json' ) ;
-		str = fs.readFileSync( __dirname + '/output.json' ).toString() ;
+		//kungFig.saveJson( kungFig.load( __dirname + '/sample/withCircularIncludes.kfg' ) , __dirname + '/output.json' ) ;
+		//str = fs.readFileSync( __dirname + '/output.json' ).toString() ;
 		//console.log( str ) ;
-		expect( str ).to.be( '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "@@toBe": "#circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "@@toA": "#circularOne"\n  }\n}' ) ;
-		fs.unlinkSync( __dirname + '/output.json' ) ;
+		//expect( str ).to.be( '{\n  "hello": "world!",\n  "circularOne": {\n    "some": "data",\n    "@@toBe": "#circularTwo"\n  },\n  "circularTwo": {\n    "more": "data",\n    "@@toA": "#circularOne"\n  }\n}' ) ;
+		//fs.unlinkSync( __dirname + '/output.json' ) ;
 
 		kungFig.saveKfg( kungFig.load( __dirname + '/sample/withCircularIncludes.kfg' ) , __dirname + '/output.kfg' ) ;
 		str = fs.readFileSync( __dirname + '/output.kfg' ).toString() ;
