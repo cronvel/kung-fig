@@ -474,6 +474,10 @@ describe( "KFG parse" , () => {
 		expect( parse( "true: Joe" ) ).to.equal( {"true":"Joe"} ) ;
 		expect( parse( "false: Joe" ) ).to.equal( {"false":"Joe"} ) ;
 	} ) ;
+
+	it( "key with dot" , () => {
+		expect( parse( "key.with.dots: value\nkey2.with.dots: value2" ) ).to.equal( {"key.with.dots": "value","key2.with.dots": "value2"} ) ;
+	} ) ;
 	
 	it( "quoted key" , () => {
 		expect( parse( '"some:\\"bizarre:\\nkey" : value' ) ).to.equal( {"some:\"bizarre:\nkey":"value"} ) ;
