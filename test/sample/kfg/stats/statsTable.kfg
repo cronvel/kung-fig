@@ -1,7 +1,7 @@
 <StatsTable>
 strength: 12
-dexterity: 11
-reflex: 15
+dexterity: 10
+reflex: 16
 defense: (avg)
 	- dexterity
 	- reflex

@@ -4,4 +4,5 @@ strength: (+) 5
 dexterity:
 	- (*) 0.8
 	- (-) 2
+defense: (+) 1
 hp.max: (+) 1

@@ -1754,6 +1754,9 @@ describe( "zzz Stats Modifiers" , () => {
 		expect( o['hp.max'].plus.operand ).to.be( 1 ) ;
 	} ) ;
 
+	it( "ModifiersTable template" ) ;
+	it( "StatsTable template" ) ;
+
 	it( "full StatsTable and ModifiersTable use case" , () => {
 		var npc = parse( fs.readFileSync( __dirname + '/sample/kfg/stats/statsTable.kfg' , 'utf8' ) ) ,
 			staff = parse( fs.readFileSync( __dirname + '/sample/kfg/stats/modifiersTable.kfg' , 'utf8' ) ) ;
@@ -1761,13 +1764,12 @@ describe( "zzz Stats Modifiers" , () => {
 		//console.log( "final" , npc , staff ) ;
 		expect( npc.strength.base ).to.be( 12 ) ;
 		expect( npc.strength.actual ).to.be( 12 ) ;
-		expect( npc.dexterity.base ).to.be( 11 ) ;
-		expect( npc.dexterity.actual ).to.be( 11 ) ;
-		expect( npc.reflex.base ).to.be( 15 ) ;
-		expect( npc.reflex.actual ).to.be( 15 ) ;
+		expect( npc.dexterity.base ).to.be( 10 ) ;
+		expect( npc.dexterity.actual ).to.be( 10 ) ;
+		expect( npc.reflex.base ).to.be( 16 ) ;
+		expect( npc.reflex.actual ).to.be( 16 ) ;
 		expect( npc.defense.base ).to.be( null ) ;
 		expect( npc.defense.actual ).to.be( 13 ) ;
-
 		expect( npc.hp.max.base ).to.be( 20 ) ;
 		expect( npc.hp.max.actual ).to.be( 20 ) ;
 		expect( npc.hp.injury.base ).to.be( 4 ) ;
@@ -1778,7 +1780,26 @@ describe( "zzz Stats Modifiers" , () => {
 		expect( staff.strength.plus.operand ).to.be( 5 ) ;
 		expect( staff.dexterity.multiply.operand ).to.be( 0.8 ) ;
 		expect( staff.dexterity.plus.operand ).to.be( -2 ) ;
+		expect( staff.defense.plus.operand ).to.be( 1 ) ;
 		expect( staff['hp.max'].plus.operand ).to.be( 1 ) ;
+		
+
+		npc.stack( staff ) ;
+
+		expect( npc.strength.base ).to.be( 12 ) ;
+		expect( npc.strength.actual ).to.be( 17 ) ;
+		expect( npc.dexterity.base ).to.be( 10 ) ;
+		expect( npc.dexterity.actual ).to.be( 6 ) ;
+		expect( npc.reflex.base ).to.be( 16 ) ;
+		expect( npc.reflex.actual ).to.be( 16 ) ;
+		expect( npc.defense.base ).to.be( null ) ;
+		expect( npc.defense.actual ).to.be( 12 ) ;
+		expect( npc.hp.max.base ).to.be( 20 ) ;
+		expect( npc.hp.max.actual ).to.be( 21 ) ;
+		expect( npc.hp.injury.base ).to.be( 4 ) ;
+		expect( npc.hp.injury.actual ).to.be( 4 ) ;
+		expect( npc.hp.remaining.base ).to.be( null ) ;
+		expect( npc.hp.remaining.actual ).to.be( 17 ) ;
 	} ) ;
 } ) ;
 
