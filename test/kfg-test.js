@@ -1704,21 +1704,24 @@ describe( "ExpressionTag" , () => {
 
 
 
-describe( "Stats Modifiers" , () => {
+describe( "zzz Stats Modifiers" , () => {
 
 	it( "should parse a StatsTable" , () => {
-		var o = parse( '<StatsTable>\nstrength: 12\ndexterity: 15\nhp: 20\n' ) ;
+		var o = parse( '<StatsTable>\nstrength: 12\ndexterity: 15\nhp:\n\tmax: 20\n\tremaining: 14\n' ) ;
 		//console.log( "final:" , o ) ;
 		expect( o.strength.base ).to.be( 12 ) ;
 		expect( o.strength.actual ).to.be( 12 ) ;
 		expect( o.dexterity.base ).to.be( 15 ) ;
 		expect( o.dexterity.actual ).to.be( 15 ) ;
-		expect( o.hp.base ).to.be( 20 ) ;
-		expect( o.hp.actual ).to.be( 20 ) ;
+
+		expect( o.hp.max.base ).to.be( 20 ) ;
+		expect( o.hp.max.actual ).to.be( 20 ) ;
+		expect( o.hp.remaining.base ).to.be( 14 ) ;
+		expect( o.hp.remaining.actual ).to.be( 14 ) ;
 	} ) ;
 
 	it( "should parse a StatsTable with compound stat" , () => {
-		var o = parse( '<StatsTable>\nreflex: 16\ndexterity: 10\ndefense: (average)\n\t- reflex\n\t- dexterity\n' ) ;
+		var o = parse( '<StatsTable>\nreflex: 16\ndexterity: 10\ndefense: (average)\n\t- reflex\n\t- dexterity\nhp:\n\tmax: 20\n\tinjury: 7\n\tremaining: (minus)\n\t\t- hp.max\n\t\t- hp.injury\n' ) ;
 		//console.log( "final:" , o ) ;
 		expect( o.reflex.base ).to.be( 16 ) ;
 		expect( o.reflex.actual ).to.be( 16 ) ;
@@ -1726,6 +1729,13 @@ describe( "Stats Modifiers" , () => {
 		expect( o.dexterity.actual ).to.be( 10 ) ;
 		expect( o.defense.base ).to.be( null ) ;
 		expect( o.defense.actual ).to.be( 13 ) ;
+
+		expect( o.hp.max.base ).to.be( 20 ) ;
+		expect( o.hp.max.actual ).to.be( 20 ) ;
+		expect( o.hp.injury.base ).to.be( 7 ) ;
+		expect( o.hp.injury.actual ).to.be( 7 ) ;
+		expect( o.hp.remaining.base ).to.be( null ) ;
+		expect( o.hp.remaining.actual ).to.be( 13 ) ;
 	} ) ;
 
 	it( "should parse a ModifiersTable" , () => {
@@ -1735,12 +1745,40 @@ describe( "Stats Modifiers" , () => {
 		expect( o.strength.plus.operand ).to.be( 5 ) ;
 		expect( o.dexterity.multiply.operand ).to.be( 0.8 ) ;
 
-		o = parse( '<ModifiersTable>\nid: staff\nstrength: (+) 5\ndexterity:\n\t- (*) 0.8\n\t- (-) 2\n' ) ;
+		o = parse( '<ModifiersTable>\nid: staff\nstrength: (+) 5\ndexterity:\n\t- (*) 0.8\n\t- (-) 2\nhp.max: (+) 1\n' ) ;
 		//console.log( "final:" , o ) ;
 		//console.log( "final:" , o.dexterity.plus ) ;
 		expect( o.strength.plus.operand ).to.be( 5 ) ;
 		expect( o.dexterity.multiply.operand ).to.be( 0.8 ) ;
 		expect( o.dexterity.plus.operand ).to.be( -2 ) ;
+		expect( o['hp.max'].plus.operand ).to.be( 1 ) ;
+	} ) ;
+
+	it( "full StatsTable and ModifiersTable use case" , () => {
+		var npc = parse( fs.readFileSync( __dirname + '/sample/kfg/stats/statsTable.kfg' , 'utf8' ) ) ,
+			staff = parse( fs.readFileSync( __dirname + '/sample/kfg/stats/modifiersTable.kfg' , 'utf8' ) ) ;
+		
+		//console.log( "final" , npc , staff ) ;
+		expect( npc.strength.base ).to.be( 12 ) ;
+		expect( npc.strength.actual ).to.be( 12 ) ;
+		expect( npc.dexterity.base ).to.be( 11 ) ;
+		expect( npc.dexterity.actual ).to.be( 11 ) ;
+		expect( npc.reflex.base ).to.be( 15 ) ;
+		expect( npc.reflex.actual ).to.be( 15 ) ;
+		expect( npc.defense.base ).to.be( null ) ;
+		expect( npc.defense.actual ).to.be( 13 ) ;
+
+		expect( npc.hp.max.base ).to.be( 20 ) ;
+		expect( npc.hp.max.actual ).to.be( 20 ) ;
+		expect( npc.hp.injury.base ).to.be( 4 ) ;
+		expect( npc.hp.injury.actual ).to.be( 4 ) ;
+		expect( npc.hp.remaining.base ).to.be( null ) ;
+		expect( npc.hp.remaining.actual ).to.be( 16 ) ;
+
+		expect( staff.strength.plus.operand ).to.be( 5 ) ;
+		expect( staff.dexterity.multiply.operand ).to.be( 0.8 ) ;
+		expect( staff.dexterity.plus.operand ).to.be( -2 ) ;
+		expect( staff['hp.max'].plus.operand ).to.be( 1 ) ;
 	} ) ;
 } ) ;
 

@@ -1,0 +1,13 @@
+<StatsTable>
+strength: 12
+dexterity: 11
+reflex: 15
+defense: (avg)
+	- dexterity
+	- reflex
+hp:
+	max: 20
+	injury: 4
+	remaining: (minus)
+		- hp.max
+		- hp.injury
