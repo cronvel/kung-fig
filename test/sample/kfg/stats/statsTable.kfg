@@ -1,10 +1,11 @@
 <StatsTable>
 strength: 12
 dexterity: 10
-reflex: 16
+reflex: 18
 defense: (avg)
 	- dexterity
 	- reflex
+block: $$= ( ( 3 * $reflex ) + $dexterity ) / 4
 hp:
 	max: 20
 	injury: 4

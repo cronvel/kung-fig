@@ -1704,7 +1704,7 @@ describe( "ExpressionTag" , () => {
 
 
 
-describe( "zzz Stats Modifiers" , () => {
+describe( "Stats Modifiers" , () => {
 
 	it( "should parse a StatsTable" , () => {
 		var o = parse( '<StatsTable>\nstrength: 12\ndexterity: 15\nhp:\n\tmax: 20\n\tremaining: 14\n' ) ;
@@ -1738,6 +1738,24 @@ describe( "zzz Stats Modifiers" , () => {
 		expect( o.hp.remaining.actual ).to.be( 13 ) ;
 	} ) ;
 
+	it( "should parse a StatsTable with compound stat using Expression" , () => {
+		var o = parse( '<StatsTable>\nreflex: 16\ndexterity: 10\ndefense: $$= ( ( 2 * $reflex ) + $dexterity ) / 3\nhp:\n\tmax: 20\n\tinjury: 7\n\tremaining: $$= $hp.max - $hp.injury\n' ) ;
+
+		expect( o.reflex.base ).to.be( 16 ) ;
+		expect( o.reflex.actual ).to.be( 16 ) ;
+		expect( o.dexterity.base ).to.be( 10 ) ;
+		expect( o.dexterity.actual ).to.be( 10 ) ;
+		expect( o.defense.base ).to.be( null ) ;
+		expect( o.defense.actual ).to.be( 14 ) ;
+
+		expect( o.hp.max.base ).to.be( 20 ) ;
+		expect( o.hp.max.actual ).to.be( 20 ) ;
+		expect( o.hp.injury.base ).to.be( 7 ) ;
+		expect( o.hp.injury.actual ).to.be( 7 ) ;
+		expect( o.hp.remaining.base ).to.be( null ) ;
+		expect( o.hp.remaining.actual ).to.be( 13 ) ;
+	} ) ;
+
 	it( "should parse a ModifiersTable" , () => {
 		var o = parse( '<ModifiersTable>\nid: staff\nstrength: (+) 5\ndexterity: (*) 0.8\n' ) ;
 		//console.log( "final:" , o ) ;
@@ -1754,9 +1772,6 @@ describe( "zzz Stats Modifiers" , () => {
 		expect( o['hp.max'].plus.operand ).to.be( 1 ) ;
 	} ) ;
 
-	it( "ModifiersTable template" ) ;
-	it( "StatsTable template" ) ;
-
 	it( "full StatsTable and ModifiersTable use case" , () => {
 		var npc = parse( fs.readFileSync( __dirname + '/sample/kfg/stats/statsTable.kfg' , 'utf8' ) ) ,
 			staff = parse( fs.readFileSync( __dirname + '/sample/kfg/stats/modifiersTable.kfg' , 'utf8' ) ) ;
@@ -1766,10 +1781,12 @@ describe( "zzz Stats Modifiers" , () => {
 		expect( npc.strength.actual ).to.be( 12 ) ;
 		expect( npc.dexterity.base ).to.be( 10 ) ;
 		expect( npc.dexterity.actual ).to.be( 10 ) ;
-		expect( npc.reflex.base ).to.be( 16 ) ;
-		expect( npc.reflex.actual ).to.be( 16 ) ;
+		expect( npc.reflex.base ).to.be( 18 ) ;
+		expect( npc.reflex.actual ).to.be( 18 ) ;
 		expect( npc.defense.base ).to.be( null ) ;
-		expect( npc.defense.actual ).to.be( 13 ) ;
+		expect( npc.defense.actual ).to.be( 14 ) ;
+		expect( npc.block.base ).to.be( null ) ;
+		expect( npc.block.actual ).to.be( 16 ) ;
 		expect( npc.hp.max.base ).to.be( 20 ) ;
 		expect( npc.hp.max.actual ).to.be( 20 ) ;
 		expect( npc.hp.injury.base ).to.be( 4 ) ;
@@ -1781,6 +1798,7 @@ describe( "zzz Stats Modifiers" , () => {
 		expect( staff.dexterity.multiply.operand ).to.be( 0.8 ) ;
 		expect( staff.dexterity.plus.operand ).to.be( -2 ) ;
 		expect( staff.defense.plus.operand ).to.be( 1 ) ;
+		expect( staff.block.plus.operand ).to.be( 2 ) ;
 		expect( staff['hp.max'].plus.operand ).to.be( 1 ) ;
 		
 
@@ -1790,16 +1808,45 @@ describe( "zzz Stats Modifiers" , () => {
 		expect( npc.strength.actual ).to.be( 17 ) ;
 		expect( npc.dexterity.base ).to.be( 10 ) ;
 		expect( npc.dexterity.actual ).to.be( 6 ) ;
-		expect( npc.reflex.base ).to.be( 16 ) ;
-		expect( npc.reflex.actual ).to.be( 16 ) ;
+		expect( npc.reflex.base ).to.be( 18 ) ;
+		expect( npc.reflex.actual ).to.be( 18 ) ;
 		expect( npc.defense.base ).to.be( null ) ;
-		expect( npc.defense.actual ).to.be( 12 ) ;
+		expect( npc.defense.actual ).to.be( 13 ) ;
+		expect( npc.block.base ).to.be( null ) ;
+		expect( npc.block.actual ).to.be( 17 ) ;
 		expect( npc.hp.max.base ).to.be( 20 ) ;
 		expect( npc.hp.max.actual ).to.be( 21 ) ;
 		expect( npc.hp.injury.base ).to.be( 4 ) ;
 		expect( npc.hp.injury.actual ).to.be( 4 ) ;
 		expect( npc.hp.remaining.base ).to.be( null ) ;
 		expect( npc.hp.remaining.actual ).to.be( 17 ) ;
+		expect( npc.mods['staff of might'] ).to.be.an( Object ) ;
 	} ) ;
+
+	it( "should parse a ModifiersTable template" , () => {
+		var npc = parse( '<StatsTable>\nstrength: 12\ndexterity: 15\nhp:\n\tmax: 20\n\tremaining: 14\n' ) ,
+			staff = parse( '<ModifiersTable>\nid: staff\ntemplate: true\nstrength: (+) 5\ndexterity:\n\t- (*) 0.8\n\t- (-) 2\nhp.max: (+) 1\n' ) ;
+
+		expect( npc.strength.base ).to.be( 12 ) ;
+		expect( npc.strength.actual ).to.be( 12 ) ;
+		expect( npc.dexterity.base ).to.be( 15 ) ;
+		expect( npc.dexterity.actual ).to.be( 15 ) ;
+
+		expect( npc.hp.max.base ).to.be( 20 ) ;
+		expect( npc.hp.max.actual ).to.be( 20 ) ;
+		expect( npc.hp.remaining.base ).to.be( 14 ) ;
+		expect( npc.hp.remaining.actual ).to.be( 14 ) ;
+
+		expect( staff.strength.plus.operand ).to.be( 5 ) ;
+		expect( staff.dexterity.multiply.operand ).to.be( 0.8 ) ;
+		expect( staff.dexterity.plus.operand ).to.be( -2 ) ;
+		expect( staff['hp.max'].plus.operand ).to.be( 1 ) ;
+
+		npc.stack( staff ) ;
+		expect( npc.mods.staff ).to.be.undefined() ;
+		expect( npc.mods['staff_0'] ).to.be.an( Object ) ;
+	} ) ;
+
+	//it( "StatsTable template" ) ;
 } ) ;
 
