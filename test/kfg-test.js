@@ -1847,6 +1847,57 @@ describe( "Stats Modifiers" , () => {
 		expect( npc.mods['staff_0'] ).to.be.an( Object ) ;
 	} ) ;
 
+	it( "zzz StatsTable and ModifiersTable template featuring events" , () => {
+		throw new Error( "TODO" ) ;
+		var npc = parse( fs.readFileSync( __dirname + '/sample/kfg/stats/statsTable.kfg' , 'utf8' ) ) ,
+			staff = parse( fs.readFileSync( __dirname + '/sample/kfg/stats/modifiersTable.kfg' , 'utf8' ) ) ;
+		
+		//console.log( "final" , npc , staff ) ;
+		expect( npc.strength.base ).to.be( 12 ) ;
+		expect( npc.strength.actual ).to.be( 12 ) ;
+		expect( npc.dexterity.base ).to.be( 10 ) ;
+		expect( npc.dexterity.actual ).to.be( 10 ) ;
+		expect( npc.reflex.base ).to.be( 18 ) ;
+		expect( npc.reflex.actual ).to.be( 18 ) ;
+		expect( npc.defense.base ).to.be( null ) ;
+		expect( npc.defense.actual ).to.be( 14 ) ;
+		expect( npc.block.base ).to.be( null ) ;
+		expect( npc.block.actual ).to.be( 16 ) ;
+		expect( npc.hp.max.base ).to.be( 20 ) ;
+		expect( npc.hp.max.actual ).to.be( 20 ) ;
+		expect( npc.hp.injury.base ).to.be( 4 ) ;
+		expect( npc.hp.injury.actual ).to.be( 4 ) ;
+		expect( npc.hp.remaining.base ).to.be( null ) ;
+		expect( npc.hp.remaining.actual ).to.be( 16 ) ;
+
+		expect( staff.strength.plus.operand ).to.be( 5 ) ;
+		expect( staff.dexterity.multiply.operand ).to.be( 0.8 ) ;
+		expect( staff.dexterity.plus.operand ).to.be( -2 ) ;
+		expect( staff.defense.plus.operand ).to.be( 1 ) ;
+		expect( staff.block.plus.operand ).to.be( 2 ) ;
+		expect( staff['hp.max'].plus.operand ).to.be( 1 ) ;
+		
+
+		npc.stack( staff ) ;
+
+		expect( npc.strength.base ).to.be( 12 ) ;
+		expect( npc.strength.actual ).to.be( 17 ) ;
+		expect( npc.dexterity.base ).to.be( 10 ) ;
+		expect( npc.dexterity.actual ).to.be( 6 ) ;
+		expect( npc.reflex.base ).to.be( 18 ) ;
+		expect( npc.reflex.actual ).to.be( 18 ) ;
+		expect( npc.defense.base ).to.be( null ) ;
+		expect( npc.defense.actual ).to.be( 13 ) ;
+		expect( npc.block.base ).to.be( null ) ;
+		expect( npc.block.actual ).to.be( 17 ) ;
+		expect( npc.hp.max.base ).to.be( 20 ) ;
+		expect( npc.hp.max.actual ).to.be( 21 ) ;
+		expect( npc.hp.injury.base ).to.be( 4 ) ;
+		expect( npc.hp.injury.actual ).to.be( 4 ) ;
+		expect( npc.hp.remaining.base ).to.be( null ) ;
+		expect( npc.hp.remaining.actual ).to.be( 17 ) ;
+		expect( npc.mods['staff of might'] ).to.be.an( Object ) ;
+	} ) ;
 	//it( "StatsTable template" ) ;
 } ) ;
 

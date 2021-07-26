@@ -1,0 +1,8 @@
+<ModifiersTable>
+id: spell of agility
+template: yes
+dexterity: (+) 6
+events:
+	-	name: newTurn
+		action: fade
+		params: 2
