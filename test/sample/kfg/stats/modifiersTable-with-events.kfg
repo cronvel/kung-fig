@@ -3,6 +3,6 @@ id: spell of agility
 template: yes
 dexterity: (+) 6
 events:
-	-	name: newTurn
+	-	name: new-turn
 		action: fade
-		params: 2
+		amount: 2

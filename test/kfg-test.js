@@ -1847,10 +1847,9 @@ describe( "Stats Modifiers" , () => {
 		expect( npc.mods['staff_0'] ).to.be.an( Object ) ;
 	} ) ;
 
-	it( "zzz StatsTable and ModifiersTable template featuring events" , () => {
-		throw new Error( "TODO" ) ;
+	it( "StatsTable and ModifiersTable template featuring events" , () => {
 		var npc = parse( fs.readFileSync( __dirname + '/sample/kfg/stats/statsTable.kfg' , 'utf8' ) ) ,
-			staff = parse( fs.readFileSync( __dirname + '/sample/kfg/stats/modifiersTable.kfg' , 'utf8' ) ) ;
+			spell = parse( fs.readFileSync( __dirname + '/sample/kfg/stats/modifiersTable-with-events.kfg' , 'utf8' ) ) ;
 		
 		//console.log( "final" , npc , staff ) ;
 		expect( npc.strength.base ).to.be( 12 ) ;
@@ -1863,41 +1862,81 @@ describe( "Stats Modifiers" , () => {
 		expect( npc.defense.actual ).to.be( 14 ) ;
 		expect( npc.block.base ).to.be( null ) ;
 		expect( npc.block.actual ).to.be( 16 ) ;
-		expect( npc.hp.max.base ).to.be( 20 ) ;
-		expect( npc.hp.max.actual ).to.be( 20 ) ;
-		expect( npc.hp.injury.base ).to.be( 4 ) ;
-		expect( npc.hp.injury.actual ).to.be( 4 ) ;
-		expect( npc.hp.remaining.base ).to.be( null ) ;
-		expect( npc.hp.remaining.actual ).to.be( 16 ) ;
+		expect( npc[ kungFig.statsModifiers.UNPROXY ].modifiersTables ).to.have.length.of( 0 ) ;
 
-		expect( staff.strength.plus.operand ).to.be( 5 ) ;
-		expect( staff.dexterity.multiply.operand ).to.be( 0.8 ) ;
-		expect( staff.dexterity.plus.operand ).to.be( -2 ) ;
-		expect( staff.defense.plus.operand ).to.be( 1 ) ;
-		expect( staff.block.plus.operand ).to.be( 2 ) ;
-		expect( staff['hp.max'].plus.operand ).to.be( 1 ) ;
+		expect( spell.dexterity.plus.operand ).to.be( 6 ) ;
 		
 
-		npc.stack( staff ) ;
+		npc.stack( spell ) ;
 
 		expect( npc.strength.base ).to.be( 12 ) ;
-		expect( npc.strength.actual ).to.be( 17 ) ;
+		expect( npc.strength.actual ).to.be( 12 ) ;
 		expect( npc.dexterity.base ).to.be( 10 ) ;
-		expect( npc.dexterity.actual ).to.be( 6 ) ;
+		expect( npc.dexterity.actual ).to.be( 16 ) ;
 		expect( npc.reflex.base ).to.be( 18 ) ;
 		expect( npc.reflex.actual ).to.be( 18 ) ;
 		expect( npc.defense.base ).to.be( null ) ;
-		expect( npc.defense.actual ).to.be( 13 ) ;
+		expect( npc.defense.actual ).to.be( 17 ) ;
+		expect( npc.block.base ).to.be( null ) ;
+		expect( npc.block.actual ).to.be( 17.5 ) ;
+		expect( npc.mods['spell of agility'] ).to.be.undefined() ;
+		expect( npc.mods['spell of agility_0'] ).to.be.an( Object ) ;
+		expect( npc[ kungFig.statsModifiers.UNPROXY ].modifiersTables ).to.have.length.of( 1 ) ;
+		//console.log( 'spell of agility_0' , npc.mods['spell of agility_0'][ kungFig.statsModifiers.UNPROXY ].events ) ;
+		
+
+		npc.trigger( 'new-turn' ) ;
+
+		expect( npc.strength.base ).to.be( 12 ) ;
+		expect( npc.strength.actual ).to.be( 12 ) ;
+		expect( npc.dexterity.base ).to.be( 10 ) ;
+		expect( npc.dexterity.actual ).to.be( 14 ) ;
+		expect( npc.reflex.base ).to.be( 18 ) ;
+		expect( npc.reflex.actual ).to.be( 18 ) ;
+		expect( npc.defense.base ).to.be( null ) ;
+		expect( npc.defense.actual ).to.be( 16 ) ;
 		expect( npc.block.base ).to.be( null ) ;
 		expect( npc.block.actual ).to.be( 17 ) ;
-		expect( npc.hp.max.base ).to.be( 20 ) ;
-		expect( npc.hp.max.actual ).to.be( 21 ) ;
-		expect( npc.hp.injury.base ).to.be( 4 ) ;
-		expect( npc.hp.injury.actual ).to.be( 4 ) ;
-		expect( npc.hp.remaining.base ).to.be( null ) ;
-		expect( npc.hp.remaining.actual ).to.be( 17 ) ;
-		expect( npc.mods['staff of might'] ).to.be.an( Object ) ;
+		expect( npc.mods['spell of agility'] ).to.be.undefined() ;
+		expect( npc.mods['spell of agility_0'] ).to.be.an( Object ) ;
+		expect( npc[ kungFig.statsModifiers.UNPROXY ].modifiersTables ).to.have.length.of( 1 ) ;
+		
+
+		npc.trigger( 'new-turn' ) ;
+
+		expect( npc.strength.base ).to.be( 12 ) ;
+		expect( npc.strength.actual ).to.be( 12 ) ;
+		expect( npc.dexterity.base ).to.be( 10 ) ;
+		expect( npc.dexterity.actual ).to.be( 12 ) ;
+		expect( npc.reflex.base ).to.be( 18 ) ;
+		expect( npc.reflex.actual ).to.be( 18 ) ;
+		expect( npc.defense.base ).to.be( null ) ;
+		expect( npc.defense.actual ).to.be( 15 ) ;
+		expect( npc.block.base ).to.be( null ) ;
+		expect( npc.block.actual ).to.be( 16.5 ) ;
+		expect( npc.mods['spell of agility'] ).to.be.undefined() ;
+		expect( npc.mods['spell of agility_0'] ).to.be.an( Object ) ;
+		expect( npc[ kungFig.statsModifiers.UNPROXY ].modifiersTables ).to.have.length.of( 1 ) ;
+		
+
+		npc.trigger( 'new-turn' ) ;
+
+		expect( npc.strength.base ).to.be( 12 ) ;
+		expect( npc.strength.actual ).to.be( 12 ) ;
+		expect( npc.dexterity.base ).to.be( 10 ) ;
+		expect( npc.dexterity.actual ).to.be( 10 ) ;
+		expect( npc.reflex.base ).to.be( 18 ) ;
+		expect( npc.reflex.actual ).to.be( 18 ) ;
+		expect( npc.defense.base ).to.be( null ) ;
+		expect( npc.defense.actual ).to.be( 14 ) ;
+		expect( npc.block.base ).to.be( null ) ;
+		expect( npc.block.actual ).to.be( 16 ) ;
+		expect( npc.mods['spell of agility'] ).to.be.undefined() ;
+		// It's automatically removed once neutralized
+		expect( npc.mods['spell of agility_0'] ).to.be.undefined() ;
+		expect( npc[ kungFig.statsModifiers.UNPROXY ].modifiersTables ).to.have.length.of( 0 ) ;
 	} ) ;
+
 	//it( "StatsTable template" ) ;
 } ) ;
 
