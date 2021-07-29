@@ -444,7 +444,16 @@ describe( "KFG parse" , () => {
 		expect( parse( "<Map>" ) ).to.be.a( Map ) ;
 		expect( parse( "<TemplateSentence> :string" ).toString() ).to.be( ':string' ) ;
 	} ) ;
-		
+
+	it( "parse numbers" , () => {
+		expect( parse( "v:1" ) ).to.equal( {v:1} ) ;
+		expect( parse( "v:10e2" ) ).to.equal( {v:1000} ) ;
+		expect( parse( "v:123.5" ) ).to.equal( {v:123.5} ) ;
+		expect( parse( "v: 25%" ) ).to.equal( {v:0.25} ) ;
+		expect( parse( "v: +25%" ) ).to.equal( {v:1.25} ) ;
+		expect( parse( "v: -25%" ) ).to.equal( {v:0.75} ) ;
+	} ) ;
+
 	it( "numbers and string ambiguity" , () => {
 		expect( parse( "v:1" ) ).to.equal( {v:1} ) ;
 		expect( parse( "v:1l" ) ).to.equal( {v:"1l"} ) ;
