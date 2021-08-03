@@ -1736,14 +1736,14 @@ describe( "Stats Modifiers" , () => {
 		expect( o.reflex.actual ).to.be( 16 ) ;
 		expect( o.dexterity.base ).to.be( 10 ) ;
 		expect( o.dexterity.actual ).to.be( 10 ) ;
-		expect( o.defense.base ).to.be( null ) ;
+		expect( o.defense.base ).to.be( 13 ) ;
 		expect( o.defense.actual ).to.be( 13 ) ;
 
 		expect( o.hp.max.base ).to.be( 20 ) ;
 		expect( o.hp.max.actual ).to.be( 20 ) ;
 		expect( o.hp.injury.base ).to.be( 7 ) ;
 		expect( o.hp.injury.actual ).to.be( 7 ) ;
-		expect( o.hp.remaining.base ).to.be( null ) ;
+		expect( o.hp.remaining.base ).to.be( 13 ) ;
 		expect( o.hp.remaining.actual ).to.be( 13 ) ;
 	} ) ;
 
@@ -1754,14 +1754,14 @@ describe( "Stats Modifiers" , () => {
 		expect( o.reflex.actual ).to.be( 16 ) ;
 		expect( o.dexterity.base ).to.be( 10 ) ;
 		expect( o.dexterity.actual ).to.be( 10 ) ;
-		expect( o.defense.base ).to.be( null ) ;
+		expect( o.defense.base ).to.be( 14 ) ;
 		expect( o.defense.actual ).to.be( 14 ) ;
 
 		expect( o.hp.max.base ).to.be( 20 ) ;
 		expect( o.hp.max.actual ).to.be( 20 ) ;
 		expect( o.hp.injury.base ).to.be( 7 ) ;
 		expect( o.hp.injury.actual ).to.be( 7 ) ;
-		expect( o.hp.remaining.base ).to.be( null ) ;
+		expect( o.hp.remaining.base ).to.be( 13 ) ;
 		expect( o.hp.remaining.actual ).to.be( 13 ) ;
 	} ) ;
 
@@ -1792,15 +1792,15 @@ describe( "Stats Modifiers" , () => {
 		expect( npc.dexterity.actual ).to.be( 10 ) ;
 		expect( npc.reflex.base ).to.be( 18 ) ;
 		expect( npc.reflex.actual ).to.be( 18 ) ;
-		expect( npc.defense.base ).to.be( null ) ;
+		expect( npc.defense.base ).to.be( 14 ) ;
 		expect( npc.defense.actual ).to.be( 14 ) ;
-		expect( npc.block.base ).to.be( null ) ;
+		expect( npc.block.base ).to.be( 16 ) ;
 		expect( npc.block.actual ).to.be( 16 ) ;
 		expect( npc.hp.max.base ).to.be( 20 ) ;
 		expect( npc.hp.max.actual ).to.be( 20 ) ;
 		expect( npc.hp.injury.base ).to.be( 4 ) ;
 		expect( npc.hp.injury.actual ).to.be( 4 ) ;
-		expect( npc.hp.remaining.base ).to.be( null ) ;
+		expect( npc.hp.remaining.base ).to.be( 16 ) ;
 		expect( npc.hp.remaining.actual ).to.be( 16 ) ;
 
 		expect( staff.strength.plus.operand ).to.be( 5 ) ;
@@ -1819,15 +1819,15 @@ describe( "Stats Modifiers" , () => {
 		expect( npc.dexterity.actual ).to.be( 6 ) ;
 		expect( npc.reflex.base ).to.be( 18 ) ;
 		expect( npc.reflex.actual ).to.be( 18 ) ;
-		expect( npc.defense.base ).to.be( null ) ;
+		expect( npc.defense.base ).to.be( 14 ) ;
 		expect( npc.defense.actual ).to.be( 13 ) ;
-		expect( npc.block.base ).to.be( null ) ;
+		expect( npc.block.base ).to.be( 16 ) ;
 		expect( npc.block.actual ).to.be( 17 ) ;
 		expect( npc.hp.max.base ).to.be( 20 ) ;
 		expect( npc.hp.max.actual ).to.be( 21 ) ;
 		expect( npc.hp.injury.base ).to.be( 4 ) ;
 		expect( npc.hp.injury.actual ).to.be( 4 ) ;
-		expect( npc.hp.remaining.base ).to.be( null ) ;
+		expect( npc.hp.remaining.base ).to.be( 16 ) ;
 		expect( npc.hp.remaining.actual ).to.be( 17 ) ;
 		expect( npc.mods['staff of might'] ).to.be.an( Object ) ;
 	} ) ;
@@ -1867,9 +1867,9 @@ describe( "Stats Modifiers" , () => {
 		expect( npc.dexterity.actual ).to.be( 10 ) ;
 		expect( npc.reflex.base ).to.be( 18 ) ;
 		expect( npc.reflex.actual ).to.be( 18 ) ;
-		expect( npc.defense.base ).to.be( null ) ;
+		expect( npc.defense.base ).to.be( 14 ) ;
 		expect( npc.defense.actual ).to.be( 14 ) ;
-		expect( npc.block.base ).to.be( null ) ;
+		expect( npc.block.base ).to.be( 16 ) ;
 		expect( npc.block.actual ).to.be( 16 ) ;
 		expect( npc[ kungFig.statsModifiers.UNPROXY ].modifiersTables ).to.have.length.of( 0 ) ;
 
@@ -1884,9 +1884,9 @@ describe( "Stats Modifiers" , () => {
 		expect( npc.dexterity.actual ).to.be( 16 ) ;
 		expect( npc.reflex.base ).to.be( 18 ) ;
 		expect( npc.reflex.actual ).to.be( 18 ) ;
-		expect( npc.defense.base ).to.be( null ) ;
+		expect( npc.defense.base ).to.be( 14 ) ;
 		expect( npc.defense.actual ).to.be( 17 ) ;
-		expect( npc.block.base ).to.be( null ) ;
+		expect( npc.block.base ).to.be( 16 ) ;
 		expect( npc.block.actual ).to.be( 17.5 ) ;
 		expect( npc.mods['spell of agility'] ).to.be.undefined() ;
 		expect( npc.mods['spell of agility_0'] ).to.be.an( Object ) ;
@@ -1902,9 +1902,9 @@ describe( "Stats Modifiers" , () => {
 		expect( npc.dexterity.actual ).to.be( 14 ) ;
 		expect( npc.reflex.base ).to.be( 18 ) ;
 		expect( npc.reflex.actual ).to.be( 18 ) ;
-		expect( npc.defense.base ).to.be( null ) ;
+		expect( npc.defense.base ).to.be( 14 ) ;
 		expect( npc.defense.actual ).to.be( 16 ) ;
-		expect( npc.block.base ).to.be( null ) ;
+		expect( npc.block.base ).to.be( 16 ) ;
 		expect( npc.block.actual ).to.be( 17 ) ;
 		expect( npc.mods['spell of agility'] ).to.be.undefined() ;
 		expect( npc.mods['spell of agility_0'] ).to.be.an( Object ) ;
@@ -1919,9 +1919,9 @@ describe( "Stats Modifiers" , () => {
 		expect( npc.dexterity.actual ).to.be( 12 ) ;
 		expect( npc.reflex.base ).to.be( 18 ) ;
 		expect( npc.reflex.actual ).to.be( 18 ) ;
-		expect( npc.defense.base ).to.be( null ) ;
+		expect( npc.defense.base ).to.be( 14 ) ;
 		expect( npc.defense.actual ).to.be( 15 ) ;
-		expect( npc.block.base ).to.be( null ) ;
+		expect( npc.block.base ).to.be( 16 ) ;
 		expect( npc.block.actual ).to.be( 16.5 ) ;
 		expect( npc.mods['spell of agility'] ).to.be.undefined() ;
 		expect( npc.mods['spell of agility_0'] ).to.be.an( Object ) ;
@@ -1936,9 +1936,9 @@ describe( "Stats Modifiers" , () => {
 		expect( npc.dexterity.actual ).to.be( 10 ) ;
 		expect( npc.reflex.base ).to.be( 18 ) ;
 		expect( npc.reflex.actual ).to.be( 18 ) ;
-		expect( npc.defense.base ).to.be( null ) ;
+		expect( npc.defense.base ).to.be( 14 ) ;
 		expect( npc.defense.actual ).to.be( 14 ) ;
-		expect( npc.block.base ).to.be( null ) ;
+		expect( npc.block.base ).to.be( 16 ) ;
 		expect( npc.block.actual ).to.be( 16 ) ;
 		expect( npc.mods['spell of agility'] ).to.be.undefined() ;
 		// It's automatically removed once neutralized
