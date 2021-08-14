@@ -138,11 +138,11 @@ describe( "Dynamic.getRecursiveFinalValue()" , () => {
 		ref1 = new Ref( '$object' ) ;
 		ctx.object.array = new Ref( '$array' ) ;
 
-		v1 = Dynamic.getRecursiveFinalValue( ref1 , ctx ) ;
+		v1 = Dynamic.getDeepFinalValue( ref1 , ctx ) ;
 
 		//console.log( v1 ) ;
 
-		v2 = Dynamic.getRecursiveFinalValue( v1 , ctx ) ;
+		v2 = Dynamic.getDeepFinalValue( v1 , ctx ) ;
 
 		//console.log( v2 ) ;
 

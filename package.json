@@ -13,18 +13,18 @@
     "glob": "^7.1.7",
     "hash-kit": "^0.3.9",
     "kung-fig-common": "^0.42.2",
-    "kung-fig-dynamic": "^0.41.13",
-    "kung-fig-dynamic-instance": "^0.43.0",
-    "kung-fig-expression": "^0.45.9",
-    "kung-fig-ref": "^0.42.11",
-    "kung-fig-template": "^0.47.1",
+    "kung-fig-dynamic": "^0.42.4",
+    "kung-fig-dynamic-instance": "^0.44.1",
+    "kung-fig-expression": "^0.46.0",
+    "kung-fig-ref": "^0.44.0",
+    "kung-fig-template": "^0.47.2",
     "seventh": "^0.7.40",
     "stats-modifiers": "^0.4.5",
     "string-kit": "^0.12.5",
     "tree-kit": "^0.7.0"
   },
   "devDependencies": {
-    "babel-tower": "^0.20.2"
+    "babel-tower": "^0.20.3"
   },
   "scripts": {
     "test": "tea-time -R dot"
