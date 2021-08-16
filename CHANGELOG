@@ -1,4 +1,13 @@
 
+v0.57.1
+-------
+
+(fix previous commit) BREAKING Dynamic and Tag API change
+Dynamic#getRecursiveFinalValue() --> Dynamic#getDeepFinalValue() or Dynamic#extractFromStatic()
+Tag#getRecursiveFinalValue() --> Tag#extractContent()
+cloning rules changed for both extract* API, no cloning for .getDeepFinalValue() except if there is a dynamic object forcing it
+
+
 v0.57.0
 -------
 
