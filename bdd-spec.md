@@ -15,7 +15,7 @@
    - [JS modules](#js-modules)
    - [Array references](#array-references)
    - [Template](#template)
-   - [Dynamic.getRecursiveFinalValue()](#dynamicgetrecursivefinalvalue)
+   - [Dynamic.getDeepFinalValue()](#dynamicgetrecursivefinalvalue)
    - [Ref](#ref)
      - [Get](#ref-get)
      - [Set](#ref-set)
@@ -2362,7 +2362,7 @@ doormen.equals( ctx.d.getFinalValue( ctx ) , "Hello, I'm 42." ) ;
 ```
 
 <a name="dynamicgetrecursivefinalvalue"></a>
-# Dynamic.getRecursiveFinalValue()
+# Dynamic.getDeepFinalValue()
 Historical non-cloning bug.
 
 ```js
@@ -2374,7 +2374,7 @@ ctx.b = ref1 = Ref.create( '$a' ) ;
 ctx.c = tpl1 = Template.create( "Hello, I'm ${a}." ) ;
 ctx.d = tpl2 = Template.create( "Hello, I'm ${b}." ) ;
 
-doormen.equals( Dynamic.getRecursiveFinalValue( ctx , ctx ) , {
+doormen.equals( Dynamic.getDeepFinalValue( ctx , ctx ) , {
 	a: 42 ,
 	b: 42 ,
 	c: "Hello, I'm 42." ,
@@ -2764,7 +2764,7 @@ doormen.equals( ctx.c.getFinalValue( ctx ) , 42 ) ;
 doormen.equals( ctx.d.getFinalValue( ctx ) , 42 ) ;
 ```
 
-Ref#getRecursiveFinalValue().
+Ref#getDeepFinalValue().
 
 ```js
 var ctx = { a: 42 , container: {} } ;
@@ -2772,7 +2772,7 @@ ctx.container.b = Ref.create( '$a' ) ;
 ctx.container.c = Ref.create( '$container.b' ) ;
 ctx.container.d = Ref.create( '$container.c' ) ;
 ctx.refContainer = Ref.create( '$container' ) ;
-doormen.equals( ctx.refContainer.getRecursiveFinalValue( ctx ) , { b:42 , c:42 , d:42 } ) ;
+doormen.equals( ctx.refContainer.getDeepFinalValue( ctx ) , { b:42 , c:42 , d:42 } ) ;
 ```
 
 Ref#toString().

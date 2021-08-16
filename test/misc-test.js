@@ -30,12 +30,12 @@
 
 
 
-var kungFig = require( '../lib/kungFig.js' ) ;
-var Dynamic = kungFig.Dynamic ;
-var Ref = kungFig.Ref ;
-var Expression = kungFig.Expression ;
-var TemplateSentence = kungFig.TemplateSentence ;
-var string = require( 'string-kit' ) ;
+const kungFig = require( '../lib/kungFig.js' ) ;
+const Dynamic = kungFig.Dynamic ;
+const Ref = kungFig.Ref ;
+const Expression = kungFig.Expression ;
+const TemplateSentence = kungFig.TemplateSentence ;
+const string = require( 'string-kit' ) ;
 
 
 
@@ -98,7 +98,7 @@ describe( "Expression" , () => {
 
 
 
-describe( "Dynamic.getRecursiveFinalValue()" , () => {
+describe( "Dynamic.getDeepFinalValue()" , () => {
 
 	it( "Historical non-cloning bug" , () => {
 		// Case where it SHOULD clone
@@ -111,7 +111,7 @@ describe( "Dynamic.getRecursiveFinalValue()" , () => {
 		ctx.c = tpl1 = new TemplateSentence( "Hello, I'm ${a}." ) ;
 		ctx.d = tpl2 = new TemplateSentence( "Hello, I'm ${b}." ) ;
 
-		expect( Dynamic.getRecursiveFinalValue( ctx , ctx ) ).to.equal( {
+		expect( Dynamic.getDeepFinalValue( ctx , ctx ) ).to.equal( {
 			a: 42 ,
 			b: 42 ,
 			c: "Hello, I'm 42." ,
@@ -123,6 +123,8 @@ describe( "Dynamic.getRecursiveFinalValue()" , () => {
 		expect( ctx.d ).to.be( tpl2 ) ;
 	} ) ;
 
+	/*
+	// Doesn't make sense, dynamic should not be in the data context, only applicable should
 	it( "Historical cloning bug" , () => {
 		// Case where it should NOT clone
 
@@ -138,11 +140,11 @@ describe( "Dynamic.getRecursiveFinalValue()" , () => {
 		ref1 = new Ref( '$object' ) ;
 		ctx.object.array = new Ref( '$array' ) ;
 
-		v1 = Dynamic.getRecursiveFinalValue( ref1 , ctx ) ;
+		v1 = Dynamic.getDeepFinalValue( ref1 , ctx ) ;
 
 		//console.log( v1 ) ;
 
-		v2 = Dynamic.getRecursiveFinalValue( v1 , ctx ) ;
+		v2 = Dynamic.getDeepFinalValue( v1 , ctx ) ;
 
 		//console.log( v2 ) ;
 
@@ -159,5 +161,6 @@ describe( "Dynamic.getRecursiveFinalValue()" , () => {
 		expect( v1.array ).to.be( ctx.array ) ;
 		expect( v1.array ).to.be( ctx.object.array ) ;
 	} ) ;
+	*/
 } ) ;
 

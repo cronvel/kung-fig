@@ -12,7 +12,8 @@
 * [The Dynamic Interface](#ref.Dynamic)
 	* [.get(), .getValue()](#ref.Dynamic.get)
 	* [.getFinalValue()](#ref.Dynamic.getFinalValue)
-	* [.getRecursiveFinalValue()](#ref.Dynamic.getRecursiveFinalValue)
+	* [.getDeepFinalValue()](#ref.Dynamic.getDeepFinalValue)
+	* [.extractFromStatic()](#ref.Dynamic.extractFromStatic)
 	* [.toString()](#ref.Dynamic.toString)
 	* [.apply()](#ref.Dynamic.apply)
 	* [.set()](#ref.Dynamic.set)
@@ -34,8 +35,7 @@
 	* [.parseAttributes()](#ref.Tag.parseAttributes)
 	* [.stringifyAttributes()](#ref.Tag.stringifyAttributes)
 	* [.getParentTag()](#ref.Tag.getParentTag)
-	* [.getFinalContent()](#ref.Tag.getFinalContent)
-	* [.getRecursiveFinalContent()](#ref.Tag.getRecursiveFinalContent)
+	* [.extractContent()](#ref.Tag.extractContent)
 * [Built-in Tag Derived Class](#ref.Tag.derived)
 	* [LabelTag Class](#ref.Tag.LabelTag)
 	* [VarTag Class](#ref.Tag.VarTag)
@@ -250,8 +250,8 @@ else it would return *value*.
 
 
 
-<a name="ref.Dynamic.getRecursiveFinalValue"></a>
-### .getRecursiveFinalValue( ctx , [bound] )
+<a name="ref.Dynamic.getDeepFinalValue"></a>
+### .getDeepFinalValue( ctx , [bound] )
 
 * ctx `mixed` the context, it can be of any type, but it is usually an object
 * bound `boolean` (optional) if true and the value to be returned is a function, the function is bounded
@@ -267,11 +267,37 @@ and if any, it would apply [.getFinalValue()](#ref.Dynamic.getFinalValue) on the
 
 
 
-### Dynamic.getRecursiveFinalValue( value , ctx , [bound] )
+### Dynamic.getDeepFinalValue( value , ctx , [bound] )
 
-This is the static method variant of [.getRecursiveFinalValue()](#ref.Dynamic.getRecursiveFinalValue).
+This is the static method variant of [.getDeepFinalValue()](#ref.Dynamic.getDeepFinalValue).
 
-The first argument *value* can be anything, if it is a Dynamic object, it would return `value.getRecursiveFinalValue()`,
+The first argument *value* can be anything, if it is a Dynamic object, it would return `value.getDeepFinalValue()`,
+else it would return *value*.
+
+
+
+<a name="ref.Dynamic.extractFromStatic"></a>
+### .extractFromStatic( ctx , [bound] )
+
+* ctx `mixed` the context, it can be of any type, but it is usually an object
+* bound `boolean` (optional) if true and the value to be returned is a function, the function is bounded
+  to the relevant value, depending on the type of the Dynamic object (e.g. given a [Ref instance](#ref.Ref) *"$obj.myfunc"*,
+  the returned value would be bound to `ctx.obj`, like a regular Javascript method call would).
+  This argument has no effect on some Dynamic objects where the *bound* concept is not relevant
+  (e.g. [TemplateSentence instances](#ref.TemplateSentence))
+
+Like [.getFinalValue()](#ref.Dynamic.getFinalValue), a Dynamic chain is *solved* until a non-Dynamic value is found.
+
+Then, if the final value is an object or an array, it will search recursively for Dynamic object inside it,
+and if any, it would apply [.getFinalValue()](#ref.Dynamic.getFinalValue) on them.
+
+
+
+### Dynamic.extractFromStatic( value , ctx , [bound] )
+
+This is the static method variant of [.extractFromStatic()](#ref.Dynamic.extractFromStatic).
+
+The first argument *value* can be anything, if it is a Dynamic object, it would return `value.extractFromStatic()`,
 else it would return *value*.
 
 
@@ -832,8 +858,8 @@ This method returns the parent tag, if any. Otherwise it returns *null*.
 
 
 
-<a name="ref.Tag.getFinalContent"></a>
-### .getFinalContent( ctx , [bound] )
+<a name="ref.Tag.extractContent"></a>
+### .extractContent( ctx , [bound] )
 
 * ctx `mixed` the context, it can be of any type, but it is usually an object
 * bound `boolean` (optional) if true and the value to be returned is a function, the function is bounded
@@ -842,25 +868,12 @@ This method returns the parent tag, if any. Otherwise it returns *null*.
   This argument has no effect on some Dynamic objects where the *bound* concept is not relevant
   (e.g. [TemplateSentence instances](#ref.TemplateSentence))
 
-This method returns the tag's content (i.e. the `content` preoperty).
-If the content is a *Dynamic object*, it returns
-[`this.content.getFinalContent( ctx , bound )`](#ref.Dynamic.getFinalValue) instead.
-
-
-
-<a name="ref.Tag.getRecursiveFinalContent"></a>
-### .getRecursiveFinalContent( ctx , [bound] )
-
-* ctx `mixed` the context, it can be of any type, but it is usually an object
-* bound `boolean` (optional) if true and the value to be returned is a function, the function is bounded
-  to the relevant value, depending on the type of the Dynamic object (e.g. given a [Ref instance](#ref.Ref) *"$obj.myfunc"*,
-  the returned value would be bound to `ctx.obj`, like a regular Javascript method call would).
-  This argument has no effect on some Dynamic objects where the *bound* concept is not relevant
-  (e.g. [TemplateSentence instances](#ref.TemplateSentence))
-
-This method returns the tag's content (i.e. the `content` preoperty).
-If the content is a *Dynamic object*, it returns
-[`this.content.getRecursiveFinalContent( ctx , bound )`](#ref.Dynamic.getRecursiveFinalValue) instead.
+This method extract the tag's content (i.e. the `content` preoperty).
+The content of a tag is always *deep-cloned* from the *static* content attached to the tags, except for object considered immutable
+(note that all unknown instances are considered immutable by default).
+This is because tags are mostly used to create scripting language, and a tag can be *executed* multiple times
+and should create each time a new independent value.
+Technically, it calls [`Dynamic.extractFromStatic( this.content , ctx , bound )`](#ref.Dynamic.extractFromStatic).
 
 
 
