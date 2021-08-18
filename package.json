@@ -1,8 +1,8 @@
 {
   "name": "kung-fig",
-  "version": "0.58.0",
+  "version": "0.59.0",
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=14.15.0"
   },
   "description": "The Kung Fu of configuration files!",
   "main": "lib/kungFig.js",
@@ -15,11 +15,11 @@
     "kung-fig-common": "^0.42.2",
     "kung-fig-dynamic": "^0.43.1",
     "kung-fig-dynamic-instance": "^0.45.0",
-    "kung-fig-expression": "^0.47.0",
-    "kung-fig-ref": "^0.45.0",
-    "kung-fig-template": "^0.49.0",
+    "kung-fig-expression": "^0.48.0",
+    "kung-fig-ref": "^0.46.0",
+    "kung-fig-template": "^0.50.0",
     "seventh": "^0.7.40",
-    "stats-modifiers": "^0.4.6",
+    "stats-modifiers": "^0.4.7",
     "string-kit": "^0.12.8",
     "tree-kit": "^0.7.0"
   },
