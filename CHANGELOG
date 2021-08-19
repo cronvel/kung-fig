@@ -1,4 +1,10 @@
 
+v0.59.1
+-------
+
+Dependencies upgraded, Expression now supports ternary expression as switch-case-like, Expression supports semi-colons as optional argument separators
+
+
 v0.59.0
 -------
 
