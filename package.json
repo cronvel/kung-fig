@@ -1,6 +1,6 @@
 {
   "name": "kung-fig",
-  "version": "0.59.3",
+  "version": "0.59.4",
   "engines": {
     "node": ">=14.15.0"
   },
@@ -15,7 +15,7 @@
     "kung-fig-common": "^0.43.0",
     "kung-fig-dynamic": "^0.43.1",
     "kung-fig-dynamic-instance": "^0.45.0",
-    "kung-fig-expression": "^0.48.2",
+    "kung-fig-expression": "^0.48.3",
     "kung-fig-ref": "^0.46.0",
     "kung-fig-template": "^0.50.0",
     "seventh": "^0.7.40",
