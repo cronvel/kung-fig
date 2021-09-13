@@ -1668,7 +1668,8 @@ describe( "ExpressionTag" , () => {
 						args: [
 							{ refParts: [ 'a' ] } ,
 							3
-						]
+						] ,
+						xop: null
 					} ,
 					content: undefined
 				}

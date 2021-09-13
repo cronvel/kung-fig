@@ -1,4 +1,10 @@
 
+v0.59.7
+-------
+
+Fix more userland operators error (cloning)
+
+
 v0.59.6
 -------
 
