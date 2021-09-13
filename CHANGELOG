@@ -1,4 +1,10 @@
 
+v0.59.6
+-------
+
+Fix Expression#compile() when there is userland operators
+
+
 v0.59.5
 -------
 
