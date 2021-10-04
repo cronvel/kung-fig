@@ -1,0 +1,8 @@
+<ModifiersTable>
+id: staff of might
+strength:
+	- (* !) 1.5
+	- (+) 4
+dexterity:
+	- (*) 0.5
+	- (- !) 4

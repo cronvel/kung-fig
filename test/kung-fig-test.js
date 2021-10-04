@@ -60,14 +60,14 @@ describe( "Loading a config" , () => {
 			description: 'This is a wonderful katana with a blueish blade!\nThis is a two-handed weapon.' ,
 			durability: 24 ,
 			melee: {
-				toHit: { operator: '+' , operand: -2 } ,
-				attack: { operator: '+' , operand: 6 } ,
-				AT: { operator: '*' , operand: 12 } ,
-				reach: { operator: '+' , operand: 7 } ,
+				toHit: { operator: '+' , operand: -2 , priorityGroup: null } ,
+				attack: { operator: '+' , operand: 6 , priorityGroup: null } ,
+				AT: { operator: '*' , operand: 12 , priorityGroup: null } ,
+				reach: { operator: '+' , operand: 7 , priorityGroup: null } ,
 				size: 4 ,
-				power: { operator: '+' , operand: 3 } ,
+				power: { operator: '+' , operand: 3 , priorityGroup: null } ,
 				damages: [
-					{ type: 'cutting' , damage: { operator: '+' , operand: 14 } } ,
+					{ type: 'cutting' , damage: { operator: '+' , operand: 14 , priorityGroup: null } } ,
 					{ type: 'fire' , damage: 10 }
 				]
 			}

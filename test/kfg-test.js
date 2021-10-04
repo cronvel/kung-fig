@@ -1833,6 +1833,30 @@ describe( "Stats Modifiers" , () => {
 		expect( npc.mods['staff of might'] ).to.be.an( Object ) ;
 	} ) ;
 
+	it( "full ModifiersTable with operators having important mark '!' (= less priority, it comes last)" , () => {
+		var npc = parse( fs.readFileSync( __dirname + '/sample/kfg/stats/statsTable.kfg' , 'utf8' ) ) ,
+			staff = parse( fs.readFileSync( __dirname + '/sample/kfg/stats/modifiersTable-with-priority.kfg' , 'utf8' ) ) ;
+		
+		//console.log( "final" , npc , staff ) ;
+		expect( npc.strength.base ).to.be( 12 ) ;
+		expect( npc.strength.actual ).to.be( 12 ) ;
+		expect( npc.dexterity.base ).to.be( 10 ) ;
+		expect( npc.dexterity.actual ).to.be( 10 ) ;
+
+		expect( staff.strength.multiply_m1.operand ).to.be( 1.5 ) ;
+		expect( staff.strength.plus.operand ).to.be( 4 ) ;
+		expect( staff.dexterity.multiply.operand ).to.be( 0.5 ) ;
+		expect( staff.dexterity.plus_m1.operand ).to.be( -4 ) ;
+
+		npc.stack( staff ) ;
+
+		expect( npc.strength.base ).to.be( 12 ) ;
+		expect( npc.strength.actual ).to.be( 24 ) ;
+		expect( npc.dexterity.base ).to.be( 10 ) ;
+		expect( npc.dexterity.actual ).to.be( 1 ) ;
+		expect( npc.mods['staff of might'] ).to.be.an( Object ) ;
+	} ) ;
+
 	it( "should parse a ModifiersTable template" , () => {
 		var npc = parse( '<StatsTable>\nstrength: 12\ndexterity: 15\nhp:\n\tmax: 20\n\tremaining: 14\n' ) ,
 			staff = parse( '<ModifiersTable>\nid: staff\ntemplate: true\nstrength: (+) 5\ndexterity:\n\t- (*) 0.8\n\t- (-) 2\nhp.max: (+) 1\n' ) ;
