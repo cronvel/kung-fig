@@ -1,4 +1,10 @@
 
+v0.60.0
+-------
+
+Breaking: stats-modifiers operator priority changed
+
+
 v0.59.12
 --------
 
