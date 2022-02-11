@@ -197,6 +197,9 @@ describe( "KFG stringify" , () => {
 		
 		expect( stringify( { tpl: new TemplateSentence( '' ) } ) ).to.be( 'tpl: <Sentence>\n' ) ;
 		expect( stringify( new TemplateSentence( '' ) ) ).to.be( '<Sentence>\n' ) ;
+
+		expect( stringify( parse( 'tpl: $> Hello ${name}!\n' ) ) ).to.be( 'tpl: $> Hello ${name}!\n' ) ;
+		expect( stringify( parse( 'tpl: $> Hello ${firstName} ${lastName}!\n' ) ) ).to.be( 'tpl: $> Hello ${firstName} ${lastName}!\n' ) ;
 	} ) ;
 	
 	it( "stringify applicable templates" ) ;
