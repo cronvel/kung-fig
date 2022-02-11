@@ -1,4 +1,10 @@
 
+v0.60.2
+-------
+
+Add .saveJsonAsync() and .saveKfgAsync()
+
+
 v0.60.1
 -------
 
