@@ -104,6 +104,15 @@ describe( "KFG stringify" , () => {
 		expect( stringify( 123.456 ) ).to.be( "123.456\n" ) ;
 	} ) ;
 	
+	it( "stringify with boolean preferences" , () => {
+		expect( stringify( true ) ).to.be( "true\n" ) ;
+		expect( stringify( false ) ).to.be( "false\n" ) ;
+		expect( stringify( true , { preferYesNo: true } ) ).to.be( "yes\n" ) ;
+		expect( stringify( false , { preferYesNo: true } ) ).to.be( "no\n" ) ;
+		expect( stringify( true , { preferOnOff: true } ) ).to.be( "on\n" ) ;
+		expect( stringify( false , { preferOnOff: true } ) ).to.be( "off\n" ) ;
+	} ) ;
+	
 	it( "stringify empty object/array" , () => {
 		expect( stringify( [] ) ).to.be( '<Array>\n' ) ;
 		expect( stringify( {} ) ).to.be( '<Object>\n' ) ;
