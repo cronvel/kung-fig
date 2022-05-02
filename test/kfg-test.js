@@ -76,6 +76,9 @@ describe( "KFG stringify" , () => {
 		expect( stringify( "Hello\nWorld!" ) ).to.be( '> Hello\n> World!\n' ) ;
 		expect( stringify( "One...\nTwo...\n\nThree!" ) ).to.be( '> One...\n> Two...\n> \n> Three!\n' ) ;
 		expect( stringify( "One...\n\tTwo...\n\nThree!" ) ).to.be( '> One...\n> \tTwo...\n> \n> Three!\n' ) ;
+
+		expect( stringify( "C:\\Users\\Bob" ) ).to.be( '> C:\\Users\\Bob\n' ) ;
+		expect( stringify( { path: "C:\\Users\\Bob" } ) ).to.be( 'path: C:\\Users\\Bob\n' ) ;
 	} ) ;
 		
 	it( "stringify string with option 'preferQuotes'" , () => {
@@ -418,6 +421,9 @@ describe( "KFG parse" , () => {
 		expect( parse( '> 123' ) ).to.be( "123" ) ;
 		expect( parse( '> 123.45' ) ).to.be( "123.45" ) ;
 		//expect( parse( 'this is not: an object' ) ).to.be( "this is not: an object" ) ;
+
+		expect( parse( '> C:\\Users\\Bob' ) ).to.be( "C:\\Users\\Bob" ) ;
+		expect( parse( '"C:\\\\Users\\\\Bob"' ) ).to.be( "C:\\Users\\Bob" ) ;
 	} ) ;
 	
 	it( "parse multi-line string at top-level" , () => {
@@ -494,6 +500,9 @@ describe( "KFG parse" , () => {
 		expect( parse( "null: Joe" ) ).to.equal( {"null":"Joe"} ) ;
 		expect( parse( "true: Joe" ) ).to.equal( {"true":"Joe"} ) ;
 		expect( parse( "false: Joe" ) ).to.equal( {"false":"Joe"} ) ;
+
+		expect( parse( 'path: C:\\Users\\Bob' ) ).to.equal( { path: "C:\\Users\\Bob" } ) ;
+		expect( parse( 'path: > C:\\Users\\Bob' ) ).to.equal( { path: "C:\\Users\\Bob" } ) ;
 	} ) ;
 
 	it( "key with dot" , () => {

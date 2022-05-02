@@ -1,4 +1,10 @@
 
+v0.61.0
+-------
+
+KFG stringifier now allows antislashes in implicit string
+
+
 v0.60.3
 -------
 
