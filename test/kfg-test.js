@@ -242,7 +242,7 @@ describe( "KFG stringify" , () => {
 		//console.log( string.escape.control( s ) ) ;
 		//console.log( parse( s ) ) ;
 		
-		expect( s ).to.be( 'bin: <bin16> af461e0a\ndate1: <date> Fri Jan 02 1970 11:17:36 GMT+0100 (Central European Standard Time)\nregex1: <regex> /abc/\narray:\n\t-\t- <date> Fri Jan 02 1970 11:17:36 GMT+0100 (Central European Standard Time)\n\t\t- <regex> /abc/gi\n\t-\t- <date> Fri Jan 02 1970 11:17:36 GMT+0100 (Central European Standard Time)\n\t\t- <regex> /abc/gi\nobject:\n\tdate2: <date> Fri Jan 02 1970 11:17:36 GMT+0100 (Central European Standard Time)\n\tregex2: <regex> /abc/gi\n' ) ;
+		expect( s ).to.be( 'bin: <bin16> af461e0a\ndate1: <date> 1970-01-02T10:17:36.000Z\nregex1: <regex> /abc/\narray:\n\t-\t- <date> 1970-01-02T10:17:36.000Z\n\t\t- <regex> /abc/gi\n\t-\t- <date> 1970-01-02T10:17:36.000Z\n\t\t- <regex> /abc/gi\nobject:\n\tdate2: <date> 1970-01-02T10:17:36.000Z\n\tregex2: <regex> /abc/gi\n' ) ;
 		
 		var o2 = parse( s ) ;
 		
@@ -343,7 +343,6 @@ describe( "KFG stringify" , () => {
 	} ) ;
 	
 	it( "stringify an object with tags, featuring custom tags prototype" , () => {
-		
 		function IfTag() {}
 		IfTag.prototype = Object.create( Tag.prototype ) ;
 		IfTag.prototype.constructor = IfTag ;
@@ -478,6 +477,10 @@ describe( "KFG parse" , () => {
 		expect( parse( "v:10e2" ) ).to.equal( {v:1000} ) ;
 		expect( parse( "v:123.5" ) ).to.equal( {v:123.5} ) ;
 		expect( parse( "v:123.e5" ) ).to.equal( {v:"123.e5"} ) ;
+
+		expect( parse( "v: 12edo" ) ).to.equal( {v:"12edo"} ) ;
+		expect( parse( "v: 12EDO" ) ).to.equal( {v:"12EDO"} ) ;
+		expect( parse( "v: 12-EDO" ) ).to.equal( {v:"12-EDO"} ) ;
 	} ) ;
 	
 	it( "constant and string ambiguity" , () => {
@@ -1324,7 +1327,6 @@ describe( "KFG parse" , () => {
 	} ) ;
 	
 	it( "parse a file containing tags" , () => {
-		
 		var o = parse( fs.readFileSync( __dirname + '/sample/kfg/tag.kfg' , 'utf8' ) ) ;
 		
 		//console.log( o ) ;

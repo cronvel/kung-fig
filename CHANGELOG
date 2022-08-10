@@ -1,4 +1,12 @@
 
+v0.62.0
+-------
+
+BREAKING: kungFig.builtin refactored (but it wasn't really API)
+Centralize builtin Classes management (stringify() doesn't have its own stuff, it's now shared within builtin.js)
+Fix a stringify bug when using 'noCircularPatch' option and Date instances
+
+
 v0.61.1
 -------
 

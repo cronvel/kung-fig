@@ -789,6 +789,16 @@ describe( "Saving a config" , () => {
 		//console.log( str ) ;
 		expect( str ).to.be( '[\n  "test",\n  [\n    3,\n    [\n      "hello",\n      "world!"\n    ],\n    {\n      "just": "a",\n      "simple": {\n        "test": "!"\n      }\n    }\n  ],\n  [\n    "world!",\n    "hello",\n    3\n  ]\n]' ) ;
 	} ) ;
+
+	it( "xxx should stringify a config with a Date" , () => {
+		var conf = {
+			date: new Date( "2022-08-10T11:35:38.622Z" )
+		} ;
+
+		//console.log( kungFig.saveKfg( conf ).replace( /\n/g , () => '\\n' ).replace( /\t/g , () => '\\t' ) ) ;
+		expect( kungFig.saveJson( conf ) ).to.be( '{\n  "date": "2022-08-10T11:35:38.622Z"\n}' ) ;
+		expect( kungFig.saveKfg( conf ) ).to.be( 'date: <date> 2022-08-10T11:35:38.622Z\n' ) ;
+	} ) ;
 } ) ;
 
 

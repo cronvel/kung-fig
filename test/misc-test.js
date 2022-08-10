@@ -71,7 +71,7 @@ describe( "Expression" , () => {
 		var parsed , ctx , regexp ;
 
 		regexp = /hello/ ;
-		kungFig.builtin.regex.toExtended( regexp ) ;
+		kungFig.builtin.types.regex.toExtended( regexp ) ;
 
 		ctx = {
 			str: 'hello world!' ,
@@ -88,7 +88,7 @@ describe( "Expression" , () => {
 		//deb( parsed ) ;
 		expect( parsed.getFinalValue( ctx ) ).to.equal( [ 'hello' , 'hello world!' ] ) ;
 
-		kungFig.builtin.regex.toSubstitution( regexp , 'hi' ) ;
+		kungFig.builtin.types.regex.toSubstitution( regexp , 'hi' ) ;
 
 		parsed = Expression.parse( '$regexp.substitute -> $str' ) ;
 		//deb( parsed ) ;
