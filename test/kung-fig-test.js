@@ -790,7 +790,7 @@ describe( "Saving a config" , () => {
 		expect( str ).to.be( '[\n  "test",\n  [\n    3,\n    [\n      "hello",\n      "world!"\n    ],\n    {\n      "just": "a",\n      "simple": {\n        "test": "!"\n      }\n    }\n  ],\n  [\n    "world!",\n    "hello",\n    3\n  ]\n]' ) ;
 	} ) ;
 
-	it( "xxx should stringify a config with a Date" , () => {
+	it( "should stringify a config with a Date (historical bug)" , () => {
 		var conf = {
 			date: new Date( "2022-08-10T11:35:38.622Z" )
 		} ;

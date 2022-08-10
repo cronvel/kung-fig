@@ -216,6 +216,18 @@ describe( "KFG stringify" , () => {
 	
 	it( "stringify applicable templates" ) ;
 	
+	it( "functions should be stripped inside object, or set to null in arrays" , () => {
+		var o = {
+			a: 'a' ,
+			fn: () => null ,
+			array: [ 1 , () => null , 3 ]
+		} ;
+		
+		var s = stringify( o ) ;
+		
+		expect( s ).to.be( 'a: a\narray:\n\t- 1\n\t- null\n\t- 3\n' ) ;
+	} ) ;
+	
 	it( "stringify an object with special instances (bin, date, regex)" , () => {
 		var o = {
 			bin: Buffer.from( 'af461e0a' , 'hex' ) ,
