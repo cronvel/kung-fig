@@ -2,8 +2,11 @@
 v0.63.0
 -------
 
-MAYBE BREAKING: support for inline LXON (LaX jsON) to allow more compact data, disambigation with tags vs arrays are done by forcing a space after the '[' bracket (or the '{' brace) for LXON (it acts as a regular introducer) where tags require a tag name starting IMMEDIATELY after the '[' bracket
-support for builtin type <LXON> (pass a string)
+MAYBE BREAKING: support for inline LXON (LaX jsON) to allow more compact data, disambigation with tags vs arrays are done
+by forcing a space after the '[' bracket (or the '{' brace) for LXON (it acts as a regular introducer) where tags require
+a tag name starting IMMEDIATELY after the '[' bracket.
+
+Support for builtin type <LXON> (passing a string, like for JSON).
 
 
 v0.62.1
