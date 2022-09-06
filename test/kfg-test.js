@@ -636,6 +636,25 @@ describe( "KFG parse" , () => {
 		) ;
 	} ) ;
 	
+	it( "parse inline LXON (LaX jsON)" , () => {
+		expect( parse( 'key: [ "one" , "two" , "three" ]' ) ).to.equal( { key: [ 'one' , 'two' , 'three' ] } ) ;
+		expect( parse( 'key: [ "one" , "two" , "three" ]' ) ).to.equal( { key: [ 'one' , 'two' , 'three' ] } ) ;
+		expect( parse( 'key: [ { name: "Bob" } , { name: "Jim" } , { name: "Jack" } ]' ) ).to.equal( { key: [ { name: "Bob" } , { name: "Jim" } , { name: "Jack" } ] } ) ;
+		expect( parse( 'key: { name: "Bob" , job : "coder" }' ) ).to.equal( { key: { name: "Bob" , job: "coder" } } ) ;
+
+		expect( () => parse( 'key: ["one" , "two" , "three" ]' ) ).to.throw( SyntaxError ) ;
+		expect( () => parse( 'key: {name: "Bob" , job : "coder" }' ) ).to.throw( SyntaxError ) ;
+
+		expect( parse( '[ "one" , "two" , "three" ]' ) ).to.equal( [ 'one' , 'two' , 'three' ] ) ;
+		expect( parse( '{ name: "Bob" , job : "coder" }' ) ).to.equal( { name: "Bob" , job: "coder" } ) ;
+		
+		// Check constants
+		expect( parse( '{ name: "Bob" , coder: yes, smoke:no, work: off,vacation:on,gf:null,paid:NaN,ideas:Infinity, time:-Infinity}' ) ).to.equal( { name: "Bob" , coder: true , smoke: false , work: false , vacation: true , gf: null , paid: NaN , ideas: Infinity , time: - Infinity } ) ;
+
+		expect( parse( '["one" , "two" , "three" ]' ) ).to.be.a( TagContainer ) ;
+		expect( () => parse( '{name: "Bob" , job : "coder" }' ) ).to.throw( SyntaxError ) ;
+	} ) ;
+	
 	it( "map keys and values" , () => {
 		expect( parse( '<: Hello Bob!\n:> Bonjour Bob !' ) ).to.map( [
 			[ "Hello Bob!" , "Bonjour Bob !" ]
@@ -1219,7 +1238,7 @@ describe( "KFG parse" , () => {
 		//console.log( JSON.stringify( o ) ) ;
 		
 		expect( JSON.stringify( o ) ).to.be(
-			'{"a":1234,"bin":{"type":"Buffer","data":[253,16,75,25]},"date1":"2016-04-29T10:08:14.000Z","date2":"2016-04-29T10:08:08.645Z","b":"toto","regex1":{},"sub":{"sub":{"date3":"1970-01-01T00:00:01.000Z","regex2":{}}},"d":2,"json":{"a":1,"b":2,"array":[1,2,"three"]}}'
+			'{"a":1234,"bin":{"type":"Buffer","data":[253,16,75,25]},"date1":"2016-04-29T10:08:14.000Z","date2":"2016-04-29T10:08:08.645Z","b":"toto","regex1":{},"sub":{"sub":{"date3":"1970-01-01T00:00:01.000Z","regex2":{}}},"d":2,"json":{"a":1,"b":2,"array":[1,2,"three"]},"lxon":{"key1":"value1","key2":2,"array":[1,2,"three"]}}'
 		) ;
 		
 		expect( o.regex1 ).to.be.a( RegExp ) ;

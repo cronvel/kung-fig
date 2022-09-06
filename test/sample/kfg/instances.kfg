@@ -10,3 +10,4 @@ sub:
 		regex2: <regex> /abc/m
 d: 2
 json: <JSON> > {"a":1,"b":2,"array":[1,2,"three"]}
+lxon: <LXON> > { key1 :"value1" , key2:2,array:[1,2,"three"]}

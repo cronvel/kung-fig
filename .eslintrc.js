@@ -9,6 +9,7 @@ module.exports = {
 		'ecmaVersion': 2020
 	} ,
 	'extends': [ 'eslint:recommended' ] ,
+	'ignorePatterns': [ "*.min.js" ] ,
 	'rules': {
 		
 		/*
