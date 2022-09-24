@@ -1,6 +1,6 @@
 {
   "name": "kung-fig",
-  "version": "0.63.0",
+  "version": "0.63.1",
   "engines": {
     "node": ">=14.15.0"
   },
@@ -20,7 +20,7 @@
     "kung-fig-template": "^0.50.0",
     "seventh": "^0.7.40",
     "stats-modifiers": "^0.6.0",
-    "string-kit": "^0.17.0",
+    "string-kit": "^0.17.6",
     "tree-kit": "^0.7.4"
   },
   "devDependencies": {

@@ -1,4 +1,10 @@
 
+v0.63.1
+-------
+
+Fix KFG section bug, when there is no spaces between the section mark and the section name (which should be supported)
+
+
 v0.63.0
 -------
 

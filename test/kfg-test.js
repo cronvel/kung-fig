@@ -612,7 +612,11 @@ describe( "KFG parse" , () => {
 	} ) ;
 	
 	it( "sections as object's keys" , () => {
+		expect( parse( '---section1---\nvalue' ) ).to.equal( {section1:"value"} ) ;
 		expect( parse( '--- section1 ---\nvalue' ) ).to.equal( {section1:"value"} ) ;
+		expect( parse( '---section1 ---\nvalue' ) ).to.equal( {section1:"value"} ) ;
+		expect( parse( '--- section1---\nvalue' ) ).to.equal( {section1:"value"} ) ;
+		expect( parse( '---   section1  ---\nvalue' ) ).to.equal( {section1:"value"} ) ;
 		expect( parse( '---- section1 ---\nvalue' ) ).to.equal( {section1:"value"} ) ;
 		expect( parse( '--- section1 ----\nvalue' ) ).to.equal( {section1:"value"} ) ;
 		expect( parse( '------ section1 --------\nvalue' ) ).to.equal( {section1:"value"} ) ;
