@@ -1,0 +1,5 @@
+sub:
+	key: value
+	key2: value2
+	@@empty.kfg
+	@@emptyWithComments.kfg

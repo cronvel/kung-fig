@@ -43,6 +43,11 @@ describe( "Loading a config" , () => {
 		expect( () => kungFig.load( __dirname + '/sample/unexistant.kfg' ) ).to.throw() ;
 	} ) ;
 
+	it( "empty KFG or KFG containing only comments should be considered as an empty object instead of undefined" , () => {
+		expect( kungFig.load( __dirname + '/sample/empty.kfg' ) ).to.equal( {} ) ;
+		expect( kungFig.load( __dirname + '/sample/emptyWithComments.kfg' ) ).to.equal( {} ) ;
+	} ) ;
+
 	it( "should load a simple JSON file without dependency" , () => {
 		expect( kungFig.load( __dirname + '/sample/simple.json' ) ).to.equal( { just: 'a' , simple: { test: '!' } } ) ;
 	} ) ;
@@ -287,6 +292,12 @@ describe( "Dependencies (aka includes) and references" , () => {
 	it( "should load a KFG file with a dependency that merge with existing properties (before)" , () => {
 		expect( kungFig.load( __dirname + '/sample/dependencyMergeBefore.kfg' ) ).to.equal( {
 			sub: { just: "the" , simple: { test: "!" , and: "test" } , extra: "value" }
+		} ) ;
+	} ) ;
+	
+	it( "should load a KFG file with an empty dependency should not alter anything" , () => {
+		expect( kungFig.load( __dirname + '/sample/dependencyMergeEmpty.kfg' ) ).to.equal( {
+			sub: { key: "value" , key2: "value2" }
 		} ) ;
 	} ) ;
 	

@@ -1,4 +1,10 @@
 
+v0.64.0
+-------
+
+MAYBE BREAKING: empty files and files with only comments are now considered as empty objects instead of undefined (prevent trouble when we are commenting out the last key-value pair of a file)
+
+
 v0.63.1
 -------
 
