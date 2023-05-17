@@ -19,8 +19,8 @@
     "kung-fig-ref": "^0.46.2",
     "kung-fig-template": "^0.50.0",
     "seventh": "^0.8.2",
-    "stats-modifiers": "^0.6.0",
-    "string-kit": "^0.17.8",
+    "stats-modifiers": "^0.7.1",
+    "string-kit": "^0.17.10",
     "tree-kit": "^0.7.4"
   },
   "devDependencies": {
