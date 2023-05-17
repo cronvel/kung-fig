@@ -1,0 +1,8 @@
+<StatsTable>
+reflex: 16
+dexterity: 10
+defense: $$= ( ( 2 * $reflex ) + $dexterity ) / 3
+hp:
+	max: 20
+	injury: 7
+	remaining: $$= $hp.max - $hp.injury

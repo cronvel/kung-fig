@@ -1,0 +1,6 @@
+<StatsTable>
+strength: 12
+dexterity: 15
+hp:
+	max: 20
+	remaining: 14

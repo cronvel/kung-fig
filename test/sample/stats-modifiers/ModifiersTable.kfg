@@ -1,0 +1,4 @@
+<ModifiersTable>
+id: staff
+strength: (+) 5
+dexterity: (*) 0.8
