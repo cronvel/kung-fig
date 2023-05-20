@@ -1923,6 +1923,29 @@ describe( "Stats Modifiers" , () => {
 		expect( npc.mods['staff of might'] ).to.be.an( Object ) ;
 	} ) ;
 
+	it( "should parse a StatsTable with a Template Sentence Stat" , () => {
+		var statsTable = kungFig.parse( "<StatsTable>\nflavor: $> ${selfName} attack ${enemyName}" ) ;
+		var mods = kungFig.parse( "<ModifiersTable>\nflavor: ($_+) $> with a ${weaponName}" ) ;
+		var mods2 = kungFig.parse( "<ModifiersTable>\nflavor: (+$_) $> ${title}" ) ;
+
+		/*
+		log( "final statsTable: %I" , statsTable ) ;
+		log( "final modifiersTable: %I" , mods ) ;
+		log( "final modifiersTable 2: %I" , mods2 ) ;
+		//*/
+
+		expect( statsTable.flavor.base.key ).to.be( "${selfName} attack ${enemyName}" ) ;
+		expect( statsTable.flavor.actual.key ).to.be( "${selfName} attack ${enemyName}" ) ;
+		
+		statsTable.stack( mods ) ;
+		expect( statsTable.flavor.base.key ).to.be( "${selfName} attack ${enemyName}" ) ;
+		expect( statsTable.flavor.actual.key ).to.be( "${selfName} attack ${enemyName} with a ${weaponName}" ) ;
+
+		statsTable.stack( mods2 ) ;
+		expect( statsTable.flavor.base.key ).to.be( "${selfName} attack ${enemyName}" ) ;
+		expect( statsTable.flavor.actual.key ).to.be( "${title} ${selfName} attack ${enemyName} with a ${weaponName}" ) ;
+	} ) ;
+
 	it( "should parse a ModifiersTable template" , () => {
 		var npc = parse( '<StatsTable>\nstrength: 12\ndexterity: 15\nhp:\n\tmax: 20\n\tremaining: 14\n' ) ,
 			staff = parse( '<ModifiersTable>\nid: staff\ntemplate: true\nstrength: (+) 5\ndexterity:\n\t- (*) 0.8\n\t- (-) 2\nhp.max: (+) 1\n' ) ;
