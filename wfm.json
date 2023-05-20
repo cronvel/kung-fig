@@ -1,16 +1,3 @@
 {
-	"prepare": {
-		"prereleaseCount": 1,
-		"fromVersion": "0.64.0",
-		"forceVersionGte": "0.64.0",
-		"statusType": "alpha",
-		"releaseType": "breaking",
-		"nextVersion": "0.65.0-alpha.1",
-		"entries": [
-			{
-				"type": "breaking",
-				"message": "Upgrading stats-modifiers "
-			}
-		]
-	}
+	"prepare": {}
 }
