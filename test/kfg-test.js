@@ -813,6 +813,21 @@ describe( "KFG parse" , () => {
 		expect( parse( "object:\n\t\t# comment\n\tkey: value" ) ).to.equal( { object: { key: "value" } } ) ;
 	} ) ;
 	
+	it( "parse empty property and operator with no operand" , () => {
+		var o = parse( "a:   \nb: (#)  \n" ) ;
+		//log( "o: %I" , o ) ;
+
+		expect( o ).to.only.have.own.keys( 'b' ) ;
+		expect( o.b ).to.be.a( kungFig.Operator ) ;
+		expect( o ).to.be.like( {
+			b: {
+				operator: '#' ,
+				operand: undefined ,
+				priorityGroup: null
+			}
+		} ) ;
+	} ) ;
+
 	it( "parse a basic file" , () => {
 		var kfg = parse( fs.readFileSync( __dirname + '/sample/kfg/simple.kfg' , 'utf8' ) , null , true ) ;
 		
@@ -1790,7 +1805,7 @@ describe( "Stats Modifiers" , () => {
 		expect( o.hp.remaining.actual ).to.be( 14 ) ;
 	} ) ;
 
-	it( "should parse a StatsTable with compound stat" , () => {
+	it( "should parse a StatsTable with Compound Stats" , () => {
 		var o = kungFig.load( __dirname + '/sample/stats-modifiers/CompoundStats.kfg' ) ;
 		//log( "final: %I" , o ) ;
 		//console.log( "final:" , o ) ;
@@ -1810,7 +1825,7 @@ describe( "Stats Modifiers" , () => {
 		expect( o.hp.remaining.actual ).to.be( 13 ) ;
 	} ) ;
 
-	it( "should parse a StatsTable with compound stat using Expression" , () => {
+	it( "should parse a StatsTable with Compound Stats using Expression" , () => {
 		var o = kungFig.load( __dirname + '/sample/stats-modifiers/CompoundStats-using-Expression.kfg' ) ;
 		//log( "final: %I" , o ) ;
 		
@@ -1848,11 +1863,35 @@ describe( "Stats Modifiers" , () => {
 		expect( o['hp.max'].plus.operand ).to.be( 1 ) ;
 	} ) ;
 
+	it( "should parse a StatsTable having WildNestedStats and ModifiersTable adding" , () => {
+		var stats = kungFig.load( __dirname + '/sample/stats-modifiers/WildNestedStats.kfg' ) ;
+		var mods = parse( '<ModifiersTable>\ndamages.fire: (#)\ndamages.fire.damage: (+) 2' ) ;
+
+		/*
+		log( "stats: %[5]I" , stats ) ;
+		log( "mods: %[5]I" , mods ) ;
+		log( "stats: %[5]I" , stats.damages ) ;
+		//*/
+
+		expect( stats.damages.base ).to.only.have.own.keys( 'cutting' ) ;
+		expect( stats.damages.base.cutting.damage.base ).to.be( 8 ) ;
+		expect( stats.damages.actual ).to.only.have.own.keys( 'cutting' ) ;
+		expect( stats.damages.actual.cutting.damage.actual ).to.be( 8 ) ;
+		
+		stats.stack( mods ) ;
+		expect( stats.damages.base ).to.only.have.own.keys( 'cutting' ) ;
+		expect( stats.damages.base.cutting.damage.base ).to.be( 8 ) ;
+		expect( stats.damages.actual ).to.only.have.own.keys( 'cutting' , 'fire' ) ;
+		expect( stats.damages.actual.cutting.damage.actual ).to.be( 8 ) ;
+		expect( stats.damages.actual.fire.damage.actual ).to.be( 3 ) ;
+	} ) ;
+
 	it( "full StatsTable and ModifiersTable use case" , () => {
-		var npc = parse( fs.readFileSync( __dirname + '/sample/stats-modifiers/npc-StatsTable.kfg' , 'utf8' ) ) ,
-			staff = parse( fs.readFileSync( __dirname + '/sample/stats-modifiers/staff-ModifiersTable.kfg' , 'utf8' ) ) ;
+		var npc = kungFig.load( __dirname + '/sample/stats-modifiers/npc-StatsTable.kfg' ) ,
+			staff = kungFig.load( __dirname + '/sample/stats-modifiers/staff-ModifiersTable.kfg' ) ;
 		
 		//console.log( "final" , npc , staff ) ;
+
 		expect( npc.strength.base ).to.be( 12 ) ;
 		expect( npc.strength.actual ).to.be( 12 ) ;
 		expect( npc.dexterity.base ).to.be( 12 ) ;
@@ -1900,8 +1939,8 @@ describe( "Stats Modifiers" , () => {
 	} ) ;
 
 	it( "full ModifiersTable with operators having important mark '!' (= less priority, it comes last)" , () => {
-		var npc = parse( fs.readFileSync( __dirname + '/sample/stats-modifiers/npc-StatsTable.kfg' , 'utf8' ) ) ,
-			staff = parse( fs.readFileSync( __dirname + '/sample/stats-modifiers/ModifiersTable-with-priority.kfg' , 'utf8' ) ) ;
+		var npc = kungFig.load( __dirname + '/sample/stats-modifiers/npc-StatsTable.kfg' ) ,
+			staff = kungFig.load( __dirname + '/sample/stats-modifiers/ModifiersTable-with-priority.kfg' ) ;
 		
 		//console.log( "final" , npc , staff ) ;
 		expect( npc.strength.base ).to.be( 12 ) ;
@@ -1971,8 +2010,8 @@ describe( "Stats Modifiers" , () => {
 	} ) ;
 
 	it( "StatsTable and ModifiersTable template featuring events" , () => {
-		var npc = parse( fs.readFileSync( __dirname + '/sample/stats-modifiers/npc-StatsTable.kfg' , 'utf8' ) ) ,
-			spell = parse( fs.readFileSync( __dirname + '/sample/stats-modifiers/ModifiersTable-with-events.kfg' , 'utf8' ) ) ;
+		var npc = kungFig.load( __dirname + '/sample/stats-modifiers/npc-StatsTable.kfg' ) ,
+			spell = kungFig.load( __dirname + '/sample/stats-modifiers/ModifiersTable-with-events.kfg' ) ;
 		
 		//console.log( "final" , npc , staff ) ;
 		expect( npc.strength.base ).to.be( 12 ) ;

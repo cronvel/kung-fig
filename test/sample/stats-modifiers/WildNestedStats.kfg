@@ -1,0 +1,9 @@
+<StatsTable>
+damages: <WildNestedStats>
+	template:
+		damage: 1
+		area: 1
+	cutting:
+		damage: 8
+		area: 1
+
