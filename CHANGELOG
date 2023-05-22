@@ -290,9 +290,9 @@ New: now KFG supports stats-modifiers
 v0.55.0
 -------
 
-MAYBE BREAKING: instance and array element repetition refacto
-element repetition clone non-opaque mutable object
-instance now supports includes because there are instanciated AFTER including (before, it was done at parser time)
+MAYBE BREAKING: instances and arrays' element repetition refacto.
+Element repetition clones non-opaque mutable objects.
+Instances now supports includes because they are instanciated AFTER including (before this version, it was done at parser time).
 
 
 v0.54.6
