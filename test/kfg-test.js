@@ -1870,7 +1870,13 @@ describe( "Stats Modifiers" , () => {
 		/*
 		log( "stats: %[5]I" , stats ) ;
 		log( "mods: %[5]I" , mods ) ;
+		//*/
+
+		/*
 		log( "stats: %[5]I" , stats.damages ) ;
+		var wild = parse( 'object: <Wild>\n\ttemplate:\n\t\ta: Alice\n\t\tb: Bob' ) ;
+		log( "wild: %[5]I" , wild ) ;
+		log( "wild.clone(): %[5]I" , wild.object.clone() ) ;
 		//*/
 
 		expect( stats.damages.base ).to.only.have.own.keys( 'cutting' ) ;
