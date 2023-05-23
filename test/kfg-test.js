@@ -1865,7 +1865,7 @@ describe( "Stats Modifiers" , () => {
 
 	it( "should parse a StatsTable having WildNestedStats and ModifiersTable adding" , () => {
 		var stats = kungFig.load( __dirname + '/sample/stats-modifiers/WildNestedStats.kfg' ) ;
-		var mods = parse( '<ModifiersTable>\ndamages.fire: (#)\ndamages.fire.damage: (+) 2' ) ;
+		var mods = parse( '<ModifiersTable>\ndamages.fire: (#) true\ndamages.fire.damage: (+) 2' ) ;
 
 		/*
 		log( "stats: %[5]I" , stats ) ;
@@ -1884,6 +1884,19 @@ describe( "Stats Modifiers" , () => {
 		expect( stats.damages.actual ).to.only.have.own.keys( 'cutting' , 'fire' ) ;
 		expect( stats.damages.actual.cutting.damage.actual ).to.be( 8 ) ;
 		expect( stats.damages.actual.fire.damage.actual ).to.be( 3 ) ;
+
+
+		// Wild activation + nested syntax
+
+		stats = kungFig.load( __dirname + '/sample/stats-modifiers/WildNestedStats.kfg' ) ;
+		mods = parse( '<ModifiersTable>\ndamages.fire: (#)\n\tdamage: (+) 4\n\tarea: (+) 2' ) ;
+		stats.stack( mods ) ;
+		expect( stats.damages.base ).to.only.have.own.keys( 'cutting' ) ;
+		expect( stats.damages.base.cutting.damage.base ).to.be( 8 ) ;
+		expect( stats.damages.actual ).to.only.have.own.keys( 'cutting' , 'fire' ) ;
+		expect( stats.damages.actual.cutting.damage.actual ).to.be( 8 ) ;
+		expect( stats.damages.actual.fire.damage.actual ).to.be( 5 ) ;
+		expect( stats.damages.actual.fire.area.actual ).to.be( 3 ) ;
 	} ) ;
 
 	it( "full StatsTable and ModifiersTable use case" , () => {
