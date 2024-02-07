@@ -1,4 +1,10 @@
 
+v0.67.2
+-------
+
+Important bugfix: fix constant detection error when the value is a method name of the Object's prototype
+
+
 v0.65.0
 -------
 

@@ -2121,3 +2121,13 @@ describe( "Stats Modifiers" , () => {
 	//it( "StatsTable template" ) ;
 } ) ;
 
+
+
+describe( "Historical parser bugs" , () => {
+
+	it( "Constant detection error when the value is a method name of the Object's prototype" , () => {
+		var o = kungFig.parse( "object:\n\tkey: value\n\tkey2: toString\n\tkey3: trim\n" ) ;
+		expect( o ).to.equal( { object: { key: "value" , key2: "toString" , key3: "trim" } } ) ;
+	} ) ;
+} ) ;
+
