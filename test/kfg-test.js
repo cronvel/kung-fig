@@ -2126,8 +2126,12 @@ describe( "Stats Modifiers" , () => {
 describe( "Historical parser bugs" , () => {
 
 	it( "Constant detection error when the value is a method name of the Object's prototype" , () => {
-		var o = kungFig.parse( "object:\n\tkey: value\n\tkey2: toString\n\tkey3: trim\n" ) ;
-		expect( o ).to.equal( { object: { key: "value" , key2: "toString" , key3: "trim" } } ) ;
+		var o = kungFig.parse( "object:\n\tkey: value\n\tkey2: toString\n\tkey3: trim\n\tkey4: hasOwnProperty\n" ) ;
+		expect( o ).to.equal( { object: { key: "value" , key2: "toString" , key3: "trim" , key4: "hasOwnProperty" } } ) ;
+
+		// Also test if it works with the key (not an historical bug)
+		o = kungFig.parse( "object:\n\tkey: value\n\ttoString: value2\n\thasOwnProperty: value3\n" ) ;
+		expect( o ).to.equal( { object: { key: "value" , toString: "value2" , hasOwnProperty: "value3" } } ) ;
 	} ) ;
 } ) ;
 
