@@ -467,6 +467,34 @@ describe( "Dependencies (aka includes) and references" , () => {
 		} ) ;
 	} ) ;
 
+	it( "should async load a KFG file with a glob dependency" , async () => {
+		var object = await kungFig.loadAsync( __dirname + '/sample/withGlobIncludes.kfg' ) ;
+
+		expect( object ).to.equal( {
+			simple: 'test' ,
+			globInclude: [
+				{
+					one: 1 ,
+					two: {
+						five: {
+							just: "a" ,
+							simple: {
+								test: "!"
+							}
+						} ,
+						four: {
+							hello: "world!"
+						} ,
+						three: 3
+					}
+				} ,
+				{
+					hello: "world!"
+				}
+			]
+		} ) ;
+	} ) ;
+
 	it( "should load a KFG file with a glob dependency that resolve to no files" , () => {
 		expect( kungFig.load( __dirname + '/sample/withUnexistantGlobInclude.kfg' ) ).to.equal( {
 			simple: 'test' ,

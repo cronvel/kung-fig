@@ -57,3 +57,7 @@ log
 sample
 wfm.json
 builder
+test/
+doc/
+sample/
+builder/
