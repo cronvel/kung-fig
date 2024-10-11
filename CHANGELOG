@@ -1,4 +1,10 @@
 
+v0.67.4
+-------
+
+LXON parser upgraded: unquoted keys now support '@' and '-' and there is no more extra limitation for the first character of a key
+
+
 v0.67.3
 -------
 
