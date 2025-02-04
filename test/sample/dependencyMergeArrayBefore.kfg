@@ -1,0 +1,6 @@
+array:
+	@@includesArray/two.kfg
+	@@includesArray/three.kfg
+	- one
+	- two
+	- three

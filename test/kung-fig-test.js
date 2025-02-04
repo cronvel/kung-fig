@@ -301,6 +301,44 @@ describe( "Dependencies (aka includes) and references" , () => {
 		} ) ;
 	} ) ;
 	
+	it( "should load a KFG file with a dependency that merge with existing array elements (before)" , () => {
+		expect( kungFig.load( __dirname + '/sample/dependencyMergeArrayBefore.kfg' ) ).to.equal( {
+			array: [ 'hello' , 'world!' , 'more...' , 'values...' , 'and even...' , 'more values...' , 'one' , 'two' , 'three' ]
+		} ) ;
+	} ) ;
+	
+	it( "should load a KFG file with a dependency that merge with existing array elements (after)" , () => {
+		expect( kungFig.load( __dirname + '/sample/dependencyMergeArrayAfter.kfg' ) ).to.equal( {
+			array: [ 'one' , 'two' , 'three' , 'hello' , 'world!' , 'more...' , 'values...' , 'and even...' , 'more values...' ]
+		} ) ;
+	} ) ;
+	
+	it( "should load a KFG file with a dependency that merge with existing array elements (middle)" , () => {
+		expect( kungFig.load( __dirname + '/sample/dependencyMergeArrayMiddle.kfg' ) ).to.equal( {
+			array: [
+				'one' ,
+				'hello' , 'world!' , 'more...' , 'values...' , 'and even...' , 'more values...' ,
+				'two' ,
+				'hello' , 'world!' , 'more...' , 'values...' , 'and even...' , 'more values...' ,
+				'three'
+			]
+		} ) ;
+	} ) ;
+	
+	it( "should load a KFG file with a dependency that merge with existing array elements (everywhere)" , () => {
+		expect( kungFig.load( __dirname + '/sample/dependencyMergeArrayEverywhere.kfg' ) ).to.equal( {
+			array: [
+				'hello' , 'world!' , 'more...' , 'values...' , 'and even...' , 'more values...' ,
+				'one' ,
+				'hello' , 'world!' , 'more...' , 'values...' , 'and even...' , 'more values...' ,
+				'two' ,
+				'hello' , 'world!' , 'more...' , 'values...' , 'and even...' , 'more values...' ,
+				'three' ,
+				'hello' , 'world!' , 'more...' , 'values...' , 'and even...' , 'more values...'
+			]
+		} ) ;
+	} ) ;
+	
 	it( "should load a KFG file with a MISSING dependency that would have merge with existing properties (before)" , () => {
 		expect( kungFig.load( __dirname + '/sample/dependencyMissingMergeBefore.kfg' ) ).to.equal( {
 			sub: { just: "the" , simple: { and: "test" } , extra: "value" }

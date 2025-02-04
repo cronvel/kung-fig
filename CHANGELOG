@@ -1,4 +1,10 @@
 
+v0.68.0
+-------
+
+MAYBE BREAKING: support for includes in Array/Set, instead of merging, it inserts new elements exactly at the position where the include mark occurs, included data should be of type Array/Set (also works for TagContainers, and maybe in the future for all array-like)
+
+
 v0.67.6
 -------
 
