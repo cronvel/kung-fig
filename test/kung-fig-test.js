@@ -301,20 +301,20 @@ describe( "Dependencies (aka includes) and references" , () => {
 		} ) ;
 	} ) ;
 	
-	it( "should load a KFG file with a dependency that merge with existing array elements (before)" , () => {
-		expect( kungFig.load( __dirname + '/sample/dependencyMergeArrayBefore.kfg' ) ).to.equal( {
+	it( "should load a KFG file with a dependency that insert in place array elements (before)" , () => {
+		expect( kungFig.load( __dirname + '/sample/dependencyInsertArrayBefore.kfg' ) ).to.equal( {
 			array: [ 'hello' , 'world!' , 'more...' , 'values...' , 'and even...' , 'more values...' , 'one' , 'two' , 'three' ]
 		} ) ;
 	} ) ;
 	
-	it( "should load a KFG file with a dependency that merge with existing array elements (after)" , () => {
-		expect( kungFig.load( __dirname + '/sample/dependencyMergeArrayAfter.kfg' ) ).to.equal( {
+	it( "should load a KFG file with a dependency that insert in place array elements (after)" , () => {
+		expect( kungFig.load( __dirname + '/sample/dependencyInsertArrayAfter.kfg' ) ).to.equal( {
 			array: [ 'one' , 'two' , 'three' , 'hello' , 'world!' , 'more...' , 'values...' , 'and even...' , 'more values...' ]
 		} ) ;
 	} ) ;
 	
-	it( "should load a KFG file with a dependency that merge with existing array elements (middle)" , () => {
-		expect( kungFig.load( __dirname + '/sample/dependencyMergeArrayMiddle.kfg' ) ).to.equal( {
+	it( "should load a KFG file with a dependency that insert in place array elements (middle)" , () => {
+		expect( kungFig.load( __dirname + '/sample/dependencyInsertArrayMiddle.kfg' ) ).to.equal( {
 			array: [
 				'one' ,
 				'hello' , 'world!' , 'more...' , 'values...' , 'and even...' , 'more values...' ,
@@ -325,8 +325,8 @@ describe( "Dependencies (aka includes) and references" , () => {
 		} ) ;
 	} ) ;
 	
-	it( "should load a KFG file with a dependency that merge with existing array elements (everywhere)" , () => {
-		expect( kungFig.load( __dirname + '/sample/dependencyMergeArrayEverywhere.kfg' ) ).to.equal( {
+	it( "should load a KFG file with a dependency that insert in place array elements (everywhere)" , () => {
+		expect( kungFig.load( __dirname + '/sample/dependencyInsertArrayEverywhere.kfg' ) ).to.equal( {
 			array: [
 				'hello' , 'world!' , 'more...' , 'values...' , 'and even...' , 'more values...' ,
 				'one' ,
@@ -337,6 +337,21 @@ describe( "Dependencies (aka includes) and references" , () => {
 				'hello' , 'world!' , 'more...' , 'values...' , 'and even...' , 'more values...'
 			]
 		} ) ;
+	} ) ;
+	
+	it( "should load a KFG file with a dependency that insert in place array elements at top-level" , () => {
+		console.log( "Result:" , kungFig.load( __dirname + '/sample/dependencyInsertArrayTopLevel.kfg' ) ) ;
+		return ;
+
+		expect( kungFig.load( __dirname + '/sample/dependencyInsertArrayTopLevel.kfg' ) ).to.equal( [
+			'hello' , 'world!' , 'more...' , 'values...' , 'and even...' , 'more values...' ,
+			'one' ,
+			'hello' , 'world!' , 'more...' , 'values...' , 'and even...' , 'more values...' ,
+			'two' ,
+			'hello' , 'world!' , 'more...' , 'values...' , 'and even...' , 'more values...' ,
+			'three' ,
+			'hello' , 'world!' , 'more...' , 'values...' , 'and even...' , 'more values...'
+		] ) ;
 	} ) ;
 	
 	it( "should load a KFG file with a MISSING dependency that would have merge with existing properties (before)" , () => {

@@ -1,5 +1,0 @@
-array:
-	- one
-	- two
-	- three
-	@@mergeArray/two.kfg
