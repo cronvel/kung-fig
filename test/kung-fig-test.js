@@ -340,9 +340,6 @@ describe( "Dependencies (aka includes) and references" , () => {
 	} ) ;
 	
 	it( "should load a KFG file with a dependency that insert in place array elements at top-level" , () => {
-		console.log( "Result:" , kungFig.load( __dirname + '/sample/dependencyInsertArrayTopLevel.kfg' ) ) ;
-		return ;
-
 		expect( kungFig.load( __dirname + '/sample/dependencyInsertArrayTopLevel.kfg' ) ).to.equal( [
 			'hello' , 'world!' , 'more...' , 'values...' , 'and even...' , 'more values...' ,
 			'one' ,

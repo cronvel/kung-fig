@@ -1,0 +1,11 @@
+@@includesArray/two.kfg
+@@includesArray/three.kfg
+- one
+@@includesArray/two.kfg
+@@includesArray/three.kfg
+- two
+@@includesArray/two.kfg
+@@includesArray/three.kfg
+- three
+@@includesArray/two.kfg
+@@includesArray/three.kfg
