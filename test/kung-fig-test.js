@@ -231,7 +231,7 @@ describe( "Dependencies (aka includes) and references" , () => {
 		expect( object['partial-merge-before2'] ).to.be.a( Complex ) ;
 	} ) ;
 	
-	it( "dependencies inside instances with merge" , () => {
+	it( "dependency inside instance inside dependency inside instance, with merge" , () => {
 		function Complex( value ) {
 			var self = Object.create( Complex.prototype ) ;
 			self.str = value.str ;
@@ -354,6 +354,18 @@ describe( "Dependencies (aka includes) and references" , () => {
 	it( "should load a KFG file with a MISSING dependency that would have merge with existing properties (before)" , () => {
 		expect( kungFig.load( __dirname + '/sample/dependencyMissingMergeBefore.kfg' ) ).to.equal( {
 			sub: { just: "the" , simple: { and: "test" } , extra: "value" }
+		} ) ;
+	} ) ;
+	
+	it( "array-like should replace existing array-like when recursively merging (should be considered as opaque values)" , () => {
+		expect( kungFig.load( __dirname + '/sample/dependencyMergeArrayLike.kfg' ) ).to.equal( {
+			a: [ 'element#1' , 'element#2' ] ,
+			b: 'string1' ,
+			sub: {
+				a2: [ 'element#3' , 'element#4' ] ,
+				b2: 'string2' ,
+				c2: 'string3'
+			}
 		} ) ;
 	} ) ;
 	

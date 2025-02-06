@@ -1,0 +1,11 @@
+a:
+	- first
+	- second
+b: string1
+sub:
+    a2: 
+		- third
+		- fourth
+	b2: string2
+
+@@merge/arrayLike.kfg

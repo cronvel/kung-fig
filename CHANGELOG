@@ -1,4 +1,10 @@
 
+v0.68.2
+-------
+
+Fixing includes: array-like values should replace other values during merging recursion
+
+
 v0.68.1
 -------
 

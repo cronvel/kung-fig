@@ -1,0 +1,8 @@
+a:
+    - element#1
+    - element#2
+sub:
+    a2: 
+        - element#3
+        - element#4
+    c2: string3
