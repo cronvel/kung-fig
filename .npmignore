@@ -61,3 +61,13 @@ test/
 doc/
 sample/
 builder/
+bench/
+log/
+Makefile
+documentation.md
+bdd-spec.md
+SECURITY.md
+.eslintrc.js
+eslint.config.js
+esbuild.config.js
+.jshintrc
