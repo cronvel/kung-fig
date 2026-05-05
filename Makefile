@@ -5,7 +5,7 @@
 
 # The first rule is the default rule, when invoking "make" without argument...
 # Build every buildable things
-all: install doc browser
+all: install browser
 
 # Just install things so it works, basicaly: it just performs a "npm install --production" ATM
 install: log/npm-install.log
@@ -17,10 +17,10 @@ dev-install: log/npm-dev-install.log
 build: browser
 
 # Build the browser lib
-browser: browser/kfgParse.js browser/kfgParse.min.js
+browser: browser/kfgParse.js browser/kfgParse.esm.js
 
 # Build only the non-minified browser lib
-dev-browser: browser/kfgParse.js
+dev-browser: browser/kfgParse.js browser/kfgParse.esm.js
 
 # This run the JsHint & Mocha BDD test, display it to STDOUT & save it to log/mocha.log and log/jshint.log
 test: log/jshint.log log/mocha.log
@@ -32,7 +32,7 @@ lint: log/jshint.log
 unit: log/mocha.log
 
 # This build the doc and README.md
-doc: README.md
+#doc: README.md
 
 # This publish to NPM and push to Github, if we are on master branch only
 publish: log/npm-publish.log log/github-push.log
@@ -45,15 +45,21 @@ clean: clean-all
 # Variables
 
 BROWSERIFY=browserify
+BROTHERHOOD=brotherhood
 UGLIFY=uglifyjs
 
 
 
 # Files rules
 
-# Build the browser lib
+# Build the browser lib (standalone)
 browser/kfgParse.js: lib/*.js package.json
-	${BROWSERIFY} lib/kfgParse.js -i fs -s kfgParse -o browser/kfgParse.js
+	${BROTHERHOOD} pack lib/kfgParse.js -g kfgParse -d --root ./ --icm crypto --ip hash-kit -o browser/kfgParse.js
+#	${BROWSERIFY} lib/kfgParse.js -i fs -s kfgParse -o browser/kfgParse.js
+
+# Build the browser lib (ESM version)
+browser/kfgParse.esm.js: lib/*.js package.json
+	${BROTHERHOOD} pack lib/kfgParse.js -e -d --root ./ --icm crypto --ip hash-kit -o browser/kfgParse.esm.js
 
 # Build the browser minified lib
 browser/kfgParse.min.js: browser/kfgParse.js
@@ -68,15 +74,15 @@ log/mocha.log: log/npm-dev-install.log lib/*.js test/*.js
 	cd test ; ${MOCHA} *.js -R spec | tee ../log/mocha.log ; exit $${PIPESTATUS[0]}
 
 # README
-README.md: documentation.md
-	cat documentation.md > README.md
+#README.md: documentation.md
+#	cat documentation.md > README.md
 
 # Mocha Markdown BDD spec
 bdd-spec.md: log/npm-dev-install.log lib/*.js test/*.js
 	cd test ; ${MOCHA} *.js -R markdown > ../bdd-spec.md
 
 # Upgrade version in package.json
-log/upgrade-package.log: lib/*.js test/*.js documentation.md
+log/upgrade-package.log: lib/*.js test/*.js
 	npm version patch -m "Upgrade package.json version to %s" | tee log/upgrade-package.log ; exit $${PIPESTATUS[0]}
 
 # Publish to NPM
@@ -105,7 +111,7 @@ log/npm-dev-install.log: package.json
 
 # Delete files, mostly log and non-versioned files
 clean-all:
-	rm -rf log/*.log README.md bdd-spec.md node_modules
+	rm -rf log/*.log bdd-spec.md node_modules
 
 # This will fail if we are not on master branch (grep exit 1 if nothing found)
 check-if-master-branch:

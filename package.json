@@ -1,6 +1,6 @@
 {
   "name": "kung-fig",
-  "version": "0.68.4",
+  "version": "0.68.5",
   "engines": {
     "node": ">=16.13.0"
   },
@@ -24,7 +24,8 @@
     "tree-kit": "^0.8.8"
   },
   "devDependencies": {
-    "babel-tower": "^0.21.3"
+    "babel-tower": "^0.21.3",
+    "sha1-uint8array": "^0.10.7"
   },
   "scripts": {
     "test": "tea-time -R dot"
