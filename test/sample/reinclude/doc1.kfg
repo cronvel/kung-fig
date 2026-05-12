@@ -1,0 +1,4 @@
+indexes:
+	-   properties:
+			creationDate: 1
+	@@tag-indexes.kfg

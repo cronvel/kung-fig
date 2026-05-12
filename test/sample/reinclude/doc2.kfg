@@ -1,0 +1,4 @@
+indexes:
+	-   properties:
+			user: 1
+	@@tag-indexes.kfg

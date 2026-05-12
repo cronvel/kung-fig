@@ -351,6 +351,25 @@ describe( "Dependencies (aka includes) and references" , () => {
 		] ) ;
 	} ) ;
 	
+	it( "zzz should load a KFG file with dependency that is included multiple times" , () => {
+		expect( kungFig.load( __dirname + '/sample/reinclude/base.kfg' ) ).to.equal( {
+			doc1: {
+				indexes: [
+					{ properties: { creationDate: 1 } } ,
+					{ links: { tagsCategories: 1 } } ,
+					{ links: { tagsSoftwares: 1 } }
+				]
+			} ,
+			doc2: {
+				indexes: [
+					{ properties: { user: 1 } } ,
+					{ links: { tagsCategories: 1 } } ,
+					{ links: { tagsSoftwares: 1 } }
+				]
+			}
+		} ) ;
+	} ) ;
+	
 	it( "should load a KFG file with a MISSING dependency that would have merge with existing properties (before)" , () => {
 		expect( kungFig.load( __dirname + '/sample/dependencyMissingMergeBefore.kfg' ) ).to.equal( {
 			sub: { just: "the" , simple: { and: "test" } , extra: "value" }
