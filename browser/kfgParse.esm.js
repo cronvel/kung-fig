@@ -1,4 +1,4 @@
-let BROTHERHOOD_BUNDLE={"bundler":"brotherhood","bundlerVersion":"0.2.2","name":"kung-fig","version":"0.68.7","type":"esm","globals":[],"boundary":"ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni","packages":[{"name":"kung-fig","version":"0.68.7","id":"/"},{"name":"path-browserify","version":"1.0.1","id":"/[core]/node_modules/path-browserify"},{"name":"kung-fig-common","version":"0.43.1","id":"/node_modules/kung-fig-common"},{"name":"kung-fig-ref","version":"0.46.3","id":"/node_modules/kung-fig-ref"},{"name":"kung-fig-expression","version":"0.49.1","id":"/node_modules/kung-fig-expression"},{"name":"kung-fig-template","version":"0.50.1","id":"/node_modules/kung-fig-template"},{"name":"sha1-uint8array","version":"0.10.7","id":"/node_modules/sha1-uint8array"},{"name":"buffer","version":"6.0.3","id":"/[core]/node_modules/buffer"},{"name":"kung-fig-dynamic","version":"0.43.2","id":"/node_modules/kung-fig-dynamic"},{"name":"kung-fig-dynamic-instance","version":"0.45.0","id":"/node_modules/kung-fig-dynamic-instance"},{"name":"stats-modifiers","version":"0.8.1","id":"/node_modules/stats-modifiers"},{"name":"string-kit","version":"0.19.3","id":"/node_modules/string-kit"},{"name":"base64-js","version":"1.5.1","id":"/[core]/node_modules/base64-js"},{"name":"ieee754","version":"1.2.1","id":"/[core]/node_modules/ieee754"},{"name":"babel-tower","version":"0.21.3","id":"/node_modules/babel-tower"},{"name":"array-kit","version":"0.2.6","id":"/node_modules/array-kit"},{"name":"tree-kit","version":"0.8.8","id":"/node_modules/tree-kit"},{"name":"string-kit","version":"0.17.10","id":"/node_modules/babel-tower/node_modules/string-kit"}]};
+let BROTHERHOOD_BUNDLE={"bundler":"brotherhood","bundlerVersion":"0.2.2","name":"kung-fig","version":"0.68.8","type":"esm","globals":[],"boundary":"607lr5YjdgTQJ7dObdRyu3t31dT9b0dg","packages":[{"name":"kung-fig","version":"0.68.8","id":"/"},{"name":"path-browserify","version":"1.0.1","id":"/[core]/node_modules/path-browserify"},{"name":"kung-fig-common","version":"0.43.1","id":"/node_modules/kung-fig-common"},{"name":"kung-fig-ref","version":"0.46.3","id":"/node_modules/kung-fig-ref"},{"name":"kung-fig-expression","version":"0.49.1","id":"/node_modules/kung-fig-expression"},{"name":"kung-fig-template","version":"0.50.1","id":"/node_modules/kung-fig-template"},{"name":"sha1-uint8array","version":"0.10.7","id":"/node_modules/sha1-uint8array"},{"name":"buffer","version":"6.0.3","id":"/[core]/node_modules/buffer"},{"name":"kung-fig-dynamic","version":"0.43.2","id":"/node_modules/kung-fig-dynamic"},{"name":"kung-fig-dynamic-instance","version":"0.45.0","id":"/node_modules/kung-fig-dynamic-instance"},{"name":"stats-modifiers","version":"0.8.1","id":"/node_modules/stats-modifiers"},{"name":"string-kit","version":"0.19.3","id":"/node_modules/string-kit"},{"name":"base64-js","version":"1.5.1","id":"/[core]/node_modules/base64-js"},{"name":"ieee754","version":"1.2.1","id":"/[core]/node_modules/ieee754"},{"name":"babel-tower","version":"0.21.3","id":"/node_modules/babel-tower"},{"name":"array-kit","version":"0.2.6","id":"/node_modules/array-kit"},{"name":"tree-kit","version":"0.8.8","id":"/node_modules/tree-kit"},{"name":"string-kit","version":"0.17.10","id":"/node_modules/babel-tower/node_modules/string-kit"}]};
 const global = globalThis ;
 function BROTHERHOOD_START_PACKAGE() {}
 function BROTHERHOOD_END_PACKAGE() {}
@@ -262,9 +262,9 @@ Module.recursivePackageSearch = ( packageName , path , base , prefix = null ) =>
 	}
 } ;
 
-BROTHERHOOD_START_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_START_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Package.prepare( '/' , '/lib/kfgParse.js' , null ) ;
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/lib/kfgParse.js' , '/' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -2211,8 +2211,8 @@ function constructTag( runtime , depth ) {
 	}
 }
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/lib/hashKey.js' , '/' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -2259,8 +2259,8 @@ else {
 	module.exports = hashKit.hashKey ;
 }
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/lib/lxonParser.min.js' , '/' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -2269,8 +2269,8 @@ Module.prepare( '/lib/lxonParser.min.js' , '/' , null , ( module , exports , req
 */
 var depthLimit=Infinity;function parse(str,limit){var v,runtime={i:0};if(typeof str!=="string"){if(str&&typeof str==="object"){str=str.toString()}else{throw new TypeError("Argument #0 should be a string or an object with a .toString() method")}}parseIdle(str,runtime);if(runtime.i>=str.length){throw new SyntaxError("Empty")}v=parseValue(str,runtime);parseIdle(str,runtime);if(runtime.i<str.length){throw new SyntaxError("Unexpected "+str[runtime.i])}return v}module.exports=parse;function parseIdle(str,runtime){var c;for(;runtime.i<str.length;runtime.i++){c=str.charCodeAt(runtime.i);if(c>32){return c}if(c===32||c===10||c===13||c===9){continue}throw new SyntaxError("Unexpected "+str[runtime.i])}return-1}function parseValue(str,runtime){var c;c=str.charCodeAt(runtime.i);if(c===45){runtime.i++;parseIdle(str,runtime);c=str.charCodeAt(runtime.i);if(c>=65&&c<=90||c>=97&&c<=122){runtime.i++;return parseLxonConstant(str,runtime,LXON_NEGATIVE_CONSTANTS)}if(c>=48&&c<=57){return parseNegativeNumber(str,runtime)}throw new SyntaxError("Unexpected "+str[runtime.i])}if(c>=48&&c<=57){return parseNumber(str,runtime)}runtime.i++;switch(c){case 123:return parseObject(str,runtime);case 91:return parseArray(str,runtime);case 34:return parseString(str,runtime);default:if(c>=65&&c<=90||c>=97&&c<=122){return parseLxonConstant(str,runtime)}throw new SyntaxError("Unexpected "+str[runtime.i-1])}}const LXON_CONSTANTS=new Map([["null",null],["false",false],["true",true],["NaN",NaN],["nan",NaN],["Infinity",Infinity],["infinity",Infinity],["off",false],["on",true],["no",false],["yes",true]]);const LXON_NEGATIVE_CONSTANTS=new Map([["Infinity",-Infinity],["infinity",-Infinity]]);function parseLxonConstant(str,runtime,constants=LXON_CONSTANTS){var c,id,j=runtime.i,l=str.length;for(;j<l;j++){c=str.charCodeAt(j);if(!(c>=65&&c<=90||c>=97&&c<=122)){break}}id=str.slice(runtime.i-1,j);if(!constants.has(id)){throw new SyntaxError("Unexpected "+id)}runtime.i=j;return constants.get(id)}function parseNumber(str,runtime){var match=str.slice(runtime.i).match(/^-?[0-9]+(\.[0-9]+)?([eE][+-]?[0-9]+)?/)[0];runtime.i+=match.length;return parseFloat(match)}function parseNegativeNumber(str,runtime){var match=str.slice(runtime.i).match(/^[0-9]+(\.[0-9]+)?([eE][+-]?[0-9]+)?/)[0];runtime.i+=match.length;return-parseFloat(match)}function parseString(str,runtime){var c,j=runtime.i,l=str.length,v="";for(;j<l;j++){c=str.charCodeAt(j);if(c===34||c===92||c<=31){if(c===34){v+=str.slice(runtime.i,j);runtime.i=j+1;return v}else if(c===92){v+=str.slice(runtime.i,j);runtime.i=j+1;v+=parseBackSlash(str,runtime);j=runtime.i-1}else if(c<=31){throw new SyntaxError("Unexpected control char 0x"+c.toString(16))}}}throw new SyntaxError("Unexpected end, expecting a double-quote.")}var parseBackSlashLookup_=function createParseBackSlashLookup(){var c=0,lookup=new Array(128);for(;c<128;c++){if(c===98){lookup[c]="\b"}else if(c===102){lookup[c]="\f"}else if(c===110){lookup[c]="\n"}else if(c===114){lookup[c]="\r"}else if(c===116){lookup[c]="\t"}else if(c===92){lookup[c]="\\"}else if(c===47){lookup[c]="/"}else if(c===34){lookup[c]='"'}else{lookup[c]=""}}return lookup}();function parseBackSlash(str,runtime){var v,c=str.charCodeAt(runtime.i);if(runtime.i>=str.length){throw new SyntaxError("Unexpected end")}if(c===117){runtime.i++;v=parseUnicode(str,runtime);return v}else if((v=parseBackSlashLookup_[c]).length){runtime.i++;return v}throw new SyntaxError('Unexpected token: "'+str[runtime.i]+'"')}function parseUnicode(str,runtime){if(runtime.i+3>=str.length){throw new SyntaxError("Unexpected end")}var match=str.slice(runtime.i,runtime.i+4).match(/[0-9a-f]{4}/);if(!match){throw new SyntaxError("Unexpected "+str.slice(runtime.i,runtime.i+4))}runtime.i+=4;return String.fromCharCode(Number.parseInt(match[0],16))}function parseLxonUnquotedKey(str,runtime){var c,v,j=runtime.i+1,l=str.length;for(;j<l;j++){c=str.charCodeAt(j);if(!(c>=64&&c<=90||c>=97&&c<=122||c>=48&&c<=57||c===95||c===36||c===45)){v=str.slice(runtime.i,j);runtime.i=j;return v}}throw new SyntaxError("Unexpected end, expecting a colon.")}function parseArray(str,runtime){var j=0,c,v=[];c=parseIdle(str,runtime);if(c===93){runtime.i++;return v}for(;;j++){v[j]=parseValue(str,runtime);c=parseIdle(str,runtime);switch(c){case 44:runtime.i++;break;case 93:runtime.i++;return v;default:throw new Error("Unexpected "+str[runtime.i])}parseIdle(str,runtime)}}function parseObject(str,runtime){var c,v,k;c=parseIdle(str,runtime);if(c===125){runtime.i++;return{}}v={};for(;;){k=parseKey(str,runtime,c);c=parseIdle(str,runtime);if(c!==58){throw new Error("Unexpected "+str[runtime.i])}runtime.i++;parseIdle(str,runtime);v[k]=parseValue(str,runtime);c=parseIdle(str,runtime);switch(c){case 44:runtime.i++;break;case 125:runtime.i++;return v;default:throw new Error("Unexpected "+str[runtime.i])}c=parseIdle(str,runtime)}}function parseKey(str,runtime,c){if(c>=64&&c<=90||c>=97&&c<=122||c>=48&&c<=57||c===95||c===36||c===45){return parseLxonUnquotedKey(str,runtime)}if(c!==34){throw new Error("Unexpected "+str[runtime.i])}runtime.i++;return parseString(str,runtime)}function getPath(object,path){var i=0,iMax=path.length,p=object;try{for(;i<iMax;i++){p=p[path[i]]}}catch(error){throw new Error("Bad ref: path not found")}return p}function parseSkipString(str,runtime){var c;for(;runtime.i<str.length;runtime.i++){c=str.charCodeAt(runtime.i);if(c===34||c===92){runtime.i++;if(c===34){return}}}throw new SyntaxError("Unexpected end")}function parseSkipNested(str,runtime){var c,depth=1;for(;runtime.i<str.length;runtime.i++){c=str.charCodeAt(runtime.i);if(c===91||c===123||c===93||c===125||c===34){if(c===91||c===123){depth++}else if(c===93||c===125){depth--;if(depth===0){runtime.i++;return}}else if(c===34){runtime.i++;parseSkipString(str,runtime);runtime.i--}}}throw new SyntaxError("Unexpected end")}
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/lib/builtin.js' , '/' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -2572,8 +2572,8 @@ types.ModifiersTable = types.modifiersTable = v => {
 	return new statsModifiers.ModifiersTable( id , v , active , isTemplate , events ).getProxy() ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/lib/kfgCommon.js' , '/' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -2626,7 +2626,7 @@ function KFG( data , meta ) {
 }
 
 KFG.prototype.getDeepFinalValue = function( contextData = {} ) {
-	Dynamic.getDeepFinalValue( this.data , contextData ) ;
+	return Dynamic.getDeepFinalValue( this.data , contextData ) ;
 } ;
 
 exports.KFG = KFG ;
@@ -2904,8 +2904,8 @@ exports.containerType = function( object ) {
 	return 'Object' ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/lib/Tag.js' , '/' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -3058,8 +3058,8 @@ Tag.prototype.insertTag = function( tag , position = 0 ) {
 	}
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/lib/TagContainer.js' , '/' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -3174,8 +3174,8 @@ TagContainer.prototype.insertTag = function( tag , position = 0 ) {
 	}
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/lib/Operator.js' , '/' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -3219,8 +3219,8 @@ module.exports = Operator ;
 Operator.prototype.__prototypeUID__ = 'kung-fig/Operator' ;
 Operator.prototype.__prototypeVersion__ = require( '../package.json' ).version ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/lib/Meta.js' , '/' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -3347,8 +3347,8 @@ Meta.prototype.prependIncludeRef = function( ... args ) {
 	return includeRef ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/lib/clone.js' , '/' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -3497,8 +3497,8 @@ function cloneIncludeRefs( fromParent , fromParentKey , toParent , toParentKey ,
 	meta.addIncludeRef( clonedIncludeRef ) ;
 }
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/lib/OrderedObject.js' , '/' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -3662,12 +3662,12 @@ OrderedObject.prototype.toJSON = function() {
 	return object ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/package.json' , '/' , null , ( module , exports , require , __dirname , __filename ) => {
 module.exports = {
   "name": "kung-fig",
-  "version": "0.68.7",
+  "version": "0.68.8",
   "engines": {
     "node": ">=16.13.0"
   },
@@ -3733,11 +3733,11 @@ module.exports = {
   }
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_END_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_END_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Package.prepare( '/[core]/node_modules/path-browserify' , '/[core]/node_modules/path-browserify/index.js' , '/[core]/node_modules/path' ) ;
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/[core]/node_modules/path-browserify/index.js' , '/[core]/node_modules/path-browserify' , '/[core]/node_modules/path/index.js' , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 // 'path' module extracted from Node.js v8.11.1 (only the posix part)
@@ -4270,11 +4270,11 @@ posix.posix = posix;
 
 module.exports = posix;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_END_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_END_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Package.prepare( '/node_modules/kung-fig-common' , '/node_modules/kung-fig-common/lib/common.js' , null ) ;
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/kung-fig-common/lib/common.js' , '/node_modules/kung-fig-common' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -4313,8 +4313,8 @@ module.exports = {
 	stringifiers: require( './stringifiers.js' )
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/kung-fig-common/lib/constants.js' , '/node_modules/kung-fig-common' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -4361,8 +4361,8 @@ constants['NaN'] = NaN ;
 constants['Infinity'] = Infinity ;
 constants['-Infinity'] = -Infinity ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/kung-fig-common/lib/parsers.js' , '/node_modules/kung-fig-common' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -4608,8 +4608,8 @@ function locationStr( runtime , line ) {
 
 parsers.locationStr = locationStr ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/kung-fig-common/lib/stringifiers.js' , '/node_modules/kung-fig-common' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -4707,11 +4707,11 @@ var stringLookup_ =
 	return lookup ;
 } )() ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_END_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_END_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Package.prepare( '/node_modules/kung-fig-ref' , '/node_modules/kung-fig-ref/lib/Ref.js' , null ) ;
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/kung-fig-ref/lib/Ref.js' , '/node_modules/kung-fig-ref' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -5157,8 +5157,8 @@ function parseIndex( str , runtime ) {
 	return parseInt( str.slice( runtime.i , j ) , 10 ) ;
 }
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/kung-fig-ref/package.json' , '/node_modules/kung-fig-ref' , null , ( module , exports , require , __dirname , __filename ) => {
 module.exports = {
   "name": "kung-fig-ref",
@@ -5209,11 +5209,11 @@ module.exports = {
   }
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_END_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_END_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Package.prepare( '/node_modules/kung-fig-expression' , '/node_modules/kung-fig-expression/lib/Expression.js' , null ) ;
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/kung-fig-expression/lib/Expression.js' , '/node_modules/kung-fig-expression' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -5982,8 +5982,8 @@ function parseFnKeyConst( str_ , runtime ) {
 	throw new SyntaxError( "Unexpected '" + str + "' in expression" ) ;
 }
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/kung-fig-expression/lib/constants.js' , '/node_modules/kung-fig-expression' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -6022,8 +6022,8 @@ exports.pi = exports['π'] = Math.PI ;
 exports.e = Math.E ;
 exports.phi = exports['φ'] = 1.618033988749895 ;	// ( 1 + Math.sqrt( 5 ) ) / 2 ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/kung-fig-expression/lib/mode.js' , '/node_modules/kung-fig-expression' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -6064,8 +6064,8 @@ exports.SINGLE_OP_AFTER = 4 ;
 exports.LIST = 5 ;
 exports.KV = 6 ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/kung-fig-expression/lib/fnOperators.js' , '/node_modules/kung-fig-expression' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -6751,8 +6751,8 @@ for ( let key in exports ) {
 	if ( ! exports[ key ].id ) { exports[ key ].id = key ; }
 }
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/kung-fig-expression/package.json' , '/node_modules/kung-fig-expression' , null , ( module , exports , require , __dirname , __filename ) => {
 module.exports = {
   "name": "kung-fig-expression",
@@ -6804,8 +6804,8 @@ module.exports = {
   }
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/kung-fig-expression/lib/Stack.js' , '/node_modules/kung-fig-expression' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -6856,8 +6856,8 @@ class Stack extends Array {
 
 module.exports = Stack ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/kung-fig-expression/lib/ObjectEntry.js' , '/node_modules/kung-fig-expression' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -6920,8 +6920,8 @@ ObjectEntry.unserializer = function( ... args ) {
 	return new ObjectEntry( ... args ) ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/kung-fig-expression/lib/getNamedParameters.js' , '/node_modules/kung-fig-expression' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -6983,11 +6983,11 @@ module.exports = ( params , mapping , named = {} ) => {
 	return named ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_END_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_END_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Package.prepare( '/node_modules/kung-fig-template' , '/node_modules/kung-fig-template/lib/template.js' , null ) ;
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/kung-fig-template/lib/template.js' , '/node_modules/kung-fig-template' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -7026,8 +7026,8 @@ module.exports = {
 	Atom: require( './Atom.js' )
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/kung-fig-template/lib/Sentence.js' , '/node_modules/kung-fig-template' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -7134,8 +7134,8 @@ TemplateSentence.parseFromKfg = ( str , runtime , applicable ) => {
 	return v ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/kung-fig-template/lib/Atom.js' , '/node_modules/kung-fig-template' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -7205,8 +7205,8 @@ TemplateAtom.serializerFnId = 'TemplateAtom' ;
 
 TemplateAtom.serializer = object => ( { overide: object } ) ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/kung-fig-template/package.json' , '/node_modules/kung-fig-template' , null , ( module , exports , require , __dirname , __filename ) => {
 module.exports = {
   "name": "kung-fig-template",
@@ -7257,11 +7257,11 @@ module.exports = {
   }
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_END_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_END_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Package.prepare( '/node_modules/sha1-uint8array' , '/node_modules/sha1-uint8array/lib/sha1-uint8array.js' , null ) ;
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/sha1-uint8array/lib/sha1-uint8array.js' , '/node_modules/sha1-uint8array' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /**
@@ -7491,11 +7491,11 @@ function isBE() {
     return (buf[0] === 0xFE);
 }
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_END_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_END_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Package.prepare( '/[core]/node_modules/buffer' , '/[core]/node_modules/buffer/index.js' , null ) ;
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/[core]/node_modules/buffer/index.js' , '/[core]/node_modules/buffer' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*!
@@ -9605,11 +9605,11 @@ function BufferBigIntNotDefined () {
   throw new Error('BigInt not supported')
 }
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_END_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_END_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Package.prepare( '/node_modules/kung-fig-dynamic' , '/node_modules/kung-fig-dynamic/lib/Dynamic.js' , null ) ;
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/kung-fig-dynamic/lib/Dynamic.js' , '/node_modules/kung-fig-dynamic' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -9840,8 +9840,8 @@ Dynamic.getRecursiveFinalValue_old = function( value , ctx , bound , clone1stGen
 	return value ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/kung-fig-dynamic/package.json' , '/node_modules/kung-fig-dynamic' , null , ( module , exports , require , __dirname , __filename ) => {
 module.exports = {
   "name": "kung-fig-dynamic",
@@ -9890,11 +9890,11 @@ module.exports = {
   }
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_END_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_END_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Package.prepare( '/node_modules/kung-fig-dynamic-instance' , '/node_modules/kung-fig-dynamic-instance/lib/DynamicInstance.js' , null ) ;
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/kung-fig-dynamic-instance/lib/DynamicInstance.js' , '/node_modules/kung-fig-dynamic-instance' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -9981,8 +9981,8 @@ DynamicInstance.prototype.apply = function( ctx ) {
 // Not sure if it should be done here
 //DynamicInstance.prototype.stringify = function() {} ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/kung-fig-dynamic-instance/package.json' , '/node_modules/kung-fig-dynamic-instance' , null , ( module , exports , require , __dirname , __filename ) => {
 module.exports = {
   "name": "kung-fig-dynamic-instance",
@@ -10032,11 +10032,11 @@ module.exports = {
   }
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_END_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_END_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Package.prepare( '/node_modules/stats-modifiers' , '/node_modules/stats-modifiers/lib/stats-modifiers.js' , null ) ;
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/stats-modifiers/lib/stats-modifiers.js' , '/node_modules/stats-modifiers' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -10101,8 +10101,8 @@ exports.UNPROXY = common.SYMBOL_UNPROXY ;
 exports.createCloneId = common.createCloneId ;
 exports.unitTestResetCloneId = common.unitTestResetCloneId ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/stats-modifiers/lib/Stat.js' , '/node_modules/stats-modifiers' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -10389,8 +10389,8 @@ const STAT_HANDLER = {
 
 Stat.STAT_HANDLER = STAT_HANDLER ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/stats-modifiers/lib/StatsTable.js' , '/node_modules/stats-modifiers' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -10736,8 +10736,8 @@ const STATS_TABLE_HANDLER = {
 	setPrototypeOf: () => false
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/stats-modifiers/lib/Modifier.js' , '/node_modules/stats-modifiers' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -10886,8 +10886,8 @@ const MODIFIER_HANDLER = {
 	setPrototypeOf: () => false
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/stats-modifiers/lib/ModifiersTable.js' , '/node_modules/stats-modifiers' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -11338,8 +11338,8 @@ const INTERMEDIATE_MODIFIERS_TABLE_HANDLER = {
 	setPrototypeOf: () => false
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/stats-modifiers/lib/NestedStats.js' , '/node_modules/stats-modifiers' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -11701,8 +11701,8 @@ const NESTED_HANDLER = {
 
 NestedStats.NESTED_HANDLER = NESTED_HANDLER ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/stats-modifiers/lib/WildNestedStats.js' , '/node_modules/stats-modifiers' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -12056,8 +12056,8 @@ const ACTUAL_HANDLER = {
 
 WildNestedStats.ACTUAL_HANDLER = ACTUAL_HANDLER ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/stats-modifiers/lib/NumberStat.js' , '/node_modules/stats-modifiers' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -12152,8 +12152,8 @@ NumberStat.prototype.setBase = function( base ) {
 	return true ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/stats-modifiers/lib/StringStat.js' , '/node_modules/stats-modifiers' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -12247,8 +12247,8 @@ StringStat.prototype.setBase = function( base ) {
 	return true ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/stats-modifiers/lib/TemplateStat.js' , '/node_modules/stats-modifiers' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -12319,8 +12319,8 @@ TemplateStat.prototype.clone = function( parentTable = this[ common.SYMBOL_PAREN
 	return new TemplateStat( this.base , parentTable , pathKey ) ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/stats-modifiers/lib/Traits.js' , '/node_modules/stats-modifiers' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -12553,8 +12553,8 @@ const ACTUAL_HANDLER = {
 
 Traits.ACTUAL_HANDLER = ACTUAL_HANDLER ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/stats-modifiers/lib/CompoundStat.js' , '/node_modules/stats-modifiers' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -12731,8 +12731,8 @@ CompoundStat.refToFn = function( ref_ , suffix = null ) {
 	return ref_.compile() ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/stats-modifiers/lib/Pool.js' , '/node_modules/stats-modifiers' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -13644,8 +13644,8 @@ Pool.prototype._round = function( value , type ) {
 	}
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/stats-modifiers/lib/HistoryGauge.js' , '/node_modules/stats-modifiers' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -13888,8 +13888,8 @@ HistoryGauge.prototype.recover = function( value ) {
 	}
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/stats-modifiers/lib/HistoryAlignometer.js' , '/node_modules/stats-modifiers' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -14180,8 +14180,8 @@ HistoryAlignometer.prototype.getInstant = function( pathKey = this.pathKey ) {
 	return this.getActual( pathKey , this.instantMaxWeight ) ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/stats-modifiers/lib/common.js' , '/node_modules/stats-modifiers' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -14291,8 +14291,8 @@ exports.createCloneId = id => {
 // Unit test only
 exports.unitTestResetCloneId = () => cloneAutoId = 0 ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/stats-modifiers/package.json' , '/node_modules/stats-modifiers' , null , ( module , exports , require , __dirname , __filename ) => {
 module.exports = {
   "name": "stats-modifiers",
@@ -14346,8 +14346,8 @@ module.exports = {
   }
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/stats-modifiers/lib/operators.js' , '/node_modules/stats-modifiers' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -14506,8 +14506,8 @@ for ( let key in ops ) {
 	if ( ops[ key ].neutral === undefined ) { ops[ key ].neutral = null ; }
 }
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/stats-modifiers/lib/eventActions.js' , '/node_modules/stats-modifiers' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -14579,8 +14579,8 @@ exports.fade = ( modifiersTable , eventData , params ) => {
 	}
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/stats-modifiers/lib/compounds.js' , '/node_modules/stats-modifiers' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -14634,11 +14634,11 @@ for ( let key in exports ) {
 	//count ++ ;
 }
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_END_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_END_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Package.prepare( '/node_modules/string-kit' , '/node_modules/string-kit/lib/string.js' , null ) ;
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/string-kit/lib/string.js' , '/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -14734,8 +14734,8 @@ stringKit.installPolyfills = function installPolyfills() {
 } ;
 //*/
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/string-kit/lib/escape.js' , '/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -14841,8 +14841,8 @@ exports.unicodePercentEncode = str => str.replace( /[\x00-\x1f\u0100-\uffff\x7f%
 // Encode HTTP header value
 exports.httpHeaderValue = str => exports.unicodePercentEncode( str ) ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/string-kit/lib/ansi.js' , '/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -15112,8 +15112,8 @@ ansi.parse = str => {
 	return output ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/string-kit/lib/unicode.js' , '/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -15476,8 +15476,8 @@ unicode.isEmojiModifierCodePoint = code =>
 	( 0x1f3fb <= code && code <= 0x1f3ff ) ||	// (Fitzpatrick): https://en.wikipedia.org/wiki/Miscellaneous_Symbols_and_Pictographs#Emoji_modifiers
 	code === 0xfe0f ;	// VARIATION SELECTOR-16 [VS16] {emoji variation selector}
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/string-kit/lib/format.js' , '/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -16978,8 +16978,8 @@ function round( v , step ) {
 	return epsilonRound( step * Math.round( v * ( 1 / step ) ) ) ;
 }
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/string-kit/lib/misc.js' , '/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -17040,8 +17040,8 @@ exports.occurrenceCount = function( str , subStr , overlap = false ) {
 	return count ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/string-kit/lib/inspect.js' , '/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -17804,8 +17804,8 @@ inspectStyle.html = Object.assign( {} , inspectStyle.none , {
 	errorFromMessage: str => '<span style="color:yellow">' + str + '</span>'
 } ) ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/string-kit/lib/regexp.js' , '/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -17862,8 +17862,8 @@ exports.regexp.array2alternatives = function array2alternatives( array ) {
 	return sorted.join( '|' ) ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/string-kit/lib/camel.js' , '/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -17953,8 +17953,8 @@ camel.camelCaseToSeparated = function( str , separator = ' ' , acronym = true ) 
 camel.camelCaseToDash =
 camel.camelCaseToDashed = ( str ) => camel.camelCaseToSeparated( str , '-' , false ) ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/string-kit/lib/latinize.js' , '/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -17993,8 +17993,8 @@ module.exports = function( str ) {
 	return str.replace( /[^\u0000-\u007e]/g , ( c ) => { return latinizeMap[ c ] || c ; } ) ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/string-kit/lib/toTitleCase.js' , '/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -18084,8 +18084,8 @@ module.exports = ( str , options = DEFAULT_OPTIONS ) => {
 	} ) ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/string-kit/lib/wordwrap.js' , '/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -18290,8 +18290,8 @@ module.exports = function wordwrap( str , options ) {
 	return lines ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/string-kit/lib/naturalSort.js' , '/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -18439,8 +18439,8 @@ function naturalSort( a , b ) {
 
 module.exports = naturalSort ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/string-kit/lib/fuzzy.js' , '/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -18757,8 +18757,8 @@ fuzzy.levenshtein = ( left , right ) => {
 	return result ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/string-kit/lib/StringNumber.js' , '/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -19262,8 +19262,8 @@ StringNumber.additiveRoman = ( number , options ) => {
 	return new StringNumber( number , options ) ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/string-kit/lib/english.js' , '/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -19355,8 +19355,8 @@ english.undoPresentParticiple = word => {
 	return word ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/string-kit/lib/emoji.js' , '/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -19495,31 +19495,31 @@ emoji.splitIntoKeywords = ( name , noSimplify = false ) => {
 	return keywords ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/string-kit/lib/json-data/unicode-emoji-width-ranges.json' , '/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 module.exports = [{"s":9728,"e":9747,"w":1},{"s":9748,"e":9749,"w":2},{"s":9750,"e":9799,"w":1},{"s":9800,"e":9811,"w":2},{"s":9812,"e":9854,"w":1},{"s":9855,"e":9855,"w":2},{"s":9856,"e":9874,"w":1},{"s":9875,"e":9875,"w":2},{"s":9876,"e":9888,"w":1},{"s":9889,"e":9889,"w":2},{"s":9890,"e":9897,"w":1},{"s":9898,"e":9899,"w":2},{"s":9900,"e":9916,"w":1},{"s":9917,"e":9918,"w":2},{"s":9919,"e":9923,"w":1},{"s":9924,"e":9925,"w":2},{"s":9926,"e":9933,"w":1},{"s":9934,"e":9934,"w":2},{"s":9935,"e":9939,"w":1},{"s":9940,"e":9940,"w":2},{"s":9941,"e":9961,"w":1},{"s":9962,"e":9962,"w":2},{"s":9963,"e":9969,"w":1},{"s":9970,"e":9971,"w":2},{"s":9972,"e":9972,"w":1},{"s":9973,"e":9973,"w":2},{"s":9974,"e":9977,"w":1},{"s":9978,"e":9978,"w":2},{"s":9979,"e":9980,"w":1},{"s":9981,"e":9981,"w":2},{"s":9982,"e":9983,"w":1},{"s":9984,"e":9988,"w":1},{"s":9989,"e":9989,"w":2},{"s":9990,"e":9993,"w":1},{"s":9994,"e":9995,"w":2},{"s":9996,"e":10023,"w":1},{"s":10024,"e":10024,"w":2},{"s":10025,"e":10059,"w":1},{"s":10060,"e":10060,"w":2},{"s":10061,"e":10061,"w":1},{"s":10062,"e":10062,"w":2},{"s":10063,"e":10066,"w":1},{"s":10067,"e":10069,"w":2},{"s":10070,"e":10070,"w":1},{"s":10071,"e":10071,"w":2},{"s":10072,"e":10132,"w":1},{"s":10133,"e":10135,"w":2},{"s":10136,"e":10159,"w":1},{"s":10160,"e":10160,"w":2},{"s":10161,"e":10174,"w":1},{"s":10175,"e":10175,"w":2},{"s":126976,"e":126979,"w":1},{"s":126980,"e":126980,"w":2},{"s":126981,"e":127182,"w":1},{"s":127183,"e":127183,"w":2},{"s":127184,"e":127373,"w":1},{"s":127374,"e":127374,"w":2},{"s":127375,"e":127376,"w":1},{"s":127377,"e":127386,"w":2},{"s":127387,"e":127487,"w":1},{"s":127744,"e":127776,"w":2},{"s":127777,"e":127788,"w":1},{"s":127789,"e":127797,"w":2},{"s":127798,"e":127798,"w":1},{"s":127799,"e":127868,"w":2},{"s":127869,"e":127869,"w":1},{"s":127870,"e":127891,"w":2},{"s":127892,"e":127903,"w":1},{"s":127904,"e":127946,"w":2},{"s":127947,"e":127950,"w":1},{"s":127951,"e":127955,"w":2},{"s":127956,"e":127967,"w":1},{"s":127968,"e":127984,"w":2},{"s":127985,"e":127987,"w":1},{"s":127988,"e":127988,"w":2},{"s":127989,"e":127991,"w":1},{"s":127992,"e":127994,"w":2},{"s":128000,"e":128062,"w":2},{"s":128063,"e":128063,"w":1},{"s":128064,"e":128064,"w":2},{"s":128065,"e":128065,"w":1},{"s":128066,"e":128252,"w":2},{"s":128253,"e":128254,"w":1},{"s":128255,"e":128317,"w":2},{"s":128318,"e":128330,"w":1},{"s":128331,"e":128334,"w":2},{"s":128335,"e":128335,"w":1},{"s":128336,"e":128359,"w":2},{"s":128360,"e":128377,"w":1},{"s":128378,"e":128378,"w":2},{"s":128379,"e":128404,"w":1},{"s":128405,"e":128406,"w":2},{"s":128407,"e":128419,"w":1},{"s":128420,"e":128420,"w":2},{"s":128421,"e":128506,"w":1},{"s":128507,"e":128591,"w":2},{"s":128592,"e":128639,"w":1},{"s":128640,"e":128709,"w":2},{"s":128710,"e":128715,"w":1},{"s":128716,"e":128716,"w":2},{"s":128717,"e":128719,"w":1},{"s":128720,"e":128722,"w":2},{"s":128723,"e":128724,"w":1},{"s":128725,"e":128727,"w":2},{"s":128728,"e":128746,"w":1},{"s":128747,"e":128748,"w":2},{"s":128749,"e":128755,"w":1},{"s":128756,"e":128764,"w":2},{"s":128765,"e":128991,"w":1},{"s":128992,"e":129003,"w":2},{"s":129004,"e":129291,"w":1},{"s":129292,"e":129338,"w":2},{"s":129339,"e":129339,"w":1},{"s":129340,"e":129349,"w":2},{"s":129350,"e":129350,"w":1},{"s":129351,"e":129400,"w":2},{"s":129401,"e":129401,"w":1},{"s":129402,"e":129483,"w":2},{"s":129484,"e":129484,"w":1},{"s":129485,"e":129535,"w":2},{"s":129536,"e":129647,"w":1},{"s":129648,"e":129652,"w":2},{"s":129653,"e":129655,"w":1},{"s":129656,"e":129658,"w":2},{"s":129659,"e":129663,"w":1},{"s":129664,"e":129670,"w":2},{"s":129671,"e":129679,"w":1},{"s":129680,"e":129704,"w":2},{"s":129705,"e":129711,"w":1},{"s":129712,"e":129718,"w":2},{"s":129719,"e":129727,"w":1},{"s":129728,"e":129730,"w":2},{"s":129731,"e":129743,"w":1},{"s":129744,"e":129750,"w":2},{"s":129751,"e":129791,"w":1}] ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/string-kit/lib/json-data/latinize-map.json' , '/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 module.exports = {"߀":"0","́":""," ":" ","Ⓐ":"A","Ａ":"A","À":"A","Á":"A","Â":"A","Ầ":"A","Ấ":"A","Ẫ":"A","Ẩ":"A","Ã":"A","Ā":"A","Ă":"A","Ằ":"A","Ắ":"A","Ẵ":"A","Ẳ":"A","Ȧ":"A","Ǡ":"A","Ä":"A","Ǟ":"A","Ả":"A","Å":"A","Ǻ":"A","Ǎ":"A","Ȁ":"A","Ȃ":"A","Ạ":"A","Ậ":"A","Ặ":"A","Ḁ":"A","Ą":"A","Ⱥ":"A","Ɐ":"A","Ꜳ":"AA","Æ":"AE","Ǽ":"AE","Ǣ":"AE","Ꜵ":"AO","Ꜷ":"AU","Ꜹ":"AV","Ꜻ":"AV","Ꜽ":"AY","Ⓑ":"B","Ｂ":"B","Ḃ":"B","Ḅ":"B","Ḇ":"B","Ƀ":"B","Ɓ":"B","ｃ":"C","Ⓒ":"C","Ｃ":"C","Ꜿ":"C","Ḉ":"C","Ç":"C","Ⓓ":"D","Ｄ":"D","Ḋ":"D","Ď":"D","Ḍ":"D","Ḑ":"D","Ḓ":"D","Ḏ":"D","Đ":"D","Ɗ":"D","Ɖ":"D","ᴅ":"D","Ꝺ":"D","Ð":"Dh","Ǳ":"DZ","Ǆ":"DZ","ǲ":"Dz","ǅ":"Dz","ɛ":"E","Ⓔ":"E","Ｅ":"E","È":"E","É":"E","Ê":"E","Ề":"E","Ế":"E","Ễ":"E","Ể":"E","Ẽ":"E","Ē":"E","Ḕ":"E","Ḗ":"E","Ĕ":"E","Ė":"E","Ë":"E","Ẻ":"E","Ě":"E","Ȅ":"E","Ȇ":"E","Ẹ":"E","Ệ":"E","Ȩ":"E","Ḝ":"E","Ę":"E","Ḙ":"E","Ḛ":"E","Ɛ":"E","Ǝ":"E","ᴇ":"E","ꝼ":"F","Ⓕ":"F","Ｆ":"F","Ḟ":"F","Ƒ":"F","Ꝼ":"F","Ⓖ":"G","Ｇ":"G","Ǵ":"G","Ĝ":"G","Ḡ":"G","Ğ":"G","Ġ":"G","Ǧ":"G","Ģ":"G","Ǥ":"G","Ɠ":"G","Ꞡ":"G","Ᵹ":"G","Ꝿ":"G","ɢ":"G","Ⓗ":"H","Ｈ":"H","Ĥ":"H","Ḣ":"H","Ḧ":"H","Ȟ":"H","Ḥ":"H","Ḩ":"H","Ḫ":"H","Ħ":"H","Ⱨ":"H","Ⱶ":"H","Ɥ":"H","Ⓘ":"I","Ｉ":"I","Ì":"I","Í":"I","Î":"I","Ĩ":"I","Ī":"I","Ĭ":"I","İ":"I","Ï":"I","Ḯ":"I","Ỉ":"I","Ǐ":"I","Ȉ":"I","Ȋ":"I","Ị":"I","Į":"I","Ḭ":"I","Ɨ":"I","Ⓙ":"J","Ｊ":"J","Ĵ":"J","Ɉ":"J","ȷ":"J","Ⓚ":"K","Ｋ":"K","Ḱ":"K","Ǩ":"K","Ḳ":"K","Ķ":"K","Ḵ":"K","Ƙ":"K","Ⱪ":"K","Ꝁ":"K","Ꝃ":"K","Ꝅ":"K","Ꞣ":"K","Ⓛ":"L","Ｌ":"L","Ŀ":"L","Ĺ":"L","Ľ":"L","Ḷ":"L","Ḹ":"L","Ļ":"L","Ḽ":"L","Ḻ":"L","Ł":"L","Ƚ":"L","Ɫ":"L","Ⱡ":"L","Ꝉ":"L","Ꝇ":"L","Ꞁ":"L","Ǉ":"LJ","ǈ":"Lj","Ⓜ":"M","Ｍ":"M","Ḿ":"M","Ṁ":"M","Ṃ":"M","Ɱ":"M","Ɯ":"M","ϻ":"M","Ꞥ":"N","Ƞ":"N","Ⓝ":"N","Ｎ":"N","Ǹ":"N","Ń":"N","Ñ":"N","Ṅ":"N","Ň":"N","Ṇ":"N","Ņ":"N","Ṋ":"N","Ṉ":"N","Ɲ":"N","Ꞑ":"N","ᴎ":"N","Ǌ":"NJ","ǋ":"Nj","Ⓞ":"O","Ｏ":"O","Ò":"O","Ó":"O","Ô":"O","Ồ":"O","Ố":"O","Ỗ":"O","Ổ":"O","Õ":"O","Ṍ":"O","Ȭ":"O","Ṏ":"O","Ō":"O","Ṑ":"O","Ṓ":"O","Ŏ":"O","Ȯ":"O","Ȱ":"O","Ö":"O","Ȫ":"O","Ỏ":"O","Ő":"O","Ǒ":"O","Ȍ":"O","Ȏ":"O","Ơ":"O","Ờ":"O","Ớ":"O","Ỡ":"O","Ở":"O","Ợ":"O","Ọ":"O","Ộ":"O","Ǫ":"O","Ǭ":"O","Ø":"O","Ǿ":"O","Ɔ":"O","Ɵ":"O","Ꝋ":"O","Ꝍ":"O","Œ":"OE","Ƣ":"OI","Ꝏ":"OO","Ȣ":"OU","Ⓟ":"P","Ｐ":"P","Ṕ":"P","Ṗ":"P","Ƥ":"P","Ᵽ":"P","Ꝑ":"P","Ꝓ":"P","Ꝕ":"P","Ⓠ":"Q","Ｑ":"Q","Ꝗ":"Q","Ꝙ":"Q","Ɋ":"Q","Ⓡ":"R","Ｒ":"R","Ŕ":"R","Ṙ":"R","Ř":"R","Ȑ":"R","Ȓ":"R","Ṛ":"R","Ṝ":"R","Ŗ":"R","Ṟ":"R","Ɍ":"R","Ɽ":"R","Ꝛ":"R","Ꞧ":"R","Ꞃ":"R","Ⓢ":"S","Ｓ":"S","ẞ":"S","Ś":"S","Ṥ":"S","Ŝ":"S","Ṡ":"S","Š":"S","Ṧ":"S","Ṣ":"S","Ṩ":"S","Ș":"S","Ş":"S","Ȿ":"S","Ꞩ":"S","Ꞅ":"S","Ⓣ":"T","Ｔ":"T","Ṫ":"T","Ť":"T","Ṭ":"T","Ț":"T","Ţ":"T","Ṱ":"T","Ṯ":"T","Ŧ":"T","Ƭ":"T","Ʈ":"T","Ⱦ":"T","Ꞇ":"T","Þ":"Th","Ꜩ":"TZ","Ⓤ":"U","Ｕ":"U","Ù":"U","Ú":"U","Û":"U","Ũ":"U","Ṹ":"U","Ū":"U","Ṻ":"U","Ŭ":"U","Ü":"U","Ǜ":"U","Ǘ":"U","Ǖ":"U","Ǚ":"U","Ủ":"U","Ů":"U","Ű":"U","Ǔ":"U","Ȕ":"U","Ȗ":"U","Ư":"U","Ừ":"U","Ứ":"U","Ữ":"U","Ử":"U","Ự":"U","Ụ":"U","Ṳ":"U","Ų":"U","Ṷ":"U","Ṵ":"U","Ʉ":"U","Ⓥ":"V","Ｖ":"V","Ṽ":"V","Ṿ":"V","Ʋ":"V","Ꝟ":"V","Ʌ":"V","Ꝡ":"VY","Ⓦ":"W","Ｗ":"W","Ẁ":"W","Ẃ":"W","Ŵ":"W","Ẇ":"W","Ẅ":"W","Ẉ":"W","Ⱳ":"W","Ⓧ":"X","Ｘ":"X","Ẋ":"X","Ẍ":"X","Ⓨ":"Y","Ｙ":"Y","Ỳ":"Y","Ý":"Y","Ŷ":"Y","Ỹ":"Y","Ȳ":"Y","Ẏ":"Y","Ÿ":"Y","Ỷ":"Y","Ỵ":"Y","Ƴ":"Y","Ɏ":"Y","Ỿ":"Y","Ⓩ":"Z","Ｚ":"Z","Ź":"Z","Ẑ":"Z","Ż":"Z","Ž":"Z","Ẓ":"Z","Ẕ":"Z","Ƶ":"Z","Ȥ":"Z","Ɀ":"Z","Ⱬ":"Z","Ꝣ":"Z","ⓐ":"a","ａ":"a","ẚ":"a","à":"a","á":"a","â":"a","ầ":"a","ấ":"a","ẫ":"a","ẩ":"a","ã":"a","ā":"a","ă":"a","ằ":"a","ắ":"a","ẵ":"a","ẳ":"a","ȧ":"a","ǡ":"a","ä":"a","ǟ":"a","ả":"a","å":"a","ǻ":"a","ǎ":"a","ȁ":"a","ȃ":"a","ạ":"a","ậ":"a","ặ":"a","ḁ":"a","ą":"a","ⱥ":"a","ɐ":"a","ɑ":"a","ꜳ":"aa","æ":"ae","ǽ":"ae","ǣ":"ae","ꜵ":"ao","ꜷ":"au","ꜹ":"av","ꜻ":"av","ꜽ":"ay","ⓑ":"b","ｂ":"b","ḃ":"b","ḅ":"b","ḇ":"b","ƀ":"b","ƃ":"b","ɓ":"b","Ƃ":"b","ⓒ":"c","ć":"c","ĉ":"c","ċ":"c","č":"c","ç":"c","ḉ":"c","ƈ":"c","ȼ":"c","ꜿ":"c","ↄ":"c","C":"c","Ć":"c","Ĉ":"c","Ċ":"c","Č":"c","Ƈ":"c","Ȼ":"c","ⓓ":"d","ｄ":"d","ḋ":"d","ď":"d","ḍ":"d","ḑ":"d","ḓ":"d","ḏ":"d","đ":"d","ƌ":"d","ɖ":"d","ɗ":"d","Ƌ":"d","Ꮷ":"d","ԁ":"d","Ɦ":"d","ð":"dh","ǳ":"dz","ǆ":"dz","ⓔ":"e","ｅ":"e","è":"e","é":"e","ê":"e","ề":"e","ế":"e","ễ":"e","ể":"e","ẽ":"e","ē":"e","ḕ":"e","ḗ":"e","ĕ":"e","ė":"e","ë":"e","ẻ":"e","ě":"e","ȅ":"e","ȇ":"e","ẹ":"e","ệ":"e","ȩ":"e","ḝ":"e","ę":"e","ḙ":"e","ḛ":"e","ɇ":"e","ǝ":"e","ⓕ":"f","ｆ":"f","ḟ":"f","ƒ":"f","ﬀ":"ff","ﬁ":"fi","ﬂ":"fl","ﬃ":"ffi","ﬄ":"ffl","ⓖ":"g","ｇ":"g","ǵ":"g","ĝ":"g","ḡ":"g","ğ":"g","ġ":"g","ǧ":"g","ģ":"g","ǥ":"g","ɠ":"g","ꞡ":"g","ꝿ":"g","ᵹ":"g","ⓗ":"h","ｈ":"h","ĥ":"h","ḣ":"h","ḧ":"h","ȟ":"h","ḥ":"h","ḩ":"h","ḫ":"h","ẖ":"h","ħ":"h","ⱨ":"h","ⱶ":"h","ɥ":"h","ƕ":"hv","ⓘ":"i","ｉ":"i","ì":"i","í":"i","î":"i","ĩ":"i","ī":"i","ĭ":"i","ï":"i","ḯ":"i","ỉ":"i","ǐ":"i","ȉ":"i","ȋ":"i","ị":"i","į":"i","ḭ":"i","ɨ":"i","ı":"i","ⓙ":"j","ｊ":"j","ĵ":"j","ǰ":"j","ɉ":"j","ⓚ":"k","ｋ":"k","ḱ":"k","ǩ":"k","ḳ":"k","ķ":"k","ḵ":"k","ƙ":"k","ⱪ":"k","ꝁ":"k","ꝃ":"k","ꝅ":"k","ꞣ":"k","ⓛ":"l","ｌ":"l","ŀ":"l","ĺ":"l","ľ":"l","ḷ":"l","ḹ":"l","ļ":"l","ḽ":"l","ḻ":"l","ſ":"l","ł":"l","ƚ":"l","ɫ":"l","ⱡ":"l","ꝉ":"l","ꞁ":"l","ꝇ":"l","ɭ":"l","ǉ":"lj","ⓜ":"m","ｍ":"m","ḿ":"m","ṁ":"m","ṃ":"m","ɱ":"m","ɯ":"m","ⓝ":"n","ｎ":"n","ǹ":"n","ń":"n","ñ":"n","ṅ":"n","ň":"n","ṇ":"n","ņ":"n","ṋ":"n","ṉ":"n","ƞ":"n","ɲ":"n","ŉ":"n","ꞑ":"n","ꞥ":"n","ԉ":"n","ǌ":"nj","ⓞ":"o","ｏ":"o","ò":"o","ó":"o","ô":"o","ồ":"o","ố":"o","ỗ":"o","ổ":"o","õ":"o","ṍ":"o","ȭ":"o","ṏ":"o","ō":"o","ṑ":"o","ṓ":"o","ŏ":"o","ȯ":"o","ȱ":"o","ö":"o","ȫ":"o","ỏ":"o","ő":"o","ǒ":"o","ȍ":"o","ȏ":"o","ơ":"o","ờ":"o","ớ":"o","ỡ":"o","ở":"o","ợ":"o","ọ":"o","ộ":"o","ǫ":"o","ǭ":"o","ø":"o","ǿ":"o","ꝋ":"o","ꝍ":"o","ɵ":"o","ɔ":"o","ᴑ":"o","œ":"oe","ƣ":"oi","ꝏ":"oo","ȣ":"ou","ⓟ":"p","ｐ":"p","ṕ":"p","ṗ":"p","ƥ":"p","ᵽ":"p","ꝑ":"p","ꝓ":"p","ꝕ":"p","ρ":"p","ⓠ":"q","ｑ":"q","ɋ":"q","ꝗ":"q","ꝙ":"q","ⓡ":"r","ｒ":"r","ŕ":"r","ṙ":"r","ř":"r","ȑ":"r","ȓ":"r","ṛ":"r","ṝ":"r","ŗ":"r","ṟ":"r","ɍ":"r","ɽ":"r","ꝛ":"r","ꞧ":"r","ꞃ":"r","ⓢ":"s","ｓ":"s","ś":"s","ṥ":"s","ŝ":"s","ṡ":"s","š":"s","ṧ":"s","ṣ":"s","ṩ":"s","ș":"s","ş":"s","ȿ":"s","ꞩ":"s","ꞅ":"s","ẛ":"s","ʂ":"s","ß":"ss","ⓣ":"t","ｔ":"t","ṫ":"t","ẗ":"t","ť":"t","ṭ":"t","ț":"t","ţ":"t","ṱ":"t","ṯ":"t","ŧ":"t","ƭ":"t","ʈ":"t","ⱦ":"t","ꞇ":"t","þ":"th","ꜩ":"tz","ⓤ":"u","ｕ":"u","ù":"u","ú":"u","û":"u","ũ":"u","ṹ":"u","ū":"u","ṻ":"u","ŭ":"u","ü":"u","ǜ":"u","ǘ":"u","ǖ":"u","ǚ":"u","ủ":"u","ů":"u","ű":"u","ǔ":"u","ȕ":"u","ȗ":"u","ư":"u","ừ":"u","ứ":"u","ữ":"u","ử":"u","ự":"u","ụ":"u","ṳ":"u","ų":"u","ṷ":"u","ṵ":"u","ʉ":"u","ⓥ":"v","ｖ":"v","ṽ":"v","ṿ":"v","ʋ":"v","ꝟ":"v","ʌ":"v","ꝡ":"vy","ⓦ":"w","ｗ":"w","ẁ":"w","ẃ":"w","ŵ":"w","ẇ":"w","ẅ":"w","ẘ":"w","ẉ":"w","ⱳ":"w","ⓧ":"x","ｘ":"x","ẋ":"x","ẍ":"x","ⓨ":"y","ｙ":"y","ỳ":"y","ý":"y","ŷ":"y","ỹ":"y","ȳ":"y","ẏ":"y","ÿ":"y","ỷ":"y","ẙ":"y","ỵ":"y","ƴ":"y","ɏ":"y","ỿ":"y","ⓩ":"z","ｚ":"z","ź":"z","ẑ":"z","ż":"z","ž":"z","ẓ":"z","ẕ":"z","ƶ":"z","ȥ":"z","ɀ":"z","ⱬ":"z","ꝣ":"z"} ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/string-kit/lib/json-data/emoji-keyword-to-charlist.json' , '/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 module.exports = {"10":["🔟"],"grin":["😀","😃","😄","😆","😅","😺","😸"],"face":["😀","😃","😄","😁","😆","😅","😂","🙂","🙃","🫠","😉","😊","😇","🥰","😍","😘","😗","☺️","😚","😙","🥲","😋","😛","😜","🤪","😝","🤑","🤗","🤭","🫢","🫣","🤫","🤔","🫡","🤐","🤨","😐","😑","😶","🫥","😶‍🌫️","😏","😒","🙄","😬","😮‍💨","🤥","🫨","😌","😔","😪","🤤","😴","😷","🤒","🤕","🤢","🤮","🤧","🥵","🥶","🥴","😵","😵‍💫","🤠","🥳","🥸","😎","🤓","🧐","😕","🫤","😟","🙁","☹️","😮","😯","😲","😳","🥺","🥹","😦","😧","😨","😰","😥","😢","😭","😱","😖","😣","😞","😓","😩","😫","🥱","😤","😡","😠","🤬","😈","👿","🤡","🤛","🤜","🐵","🐶","🐱","🐯","🐴","🐮","🐷","🐭","🐰","🐥","🐲","🌚","🌛","🌜","🌝","🌞","🌬️","📄"],"big":["😃"],"eyes":["😃","😄","😁","😊","😍","😚","😙","🫢","🙄","😵","😵‍💫","😸","😻","👀"],"smile":["😄","😁","🙂","😊","😇","🥰","😍","☺️","😙","🥲","🤗","😎","😈","😸","😻","😼"],"beam":["😁"],"squint":["😆","😝"],"sweat":["😅","😰","😓","💦"],"roll":["🤣","🙄","🧻"],"on":["🤣","🤬","❤️‍🔥","🍖","⛱️","🔛"],"the":["🤣","🤘","🫵"],"floor":["🤣"],"laugh":["🤣"],"tears":["😂","🥹","😹"],"joy":["😂","😹"],"slightly":["🙂","🙁"],"upside":["🙃"],"down":["🙃","🫳","👇","👎","↘️","⬇️","↙️","↕️","⤵️","⏬","🔻"],"melt":["🫠"],"wink":["😉","😜"],"halo":["😇"],"hearts":["🥰","💞","💕"],"heart":["😍","😻","💘","💝","💖","💗","💓","💟","❣️","💔","❤️‍🔥","❤️‍🩹","❤️","🩷","🧡","💛","💚","💙","🩵","💜","🤎","🖤","🩶","🤍","🫶","🫀","💑","👩‍❤️‍👨","👨‍❤️‍👨","👩‍❤️‍👩","♥️"],"star":["🤩","⭐","🌟","🌠","✡️","☪️","🔯","✴️"],"struck":["🤩"],"blow":["😘"],"kiss":["😘","😗","😚","😙","😽","💋","💏","👩‍❤️‍💋‍👨","👨‍❤️‍💋‍👨","👩‍❤️‍💋‍👩"],"closed":["😚","🌂","📕","📫","📪"],"tear":["🥲","📆"],"savore":["😋"],"food":["😋","🥘","🍲","🥫"],"tongue":["😛","😜","😝","👅"],"zany":["🤪"],"money":["🤑","💰","💸"],"mouth":["🤑","🤭","🫢","🤐","😶","🫤","😮","😦","🤬","👄"],"open":["🤗","🫢","😮","😦","👐","📖","📬","📭","📂","🈺"],"hands":["🤗","👏","🙌","🫶","👐","🙏","🧑‍🤝‍🧑","👭","👫","👬"],"hand":["🤭","🫢","👋","🤚","🖐️","✋","🫱","🫲","🫳","🫴","🫷","🫸","👌","🤏","✌️","🫰","🤙","✍️","💁","💁‍♂️","💁‍♀️","🙋","🙋‍♂️","🙋‍♀️","🪭"],"over":["🤭","🫢","🌄"],"and":["🫢","☠️","🫰","👫","🍽️","🍴","⛈️","⚒️","🛠️","🏹","🔩","🛋️","☪️"],"peek":["🫣"],"eye":["🫣","👁️‍🗨️","👁️"],"shush":["🤫"],"think":["🤔"],"salute":["🫡","🖖"],"zipper":["🤐"],"raised":["🤨","🤚","✋","✊","📫","📬"],"eyebrow":["🤨"],"neutral":["😐"],"expressionless":["😑"],"without":["😶","🍵","⛄"],"dotted":["🫥","🔯"],"line":["🫥"],"in":["😶‍🌫️","😱","👁️‍🗨️","🤵","🤵‍♂️","🤵‍♀️","🧑‍🦼","👨‍🦼","👩‍🦼","🧑‍🦽","👨‍🦽","👩‍🦽","🕴️","🧖","🧖‍♂️","🧖‍♀️","🧘","🧘‍♂️","🧘‍♀️","🛌","👤","👥","🍃","⛳","🚮"],"clouds":["😶‍🌫️"],"smirk":["😏"],"unamused":["😒"],"grimace":["😬"],"exhale":["😮‍💨"],"lying":["🤥"],"shake":["🫨"],"relieved":["😌","😥"],"pensive":["😔"],"sleepy":["😪"],"drool":["🤤"],"sleep":["😴"],"medical":["😷","⚕️"],"mask":["😷","🤿"],"thermometer":["🤒","🌡️"],"head":["🤕","🤯","🗣️"],"bandage":["🤕","🩹"],"nauseated":["🤢"],"vomite":["🤮"],"sneez":["🤧"],"hot":["🥵","🌶️","🌭","☕","♨️"],"cold":["🥶"],"woozy":["🥴"],"crossed":["😵","🤞","🫰","⚔️","🎌"],"out":["😵"],"spiral":["😵‍💫","🐚","🗒️","🗓️"],"explode":["🤯"],"cowboy":["🤠"],"hat":["🤠","👒","🎩"],"party":["🥳","🎉"],"disguised":["🥸"],"sunglasses":["😎","🕶️"],"nerd":["🤓"],"monocle":["🧐"],"confused":["😕"],"diagonal":["🫤"],"worried":["😟"],"frown":["🙁","☹️","😦","🙍","🙍‍♂️","🙍‍♀️"],"hushed":["😯"],"astonished":["😲"],"flushed":["😳"],"plead":["🥺"],"hold":["🥹","🧑‍🤝‍🧑","👭","👫","👬"],"back":["🥹","🤚","🔙"],"anguished":["😧"],"fearful":["😨"],"anxious":["😰"],"sad":["😥"],"but":["😥"],"cry":["😢","😭","😿"],"loudly":["😭"],"scream":["😱"],"fear":["😱"],"confounded":["😖"],"persever":["😣"],"disappointed":["😞"],"downcast":["😓"],"weary":["😩","🙀"],"tired":["😫"],"yawn":["🥱"],"steam":["😤","🍜"],"from":["😤"],"nose":["😤","👃","🐽"],"enraged":["😡"],"angry":["😠","👿"],"symbols":["🤬","🔣"],"horns":["😈","👿","🤘"],"skull":["💀","☠️"],"crossbones":["☠️"],"pile":["💩"],"poo":["💩"],"clown":["🤡"],"ogre":["👹"],"goblin":["👺"],"ghost":["👻"],"alien":["👽","👾"],"monster":["👾"],"robot":["🤖"],"cat":["😺","😸","😹","😻","😼","😽","🙀","😿","😾","🐱","🐈","🐈‍⬛"],"wry":["😼"],"pout":["😾","🙎","🙎‍♂️","🙎‍♀️"],"see":["🙈"],"no":["🙈","🙉","🙊","🙅","🙅‍♂️","🙅‍♀️","⛔","🚳","🚭","🚯","🚷","📵","🔞","🈵"],"evil":["🙈","🙉","🙊"],"monkey":["🙈","🙉","🙊","🐵","🐒"],"hear":["🙉","🦻"],"speak":["🙊","🗣️"],"love":["💌","🤟","🏩"],"letter":["💌"],"arrow":["💘","📲","📩","🏹","⬆️","↗️","➡️","↘️","⬇️","↙️","⬅️","↖️","↕️","↔️","↩️","↪️","⤴️","⤵️","🔙","🔚","🔛","🔜","🔝"],"ribbon":["💝","🎀","🎗️"],"sparkle":["💖","❇️"],"grow":["💗"],"beat":["💓"],"revolve":["💞"],"two":["💕","🐫","🕑","🕝"],"decoration":["💟","🎍"],"exclamation":["❣️","‼️","⁉️","❕","❗"],"broken":["💔"],"fire":["❤️‍🔥","🚒","🔥","🧯"],"mend":["❤️‍🩹"],"red":["❤️","👨‍🦰","👩‍🦰","🧑‍🦰","🍎","🧧","🀄","🏮","❓","❗","⭕","🔴","🟥","🔺","🔻"],"pink":["🩷"],"orange":["🧡","📙","🟠","🟧","🔶","🔸"],"yellow":["💛","🟡","🟨"],"green":["💚","🍏","🥬","🥗","📗","🟢","🟩"],"blue":["💙","🩵","📘","🔵","🟦","🔷","🔹"],"light":["🩵","🚈","🚨","🚥","🚦","💡"],"purple":["💜","🟣","🟪"],"brown":["🤎","🟤","🟫"],"black":["🖤","🐈‍⬛","🐦‍⬛","✒️","⚫","⬛","◼️","◾","▪️","🔲","🏴"],"grey":["🩶"],"white":["🤍","👨‍🦳","👩‍🦳","🧑‍🦳","🧑‍🦯","👨‍🦯","👩‍🦯","💮","🦯","❔","❕","⚪","⬜","◻️","◽","▫️","🔳","🏳️"],"mark":["💋","‼️","⁉️","❓","❔","❕","❗","✅","✔️","❌","❎","〽️","™️"],"hundred":["💯"],"points":["💯"],"anger":["💢","🗯️"],"symbol":["💢","♿","🚼","⚛️","☮️","⚧️","⚕️","♻️","🔰"],"collision":["💥"],"dizzy":["💫"],"droplets":["💦"],"dash":["💨","〰️"],"away":["💨"],"hole":["🕳️","⛳"],"speech":["💬","👁️‍🗨️","🗨️"],"balloon":["💬","💭","🎈"],"bubble":["👁️‍🗨️","🗨️","🗯️","🧋"],"left":["🗨️","👈","🤛","🔍","🛅","↙️","⬅️","↖️","↔️","↩️","↪️"],"right":["🗯️","👉","🤜","🔎","↗️","➡️","↘️","↔️","↩️","↪️","⤴️","⤵️"],"thought":["💭"],"zzz":["💤"],"wave":["👋","🌊"],"fingers":["🖐️","🤌","🤞"],"splayed":["🖐️"],"vulcan":["🖖"],"rightwards":["🫱","🫸"],"leftwards":["🫲","🫷"],"palm":["🫳","🫴","🌴"],"up":["🫴","👆","☝️","👍","🤲","📄","🗞️","⬆️","↗️","↖️","↕️","⤴️","⏫","🆙","🔺"],"push":["🫷","🫸"],"ok":["👌","🙆","🙆‍♂️","🙆‍♀️","🆗"],"pinched":["🤌"],"pinch":["🤏"],"victory":["✌️"],"index":["🫰","👈","👉","👆","👇","☝️","🫵","🗂️","📇"],"finger":["🫰","🖕"],"thumb":["🫰"],"you":["🤟"],"gesture":["🤟","🙅","🙅‍♂️","🙅‍♀️","🙆","🙆‍♂️","🙆‍♀️"],"sign":["🤘","🛑","🏧","🚮","♀️","♂️","🟰","💲"],"call":["🤙"],"me":["🤙"],"backhand":["👈","👉","👆","👇"],"point":["👈","👉","👆","👇","☝️","🫵"],"middle":["🖕"],"at":["🫵","🌆","🌉"],"viewer":["🫵"],"thumbs":["👍","👎"],"fist":["✊","👊","🤛","🤜"],"oncome":["👊","🚍","🚔","🚖","🚘"],"clap":["👏"],"raise":["🙌","🙋","🙋‍♂️","🙋‍♀️"],"palms":["🤲"],"together":["🤲"],"handshake":["🤝"],"folded":["🙏"],"write":["✍️"],"nail":["💅"],"polish":["💅"],"selfie":["🤳"],"flexed":["💪"],"biceps":["💪"],"mechanical":["🦾","🦿"],"arm":["🦾"],"leg":["🦿","🦵","🍗"],"foot":["🦶"],"ear":["👂","🦻","🌽"],"aid":["🦻"],"brain":["🧠"],"anatomical":["🫀"],"lungs":["🫁"],"tooth":["🦷"],"bone":["🦴","🍖"],"bite":["🫦"],"lip":["🫦"],"baby":["👶","👩‍🍼","👨‍🍼","🧑‍🍼","👼","🐤","🐥","🍼","🚼"],"child":["🧒"],"boy":["👦","👨‍👩‍👦","👨‍👩‍👧‍👦","👨‍👩‍👦‍👦","👨‍👨‍👦","👨‍👨‍👧‍👦","👨‍👨‍👦‍👦","👩‍👩‍👦","👩‍👩‍👧‍👦","👩‍👩‍👦‍👦","👨‍👦","👨‍👦‍👦","👨‍👧‍👦","👩‍👦","👩‍👦‍👦","👩‍👧‍👦"],"girl":["👧","👨‍👩‍👧","👨‍👩‍👧‍👦","👨‍👩‍👧‍👧","👨‍👨‍👧","👨‍👨‍👧‍👦","👨‍👨‍👧‍👧","👩‍👩‍👧","👩‍👩‍👧‍👦","👩‍👩‍👧‍👧","👨‍👧","👨‍👧‍👦","👨‍👧‍👧","👩‍👧","👩‍👧‍👦","👩‍👧‍👧"],"person":["🧑","👱","🧔","🧑‍🦰","🧑‍🦱","🧑‍🦳","🧑‍🦲","🧓","🙍","🙎","🙅","🙆","💁","🙋","🧏","🙇","🤦","🤷","🫅","👳","👲","🤵","👰","🫄","🧑‍🍼","💆","💇","🚶","🧍","🧎","🧑‍🦯","🧑‍🦼","🧑‍🦽","🏃","🕴️","🧖","🧗","🤺","🏌️","🏄","🚣","🏊","⛹️","🏋️","🚴","🚵","🤸","🤽","🤾","🤹","🧘","🛀","🛌"],"blond":["👱","👱‍♀️","👱‍♂️"],"hair":["👱","👨‍🦰","👨‍🦱","👨‍🦳","👩‍🦰","🧑‍🦰","👩‍🦱","🧑‍🦱","👩‍🦳","🧑‍🦳","👱‍♀️","👱‍♂️","🪮"],"man":["👨","🧔‍♂️","👨‍🦰","👨‍🦱","👨‍🦳","👨‍🦲","👱‍♂️","👴","🙍‍♂️","🙎‍♂️","🙅‍♂️","🙆‍♂️","💁‍♂️","🙋‍♂️","🧏‍♂️","🙇‍♂️","🤦‍♂️","🤷‍♂️","👨‍⚕️","👨‍🎓","👨‍🏫","👨‍⚖️","👨‍🌾","👨‍🍳","👨‍🔧","👨‍🏭","👨‍💼","👨‍🔬","👨‍💻","👨‍🎤","👨‍🎨","👨‍✈️","👨‍🚀","👨‍🚒","👮‍♂️","🕵️‍♂️","💂‍♂️","👷‍♂️","👳‍♂️","🤵‍♂️","👰‍♂️","🫃","👨‍🍼","🦸‍♂️","🦹‍♂️","🧙‍♂️","🧚‍♂️","🧛‍♂️","🧝‍♂️","🧞‍♂️","🧟‍♂️","💆‍♂️","💇‍♂️","🚶‍♂️","🧍‍♂️","🧎‍♂️","👨‍🦯","👨‍🦼","👨‍🦽","🏃‍♂️","🕺","🧖‍♂️","🧗‍♂️","🏌️‍♂️","🏄‍♂️","🚣‍♂️","🏊‍♂️","⛹️‍♂️","🏋️‍♂️","🚴‍♂️","🚵‍♂️","🤸‍♂️","🤽‍♂️","🤾‍♂️","🤹‍♂️","🧘‍♂️","👫","👩‍❤️‍💋‍👨","👨‍❤️‍💋‍👨","👩‍❤️‍👨","👨‍❤️‍👨","👨‍👩‍👦","👨‍👩‍👧","👨‍👩‍👧‍👦","👨‍👩‍👦‍👦","👨‍👩‍👧‍👧","👨‍👨‍👦","👨‍👨‍👧","👨‍👨‍👧‍👦","👨‍👨‍👦‍👦","👨‍👨‍👧‍👧","👨‍👦","👨‍👦‍👦","👨‍👧","👨‍👧‍👦","👨‍👧‍👧","👞","🇮🇲"],"beard":["🧔","🧔‍♂️","🧔‍♀️"],"woman":["🧔‍♀️","👩","👩‍🦰","👩‍🦱","👩‍🦳","👩‍🦲","👱‍♀️","👵","🙍‍♀️","🙎‍♀️","🙅‍♀️","🙆‍♀️","💁‍♀️","🙋‍♀️","🧏‍♀️","🙇‍♀️","🤦‍♀️","🤷‍♀️","👩‍⚕️","👩‍🎓","👩‍🏫","👩‍⚖️","👩‍🌾","👩‍🍳","👩‍🔧","👩‍🏭","👩‍💼","👩‍🔬","👩‍💻","👩‍🎤","👩‍🎨","👩‍✈️","👩‍🚀","👩‍🚒","👮‍♀️","🕵️‍♀️","💂‍♀️","👷‍♀️","👳‍♀️","🧕","🤵‍♀️","👰‍♀️","🤰","👩‍🍼","🦸‍♀️","🦹‍♀️","🧙‍♀️","🧚‍♀️","🧛‍♀️","🧝‍♀️","🧞‍♀️","🧟‍♀️","💆‍♀️","💇‍♀️","🚶‍♀️","🧍‍♀️","🧎‍♀️","👩‍🦯","👩‍🦼","👩‍🦽","🏃‍♀️","💃","🧖‍♀️","🧗‍♀️","🏌️‍♀️","🏄‍♀️","🚣‍♀️","🏊‍♀️","⛹️‍♀️","🏋️‍♀️","🚴‍♀️","🚵‍♀️","🤸‍♀️","🤽‍♀️","🤾‍♀️","🤹‍♀️","🧘‍♀️","👫","👩‍❤️‍💋‍👨","👩‍❤️‍💋‍👩","👩‍❤️‍👨","👩‍❤️‍👩","👨‍👩‍👦","👨‍👩‍👧","👨‍👩‍👧‍👦","👨‍👩‍👦‍👦","👨‍👩‍👧‍👧","👩‍👩‍👦","👩‍👩‍👧","👩‍👩‍👧‍👦","👩‍👩‍👦‍👦","👩‍👩‍👧‍👧","👩‍👦","👩‍👦‍👦","👩‍👧","👩‍👧‍👦","👩‍👧‍👧","👚","👡","👢","👒"],"curly":["👨‍🦱","👩‍🦱","🧑‍🦱","➰","➿"],"bald":["👨‍🦲","👩‍🦲","🧑‍🦲"],"older":["🧓"],"old":["👴","👵","🗝️"],"tip":["💁","💁‍♂️","💁‍♀️"],"deaf":["🧏","🧏‍♂️","🧏‍♀️"],"bow":["🙇","🙇‍♂️","🙇‍♀️","🏹"],"facepalm":["🤦","🤦‍♂️","🤦‍♀️"],"shrug":["🤷","🤷‍♂️","🤷‍♀️"],"health":["🧑‍⚕️","👨‍⚕️","👩‍⚕️"],"worker":["🧑‍⚕️","👨‍⚕️","👩‍⚕️","🧑‍🏭","👨‍🏭","👩‍🏭","🧑‍💼","👨‍💼","👩‍💼","👷","👷‍♂️","👷‍♀️","⛑️"],"student":["🧑‍🎓","👨‍🎓","👩‍🎓"],"teacher":["🧑‍🏫","👨‍🏫","👩‍🏫"],"judge":["🧑‍⚖️","👨‍⚖️","👩‍⚖️"],"farmer":["🧑‍🌾","👨‍🌾","👩‍🌾"],"cook":["🧑‍🍳","👨‍🍳","👩‍🍳","🍳","🇨🇰"],"mechanic":["🧑‍🔧","👨‍🔧","👩‍🔧"],"factory":["🧑‍🏭","👨‍🏭","👩‍🏭","🏭"],"office":["🧑‍💼","👨‍💼","👩‍💼","🏢","🏣","🏤"],"scientist":["🧑‍🔬","👨‍🔬","👩‍🔬"],"technologist":["🧑‍💻","👨‍💻","👩‍💻"],"singer":["🧑‍🎤","👨‍🎤","👩‍🎤"],"artist":["🧑‍🎨","👨‍🎨","👩‍🎨","🎨"],"pilot":["🧑‍✈️","👨‍✈️","👩‍✈️"],"astronaut":["🧑‍🚀","👨‍🚀","👩‍🚀"],"firefighter":["🧑‍🚒","👨‍🚒","👩‍🚒"],"police":["👮","👮‍♂️","👮‍♀️","🚓","🚔","🚨"],"officer":["👮","👮‍♂️","👮‍♀️"],"detective":["🕵️","🕵️‍♂️","🕵️‍♀️"],"guard":["💂","💂‍♂️","💂‍♀️"],"ninja":["🥷"],"construction":["👷","👷‍♂️","👷‍♀️","🏗️","🚧"],"crown":["🫅","👑"],"prince":["🤴"],"princess":["👸"],"wear":["👳","👳‍♂️","👳‍♀️"],"turban":["👳","👳‍♂️","👳‍♀️"],"skullcap":["👲"],"headscarf":["🧕"],"tuxedo":["🤵","🤵‍♂️","🤵‍♀️"],"veil":["👰","👰‍♂️","👰‍♀️"],"pregnant":["🤰","🫃","🫄"],"breast":["🤱"],"feed":["🤱","👩‍🍼","👨‍🍼","🧑‍🍼"],"angel":["👼"],"santa":["🎅"],"claus":["🎅","🤶","🧑‍🎄"],"mrs":["🤶"],"mx":["🧑‍🎄"],"superhero":["🦸","🦸‍♂️","🦸‍♀️"],"supervillain":["🦹","🦹‍♂️","🦹‍♀️"],"mage":["🧙","🧙‍♂️","🧙‍♀️"],"fairy":["🧚","🧚‍♂️","🧚‍♀️"],"vampire":["🧛","🧛‍♂️","🧛‍♀️"],"merperson":["🧜"],"merman":["🧜‍♂️"],"mermaid":["🧜‍♀️"],"elf":["🧝","🧝‍♂️","🧝‍♀️"],"genie":["🧞","🧞‍♂️","🧞‍♀️"],"zombie":["🧟","🧟‍♂️","🧟‍♀️"],"troll":["🧌"],"gett":["💆","💆‍♂️","💆‍♀️","💇","💇‍♂️","💇‍♀️"],"massage":["💆","💆‍♂️","💆‍♀️"],"haircut":["💇","💇‍♂️","💇‍♀️"],"walk":["🚶","🚶‍♂️","🚶‍♀️"],"stand":["🧍","🧍‍♂️","🧍‍♀️"],"kneel":["🧎","🧎‍♂️","🧎‍♀️"],"cane":["🧑‍🦯","👨‍🦯","👩‍🦯","🦯"],"motorized":["🧑‍🦼","👨‍🦼","👩‍🦼","🦼"],"wheelchair":["🧑‍🦼","👨‍🦼","👩‍🦼","🧑‍🦽","👨‍🦽","👩‍🦽","🦽","🦼","♿"],"manual":["🧑‍🦽","👨‍🦽","👩‍🦽","🦽"],"run":["🏃","🏃‍♂️","🏃‍♀️","🎽","👟"],"dance":["💃","🕺"],"suit":["🕴️","♠️","♥️","♦️","♣️"],"levitate":["🕴️"],"people":["👯","🤼","🧑‍🤝‍🧑","🫂"],"bunny":["👯","👯‍♂️","👯‍♀️"],"ears":["👯","👯‍♂️","👯‍♀️"],"men":["👯‍♂️","🤼‍♂️","👬","🚹"],"women":["👯‍♀️","🤼‍♀️","👭","🚺"],"steamy":["🧖","🧖‍♂️","🧖‍♀️"],"room":["🧖","🧖‍♂️","🧖‍♀️","🚹","🚺"],"climb":["🧗","🧗‍♂️","🧗‍♀️"],"fence":["🤺"],"horse":["🏇","🐴","🐎","🎠"],"race":["🏇","🏎️"],"skier":["⛷️"],"snowboarder":["🏂"],"golf":["🏌️","🏌️‍♂️","🏌️‍♀️"],"surf":["🏄","🏄‍♂️","🏄‍♀️"],"row":["🚣","🚣‍♂️","🚣‍♀️"],"boat":["🚣","🚣‍♂️","🚣‍♀️","🛥️"],"swim":["🏊","🏊‍♂️","🏊‍♀️"],"bounce":["⛹️","⛹️‍♂️","⛹️‍♀️"],"ball":["⛹️","⛹️‍♂️","⛹️‍♀️","🍙","🎊","⚽","🎱","🔮","🪩"],"lift":["🏋️","🏋️‍♂️","🏋️‍♀️"],"weights":["🏋️","🏋️‍♂️","🏋️‍♀️"],"bike":["🚴","🚴‍♂️","🚴‍♀️","🚵","🚵‍♂️","🚵‍♀️"],"mountain":["🚵","🚵‍♂️","🚵‍♀️","🏔️","⛰️","🚞","🚠"],"cartwheel":["🤸","🤸‍♂️","🤸‍♀️"],"wrestle":["🤼","🤼‍♂️","🤼‍♀️"],"play":["🤽","🤽‍♂️","🤽‍♀️","🤾","🤾‍♂️","🤾‍♀️","🎴","▶️","⏯️"],"water":["🤽","🤽‍♂️","🤽‍♀️","🐃","🌊","🔫","🚰","🚾","🚱"],"polo":["🤽","🤽‍♂️","🤽‍♀️"],"handball":["🤾","🤾‍♂️","🤾‍♀️"],"juggle":["🤹","🤹‍♂️","🤹‍♀️"],"lotus":["🧘","🧘‍♂️","🧘‍♀️","🪷"],"position":["🧘","🧘‍♂️","🧘‍♀️"],"take":["🛀"],"bath":["🛀"],"bed":["🛌","🛏️"],"couple":["💑","👩‍❤️‍👨","👨‍❤️‍👨","👩‍❤️‍👩"],"family":["👪","👨‍👩‍👦","👨‍👩‍👧","👨‍👩‍👧‍👦","👨‍👩‍👦‍👦","👨‍👩‍👧‍👧","👨‍👨‍👦","👨‍👨‍👧","👨‍👨‍👧‍👦","👨‍👨‍👦‍👦","👨‍👨‍👧‍👧","👩‍👩‍👦","👩‍👩‍👧","👩‍👩‍👧‍👦","👩‍👩‍👦‍👦","👩‍👩‍👧‍👧","👨‍👦","👨‍👦‍👦","👨‍👧","👨‍👧‍👦","👨‍👧‍👧","👩‍👦","👩‍👦‍👦","👩‍👧","👩‍👧‍👦","👩‍👧‍👧"],"bust":["👤"],"silhouette":["👤","👥"],"busts":["👥"],"hug":["🫂"],"footprints":["👣"],"gorilla":["🦍"],"orangutan":["🦧"],"dog":["🐶","🐕","🦮","🐕‍🦺","🌭"],"guide":["🦮"],"service":["🐕‍🦺","🈂️"],"poodle":["🐩"],"wolf":["🐺"],"fox":["🦊"],"raccoon":["🦝"],"lion":["🦁"],"tiger":["🐯","🐅"],"leopard":["🐆"],"moose":["🫎"],"donkey":["🫏"],"unicorn":["🦄"],"zebra":["🦓"],"deer":["🦌"],"bison":["🦬"],"cow":["🐮","🐄"],"ox":["🐂"],"buffalo":["🐃"],"pig":["🐷","🐖","🐽"],"boar":["🐗"],"ram":["🐏"],"ewe":["🐑"],"goat":["🐐"],"camel":["🐪","🐫"],"hump":["🐫"],"llama":["🦙"],"giraffe":["🦒"],"elephant":["🐘"],"mammoth":["🦣"],"rhinoceros":["🦏"],"hippopotamus":["🦛"],"mouse":["🐭","🐁","🖱️","🪤"],"rat":["🐀"],"hamster":["🐹"],"rabbit":["🐰","🐇"],"chipmunk":["🐿️"],"beaver":["🦫"],"hedgehog":["🦔"],"bat":["🦇"],"bear":["🐻","🐻‍❄️","🧸"],"polar":["🐻‍❄️"],"koala":["🐨"],"panda":["🐼"],"sloth":["🦥"],"otter":["🦦"],"skunk":["🦨"],"kangaroo":["🦘"],"badger":["🦡"],"paw":["🐾"],"prints":["🐾"],"turkey":["🦃","🇹🇷"],"chicken":["🐔"],"rooster":["🐓"],"hatch":["🐣"],"chick":["🐣","🐤","🐥"],"front":["🐥"],"bird":["🐦","🐦‍⬛"],"penguin":["🐧"],"dove":["🕊️"],"eagle":["🦅"],"duck":["🦆"],"swan":["🦢"],"owl":["🦉"],"dodo":["🦤"],"feather":["🪶"],"flamingo":["🦩"],"peacock":["🦚"],"parrot":["🦜"],"wing":["🪽"],"goose":["🪿"],"frog":["🐸"],"crocodile":["🐊"],"turtle":["🐢"],"lizard":["🦎"],"snake":["🐍"],"dragon":["🐲","🐉","🀄"],"sauropod":["🦕"],"rex":["🦖"],"spout":["🐳"],"whale":["🐳","🐋"],"dolphin":["🐬"],"seal":["🦭"],"fish":["🐟","🐠","🍥","🎣"],"tropical":["🐠","🍹"],"blowfish":["🐡"],"shark":["🦈"],"octopus":["🐙"],"shell":["🐚"],"coral":["🪸"],"jellyfish":["🪼"],"snail":["🐌"],"butterfly":["🦋"],"bug":["🐛"],"ant":["🐜"],"honeybee":["🐝"],"beetle":["🪲","🐞"],"lady":["🐞"],"cricket":["🦗","🏏"],"cockroach":["🪳"],"spider":["🕷️","🕸️"],"web":["🕸️"],"scorpion":["🦂"],"mosquito":["🦟"],"fly":["🪰","🛸","🥏"],"worm":["🪱"],"microbe":["🦠"],"bouquet":["💐"],"cherry":["🌸"],"blossom":["🌸","🌼"],"flower":["💮","🥀","🎴"],"rosette":["🏵️"],"rose":["🌹"],"wilted":["🥀"],"hibiscus":["🌺"],"sunflower":["🌻"],"tulip":["🌷"],"hyacinth":["🪻"],"seedle":["🌱"],"potted":["🪴"],"plant":["🪴"],"evergreen":["🌲"],"tree":["🌲","🌳","🌴","🎄","🎋"],"deciduous":["🌳"],"cactus":["🌵"],"sheaf":["🌾"],"rice":["🌾","🍘","🍙","🍚","🍛"],"herb":["🌿"],"shamrock":["☘️"],"four":["🍀","🕓","🕟"],"leaf":["🍀","🍁","🍂","🍃"],"clover":["🍀"],"maple":["🍁"],"fallen":["🍂"],"flutter":["🍃"],"wind":["🍃","🌬️","🎐"],"empty":["🪹"],"nest":["🪹","🪺","🪆"],"eggs":["🪺"],"mushroom":["🍄"],"grapes":["🍇"],"melon":["🍈"],"watermelon":["🍉"],"tangerine":["🍊"],"lemon":["🍋"],"banana":["🍌"],"pineapple":["🍍"],"mango":["🥭"],"apple":["🍎","🍏"],"pear":["🍐"],"peach":["🍑"],"cherries":["🍒"],"strawberry":["🍓"],"blueberries":["🫐"],"kiwi":["🥝"],"fruit":["🥝"],"tomato":["🍅"],"olive":["🫒"],"coconut":["🥥"],"avocado":["🥑"],"eggplant":["🍆"],"potato":["🥔","🍠"],"carrot":["🥕"],"corn":["🌽"],"pepper":["🌶️","🫑"],"bell":["🫑","🛎️","🔔","🔕"],"cucumber":["🥒"],"leafy":["🥬"],"broccoli":["🥦"],"garlic":["🧄"],"onion":["🧅"],"peanuts":["🥜"],"beans":["🫘"],"chestnut":["🌰"],"ginger":["🫚"],"root":["🫚"],"pea":["🫛"],"pod":["🫛"],"bread":["🍞","🥖"],"croissant":["🥐"],"baguette":["🥖"],"flatbread":["🫓","🥙"],"pretzel":["🥨"],"bagel":["🥯"],"pancakes":["🥞"],"waffle":["🧇"],"cheese":["🧀"],"wedge":["🧀"],"meat":["🍖","🥩"],"poultry":["🍗"],"cut":["🥩"],"bacon":["🥓"],"hamburger":["🍔"],"french":["🍟","🇬🇫","🇵🇫","🇹🇫"],"fries":["🍟"],"pizza":["🍕"],"sandwich":["🥪","🇬🇸"],"taco":["🌮"],"burrito":["🌯"],"tamale":["🫔"],"stuffed":["🥙"],"falafel":["🧆"],"egg":["🥚"],"shallow":["🥘"],"pan":["🥘"],"pot":["🍲","🍯"],"fondue":["🫕"],"bowl":["🥣","🍜","🎳"],"spoon":["🥣","🥄"],"salad":["🥗"],"popcorn":["🍿"],"butter":["🧈"],"salt":["🧂"],"canned":["🥫"],"bento":["🍱"],"box":["🍱","🥡","🧃","🥊","🗳️","🗃️","☑️"],"cracker":["🍘"],"cooked":["🍚"],"curry":["🍛"],"spaghetti":["🍝"],"roasted":["🍠"],"sweet":["🍠"],"oden":["🍢"],"sushi":["🍣"],"fried":["🍤"],"shrimp":["🍤","🦐"],"cake":["🍥","🥮","🎂"],"swirl":["🍥"],"moon":["🥮","🌑","🌒","🌓","🌔","🌕","🌖","🌗","🌘","🌙","🌚","🌛","🌜","🌝","🎑"],"dango":["🍡"],"dumple":["🥟"],"fortune":["🥠"],"cookie":["🥠","🍪"],"takeout":["🥡"],"crab":["🦀"],"lobster":["🦞"],"squid":["🦑"],"oyster":["🦪"],"soft":["🍦"],"ice":["🍦","🍧","🍨","🧊","🏒","⛸️"],"cream":["🍦","🍨"],"shaved":["🍧"],"doughnut":["🍩"],"birthday":["🎂"],"shortcake":["🍰"],"cupcake":["🧁"],"pie":["🥧"],"chocolate":["🍫"],"bar":["🍫","📊"],"candy":["🍬"],"lollipop":["🍭"],"custard":["🍮"],"honey":["🍯"],"bottle":["🍼","🍾","🧴"],"glass":["🥛","🍷","🍸","🥃","🔍","🔎"],"milk":["🥛"],"beverage":["☕","🧃"],"teapot":["🫖"],"teacup":["🍵"],"handle":["🍵"],"sake":["🍶"],"pop":["🍾"],"cork":["🍾"],"wine":["🍷"],"cocktail":["🍸"],"drink":["🍹"],"beer":["🍺","🍻"],"mug":["🍺"],"clink":["🍻","🥂"],"mugs":["🍻"],"glasses":["🥂","👓"],"tumbler":["🥃"],"pour":["🫗"],"liquid":["🫗"],"cup":["🥤"],"straw":["🥤"],"tea":["🧋"],"mate":["🧉"],"chopsticks":["🥢"],"fork":["🍽️","🍴"],"knife":["🍽️","🍴","🔪"],"plate":["🍽️"],"kitchen":["🔪"],"jar":["🫙"],"amphora":["🏺"],"globe":["🌍","🌎","🌏","🌐"],"show":["🌍","🌎","🌏"],"europe":["🌍"],"africa":["🌍","🇿🇦"],"americas":["🌎"],"asia":["🌏"],"australia":["🌏","🇦🇺"],"meridians":["🌐"],"world":["🗺️"],"map":["🗺️","🗾"],"japan":["🗾","🇯🇵"],"compass":["🧭"],"snow":["🏔️","🌨️","⛄"],"capped":["🏔️"],"volcano":["🌋"],"mount":["🗻"],"fuji":["🗻"],"camp":["🏕️"],"beach":["🏖️"],"umbrella":["🏖️","🌂","☂️","☔","⛱️"],"desert":["🏜️","🏝️"],"island":["🏝️","🇦🇨","🇧🇻","🇨🇵","🇨🇽","🇳🇫"],"national":["🏞️"],"park":["🏞️"],"stadium":["🏟️"],"classical":["🏛️"],"build":["🏛️","🏗️","🏢"],"brick":["🧱"],"rock":["🪨"],"wood":["🪵"],"hut":["🛖"],"houses":["🏘️"],"derelict":["🏚️"],"house":["🏚️","🏠","🏡"],"garden":["🏡"],"japanese":["🏣","🏯","🎎","🔰","🈁","🈂️","🈷️","🈶","🈯","🉐","🈹","🈚","🈲","🉑","🈸","🈴","🈳","㊗️","㊙️","🈺","🈵"],"post":["🏣","🏤"],"hospital":["🏥"],"bank":["🏦"],"hotel":["🏨","🏩"],"convenience":["🏪"],"store":["🏪","🏬"],"school":["🏫"],"department":["🏬"],"castle":["🏯","🏰"],"wed":["💒"],"tokyo":["🗼"],"tower":["🗼"],"statue":["🗽"],"liberty":["🗽"],"church":["⛪"],"mosque":["🕌"],"hindu":["🛕"],"temple":["🛕"],"synagogue":["🕍"],"shinto":["⛩️"],"shrine":["⛩️"],"kaaba":["🕋"],"fountain":["⛲","🖋️"],"tent":["⛺","🎪"],"foggy":["🌁"],"night":["🌃","🌉"],"stars":["🌃"],"cityscape":["🏙️","🌆"],"sunrise":["🌄","🌅"],"mountains":["🌄"],"dusk":["🌆"],"sunset":["🌇"],"bridge":["🌉"],"springs":["♨️"],"carousel":["🎠"],"playground":["🛝"],"slide":["🛝"],"ferris":["🎡"],"wheel":["🎡","🛞","☸️"],"roller":["🎢","🛼"],"coaster":["🎢"],"barber":["💈"],"pole":["💈","🎣"],"circus":["🎪"],"locomotive":["🚂"],"railway":["🚃","🚞","🛤️","🚟"],"car":["🚃","🚋","🚓","🚔","🏎️","🚨"],"high":["🚄","⚡","👠","🔊"],"speed":["🚄"],"train":["🚄","🚅","🚆"],"bullet":["🚅"],"metro":["🚇"],"rail":["🚈"],"station":["🚉"],"tram":["🚊","🚋"],"monorail":["🚝"],"bus":["🚌","🚍","🚏"],"trolleybus":["🚎"],"minibus":["🚐"],"ambulance":["🚑"],"engine":["🚒"],"taxi":["🚕","🚖"],"automobile":["🚗","🚘"],"sport":["🚙"],"utility":["🚙"],"vehicle":["🚙"],"pickup":["🛻"],"truck":["🛻","🚚"],"delivery":["🚚"],"articulated":["🚛"],"lorry":["🚛"],"tractor":["🚜"],"motorcycle":["🏍️"],"motor":["🛵","🛥️"],"scooter":["🛵","🛴"],"auto":["🛺"],"rickshaw":["🛺"],"bicycle":["🚲"],"kick":["🛴"],"skateboard":["🛹"],"skate":["🛼","⛸️"],"stop":["🚏","🛑","⏹️"],"motorway":["🛣️"],"track":["🛤️","⏭️","⏮️"],"oil":["🛢️"],"drum":["🛢️","🥁","🪘"],"fuel":["⛽"],"pump":["⛽"],"horizontal":["🚥"],"traffic":["🚥","🚦"],"vertical":["🚦","🔃"],"anchor":["⚓"],"ring":["🛟","💍"],"buoy":["🛟"],"sailboat":["⛵"],"canoe":["🛶"],"speedboat":["🚤"],"passenger":["🛳️"],"ship":["🛳️","🚢"],"ferry":["⛴️"],"airplane":["✈️","🛩️","🛫","🛬"],"small":["🛩️","🌤️","◾","◽","▪️","▫️","🔸","🔹"],"departure":["🛫"],"arrival":["🛬"],"parachute":["🪂"],"seat":["💺"],"helicopter":["🚁"],"suspension":["🚟"],"cableway":["🚠"],"aerial":["🚡"],"tramway":["🚡"],"satellite":["🛰️","📡"],"rocket":["🚀"],"saucer":["🛸"],"bellhop":["🛎️"],"luggage":["🧳","🛅"],"hourglass":["⌛","⏳"],"done":["⌛","⏳"],"not":["⏳","🈶"],"watch":["⌚"],"alarm":["⏰"],"clock":["⏰","⏲️","🕰️","🕛","🕐","🕑","🕒","🕓","🕔","🕕","🕖","🕗","🕘","🕙","🕚"],"stopwatch":["⏱️"],"timer":["⏲️"],"mantelpiece":["🕰️"],"twelve":["🕛","🕧"],"thirty":["🕧","🕜","🕝","🕞","🕟","🕠","🕡","🕢","🕣","🕤","🕥","🕦"],"one":["🕐","🕜","🩱","🔞"],"three":["🕒","🕞"],"five":["🕔","🕠"],"six":["🕕","🕡","🔯"],"seven":["🕖","🕢"],"eight":["🕗","🕣","✳️","✴️"],"nine":["🕘","🕤"],"ten":["🕙","🕥"],"eleven":["🕚","🕦"],"new":["🌑","🌚","🆕","🇳🇨","🇳🇿","🇵🇬"],"wax":["🌒","🌔"],"crescent":["🌒","🌘","🌙","☪️"],"first":["🌓","🌛"],"quarter":["🌓","🌗","🌛","🌜"],"gibbous":["🌔","🌖"],"full":["🌕","🌝"],"wane":["🌖","🌘"],"last":["🌗","🌜","⏮️"],"sun":["☀️","🌞","⛅","🌤️","🌥️","🌦️"],"ringed":["🪐"],"planet":["🪐"],"glow":["🌟"],"shoot":["🌠"],"milky":["🌌"],"way":["🌌"],"cloud":["☁️","⛅","⛈️","🌤️","🌥️","🌦️","🌧️","🌨️","🌩️"],"behind":["⛅","🌤️","🌥️","🌦️"],"lightning":["⛈️","🌩️"],"rain":["⛈️","🌦️","🌧️","☔"],"large":["🌥️","⬛","⬜","🔶","🔷"],"tornado":["🌪️"],"fog":["🌫️"],"cyclone":["🌀"],"rainbow":["🌈","🏳️‍🌈"],"drops":["☔"],"ground":["⛱️"],"voltage":["⚡"],"snowflake":["❄️"],"snowman":["☃️","⛄"],"comet":["☄️"],"droplet":["💧"],"jack":["🎃"],"lantern":["🎃","🏮"],"christmas":["🎄","🇨🇽"],"fireworks":["🎆"],"sparkler":["🎇"],"firecracker":["🧨"],"sparkles":["✨"],"popper":["🎉"],"confetti":["🎊"],"tanabata":["🎋"],"pine":["🎍"],"dolls":["🎎","🪆"],"carp":["🎏"],"streamer":["🎏"],"chime":["🎐"],"view":["🎑"],"ceremony":["🎑"],"envelope":["🧧","✉️","📨","📩"],"wrapped":["🎁"],"gift":["🎁"],"reminder":["🎗️"],"admission":["🎟️"],"tickets":["🎟️"],"ticket":["🎫"],"military":["🎖️","🪖"],"medal":["🎖️","🏅","🥇","🥈","🥉"],"trophy":["🏆"],"sports":["🏅"],"1st":["🥇"],"place":["🥇","🥈","🥉","🛐"],"2nd":["🥈"],"3rd":["🥉"],"soccer":["⚽"],"baseball":["⚾"],"softball":["🥎"],"basketball":["🏀"],"volleyball":["🏐"],"american":["🏈","🇦🇸"],"football":["🏈","🏉"],"rugby":["🏉"],"tennis":["🎾"],"disc":["🥏"],"game":["🏏","🎮","🎲"],"field":["🏑"],"hockey":["🏑","🏒"],"lacrosse":["🥍"],"ping":["🏓"],"pong":["🏓"],"badminton":["🏸"],"glove":["🥊"],"martial":["🥋"],"arts":["🥋","🎭"],"uniform":["🥋"],"goal":["🥅"],"net":["🥅"],"flag":["⛳","📫","📪","📬","📭","🏁","🚩","🏴","🏳️","🏳️‍🌈","🏳️‍⚧️","🏴‍☠️","🇦🇨","🇦🇩","🇦🇪","🇦🇫","🇦🇬","🇦🇮","🇦🇱","🇦🇲","🇦🇴","🇦🇶","🇦🇷","🇦🇸","🇦🇹","🇦🇺","🇦🇼","🇦🇽","🇦🇿","🇧🇦","🇧🇧","🇧🇩","🇧🇪","🇧🇫","🇧🇬","🇧🇭","🇧🇮","🇧🇯","🇧🇱","🇧🇲","🇧🇳","🇧🇴","🇧🇶","🇧🇷","🇧🇸","🇧🇹","🇧🇻","🇧🇼","🇧🇾","🇧🇿","🇨🇦","🇨🇨","🇨🇩","🇨🇫","🇨🇬","🇨🇭","🇨🇮","🇨🇰","🇨🇱","🇨🇲","🇨🇳","🇨🇴","🇨🇵","🇨🇷","🇨🇺","🇨🇻","🇨🇼","🇨🇽","🇨🇾","🇨🇿","🇩🇪","🇩🇬","🇩🇯","🇩🇰","🇩🇲","🇩🇴","🇩🇿","🇪🇦","🇪🇨","🇪🇪","🇪🇬","🇪🇭","🇪🇷","🇪🇸","🇪🇹","🇪🇺","🇫🇮","🇫🇯","🇫🇰","🇫🇲","🇫🇴","🇫🇷","🇬🇦","🇬🇧","🇬🇩","🇬🇪","🇬🇫","🇬🇬","🇬🇭","🇬🇮","🇬🇱","🇬🇲","🇬🇳","🇬🇵","🇬🇶","🇬🇷","🇬🇸","🇬🇹","🇬🇺","🇬🇼","🇬🇾","🇭🇰","🇭🇲","🇭🇳","🇭🇷","🇭🇹","🇭🇺","🇮🇨","🇮🇩","🇮🇪","🇮🇱","🇮🇲","🇮🇳","🇮🇴","🇮🇶","🇮🇷","🇮🇸","🇮🇹","🇯🇪","🇯🇲","🇯🇴","🇯🇵","🇰🇪","🇰🇬","🇰🇭","🇰🇮","🇰🇲","🇰🇳","🇰🇵","🇰🇷","🇰🇼","🇰🇾","🇰🇿","🇱🇦","🇱🇧","🇱🇨","🇱🇮","🇱🇰","🇱🇷","🇱🇸","🇱🇹","🇱🇺","🇱🇻","🇱🇾","🇲🇦","🇲🇨","🇲🇩","🇲🇪","🇲🇫","🇲🇬","🇲🇭","🇲🇰","🇲🇱","🇲🇲","🇲🇳","🇲🇴","🇲🇵","🇲🇶","🇲🇷","🇲🇸","🇲🇹","🇲🇺","🇲🇻","🇲🇼","🇲🇽","🇲🇾","🇲🇿","🇳🇦","🇳🇨","🇳🇪","🇳🇫","🇳🇬","🇳🇮","🇳🇱","🇳🇴","🇳🇵","🇳🇷","🇳🇺","🇳🇿","🇴🇲","🇵🇦","🇵🇪","🇵🇫","🇵🇬","🇵🇭","🇵🇰","🇵🇱","🇵🇲","🇵🇳","🇵🇷","🇵🇸","🇵🇹","🇵🇼","🇵🇾","🇶🇦","🇷🇪","🇷🇴","🇷🇸","🇷🇺","🇷🇼","🇸🇦","🇸🇧","🇸🇨","🇸🇩","🇸🇪","🇸🇬","🇸🇭","🇸🇮","🇸🇯","🇸🇰","🇸🇱","🇸🇲","🇸🇳","🇸🇴","🇸🇷","🇸🇸","🇸🇹","🇸🇻","🇸🇽","🇸🇾","🇸🇿","🇹🇦","🇹🇨","🇹🇩","🇹🇫","🇹🇬","🇹🇭","🇹🇯","🇹🇰","🇹🇱","🇹🇲","🇹🇳","🇹🇴","🇹🇷","🇹🇹","🇹🇻","🇹🇼","🇹🇿","🇺🇦","🇺🇬","🇺🇲","🇺🇳","🇺🇸","🇺🇾","🇺🇿","🇻🇦","🇻🇨","🇻🇪","🇻🇬","🇻🇮","🇻🇳","🇻🇺","🇼🇫","🇼🇸","🇽🇰","🇾🇪","🇾🇹","🇿🇦","🇿🇲","🇿🇼","🏴󠁧󠁢󠁥󠁮󠁧󠁿","🏴󠁧󠁢󠁳󠁣󠁴󠁿","🏴󠁧󠁢󠁷󠁬󠁳󠁿"],"dive":["🤿"],"shirt":["🎽","👕"],"skis":["🎿"],"sled":["🛷"],"curl":["🥌","📃"],"stone":["🥌","💎"],"bullseye":["🎯"],"yo":["🪀"],"kite":["🪁"],"pistol":["🔫"],"pool":["🎱"],"crystal":["🔮"],"magic":["🪄"],"wand":["🪄"],"video":["🎮","📹"],"joystick":["🕹️"],"slot":["🎰"],"machine":["🎰","📠"],"die":["🎲"],"puzzle":["🧩"],"piece":["🧩","🩱"],"teddy":["🧸"],"pinata":["🪅"],"mirror":["🪩","🪞"],"spade":["♠️"],"diamond":["♦️","🔶","🔷","🔸","🔹","💠"],"club":["♣️"],"chess":["♟️"],"pawn":["♟️"],"joker":["🃏"],"mahjong":["🀄"],"cards":["🎴"],"perform":["🎭"],"framed":["🖼️"],"picture":["🖼️"],"palette":["🎨"],"thread":["🧵"],"sew":["🪡"],"needle":["🪡"],"yarn":["🧶"],"knot":["🪢"],"goggles":["🥽"],"lab":["🥼"],"coat":["🥼","🧥"],"safety":["🦺","🧷"],"vest":["🦺"],"necktie":["👔"],"jeans":["👖"],"scarf":["🧣"],"gloves":["🧤"],"socks":["🧦"],"dress":["👗"],"kimono":["👘"],"sari":["🥻"],"swimsuit":["🩱"],"briefs":["🩲"],"shorts":["🩳"],"bikini":["👙"],"clothes":["👚"],"fold":["🪭"],"fan":["🪭"],"purse":["👛"],"handbag":["👜"],"clutch":["👝"],"bag":["👝","💰"],"shop":["🛍️","🛒"],"bags":["🛍️"],"backpack":["🎒"],"thong":["🩴"],"sandal":["🩴","👡"],"shoe":["👞","👟","🥿","👠"],"hike":["🥾"],"boot":["🥾","👢"],"flat":["🥿"],"heeled":["👠"],"ballet":["🩰"],"shoes":["🩰"],"pick":["🪮","⛏️","⚒️"],"top":["🎩","🔝"],"graduation":["🎓"],"cap":["🎓","🧢"],"billed":["🧢"],"helmet":["🪖","⛑️"],"rescue":["⛑️"],"prayer":["📿"],"beads":["📿"],"lipstick":["💄"],"gem":["💎"],"muted":["🔇"],"speaker":["🔇","🔈","🔉","🔊"],"low":["🔈","🪫"],"volume":["🔈","🔉","🔊"],"medium":["🔉","◼️","◻️","◾","◽"],"loudspeaker":["📢"],"megaphone":["📣"],"postal":["📯"],"horn":["📯"],"slash":["🔕"],"musical":["🎼","🎵","🎶","🎹"],"score":["🎼"],"note":["🎵"],"notes":["🎶"],"studio":["🎙️"],"microphone":["🎙️","🎤"],"level":["🎚️"],"slider":["🎚️"],"control":["🎛️","🛂"],"knobs":["🎛️"],"headphone":["🎧"],"radio":["📻","🔘"],"saxophone":["🎷"],"accordion":["🪗"],"guitar":["🎸"],"keyboard":["🎹","⌨️"],"trumpet":["🎺"],"violin":["🎻"],"banjo":["🪕"],"long":["🪘"],"maracas":["🪇"],"flute":["🪈"],"mobile":["📱","📲","📵","📴"],"phone":["📱","📲","📴"],"telephone":["☎️","📞"],"receiver":["📞"],"pager":["📟"],"fax":["📠"],"battery":["🔋","🪫"],"electric":["🔌"],"plug":["🔌"],"laptop":["💻"],"desktop":["🖥️"],"computer":["🖥️","🖱️","💽"],"printer":["🖨️"],"trackball":["🖲️"],"disk":["💽","💾","💿"],"floppy":["💾"],"optical":["💿"],"dvd":["📀"],"abacus":["🧮"],"movie":["🎥"],"camera":["🎥","📷","📸","📹"],"film":["🎞️","📽️"],"frames":["🎞️"],"projector":["📽️"],"clapper":["🎬"],"board":["🎬"],"television":["📺"],"flash":["📸"],"videocassette":["📼"],"magnify":["🔍","🔎"],"tilted":["🔍","🔎"],"candle":["🕯️"],"bulb":["💡"],"flashlight":["🔦"],"paper":["🏮","🧻"],"diya":["🪔"],"lamp":["🪔","🛋️"],"notebook":["📔","📓"],"decorative":["📔"],"cover":["📔"],"book":["📕","📖","📗","📘","📙"],"books":["📚"],"ledger":["📒"],"page":["📃","📄"],"scroll":["📜"],"newspaper":["📰","🗞️"],"rolled":["🗞️"],"bookmark":["📑","🔖"],"tabs":["📑"],"label":["🏷️"],"coin":["🪙"],"yen":["💴","💹"],"banknote":["💴","💵","💶","💷"],"dollar":["💵","💲"],"euro":["💶"],"pound":["💷"],"wings":["💸"],"credit":["💳"],"card":["💳","🗂️","📇","🗃️","🪪"],"receipt":["🧾"],"chart":["💹","📈","📉","📊"],"increase":["💹","📈"],"mail":["📧"],"income":["📨"],"outbox":["📤"],"tray":["📤","📥"],"inbox":["📥"],"package":["📦"],"mailbox":["📫","📪","📬","📭"],"lowered":["📪","📭"],"postbox":["📮"],"ballot":["🗳️"],"pencil":["✏️"],"nib":["✒️"],"pen":["🖋️","🖊️","🔏"],"paintbrush":["🖌️"],"crayon":["🖍️"],"memo":["📝"],"briefcase":["💼"],"file":["📁","📂","🗃️","🗄️"],"folder":["📁","📂"],"dividers":["🗂️"],"calendar":["📅","📆","🗓️"],"off":["📆","📴"],"notepad":["🗒️"],"decrease":["📉"],"clipboard":["📋"],"pushpin":["📌","📍"],"round":["📍"],"paperclip":["📎"],"linked":["🖇️"],"paperclips":["🖇️"],"straight":["📏"],"ruler":["📏","📐"],"triangular":["📐","🚩"],"scissors":["✂️"],"cabinet":["🗄️"],"wastebasket":["🗑️"],"locked":["🔒","🔏","🔐"],"unlocked":["🔓"],"key":["🔐","🔑","🗝️"],"hammer":["🔨","⚒️","🛠️"],"axe":["🪓"],"wrench":["🛠️","🔧"],"dagger":["🗡️"],"swords":["⚔️"],"bomb":["💣"],"boomerang":["🪃"],"shield":["🛡️"],"carpentry":["🪚"],"saw":["🪚"],"screwdriver":["🪛"],"nut":["🔩"],"bolt":["🔩"],"gear":["⚙️"],"clamp":["🗜️"],"balance":["⚖️"],"scale":["⚖️"],"link":["🔗"],"chains":["⛓️"],"hook":["🪝"],"toolbox":["🧰"],"magnet":["🧲"],"ladder":["🪜"],"alembic":["⚗️"],"test":["🧪"],"tube":["🧪"],"petri":["🧫"],"dish":["🧫"],"dna":["🧬"],"microscope":["🔬"],"telescope":["🔭"],"antenna":["📡","📶"],"syringe":["💉"],"drop":["🩸"],"blood":["🩸","🅰️","🆎","🅱️","🅾️"],"pill":["💊"],"adhesive":["🩹"],"crutch":["🩼"],"stethoscope":["🩺"],"ray":["🩻"],"door":["🚪"],"elevator":["🛗"],"window":["🪟"],"couch":["🛋️"],"chair":["🪑"],"toilet":["🚽"],"plunger":["🪠"],"shower":["🚿"],"bathtub":["🛁"],"trap":["🪤"],"razor":["🪒"],"lotion":["🧴"],"pin":["🧷"],"broom":["🧹"],"basket":["🧺"],"bucket":["🪣"],"soap":["🧼"],"bubbles":["🫧"],"toothbrush":["🪥"],"sponge":["🧽"],"extinguisher":["🧯"],"cart":["🛒"],"cigarette":["🚬"],"coffin":["⚰️"],"headstone":["🪦"],"funeral":["⚱️"],"urn":["⚱️"],"nazar":["🧿"],"amulet":["🧿"],"hamsa":["🪬"],"moai":["🗿"],"placard":["🪧"],"identification":["🪪"],"atm":["🏧"],"litter":["🚮","🚯"],"bin":["🚮"],"potable":["🚰","🚱"],"restroom":["🚻"],"closet":["🚾"],"passport":["🛂"],"customs":["🛃"],"baggage":["🛄"],"claim":["🛄"],"warn":["⚠️"],"children":["🚸"],"cross":["🚸","✝️","☦️","❌","❎"],"entry":["⛔"],"prohibited":["🚫","🈲"],"bicycles":["🚳"],"smoke":["🚭"],"non":["🚱"],"pedestrians":["🚷"],"phones":["📵"],"under":["🔞"],"eighteen":["🔞"],"radioactive":["☢️"],"biohazard":["☣️"],"curve":["↩️","↪️","⤴️","⤵️"],"clockwise":["🔃"],"arrows":["🔃","🔄"],"counterclockwise":["🔄"],"button":["🔄","🔀","🔁","🔂","▶️","⏩","⏭️","⏯️","◀️","⏪","⏮️","🔼","⏫","🔽","⏬","⏸️","⏹️","⏺️","⏏️","🔅","🔆","✅","❎","🅰️","🆎","🅱️","🆑","🆒","🆓","🆔","🆕","🆖","🅾️","🆗","🅿️","🆘","🆙","🆚","🈁","🈂️","🈷️","🈶","🈯","🉐","🈹","🈚","🈲","🉑","🈸","🈴","🈳","㊗️","㊙️","🈺","🈵","🔘","🔳","🔲"],"end":["🔚"],"soon":["🔜"],"worship":["🛐"],"atom":["⚛️"],"om":["🕉️"],"david":["✡️"],"dharma":["☸️"],"yin":["☯️"],"yang":["☯️"],"latin":["✝️","🔠","🔡","🔤"],"orthodox":["☦️"],"peace":["☮️"],"menorah":["🕎"],"pointed":["🔯","✴️","🔺","🔻"],"khanda":["🪯"],"aries":["♈"],"taurus":["♉"],"gemini":["♊"],"cancer":["♋"],"leo":["♌"],"virgo":["♍"],"libra":["♎"],"scorpio":["♏"],"sagittarius":["♐"],"capricorn":["♑"],"aquarius":["♒"],"pisces":["♓"],"ophiuchus":["⛎"],"shuffle":["🔀"],"tracks":["🔀"],"repeat":["🔁","🔂"],"single":["🔂"],"fast":["⏩","⏪","⏫","⏬"],"forward":["⏩"],"next":["⏭️"],"or":["⏯️"],"pause":["⏯️","⏸️"],"reverse":["◀️","⏪"],"upwards":["🔼"],"downwards":["🔽"],"record":["⏺️"],"eject":["⏏️"],"cinema":["🎦"],"dim":["🔅"],"bright":["🔆"],"bars":["📶"],"wireless":["🛜"],"vibration":["📳"],"mode":["📳"],"female":["♀️"],"male":["♂️"],"transgender":["⚧️","🏳️‍⚧️"],"multiply":["✖️"],"plus":["➕"],"minus":["➖"],"divide":["➗"],"heavy":["🟰","💲"],"equals":["🟰"],"infinity":["♾️"],"double":["‼️","➿"],"question":["⁉️","❓","❔"],"wavy":["〰️"],"currency":["💱"],"exchange":["💱"],"recycle":["♻️"],"fleur":["⚜️"],"de":["⚜️"],"lis":["⚜️"],"trident":["🔱"],"emblem":["🔱"],"name":["📛"],"badge":["📛"],"for":["🔰","🈺"],"beginner":["🔰"],"hollow":["⭕"],"circle":["⭕","🔴","🟠","🟡","🟢","🔵","🟣","🟤","⚫","⚪"],"check":["✅","☑️","✔️"],"loop":["➰","➿"],"part":["〽️"],"alternation":["〽️"],"spoked":["✳️"],"asterisk":["✳️"],"copyright":["©️"],"registered":["®️"],"trade":["™️"],"keycap":["#️⃣","*️⃣","0️⃣","1️⃣","2️⃣","3️⃣","4️⃣","5️⃣","6️⃣","7️⃣","8️⃣","9️⃣","🔟"],"input":["🔠","🔡","🔢","🔣","🔤"],"uppercase":["🔠"],"lowercase":["🔡"],"numbers":["🔢"],"letters":["🔤"],"type":["🅰️","🆎","🅱️","🅾️"],"ab":["🆎"],"cl":["🆑"],"cool":["🆒"],"free":["🆓","🈶","🈚"],"information":["ℹ️"],"id":["🆔"],"circled":["Ⓜ️"],"ng":["🆖"],"sos":["🆘"],"vs":["🆚"],"here":["🈁"],"charge":["🈂️","🈶","🈚"],"monthly":["🈷️"],"amount":["🈷️"],"reserved":["🈯"],"bargain":["🉐"],"discount":["🈹"],"acceptable":["🉑"],"application":["🈸"],"pass":["🈴"],"grade":["🈴"],"vacancy":["🈳","🈵"],"congratulations":["㊗️"],"secret":["㊙️"],"business":["🈺"],"square":["🟥","🟧","🟨","🟩","🟦","🟪","🟫","⬛","⬜","◼️","◻️","◾","◽","▪️","▫️","🔳","🔲"],"triangle":["🔺","🔻"],"dot":["💠"],"chequered":["🏁"],"flags":["🎌"],"pirate":["🏴‍☠️"],"ascension":["🇦🇨"],"andorra":["🇦🇩"],"united":["🇦🇪","🇬🇧","🇺🇳","🇺🇸"],"arab":["🇦🇪"],"emirates":["🇦🇪"],"afghanistan":["🇦🇫"],"antigua":["🇦🇬"],"barbuda":["🇦🇬"],"anguilla":["🇦🇮"],"albania":["🇦🇱"],"armenia":["🇦🇲"],"angola":["🇦🇴"],"antarctica":["🇦🇶"],"argentina":["🇦🇷"],"samoa":["🇦🇸","🇼🇸"],"austria":["🇦🇹"],"aruba":["🇦🇼"],"aland":["🇦🇽"],"islands":["🇦🇽","🇨🇨","🇨🇰","🇫🇰","🇫🇴","🇬🇸","🇭🇲","🇮🇨","🇰🇾","🇲🇭","🇲🇵","🇵🇳","🇸🇧","🇹🇨","🇺🇲","🇻🇬","🇻🇮"],"azerbaijan":["🇦🇿"],"bosnia":["🇧🇦"],"herzegovina":["🇧🇦"],"barbados":["🇧🇧"],"bangladesh":["🇧🇩"],"belgium":["🇧🇪"],"burkina":["🇧🇫"],"faso":["🇧🇫"],"bulgaria":["🇧🇬"],"bahrain":["🇧🇭"],"burundi":["🇧🇮"],"benin":["🇧🇯"],"st":["🇧🇱","🇰🇳","🇱🇨","🇲🇫","🇵🇲","🇸🇭","🇻🇨"],"barthelemy":["🇧🇱"],"bermuda":["🇧🇲"],"brunei":["🇧🇳"],"bolivia":["🇧🇴"],"caribbean":["🇧🇶"],"netherlands":["🇧🇶","🇳🇱"],"brazil":["🇧🇷"],"bahamas":["🇧🇸"],"bhutan":["🇧🇹"],"bouvet":["🇧🇻"],"botswana":["🇧🇼"],"belarus":["🇧🇾"],"belize":["🇧🇿"],"canada":["🇨🇦"],"cocos":["🇨🇨"],"keel":["🇨🇨"],"congo":["🇨🇩","🇨🇬"],"kinshasa":["🇨🇩"],"central":["🇨🇫"],"african":["🇨🇫"],"republic":["🇨🇫","🇩🇴"],"brazzaville":["🇨🇬"],"switzerland":["🇨🇭"],"cote":["🇨🇮"],"ivoire":["🇨🇮"],"chile":["🇨🇱"],"cameroon":["🇨🇲"],"china":["🇨🇳","🇭🇰","🇲🇴"],"colombia":["🇨🇴"],"clipperton":["🇨🇵"],"costa":["🇨🇷"],"rica":["🇨🇷"],"cuba":["🇨🇺"],"cape":["🇨🇻"],"verde":["🇨🇻"],"curacao":["🇨🇼"],"cyprus":["🇨🇾"],"czechia":["🇨🇿"],"germany":["🇩🇪"],"diego":["🇩🇬"],"garcia":["🇩🇬"],"djibouti":["🇩🇯"],"denmark":["🇩🇰"],"dominica":["🇩🇲"],"dominican":["🇩🇴"],"algeria":["🇩🇿"],"ceuta":["🇪🇦"],"melilla":["🇪🇦"],"ecuador":["🇪🇨"],"estonia":["🇪🇪"],"egypt":["🇪🇬"],"western":["🇪🇭"],"sahara":["🇪🇭"],"eritrea":["🇪🇷"],"spain":["🇪🇸"],"ethiopia":["🇪🇹"],"european":["🇪🇺"],"union":["🇪🇺"],"finland":["🇫🇮"],"fiji":["🇫🇯"],"falkland":["🇫🇰"],"micronesia":["🇫🇲"],"faroe":["🇫🇴"],"france":["🇫🇷"],"gabon":["🇬🇦"],"kingdom":["🇬🇧"],"grenada":["🇬🇩"],"georgia":["🇬🇪","🇬🇸"],"guiana":["🇬🇫"],"guernsey":["🇬🇬"],"ghana":["🇬🇭"],"gibraltar":["🇬🇮"],"greenland":["🇬🇱"],"gambia":["🇬🇲"],"guinea":["🇬🇳","🇬🇶","🇬🇼","🇵🇬"],"guadeloupe":["🇬🇵"],"equatorial":["🇬🇶"],"greece":["🇬🇷"],"south":["🇬🇸","🇰🇷","🇸🇸","🇿🇦"],"guatemala":["🇬🇹"],"guam":["🇬🇺"],"bissau":["🇬🇼"],"guyana":["🇬🇾"],"hong":["🇭🇰"],"kong":["🇭🇰"],"sar":["🇭🇰","🇲🇴"],"heard":["🇭🇲"],"mcdonald":["🇭🇲"],"honduras":["🇭🇳"],"croatia":["🇭🇷"],"haiti":["🇭🇹"],"hungary":["🇭🇺"],"canary":["🇮🇨"],"indonesia":["🇮🇩"],"ireland":["🇮🇪"],"israel":["🇮🇱"],"isle":["🇮🇲"],"india":["🇮🇳"],"british":["🇮🇴","🇻🇬"],"indian":["🇮🇴"],"ocean":["🇮🇴"],"territory":["🇮🇴"],"iraq":["🇮🇶"],"iran":["🇮🇷"],"iceland":["🇮🇸"],"italy":["🇮🇹"],"jersey":["🇯🇪"],"jamaica":["🇯🇲"],"jordan":["🇯🇴"],"kenya":["🇰🇪"],"kyrgyzstan":["🇰🇬"],"cambodia":["🇰🇭"],"kiribati":["🇰🇮"],"comoros":["🇰🇲"],"kitts":["🇰🇳"],"nevis":["🇰🇳"],"north":["🇰🇵","🇲🇰"],"korea":["🇰🇵","🇰🇷"],"kuwait":["🇰🇼"],"cayman":["🇰🇾"],"kazakhstan":["🇰🇿"],"laos":["🇱🇦"],"lebanon":["🇱🇧"],"lucia":["🇱🇨"],"liechtenstein":["🇱🇮"],"sri":["🇱🇰"],"lanka":["🇱🇰"],"liberia":["🇱🇷"],"lesotho":["🇱🇸"],"lithuania":["🇱🇹"],"luxembourg":["🇱🇺"],"latvia":["🇱🇻"],"libya":["🇱🇾"],"morocco":["🇲🇦"],"monaco":["🇲🇨"],"moldova":["🇲🇩"],"montenegro":["🇲🇪"],"martin":["🇲🇫"],"madagascar":["🇲🇬"],"marshall":["🇲🇭"],"macedonia":["🇲🇰"],"mali":["🇲🇱"],"myanmar":["🇲🇲"],"burma":["🇲🇲"],"mongolia":["🇲🇳"],"macao":["🇲🇴"],"northern":["🇲🇵"],"mariana":["🇲🇵"],"martinique":["🇲🇶"],"mauritania":["🇲🇷"],"montserrat":["🇲🇸"],"malta":["🇲🇹"],"mauritius":["🇲🇺"],"maldives":["🇲🇻"],"malawi":["🇲🇼"],"mexico":["🇲🇽"],"malaysia":["🇲🇾"],"mozambique":["🇲🇿"],"namibia":["🇳🇦"],"caledonia":["🇳🇨"],"niger":["🇳🇪"],"norfolk":["🇳🇫"],"nigeria":["🇳🇬"],"nicaragua":["🇳🇮"],"norway":["🇳🇴"],"nepal":["🇳🇵"],"nauru":["🇳🇷"],"niue":["🇳🇺"],"zealand":["🇳🇿"],"oman":["🇴🇲"],"panama":["🇵🇦"],"peru":["🇵🇪"],"polynesia":["🇵🇫"],"papua":["🇵🇬"],"philippines":["🇵🇭"],"pakistan":["🇵🇰"],"poland":["🇵🇱"],"pierre":["🇵🇲"],"miquelon":["🇵🇲"],"pitcairn":["🇵🇳"],"puerto":["🇵🇷"],"rico":["🇵🇷"],"palestinian":["🇵🇸"],"territories":["🇵🇸","🇹🇫"],"portugal":["🇵🇹"],"palau":["🇵🇼"],"paraguay":["🇵🇾"],"qatar":["🇶🇦"],"reunion":["🇷🇪"],"romania":["🇷🇴"],"serbia":["🇷🇸"],"russia":["🇷🇺"],"rwanda":["🇷🇼"],"saudi":["🇸🇦"],"arabia":["🇸🇦"],"solomon":["🇸🇧"],"seychelles":["🇸🇨"],"sudan":["🇸🇩","🇸🇸"],"sweden":["🇸🇪"],"singapore":["🇸🇬"],"helena":["🇸🇭"],"slovenia":["🇸🇮"],"svalbard":["🇸🇯"],"jan":["🇸🇯"],"mayen":["🇸🇯"],"slovakia":["🇸🇰"],"sierra":["🇸🇱"],"leone":["🇸🇱"],"san":["🇸🇲"],"marino":["🇸🇲"],"senegal":["🇸🇳"],"somalia":["🇸🇴"],"suriname":["🇸🇷"],"sao":["🇸🇹"],"tome":["🇸🇹"],"principe":["🇸🇹"],"el":["🇸🇻"],"salvador":["🇸🇻"],"sint":["🇸🇽"],"maarten":["🇸🇽"],"syria":["🇸🇾"],"eswatini":["🇸🇿"],"tristan":["🇹🇦"],"da":["🇹🇦"],"cunha":["🇹🇦"],"turks":["🇹🇨"],"caicos":["🇹🇨"],"chad":["🇹🇩"],"southern":["🇹🇫"],"togo":["🇹🇬"],"thailand":["🇹🇭"],"tajikistan":["🇹🇯"],"tokelau":["🇹🇰"],"timor":["🇹🇱"],"leste":["🇹🇱"],"turkmenistan":["🇹🇲"],"tunisia":["🇹🇳"],"tonga":["🇹🇴"],"trinidad":["🇹🇹"],"tobago":["🇹🇹"],"tuvalu":["🇹🇻"],"taiwan":["🇹🇼"],"tanzania":["🇹🇿"],"ukraine":["🇺🇦"],"uganda":["🇺🇬"],"us":["🇺🇲","🇻🇮"],"outly":["🇺🇲"],"nations":["🇺🇳"],"states":["🇺🇸"],"uruguay":["🇺🇾"],"uzbekistan":["🇺🇿"],"vatican":["🇻🇦"],"city":["🇻🇦"],"vincent":["🇻🇨"],"grenadines":["🇻🇨"],"venezuela":["🇻🇪"],"virgin":["🇻🇬","🇻🇮"],"vietnam":["🇻🇳"],"vanuatu":["🇻🇺"],"wallis":["🇼🇫"],"futuna":["🇼🇫"],"kosovo":["🇽🇰"],"yemen":["🇾🇪"],"mayotte":["🇾🇹"],"zambia":["🇿🇲"],"zimbabwe":["🇿🇼"],"england":["🏴󠁧󠁢󠁥󠁮󠁧󠁿"],"scotland":["🏴󠁧󠁢󠁳󠁣󠁴󠁿"],"wales":["🏴󠁧󠁢󠁷󠁬󠁳󠁿"]} ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/string-kit/lib/json-data/emoji-char-to-canonical-name.json' , '/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 module.exports = {"😀":"grinning-face","😃":"grinning-face-with-big-eyes","😄":"grinning-face-with-smiling-eyes","😁":"beaming-face-with-smiling-eyes","😆":"grinning-squinting-face","😅":"grinning-face-with-sweat","🤣":"rolling-on-the-floor-laughing","😂":"face-with-tears-of-joy","🙂":"slightly-smiling-face","🙃":"upside-down-face","🫠":"melting-face","😉":"winking-face","😊":"smiling-face-with-smiling-eyes","😇":"smiling-face-with-halo","🥰":"smiling-face-with-hearts","😍":"smiling-face-with-heart-eyes","🤩":"star-struck","😘":"face-blowing-a-kiss","😗":"kissing-face","☺️":"smiling-face","😚":"kissing-face-with-closed-eyes","😙":"kissing-face-with-smiling-eyes","🥲":"smiling-face-with-tear","😋":"face-savoring-food","😛":"face-with-tongue","😜":"winking-face-with-tongue","🤪":"zany-face","😝":"squinting-face-with-tongue","🤑":"money-mouth-face","🤗":"smiling-face-with-open-hands","🤭":"face-with-hand-over-mouth","🫢":"face-with-open-eyes-and-hand-over-mouth","🫣":"face-with-peeking-eye","🤫":"shushing-face","🤔":"thinking-face","🫡":"saluting-face","🤐":"zipper-mouth-face","🤨":"face-with-raised-eyebrow","😐":"neutral-face","😑":"expressionless-face","😶":"face-without-mouth","🫥":"dotted-line-face","😶‍🌫️":"face-in-clouds","😏":"smirking-face","😒":"unamused-face","🙄":"face-with-rolling-eyes","😬":"grimacing-face","😮‍💨":"face-exhaling","🤥":"lying-face","🫨":"shaking-face","😌":"relieved-face","😔":"pensive-face","😪":"sleepy-face","🤤":"drooling-face","😴":"sleeping-face","😷":"face-with-medical-mask","🤒":"face-with-thermometer","🤕":"face-with-head-bandage","🤢":"nauseated-face","🤮":"face-vomiting","🤧":"sneezing-face","🥵":"hot-face","🥶":"cold-face","🥴":"woozy-face","😵":"face-with-crossed-out-eyes","😵‍💫":"face-with-spiral-eyes","🤯":"exploding-head","🤠":"cowboy-hat-face","🥳":"partying-face","🥸":"disguised-face","😎":"smiling-face-with-sunglasses","🤓":"nerd-face","🧐":"face-with-monocle","😕":"confused-face","🫤":"face-with-diagonal-mouth","😟":"worried-face","🙁":"slightly-frowning-face","☹️":"frowning-face","😮":"face-with-open-mouth","😯":"hushed-face","😲":"astonished-face","😳":"flushed-face","🥺":"pleading-face","🥹":"face-holding-back-tears","😦":"frowning-face-with-open-mouth","😧":"anguished-face","😨":"fearful-face","😰":"anxious-face-with-sweat","😥":"sad-but-relieved-face","😢":"crying-face","😭":"loudly-crying-face","😱":"face-screaming-in-fear","😖":"confounded-face","😣":"persevering-face","😞":"disappointed-face","😓":"downcast-face-with-sweat","😩":"weary-face","😫":"tired-face","🥱":"yawning-face","😤":"face-with-steam-from-nose","😡":"enraged-face","😠":"angry-face","🤬":"face-with-symbols-on-mouth","😈":"smiling-face-with-horns","👿":"angry-face-with-horns","💀":"skull","☠️":"skull-and-crossbones","💩":"pile-of-poo","🤡":"clown-face","👹":"ogre","👺":"goblin","👻":"ghost","👽":"alien","👾":"alien-monster","🤖":"robot","😺":"grinning-cat","😸":"grinning-cat-with-smiling-eyes","😹":"cat-with-tears-of-joy","😻":"smiling-cat-with-heart-eyes","😼":"cat-with-wry-smile","😽":"kissing-cat","🙀":"weary-cat","😿":"crying-cat","😾":"pouting-cat","🙈":"see-no-evil-monkey","🙉":"hear-no-evil-monkey","🙊":"speak-no-evil-monkey","💌":"love-letter","💘":"heart-with-arrow","💝":"heart-with-ribbon","💖":"sparkling-heart","💗":"growing-heart","💓":"beating-heart","💞":"revolving-hearts","💕":"two-hearts","💟":"heart-decoration","❣️":"heart-exclamation","💔":"broken-heart","❤️‍🔥":"heart-on-fire","❤️‍🩹":"mending-heart","❤️":"red-heart","🩷":"pink-heart","🧡":"orange-heart","💛":"yellow-heart","💚":"green-heart","💙":"blue-heart","🩵":"light-blue-heart","💜":"purple-heart","🤎":"brown-heart","🖤":"black-heart","🩶":"grey-heart","🤍":"white-heart","💋":"kiss-mark","💯":"hundred-points","💢":"anger-symbol","💥":"collision","💫":"dizzy","💦":"sweat-droplets","💨":"dashing-away","🕳️":"hole","💬":"speech-balloon","👁️‍🗨️":"eye-in-speech-bubble","🗨️":"left-speech-bubble","🗯️":"right-anger-bubble","💭":"thought-balloon","💤":"zzz","👋":"waving-hand","🤚":"raised-back-of-hand","🖐️":"hand-with-fingers-splayed","✋":"raised-hand","🖖":"vulcan-salute","🫱":"rightwards-hand","🫲":"leftwards-hand","🫳":"palm-down-hand","🫴":"palm-up-hand","🫷":"leftwards-pushing-hand","🫸":"rightwards-pushing-hand","👌":"ok-hand","🤌":"pinched-fingers","🤏":"pinching-hand","✌️":"victory-hand","🤞":"crossed-fingers","🫰":"hand-with-index-finger-and-thumb-crossed","🤟":"love-you-gesture","🤘":"sign-of-the-horns","🤙":"call-me-hand","👈":"backhand-index-pointing-left","👉":"backhand-index-pointing-right","👆":"backhand-index-pointing-up","🖕":"middle-finger","👇":"backhand-index-pointing-down","☝️":"index-pointing-up","🫵":"index-pointing-at-the-viewer","👍":"thumbs-up","👎":"thumbs-down","✊":"raised-fist","👊":"oncoming-fist","🤛":"left-facing-fist","🤜":"right-facing-fist","👏":"clapping-hands","🙌":"raising-hands","🫶":"heart-hands","👐":"open-hands","🤲":"palms-up-together","🤝":"handshake","🙏":"folded-hands","✍️":"writing-hand","💅":"nail-polish","🤳":"selfie","💪":"flexed-biceps","🦾":"mechanical-arm","🦿":"mechanical-leg","🦵":"leg","🦶":"foot","👂":"ear","🦻":"ear-with-hearing-aid","👃":"nose","🧠":"brain","🫀":"anatomical-heart","🫁":"lungs","🦷":"tooth","🦴":"bone","👀":"eyes","👁️":"eye","👅":"tongue","👄":"mouth","🫦":"biting-lip","👶":"baby","🧒":"child","👦":"boy","👧":"girl","🧑":"person","👱":"person-blond-hair","👨":"man","🧔":"person-beard","🧔‍♂️":"man-beard","🧔‍♀️":"woman-beard","👨‍🦰":"man-red-hair","👨‍🦱":"man-curly-hair","👨‍🦳":"man-white-hair","👨‍🦲":"man-bald","👩":"woman","👩‍🦰":"woman-red-hair","🧑‍🦰":"person-red-hair","👩‍🦱":"woman-curly-hair","🧑‍🦱":"person-curly-hair","👩‍🦳":"woman-white-hair","🧑‍🦳":"person-white-hair","👩‍🦲":"woman-bald","🧑‍🦲":"person-bald","👱‍♀️":"woman-blond-hair","👱‍♂️":"man-blond-hair","🧓":"older-person","👴":"old-man","👵":"old-woman","🙍":"person-frowning","🙍‍♂️":"man-frowning","🙍‍♀️":"woman-frowning","🙎":"person-pouting","🙎‍♂️":"man-pouting","🙎‍♀️":"woman-pouting","🙅":"person-gesturing-no","🙅‍♂️":"man-gesturing-no","🙅‍♀️":"woman-gesturing-no","🙆":"person-gesturing-ok","🙆‍♂️":"man-gesturing-ok","🙆‍♀️":"woman-gesturing-ok","💁":"person-tipping-hand","💁‍♂️":"man-tipping-hand","💁‍♀️":"woman-tipping-hand","🙋":"person-raising-hand","🙋‍♂️":"man-raising-hand","🙋‍♀️":"woman-raising-hand","🧏":"deaf-person","🧏‍♂️":"deaf-man","🧏‍♀️":"deaf-woman","🙇":"person-bowing","🙇‍♂️":"man-bowing","🙇‍♀️":"woman-bowing","🤦":"person-facepalming","🤦‍♂️":"man-facepalming","🤦‍♀️":"woman-facepalming","🤷":"person-shrugging","🤷‍♂️":"man-shrugging","🤷‍♀️":"woman-shrugging","🧑‍⚕️":"health-worker","👨‍⚕️":"man-health-worker","👩‍⚕️":"woman-health-worker","🧑‍🎓":"student","👨‍🎓":"man-student","👩‍🎓":"woman-student","🧑‍🏫":"teacher","👨‍🏫":"man-teacher","👩‍🏫":"woman-teacher","🧑‍⚖️":"judge","👨‍⚖️":"man-judge","👩‍⚖️":"woman-judge","🧑‍🌾":"farmer","👨‍🌾":"man-farmer","👩‍🌾":"woman-farmer","🧑‍🍳":"cook","👨‍🍳":"man-cook","👩‍🍳":"woman-cook","🧑‍🔧":"mechanic","👨‍🔧":"man-mechanic","👩‍🔧":"woman-mechanic","🧑‍🏭":"factory-worker","👨‍🏭":"man-factory-worker","👩‍🏭":"woman-factory-worker","🧑‍💼":"office-worker","👨‍💼":"man-office-worker","👩‍💼":"woman-office-worker","🧑‍🔬":"scientist","👨‍🔬":"man-scientist","👩‍🔬":"woman-scientist","🧑‍💻":"technologist","👨‍💻":"man-technologist","👩‍💻":"woman-technologist","🧑‍🎤":"singer","👨‍🎤":"man-singer","👩‍🎤":"woman-singer","🧑‍🎨":"artist","👨‍🎨":"man-artist","👩‍🎨":"woman-artist","🧑‍✈️":"pilot","👨‍✈️":"man-pilot","👩‍✈️":"woman-pilot","🧑‍🚀":"astronaut","👨‍🚀":"man-astronaut","👩‍🚀":"woman-astronaut","🧑‍🚒":"firefighter","👨‍🚒":"man-firefighter","👩‍🚒":"woman-firefighter","👮":"police-officer","👮‍♂️":"man-police-officer","👮‍♀️":"woman-police-officer","🕵️":"detective","🕵️‍♂️":"man-detective","🕵️‍♀️":"woman-detective","💂":"guard","💂‍♂️":"man-guard","💂‍♀️":"woman-guard","🥷":"ninja","👷":"construction-worker","👷‍♂️":"man-construction-worker","👷‍♀️":"woman-construction-worker","🫅":"person-with-crown","🤴":"prince","👸":"princess","👳":"person-wearing-turban","👳‍♂️":"man-wearing-turban","👳‍♀️":"woman-wearing-turban","👲":"person-with-skullcap","🧕":"woman-with-headscarf","🤵":"person-in-tuxedo","🤵‍♂️":"man-in-tuxedo","🤵‍♀️":"woman-in-tuxedo","👰":"person-with-veil","👰‍♂️":"man-with-veil","👰‍♀️":"woman-with-veil","🤰":"pregnant-woman","🫃":"pregnant-man","🫄":"pregnant-person","🤱":"breast-feeding","👩‍🍼":"woman-feeding-baby","👨‍🍼":"man-feeding-baby","🧑‍🍼":"person-feeding-baby","👼":"baby-angel","🎅":"santa-claus","🤶":"mrs-claus","🧑‍🎄":"mx-claus","🦸":"superhero","🦸‍♂️":"man-superhero","🦸‍♀️":"woman-superhero","🦹":"supervillain","🦹‍♂️":"man-supervillain","🦹‍♀️":"woman-supervillain","🧙":"mage","🧙‍♂️":"man-mage","🧙‍♀️":"woman-mage","🧚":"fairy","🧚‍♂️":"man-fairy","🧚‍♀️":"woman-fairy","🧛":"vampire","🧛‍♂️":"man-vampire","🧛‍♀️":"woman-vampire","🧜":"merperson","🧜‍♂️":"merman","🧜‍♀️":"mermaid","🧝":"elf","🧝‍♂️":"man-elf","🧝‍♀️":"woman-elf","🧞":"genie","🧞‍♂️":"man-genie","🧞‍♀️":"woman-genie","🧟":"zombie","🧟‍♂️":"man-zombie","🧟‍♀️":"woman-zombie","🧌":"troll","💆":"person-getting-massage","💆‍♂️":"man-getting-massage","💆‍♀️":"woman-getting-massage","💇":"person-getting-haircut","💇‍♂️":"man-getting-haircut","💇‍♀️":"woman-getting-haircut","🚶":"person-walking","🚶‍♂️":"man-walking","🚶‍♀️":"woman-walking","🧍":"person-standing","🧍‍♂️":"man-standing","🧍‍♀️":"woman-standing","🧎":"person-kneeling","🧎‍♂️":"man-kneeling","🧎‍♀️":"woman-kneeling","🧑‍🦯":"person-with-white-cane","👨‍🦯":"man-with-white-cane","👩‍🦯":"woman-with-white-cane","🧑‍🦼":"person-in-motorized-wheelchair","👨‍🦼":"man-in-motorized-wheelchair","👩‍🦼":"woman-in-motorized-wheelchair","🧑‍🦽":"person-in-manual-wheelchair","👨‍🦽":"man-in-manual-wheelchair","👩‍🦽":"woman-in-manual-wheelchair","🏃":"person-running","🏃‍♂️":"man-running","🏃‍♀️":"woman-running","💃":"woman-dancing","🕺":"man-dancing","🕴️":"person-in-suit-levitating","👯":"people-with-bunny-ears","👯‍♂️":"men-with-bunny-ears","👯‍♀️":"women-with-bunny-ears","🧖":"person-in-steamy-room","🧖‍♂️":"man-in-steamy-room","🧖‍♀️":"woman-in-steamy-room","🧗":"person-climbing","🧗‍♂️":"man-climbing","🧗‍♀️":"woman-climbing","🤺":"person-fencing","🏇":"horse-racing","⛷️":"skier","🏂":"snowboarder","🏌️":"person-golfing","🏌️‍♂️":"man-golfing","🏌️‍♀️":"woman-golfing","🏄":"person-surfing","🏄‍♂️":"man-surfing","🏄‍♀️":"woman-surfing","🚣":"person-rowing-boat","🚣‍♂️":"man-rowing-boat","🚣‍♀️":"woman-rowing-boat","🏊":"person-swimming","🏊‍♂️":"man-swimming","🏊‍♀️":"woman-swimming","⛹️":"person-bouncing-ball","⛹️‍♂️":"man-bouncing-ball","⛹️‍♀️":"woman-bouncing-ball","🏋️":"person-lifting-weights","🏋️‍♂️":"man-lifting-weights","🏋️‍♀️":"woman-lifting-weights","🚴":"person-biking","🚴‍♂️":"man-biking","🚴‍♀️":"woman-biking","🚵":"person-mountain-biking","🚵‍♂️":"man-mountain-biking","🚵‍♀️":"woman-mountain-biking","🤸":"person-cartwheeling","🤸‍♂️":"man-cartwheeling","🤸‍♀️":"woman-cartwheeling","🤼":"people-wrestling","🤼‍♂️":"men-wrestling","🤼‍♀️":"women-wrestling","🤽":"person-playing-water-polo","🤽‍♂️":"man-playing-water-polo","🤽‍♀️":"woman-playing-water-polo","🤾":"person-playing-handball","🤾‍♂️":"man-playing-handball","🤾‍♀️":"woman-playing-handball","🤹":"person-juggling","🤹‍♂️":"man-juggling","🤹‍♀️":"woman-juggling","🧘":"person-in-lotus-position","🧘‍♂️":"man-in-lotus-position","🧘‍♀️":"woman-in-lotus-position","🛀":"person-taking-bath","🛌":"person-in-bed","🧑‍🤝‍🧑":"people-holding-hands","👭":"women-holding-hands","👫":"woman-and-man-holding-hands","👬":"men-holding-hands","💏":"kiss","👩‍❤️‍💋‍👨":"kiss-woman-man","👨‍❤️‍💋‍👨":"kiss-man-man","👩‍❤️‍💋‍👩":"kiss-woman-woman","💑":"couple-with-heart","👩‍❤️‍👨":"couple-with-heart-woman-man","👨‍❤️‍👨":"couple-with-heart-man-man","👩‍❤️‍👩":"couple-with-heart-woman-woman","👪":"family","👨‍👩‍👦":"family-man-woman-boy","👨‍👩‍👧":"family-man-woman-girl","👨‍👩‍👧‍👦":"family-man-woman-girl-boy","👨‍👩‍👦‍👦":"family-man-woman-boy-boy","👨‍👩‍👧‍👧":"family-man-woman-girl-girl","👨‍👨‍👦":"family-man-man-boy","👨‍👨‍👧":"family-man-man-girl","👨‍👨‍👧‍👦":"family-man-man-girl-boy","👨‍👨‍👦‍👦":"family-man-man-boy-boy","👨‍👨‍👧‍👧":"family-man-man-girl-girl","👩‍👩‍👦":"family-woman-woman-boy","👩‍👩‍👧":"family-woman-woman-girl","👩‍👩‍👧‍👦":"family-woman-woman-girl-boy","👩‍👩‍👦‍👦":"family-woman-woman-boy-boy","👩‍👩‍👧‍👧":"family-woman-woman-girl-girl","👨‍👦":"family-man-boy","👨‍👦‍👦":"family-man-boy-boy","👨‍👧":"family-man-girl","👨‍👧‍👦":"family-man-girl-boy","👨‍👧‍👧":"family-man-girl-girl","👩‍👦":"family-woman-boy","👩‍👦‍👦":"family-woman-boy-boy","👩‍👧":"family-woman-girl","👩‍👧‍👦":"family-woman-girl-boy","👩‍👧‍👧":"family-woman-girl-girl","🗣️":"speaking-head","👤":"bust-in-silhouette","👥":"busts-in-silhouette","🫂":"people-hugging","👣":"footprints","🐵":"monkey-face","🐒":"monkey","🦍":"gorilla","🦧":"orangutan","🐶":"dog-face","🐕":"dog","🦮":"guide-dog","🐕‍🦺":"service-dog","🐩":"poodle","🐺":"wolf","🦊":"fox","🦝":"raccoon","🐱":"cat-face","🐈":"cat","🐈‍⬛":"black-cat","🦁":"lion","🐯":"tiger-face","🐅":"tiger","🐆":"leopard","🐴":"horse-face","🫎":"moose","🫏":"donkey","🐎":"horse","🦄":"unicorn","🦓":"zebra","🦌":"deer","🦬":"bison","🐮":"cow-face","🐂":"ox","🐃":"water-buffalo","🐄":"cow","🐷":"pig-face","🐖":"pig","🐗":"boar","🐽":"pig-nose","🐏":"ram","🐑":"ewe","🐐":"goat","🐪":"camel","🐫":"two-hump-camel","🦙":"llama","🦒":"giraffe","🐘":"elephant","🦣":"mammoth","🦏":"rhinoceros","🦛":"hippopotamus","🐭":"mouse-face","🐁":"mouse","🐀":"rat","🐹":"hamster","🐰":"rabbit-face","🐇":"rabbit","🐿️":"chipmunk","🦫":"beaver","🦔":"hedgehog","🦇":"bat","🐻":"bear","🐻‍❄️":"polar-bear","🐨":"koala","🐼":"panda","🦥":"sloth","🦦":"otter","🦨":"skunk","🦘":"kangaroo","🦡":"badger","🐾":"paw-prints","🦃":"turkey","🐔":"chicken","🐓":"rooster","🐣":"hatching-chick","🐤":"baby-chick","🐥":"front-facing-baby-chick","🐦":"bird","🐧":"penguin","🕊️":"dove","🦅":"eagle","🦆":"duck","🦢":"swan","🦉":"owl","🦤":"dodo","🪶":"feather","🦩":"flamingo","🦚":"peacock","🦜":"parrot","🪽":"wing","🐦‍⬛":"black-bird","🪿":"goose","🐸":"frog","🐊":"crocodile","🐢":"turtle","🦎":"lizard","🐍":"snake","🐲":"dragon-face","🐉":"dragon","🦕":"sauropod","🦖":"t-rex","🐳":"spouting-whale","🐋":"whale","🐬":"dolphin","🦭":"seal","🐟":"fish","🐠":"tropical-fish","🐡":"blowfish","🦈":"shark","🐙":"octopus","🐚":"spiral-shell","🪸":"coral","🪼":"jellyfish","🐌":"snail","🦋":"butterfly","🐛":"bug","🐜":"ant","🐝":"honeybee","🪲":"beetle","🐞":"lady-beetle","🦗":"cricket","🪳":"cockroach","🕷️":"spider","🕸️":"spider-web","🦂":"scorpion","🦟":"mosquito","🪰":"fly","🪱":"worm","🦠":"microbe","💐":"bouquet","🌸":"cherry-blossom","💮":"white-flower","🪷":"lotus","🏵️":"rosette","🌹":"rose","🥀":"wilted-flower","🌺":"hibiscus","🌻":"sunflower","🌼":"blossom","🌷":"tulip","🪻":"hyacinth","🌱":"seedling","🪴":"potted-plant","🌲":"evergreen-tree","🌳":"deciduous-tree","🌴":"palm-tree","🌵":"cactus","🌾":"sheaf-of-rice","🌿":"herb","☘️":"shamrock","🍀":"four-leaf-clover","🍁":"maple-leaf","🍂":"fallen-leaf","🍃":"leaf-fluttering-in-wind","🪹":"empty-nest","🪺":"nest-with-eggs","🍄":"mushroom","🍇":"grapes","🍈":"melon","🍉":"watermelon","🍊":"tangerine","🍋":"lemon","🍌":"banana","🍍":"pineapple","🥭":"mango","🍎":"red-apple","🍏":"green-apple","🍐":"pear","🍑":"peach","🍒":"cherries","🍓":"strawberry","🫐":"blueberries","🥝":"kiwi-fruit","🍅":"tomato","🫒":"olive","🥥":"coconut","🥑":"avocado","🍆":"eggplant","🥔":"potato","🥕":"carrot","🌽":"ear-of-corn","🌶️":"hot-pepper","🫑":"bell-pepper","🥒":"cucumber","🥬":"leafy-green","🥦":"broccoli","🧄":"garlic","🧅":"onion","🥜":"peanuts","🫘":"beans","🌰":"chestnut","🫚":"ginger-root","🫛":"pea-pod","🍞":"bread","🥐":"croissant","🥖":"baguette-bread","🫓":"flatbread","🥨":"pretzel","🥯":"bagel","🥞":"pancakes","🧇":"waffle","🧀":"cheese-wedge","🍖":"meat-on-bone","🍗":"poultry-leg","🥩":"cut-of-meat","🥓":"bacon","🍔":"hamburger","🍟":"french-fries","🍕":"pizza","🌭":"hot-dog","🥪":"sandwich","🌮":"taco","🌯":"burrito","🫔":"tamale","🥙":"stuffed-flatbread","🧆":"falafel","🥚":"egg","🍳":"cooking","🥘":"shallow-pan-of-food","🍲":"pot-of-food","🫕":"fondue","🥣":"bowl-with-spoon","🥗":"green-salad","🍿":"popcorn","🧈":"butter","🧂":"salt","🥫":"canned-food","🍱":"bento-box","🍘":"rice-cracker","🍙":"rice-ball","🍚":"cooked-rice","🍛":"curry-rice","🍜":"steaming-bowl","🍝":"spaghetti","🍠":"roasted-sweet-potato","🍢":"oden","🍣":"sushi","🍤":"fried-shrimp","🍥":"fish-cake-with-swirl","🥮":"moon-cake","🍡":"dango","🥟":"dumpling","🥠":"fortune-cookie","🥡":"takeout-box","🦀":"crab","🦞":"lobster","🦐":"shrimp","🦑":"squid","🦪":"oyster","🍦":"soft-ice-cream","🍧":"shaved-ice","🍨":"ice-cream","🍩":"doughnut","🍪":"cookie","🎂":"birthday-cake","🍰":"shortcake","🧁":"cupcake","🥧":"pie","🍫":"chocolate-bar","🍬":"candy","🍭":"lollipop","🍮":"custard","🍯":"honey-pot","🍼":"baby-bottle","🥛":"glass-of-milk","☕":"hot-beverage","🫖":"teapot","🍵":"teacup-without-handle","🍶":"sake","🍾":"bottle-with-popping-cork","🍷":"wine-glass","🍸":"cocktail-glass","🍹":"tropical-drink","🍺":"beer-mug","🍻":"clinking-beer-mugs","🥂":"clinking-glasses","🥃":"tumbler-glass","🫗":"pouring-liquid","🥤":"cup-with-straw","🧋":"bubble-tea","🧃":"beverage-box","🧉":"mate","🧊":"ice","🥢":"chopsticks","🍽️":"fork-and-knife-with-plate","🍴":"fork-and-knife","🥄":"spoon","🔪":"kitchen-knife","🫙":"jar","🏺":"amphora","🌍":"globe-showing-europe-africa","🌎":"globe-showing-americas","🌏":"globe-showing-asia-australia","🌐":"globe-with-meridians","🗺️":"world-map","🗾":"map-of-japan","🧭":"compass","🏔️":"snow-capped-mountain","⛰️":"mountain","🌋":"volcano","🗻":"mount-fuji","🏕️":"camping","🏖️":"beach-with-umbrella","🏜️":"desert","🏝️":"desert-island","🏞️":"national-park","🏟️":"stadium","🏛️":"classical-building","🏗️":"building-construction","🧱":"brick","🪨":"rock","🪵":"wood","🛖":"hut","🏘️":"houses","🏚️":"derelict-house","🏠":"house","🏡":"house-with-garden","🏢":"office-building","🏣":"japanese-post-office","🏤":"post-office","🏥":"hospital","🏦":"bank","🏨":"hotel","🏩":"love-hotel","🏪":"convenience-store","🏫":"school","🏬":"department-store","🏭":"factory","🏯":"japanese-castle","🏰":"castle","💒":"wedding","🗼":"tokyo-tower","🗽":"statue-of-liberty","⛪":"church","🕌":"mosque","🛕":"hindu-temple","🕍":"synagogue","⛩️":"shinto-shrine","🕋":"kaaba","⛲":"fountain","⛺":"tent","🌁":"foggy","🌃":"night-with-stars","🏙️":"cityscape","🌄":"sunrise-over-mountains","🌅":"sunrise","🌆":"cityscape-at-dusk","🌇":"sunset","🌉":"bridge-at-night","♨️":"hot-springs","🎠":"carousel-horse","🛝":"playground-slide","🎡":"ferris-wheel","🎢":"roller-coaster","💈":"barber-pole","🎪":"circus-tent","🚂":"locomotive","🚃":"railway-car","🚄":"high-speed-train","🚅":"bullet-train","🚆":"train","🚇":"metro","🚈":"light-rail","🚉":"station","🚊":"tram","🚝":"monorail","🚞":"mountain-railway","🚋":"tram-car","🚌":"bus","🚍":"oncoming-bus","🚎":"trolleybus","🚐":"minibus","🚑":"ambulance","🚒":"fire-engine","🚓":"police-car","🚔":"oncoming-police-car","🚕":"taxi","🚖":"oncoming-taxi","🚗":"automobile","🚘":"oncoming-automobile","🚙":"sport-utility-vehicle","🛻":"pickup-truck","🚚":"delivery-truck","🚛":"articulated-lorry","🚜":"tractor","🏎️":"racing-car","🏍️":"motorcycle","🛵":"motor-scooter","🦽":"manual-wheelchair","🦼":"motorized-wheelchair","🛺":"auto-rickshaw","🚲":"bicycle","🛴":"kick-scooter","🛹":"skateboard","🛼":"roller-skate","🚏":"bus-stop","🛣️":"motorway","🛤️":"railway-track","🛢️":"oil-drum","⛽":"fuel-pump","🛞":"wheel","🚨":"police-car-light","🚥":"horizontal-traffic-light","🚦":"vertical-traffic-light","🛑":"stop-sign","🚧":"construction","⚓":"anchor","🛟":"ring-buoy","⛵":"sailboat","🛶":"canoe","🚤":"speedboat","🛳️":"passenger-ship","⛴️":"ferry","🛥️":"motor-boat","🚢":"ship","✈️":"airplane","🛩️":"small-airplane","🛫":"airplane-departure","🛬":"airplane-arrival","🪂":"parachute","💺":"seat","🚁":"helicopter","🚟":"suspension-railway","🚠":"mountain-cableway","🚡":"aerial-tramway","🛰️":"satellite","🚀":"rocket","🛸":"flying-saucer","🛎️":"bellhop-bell","🧳":"luggage","⌛":"hourglass-done","⏳":"hourglass-not-done","⌚":"watch","⏰":"alarm-clock","⏱️":"stopwatch","⏲️":"timer-clock","🕰️":"mantelpiece-clock","🕛":"twelve-o-clock","🕧":"twelve-thirty","🕐":"one-o-clock","🕜":"one-thirty","🕑":"two-o-clock","🕝":"two-thirty","🕒":"three-o-clock","🕞":"three-thirty","🕓":"four-o-clock","🕟":"four-thirty","🕔":"five-o-clock","🕠":"five-thirty","🕕":"six-o-clock","🕡":"six-thirty","🕖":"seven-o-clock","🕢":"seven-thirty","🕗":"eight-o-clock","🕣":"eight-thirty","🕘":"nine-o-clock","🕤":"nine-thirty","🕙":"ten-o-clock","🕥":"ten-thirty","🕚":"eleven-o-clock","🕦":"eleven-thirty","🌑":"new-moon","🌒":"waxing-crescent-moon","🌓":"first-quarter-moon","🌔":"waxing-gibbous-moon","🌕":"full-moon","🌖":"waning-gibbous-moon","🌗":"last-quarter-moon","🌘":"waning-crescent-moon","🌙":"crescent-moon","🌚":"new-moon-face","🌛":"first-quarter-moon-face","🌜":"last-quarter-moon-face","🌡️":"thermometer","☀️":"sun","🌝":"full-moon-face","🌞":"sun-with-face","🪐":"ringed-planet","⭐":"star","🌟":"glowing-star","🌠":"shooting-star","🌌":"milky-way","☁️":"cloud","⛅":"sun-behind-cloud","⛈️":"cloud-with-lightning-and-rain","🌤️":"sun-behind-small-cloud","🌥️":"sun-behind-large-cloud","🌦️":"sun-behind-rain-cloud","🌧️":"cloud-with-rain","🌨️":"cloud-with-snow","🌩️":"cloud-with-lightning","🌪️":"tornado","🌫️":"fog","🌬️":"wind-face","🌀":"cyclone","🌈":"rainbow","🌂":"closed-umbrella","☂️":"umbrella","☔":"umbrella-with-rain-drops","⛱️":"umbrella-on-ground","⚡":"high-voltage","❄️":"snowflake","☃️":"snowman","⛄":"snowman-without-snow","☄️":"comet","🔥":"fire","💧":"droplet","🌊":"water-wave","🎃":"jack-o-lantern","🎄":"christmas-tree","🎆":"fireworks","🎇":"sparkler","🧨":"firecracker","✨":"sparkles","🎈":"balloon","🎉":"party-popper","🎊":"confetti-ball","🎋":"tanabata-tree","🎍":"pine-decoration","🎎":"japanese-dolls","🎏":"carp-streamer","🎐":"wind-chime","🎑":"moon-viewing-ceremony","🧧":"red-envelope","🎀":"ribbon","🎁":"wrapped-gift","🎗️":"reminder-ribbon","🎟️":"admission-tickets","🎫":"ticket","🎖️":"military-medal","🏆":"trophy","🏅":"sports-medal","🥇":"1st-place-medal","🥈":"2nd-place-medal","🥉":"3rd-place-medal","⚽":"soccer-ball","⚾":"baseball","🥎":"softball","🏀":"basketball","🏐":"volleyball","🏈":"american-football","🏉":"rugby-football","🎾":"tennis","🥏":"flying-disc","🎳":"bowling","🏏":"cricket-game","🏑":"field-hockey","🏒":"ice-hockey","🥍":"lacrosse","🏓":"ping-pong","🏸":"badminton","🥊":"boxing-glove","🥋":"martial-arts-uniform","🥅":"goal-net","⛳":"flag-in-hole","⛸️":"ice-skate","🎣":"fishing-pole","🤿":"diving-mask","🎽":"running-shirt","🎿":"skis","🛷":"sled","🥌":"curling-stone","🎯":"bullseye","🪀":"yo-yo","🪁":"kite","🔫":"water-pistol","🎱":"pool-8-ball","🔮":"crystal-ball","🪄":"magic-wand","🎮":"video-game","🕹️":"joystick","🎰":"slot-machine","🎲":"game-die","🧩":"puzzle-piece","🧸":"teddy-bear","🪅":"pinata","🪩":"mirror-ball","🪆":"nesting-dolls","♠️":"spade-suit","♥️":"heart-suit","♦️":"diamond-suit","♣️":"club-suit","♟️":"chess-pawn","🃏":"joker","🀄":"mahjong-red-dragon","🎴":"flower-playing-cards","🎭":"performing-arts","🖼️":"framed-picture","🎨":"artist-palette","🧵":"thread","🪡":"sewing-needle","🧶":"yarn","🪢":"knot","👓":"glasses","🕶️":"sunglasses","🥽":"goggles","🥼":"lab-coat","🦺":"safety-vest","👔":"necktie","👕":"t-shirt","👖":"jeans","🧣":"scarf","🧤":"gloves","🧥":"coat","🧦":"socks","👗":"dress","👘":"kimono","🥻":"sari","🩱":"one-piece-swimsuit","🩲":"briefs","🩳":"shorts","👙":"bikini","👚":"woman-s-clothes","🪭":"folding-hand-fan","👛":"purse","👜":"handbag","👝":"clutch-bag","🛍️":"shopping-bags","🎒":"backpack","🩴":"thong-sandal","👞":"man-s-shoe","👟":"running-shoe","🥾":"hiking-boot","🥿":"flat-shoe","👠":"high-heeled-shoe","👡":"woman-s-sandal","🩰":"ballet-shoes","👢":"woman-s-boot","🪮":"hair-pick","👑":"crown","👒":"woman-s-hat","🎩":"top-hat","🎓":"graduation-cap","🧢":"billed-cap","🪖":"military-helmet","⛑️":"rescue-worker-s-helmet","📿":"prayer-beads","💄":"lipstick","💍":"ring","💎":"gem-stone","🔇":"muted-speaker","🔈":"speaker-low-volume","🔉":"speaker-medium-volume","🔊":"speaker-high-volume","📢":"loudspeaker","📣":"megaphone","📯":"postal-horn","🔔":"bell","🔕":"bell-with-slash","🎼":"musical-score","🎵":"musical-note","🎶":"musical-notes","🎙️":"studio-microphone","🎚️":"level-slider","🎛️":"control-knobs","🎤":"microphone","🎧":"headphone","📻":"radio","🎷":"saxophone","🪗":"accordion","🎸":"guitar","🎹":"musical-keyboard","🎺":"trumpet","🎻":"violin","🪕":"banjo","🥁":"drum","🪘":"long-drum","🪇":"maracas","🪈":"flute","📱":"mobile-phone","📲":"mobile-phone-with-arrow","☎️":"telephone","📞":"telephone-receiver","📟":"pager","📠":"fax-machine","🔋":"battery","🪫":"low-battery","🔌":"electric-plug","💻":"laptop","🖥️":"desktop-computer","🖨️":"printer","⌨️":"keyboard","🖱️":"computer-mouse","🖲️":"trackball","💽":"computer-disk","💾":"floppy-disk","💿":"optical-disk","📀":"dvd","🧮":"abacus","🎥":"movie-camera","🎞️":"film-frames","📽️":"film-projector","🎬":"clapper-board","📺":"television","📷":"camera","📸":"camera-with-flash","📹":"video-camera","📼":"videocassette","🔍":"magnifying-glass-tilted-left","🔎":"magnifying-glass-tilted-right","🕯️":"candle","💡":"light-bulb","🔦":"flashlight","🏮":"red-paper-lantern","🪔":"diya-lamp","📔":"notebook-with-decorative-cover","📕":"closed-book","📖":"open-book","📗":"green-book","📘":"blue-book","📙":"orange-book","📚":"books","📓":"notebook","📒":"ledger","📃":"page-with-curl","📜":"scroll","📄":"page-facing-up","📰":"newspaper","🗞️":"rolled-up-newspaper","📑":"bookmark-tabs","🔖":"bookmark","🏷️":"label","💰":"money-bag","🪙":"coin","💴":"yen-banknote","💵":"dollar-banknote","💶":"euro-banknote","💷":"pound-banknote","💸":"money-with-wings","💳":"credit-card","🧾":"receipt","💹":"chart-increasing-with-yen","✉️":"envelope","📧":"e-mail","📨":"incoming-envelope","📩":"envelope-with-arrow","📤":"outbox-tray","📥":"inbox-tray","📦":"package","📫":"closed-mailbox-with-raised-flag","📪":"closed-mailbox-with-lowered-flag","📬":"open-mailbox-with-raised-flag","📭":"open-mailbox-with-lowered-flag","📮":"postbox","🗳️":"ballot-box-with-ballot","✏️":"pencil","✒️":"black-nib","🖋️":"fountain-pen","🖊️":"pen","🖌️":"paintbrush","🖍️":"crayon","📝":"memo","💼":"briefcase","📁":"file-folder","📂":"open-file-folder","🗂️":"card-index-dividers","📅":"calendar","📆":"tear-off-calendar","🗒️":"spiral-notepad","🗓️":"spiral-calendar","📇":"card-index","📈":"chart-increasing","📉":"chart-decreasing","📊":"bar-chart","📋":"clipboard","📌":"pushpin","📍":"round-pushpin","📎":"paperclip","🖇️":"linked-paperclips","📏":"straight-ruler","📐":"triangular-ruler","✂️":"scissors","🗃️":"card-file-box","🗄️":"file-cabinet","🗑️":"wastebasket","🔒":"locked","🔓":"unlocked","🔏":"locked-with-pen","🔐":"locked-with-key","🔑":"key","🗝️":"old-key","🔨":"hammer","🪓":"axe","⛏️":"pick","⚒️":"hammer-and-pick","🛠️":"hammer-and-wrench","🗡️":"dagger","⚔️":"crossed-swords","💣":"bomb","🪃":"boomerang","🏹":"bow-and-arrow","🛡️":"shield","🪚":"carpentry-saw","🔧":"wrench","🪛":"screwdriver","🔩":"nut-and-bolt","⚙️":"gear","🗜️":"clamp","⚖️":"balance-scale","🦯":"white-cane","🔗":"link","⛓️":"chains","🪝":"hook","🧰":"toolbox","🧲":"magnet","🪜":"ladder","⚗️":"alembic","🧪":"test-tube","🧫":"petri-dish","🧬":"dna","🔬":"microscope","🔭":"telescope","📡":"satellite-antenna","💉":"syringe","🩸":"drop-of-blood","💊":"pill","🩹":"adhesive-bandage","🩼":"crutch","🩺":"stethoscope","🩻":"x-ray","🚪":"door","🛗":"elevator","🪞":"mirror","🪟":"window","🛏️":"bed","🛋️":"couch-and-lamp","🪑":"chair","🚽":"toilet","🪠":"plunger","🚿":"shower","🛁":"bathtub","🪤":"mouse-trap","🪒":"razor","🧴":"lotion-bottle","🧷":"safety-pin","🧹":"broom","🧺":"basket","🧻":"roll-of-paper","🪣":"bucket","🧼":"soap","🫧":"bubbles","🪥":"toothbrush","🧽":"sponge","🧯":"fire-extinguisher","🛒":"shopping-cart","🚬":"cigarette","⚰️":"coffin","🪦":"headstone","⚱️":"funeral-urn","🧿":"nazar-amulet","🪬":"hamsa","🗿":"moai","🪧":"placard","🪪":"identification-card","🏧":"atm-sign","🚮":"litter-in-bin-sign","🚰":"potable-water","♿":"wheelchair-symbol","🚹":"men-s-room","🚺":"women-s-room","🚻":"restroom","🚼":"baby-symbol","🚾":"water-closet","🛂":"passport-control","🛃":"customs","🛄":"baggage-claim","🛅":"left-luggage","⚠️":"warning","🚸":"children-crossing","⛔":"no-entry","🚫":"prohibited","🚳":"no-bicycles","🚭":"no-smoking","🚯":"no-littering","🚱":"non-potable-water","🚷":"no-pedestrians","📵":"no-mobile-phones","🔞":"no-one-under-eighteen","☢️":"radioactive","☣️":"biohazard","⬆️":"up-arrow","↗️":"up-right-arrow","➡️":"right-arrow","↘️":"down-right-arrow","⬇️":"down-arrow","↙️":"down-left-arrow","⬅️":"left-arrow","↖️":"up-left-arrow","↕️":"up-down-arrow","↔️":"left-right-arrow","↩️":"right-arrow-curving-left","↪️":"left-arrow-curving-right","⤴️":"right-arrow-curving-up","⤵️":"right-arrow-curving-down","🔃":"clockwise-vertical-arrows","🔄":"counterclockwise-arrows-button","🔙":"back-arrow","🔚":"end-arrow","🔛":"on-arrow","🔜":"soon-arrow","🔝":"top-arrow","🛐":"place-of-worship","⚛️":"atom-symbol","🕉️":"om","✡️":"star-of-david","☸️":"wheel-of-dharma","☯️":"yin-yang","✝️":"latin-cross","☦️":"orthodox-cross","☪️":"star-and-crescent","☮️":"peace-symbol","🕎":"menorah","🔯":"dotted-six-pointed-star","🪯":"khanda","♈":"aries","♉":"taurus","♊":"gemini","♋":"cancer","♌":"leo","♍":"virgo","♎":"libra","♏":"scorpio","♐":"sagittarius","♑":"capricorn","♒":"aquarius","♓":"pisces","⛎":"ophiuchus","🔀":"shuffle-tracks-button","🔁":"repeat-button","🔂":"repeat-single-button","▶️":"play-button","⏩":"fast-forward-button","⏭️":"next-track-button","⏯️":"play-or-pause-button","◀️":"reverse-button","⏪":"fast-reverse-button","⏮️":"last-track-button","🔼":"upwards-button","⏫":"fast-up-button","🔽":"downwards-button","⏬":"fast-down-button","⏸️":"pause-button","⏹️":"stop-button","⏺️":"record-button","⏏️":"eject-button","🎦":"cinema","🔅":"dim-button","🔆":"bright-button","📶":"antenna-bars","🛜":"wireless","📳":"vibration-mode","📴":"mobile-phone-off","♀️":"female-sign","♂️":"male-sign","⚧️":"transgender-symbol","✖️":"multiply","➕":"plus","➖":"minus","➗":"divide","🟰":"heavy-equals-sign","♾️":"infinity","‼️":"double-exclamation-mark","⁉️":"exclamation-question-mark","❓":"red-question-mark","❔":"white-question-mark","❕":"white-exclamation-mark","❗":"red-exclamation-mark","〰️":"wavy-dash","💱":"currency-exchange","💲":"heavy-dollar-sign","⚕️":"medical-symbol","♻️":"recycling-symbol","⚜️":"fleur-de-lis","🔱":"trident-emblem","📛":"name-badge","🔰":"japanese-symbol-for-beginner","⭕":"hollow-red-circle","✅":"check-mark-button","☑️":"check-box-with-check","✔️":"check-mark","❌":"cross-mark","❎":"cross-mark-button","➰":"curly-loop","➿":"double-curly-loop","〽️":"part-alternation-mark","✳️":"eight-spoked-asterisk","✴️":"eight-pointed-star","❇️":"sparkle","©️":"copyright","®️":"registered","™️":"trade-mark","#️⃣":"keycap-#","*️⃣":"keycap-*","0️⃣":"keycap-0","1️⃣":"keycap-1","2️⃣":"keycap-2","3️⃣":"keycap-3","4️⃣":"keycap-4","5️⃣":"keycap-5","6️⃣":"keycap-6","7️⃣":"keycap-7","8️⃣":"keycap-8","9️⃣":"keycap-9","🔟":"keycap-10","🔠":"input-latin-uppercase","🔡":"input-latin-lowercase","🔢":"input-numbers","🔣":"input-symbols","🔤":"input-latin-letters","🅰️":"a-button-blood-type","🆎":"ab-button-blood-type","🅱️":"b-button-blood-type","🆑":"cl-button","🆒":"cool-button","🆓":"free-button","ℹ️":"information","🆔":"id-button","Ⓜ️":"circled-m","🆕":"new-button","🆖":"ng-button","🅾️":"o-button-blood-type","🆗":"ok-button","🅿️":"p-button","🆘":"sos-button","🆙":"up-button","🆚":"vs-button","🈁":"japanese-here-button","🈂️":"japanese-service-charge-button","🈷️":"japanese-monthly-amount-button","🈶":"japanese-not-free-of-charge-button","🈯":"japanese-reserved-button","🉐":"japanese-bargain-button","🈹":"japanese-discount-button","🈚":"japanese-free-of-charge-button","🈲":"japanese-prohibited-button","🉑":"japanese-acceptable-button","🈸":"japanese-application-button","🈴":"japanese-passing-grade-button","🈳":"japanese-vacancy-button","㊗️":"japanese-congratulations-button","㊙️":"japanese-secret-button","🈺":"japanese-open-for-business-button","🈵":"japanese-no-vacancy-button","🔴":"red-circle","🟠":"orange-circle","🟡":"yellow-circle","🟢":"green-circle","🔵":"blue-circle","🟣":"purple-circle","🟤":"brown-circle","⚫":"black-circle","⚪":"white-circle","🟥":"red-square","🟧":"orange-square","🟨":"yellow-square","🟩":"green-square","🟦":"blue-square","🟪":"purple-square","🟫":"brown-square","⬛":"black-large-square","⬜":"white-large-square","◼️":"black-medium-square","◻️":"white-medium-square","◾":"black-medium-small-square","◽":"white-medium-small-square","▪️":"black-small-square","▫️":"white-small-square","🔶":"large-orange-diamond","🔷":"large-blue-diamond","🔸":"small-orange-diamond","🔹":"small-blue-diamond","🔺":"red-triangle-pointed-up","🔻":"red-triangle-pointed-down","💠":"diamond-with-a-dot","🔘":"radio-button","🔳":"white-square-button","🔲":"black-square-button","🏁":"chequered-flag","🚩":"triangular-flag","🎌":"crossed-flags","🏴":"black-flag","🏳️":"white-flag","🏳️‍🌈":"rainbow-flag","🏳️‍⚧️":"transgender-flag","🏴‍☠️":"pirate-flag","🇦🇨":"flag-ascension-island","🇦🇩":"flag-andorra","🇦🇪":"flag-united-arab-emirates","🇦🇫":"flag-afghanistan","🇦🇬":"flag-antigua-&-barbuda","🇦🇮":"flag-anguilla","🇦🇱":"flag-albania","🇦🇲":"flag-armenia","🇦🇴":"flag-angola","🇦🇶":"flag-antarctica","🇦🇷":"flag-argentina","🇦🇸":"flag-american-samoa","🇦🇹":"flag-austria","🇦🇺":"flag-australia","🇦🇼":"flag-aruba","🇦🇽":"flag-aland-islands","🇦🇿":"flag-azerbaijan","🇧🇦":"flag-bosnia-&-herzegovina","🇧🇧":"flag-barbados","🇧🇩":"flag-bangladesh","🇧🇪":"flag-belgium","🇧🇫":"flag-burkina-faso","🇧🇬":"flag-bulgaria","🇧🇭":"flag-bahrain","🇧🇮":"flag-burundi","🇧🇯":"flag-benin","🇧🇱":"flag-st-barthelemy","🇧🇲":"flag-bermuda","🇧🇳":"flag-brunei","🇧🇴":"flag-bolivia","🇧🇶":"flag-caribbean-netherlands","🇧🇷":"flag-brazil","🇧🇸":"flag-bahamas","🇧🇹":"flag-bhutan","🇧🇻":"flag-bouvet-island","🇧🇼":"flag-botswana","🇧🇾":"flag-belarus","🇧🇿":"flag-belize","🇨🇦":"flag-canada","🇨🇨":"flag-cocos-keeling-islands","🇨🇩":"flag-congo-kinshasa","🇨🇫":"flag-central-african-republic","🇨🇬":"flag-congo-brazzaville","🇨🇭":"flag-switzerland","🇨🇮":"flag-cote-d-ivoire","🇨🇰":"flag-cook-islands","🇨🇱":"flag-chile","🇨🇲":"flag-cameroon","🇨🇳":"flag-china","🇨🇴":"flag-colombia","🇨🇵":"flag-clipperton-island","🇨🇷":"flag-costa-rica","🇨🇺":"flag-cuba","🇨🇻":"flag-cape-verde","🇨🇼":"flag-curacao","🇨🇽":"flag-christmas-island","🇨🇾":"flag-cyprus","🇨🇿":"flag-czechia","🇩🇪":"flag-germany","🇩🇬":"flag-diego-garcia","🇩🇯":"flag-djibouti","🇩🇰":"flag-denmark","🇩🇲":"flag-dominica","🇩🇴":"flag-dominican-republic","🇩🇿":"flag-algeria","🇪🇦":"flag-ceuta-&-melilla","🇪🇨":"flag-ecuador","🇪🇪":"flag-estonia","🇪🇬":"flag-egypt","🇪🇭":"flag-western-sahara","🇪🇷":"flag-eritrea","🇪🇸":"flag-spain","🇪🇹":"flag-ethiopia","🇪🇺":"flag-european-union","🇫🇮":"flag-finland","🇫🇯":"flag-fiji","🇫🇰":"flag-falkland-islands","🇫🇲":"flag-micronesia","🇫🇴":"flag-faroe-islands","🇫🇷":"flag-france","🇬🇦":"flag-gabon","🇬🇧":"flag-united-kingdom","🇬🇩":"flag-grenada","🇬🇪":"flag-georgia","🇬🇫":"flag-french-guiana","🇬🇬":"flag-guernsey","🇬🇭":"flag-ghana","🇬🇮":"flag-gibraltar","🇬🇱":"flag-greenland","🇬🇲":"flag-gambia","🇬🇳":"flag-guinea","🇬🇵":"flag-guadeloupe","🇬🇶":"flag-equatorial-guinea","🇬🇷":"flag-greece","🇬🇸":"flag-south-georgia-&-south-sandwich-islands","🇬🇹":"flag-guatemala","🇬🇺":"flag-guam","🇬🇼":"flag-guinea-bissau","🇬🇾":"flag-guyana","🇭🇰":"flag-hong-kong-sar-china","🇭🇲":"flag-heard-&-mcdonald-islands","🇭🇳":"flag-honduras","🇭🇷":"flag-croatia","🇭🇹":"flag-haiti","🇭🇺":"flag-hungary","🇮🇨":"flag-canary-islands","🇮🇩":"flag-indonesia","🇮🇪":"flag-ireland","🇮🇱":"flag-israel","🇮🇲":"flag-isle-of-man","🇮🇳":"flag-india","🇮🇴":"flag-british-indian-ocean-territory","🇮🇶":"flag-iraq","🇮🇷":"flag-iran","🇮🇸":"flag-iceland","🇮🇹":"flag-italy","🇯🇪":"flag-jersey","🇯🇲":"flag-jamaica","🇯🇴":"flag-jordan","🇯🇵":"flag-japan","🇰🇪":"flag-kenya","🇰🇬":"flag-kyrgyzstan","🇰🇭":"flag-cambodia","🇰🇮":"flag-kiribati","🇰🇲":"flag-comoros","🇰🇳":"flag-st-kitts-&-nevis","🇰🇵":"flag-north-korea","🇰🇷":"flag-south-korea","🇰🇼":"flag-kuwait","🇰🇾":"flag-cayman-islands","🇰🇿":"flag-kazakhstan","🇱🇦":"flag-laos","🇱🇧":"flag-lebanon","🇱🇨":"flag-st-lucia","🇱🇮":"flag-liechtenstein","🇱🇰":"flag-sri-lanka","🇱🇷":"flag-liberia","🇱🇸":"flag-lesotho","🇱🇹":"flag-lithuania","🇱🇺":"flag-luxembourg","🇱🇻":"flag-latvia","🇱🇾":"flag-libya","🇲🇦":"flag-morocco","🇲🇨":"flag-monaco","🇲🇩":"flag-moldova","🇲🇪":"flag-montenegro","🇲🇫":"flag-st-martin","🇲🇬":"flag-madagascar","🇲🇭":"flag-marshall-islands","🇲🇰":"flag-north-macedonia","🇲🇱":"flag-mali","🇲🇲":"flag-myanmar-burma","🇲🇳":"flag-mongolia","🇲🇴":"flag-macao-sar-china","🇲🇵":"flag-northern-mariana-islands","🇲🇶":"flag-martinique","🇲🇷":"flag-mauritania","🇲🇸":"flag-montserrat","🇲🇹":"flag-malta","🇲🇺":"flag-mauritius","🇲🇻":"flag-maldives","🇲🇼":"flag-malawi","🇲🇽":"flag-mexico","🇲🇾":"flag-malaysia","🇲🇿":"flag-mozambique","🇳🇦":"flag-namibia","🇳🇨":"flag-new-caledonia","🇳🇪":"flag-niger","🇳🇫":"flag-norfolk-island","🇳🇬":"flag-nigeria","🇳🇮":"flag-nicaragua","🇳🇱":"flag-netherlands","🇳🇴":"flag-norway","🇳🇵":"flag-nepal","🇳🇷":"flag-nauru","🇳🇺":"flag-niue","🇳🇿":"flag-new-zealand","🇴🇲":"flag-oman","🇵🇦":"flag-panama","🇵🇪":"flag-peru","🇵🇫":"flag-french-polynesia","🇵🇬":"flag-papua-new-guinea","🇵🇭":"flag-philippines","🇵🇰":"flag-pakistan","🇵🇱":"flag-poland","🇵🇲":"flag-st-pierre-&-miquelon","🇵🇳":"flag-pitcairn-islands","🇵🇷":"flag-puerto-rico","🇵🇸":"flag-palestinian-territories","🇵🇹":"flag-portugal","🇵🇼":"flag-palau","🇵🇾":"flag-paraguay","🇶🇦":"flag-qatar","🇷🇪":"flag-reunion","🇷🇴":"flag-romania","🇷🇸":"flag-serbia","🇷🇺":"flag-russia","🇷🇼":"flag-rwanda","🇸🇦":"flag-saudi-arabia","🇸🇧":"flag-solomon-islands","🇸🇨":"flag-seychelles","🇸🇩":"flag-sudan","🇸🇪":"flag-sweden","🇸🇬":"flag-singapore","🇸🇭":"flag-st-helena","🇸🇮":"flag-slovenia","🇸🇯":"flag-svalbard-&-jan-mayen","🇸🇰":"flag-slovakia","🇸🇱":"flag-sierra-leone","🇸🇲":"flag-san-marino","🇸🇳":"flag-senegal","🇸🇴":"flag-somalia","🇸🇷":"flag-suriname","🇸🇸":"flag-south-sudan","🇸🇹":"flag-sao-tome-&-principe","🇸🇻":"flag-el-salvador","🇸🇽":"flag-sint-maarten","🇸🇾":"flag-syria","🇸🇿":"flag-eswatini","🇹🇦":"flag-tristan-da-cunha","🇹🇨":"flag-turks-&-caicos-islands","🇹🇩":"flag-chad","🇹🇫":"flag-french-southern-territories","🇹🇬":"flag-togo","🇹🇭":"flag-thailand","🇹🇯":"flag-tajikistan","🇹🇰":"flag-tokelau","🇹🇱":"flag-timor-leste","🇹🇲":"flag-turkmenistan","🇹🇳":"flag-tunisia","🇹🇴":"flag-tonga","🇹🇷":"flag-turkey","🇹🇹":"flag-trinidad-&-tobago","🇹🇻":"flag-tuvalu","🇹🇼":"flag-taiwan","🇹🇿":"flag-tanzania","🇺🇦":"flag-ukraine","🇺🇬":"flag-uganda","🇺🇲":"flag-us-outlying-islands","🇺🇳":"flag-united-nations","🇺🇸":"flag-united-states","🇺🇾":"flag-uruguay","🇺🇿":"flag-uzbekistan","🇻🇦":"flag-vatican-city","🇻🇨":"flag-st-vincent-&-grenadines","🇻🇪":"flag-venezuela","🇻🇬":"flag-british-virgin-islands","🇻🇮":"flag-us-virgin-islands","🇻🇳":"flag-vietnam","🇻🇺":"flag-vanuatu","🇼🇫":"flag-wallis-&-futuna","🇼🇸":"flag-samoa","🇽🇰":"flag-kosovo","🇾🇪":"flag-yemen","🇾🇹":"flag-mayotte","🇿🇦":"flag-south-africa","🇿🇲":"flag-zambia","🇿🇼":"flag-zimbabwe","🏴󠁧󠁢󠁥󠁮󠁧󠁿":"flag-england","🏴󠁧󠁢󠁳󠁣󠁴󠁿":"flag-scotland","🏴󠁧󠁢󠁷󠁬󠁳󠁿":"flag-wales"} ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_END_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_END_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Package.prepare( '/[core]/node_modules/base64-js' , '/[core]/node_modules/base64-js/index.js' , null ) ;
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/[core]/node_modules/base64-js/index.js' , '/[core]/node_modules/base64-js' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 exports.byteLength = byteLength
@@ -19671,11 +19671,11 @@ function fromByteArray (uint8) {
   return parts.join('')
 }
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_END_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_END_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Package.prepare( '/[core]/node_modules/ieee754' , '/[core]/node_modules/ieee754/index.js' , null ) ;
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/[core]/node_modules/ieee754/index.js' , '/[core]/node_modules/ieee754' , null , ( module , exports , require , __dirname , __filename ) => {
 
 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
@@ -19764,11 +19764,11 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_END_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_END_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Package.prepare( '/node_modules/babel-tower' , '/node_modules/babel-tower/lib/Babel.js' , null ) ;
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/babel-tower/lib/Babel.js' , '/node_modules/babel-tower' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -20039,8 +20039,8 @@ Babel.getNamedVars = function( str ) {
 // Useful for Sentence constructor, when no Babel instances are given
 Babel.default = new Babel() ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/babel-tower/lib/Atom.js' , '/node_modules/babel-tower' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -21069,8 +21069,8 @@ function unescapeAny( value ) {
 	return value ;
 }
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/babel-tower/lib/Sentence.js' , '/node_modules/babel-tower' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -21482,8 +21482,8 @@ function unescape( str ) {
 	return str.replace( /\$\$/g , () => '$' ) ;
 }
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/babel-tower/lib/filters.js' , '/node_modules/babel-tower' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -21583,11 +21583,11 @@ exports['en;a'] = str => {
 	return ( vowels.indexOf( str[ 0 ] ) !== -1 ? 'an ' : 'a ' ) + str ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_END_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_END_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Package.prepare( '/node_modules/array-kit' , '/node_modules/array-kit/lib/array-kit.js' , null ) ;
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/array-kit/lib/array-kit.js' , '/node_modules/array-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -21636,8 +21636,8 @@ arrayKit.random = arrayKit.randomElement = array => array[ Math.floor( array.len
 arrayKit.shuffle = array => arrayKit.sample( array , array.length , true ) ;
 arrayKit.randomSampleSize = ( array , min , max , inPlace ) => arrayKit.sample( array , arrayKit.randomInteger( min , max ) , inPlace ) ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/array-kit/lib/range.js' , '/node_modules/array-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -21705,8 +21705,8 @@ module.exports = function( start , end , step ) {
 	return output ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/array-kit/lib/sample.js' , '/node_modules/array-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -21764,8 +21764,8 @@ module.exports = ( array , count = Infinity , inPlace = false ) => {
 	return sample ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/array-kit/lib/inPlaceFilter.js' , '/node_modules/array-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -21831,8 +21831,8 @@ module.exports = ( src , fn , thisArg , forceKey ) => {
 	return src ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/array-kit/lib/delete.js' , '/node_modules/array-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -21885,8 +21885,8 @@ module.exports = ( src , index ) => {
 	src.length -- ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/array-kit/lib/deleteValue.js' , '/node_modules/array-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -21951,11 +21951,11 @@ module.exports = ( src , value ) => {
 	return deletedCount ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_END_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_END_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Package.prepare( '/node_modules/tree-kit' , '/node_modules/tree-kit/lib/tree.js' , null ) ;
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/tree-kit/lib/dotPath.js' , '/node_modules/tree-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -22250,11 +22250,11 @@ dotPath.prepend = ( object , path , value ) => {
 	return pointer[ key ] ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_END_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_END_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Package.prepare( '/node_modules/babel-tower/node_modules/string-kit' , '/node_modules/babel-tower/node_modules/string-kit/lib/string.js' , null ) ;
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/babel-tower/node_modules/string-kit/lib/string.js' , '/node_modules/babel-tower/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -22348,8 +22348,8 @@ stringKit.installPolyfills = function installPolyfills() {
 } ;
 //*/
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/babel-tower/node_modules/string-kit/lib/escape.js' , '/node_modules/babel-tower/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -22455,8 +22455,8 @@ exports.unicodePercentEncode = str => str.replace( /[\x00-\x1f\u0100-\uffff\x7f%
 // Encode HTTP header value
 exports.httpHeaderValue = str => exports.unicodePercentEncode( str ) ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/babel-tower/node_modules/string-kit/lib/ansi.js' , '/node_modules/babel-tower/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -22726,8 +22726,8 @@ ansi.parse = str => {
 	return output ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/babel-tower/node_modules/string-kit/lib/unicode.js' , '/node_modules/babel-tower/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -23076,8 +23076,8 @@ unicode.isEmojiModifierCodePoint = code =>
 	( 0x1f3fb <= code && code <= 0x1f3ff ) ||	// (Fitzpatrick): https://en.wikipedia.org/wiki/Miscellaneous_Symbols_and_Pictographs#Emoji_modifiers
 	code === 0xfe0f ;	// VARIATION SELECTOR-16 [VS16] {emoji variation selector}
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/babel-tower/node_modules/string-kit/lib/format.js' , '/node_modules/babel-tower/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -24317,8 +24317,8 @@ function round( v , step ) {
 	return epsilonRound( step * Math.round( v * ( 1 / step ) ) ) ;
 }
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/babel-tower/node_modules/string-kit/lib/misc.js' , '/node_modules/babel-tower/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -24379,8 +24379,8 @@ exports.occurrenceCount = function( str , subStr , overlap = false ) {
 	return count ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/babel-tower/node_modules/string-kit/lib/inspect.js' , '/node_modules/babel-tower/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -25143,8 +25143,8 @@ inspectStyle.html = Object.assign( {} , inspectStyle.none , {
 	errorFromMessage: str => '<span style="color:yellow">' + str + '</span>'
 } ) ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/babel-tower/node_modules/string-kit/lib/regexp.js' , '/node_modules/babel-tower/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -25201,8 +25201,8 @@ exports.regexp.array2alternatives = function array2alternatives( array ) {
 	return sorted.join( '|' ) ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/babel-tower/node_modules/string-kit/lib/camel.js' , '/node_modules/babel-tower/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -25292,8 +25292,8 @@ camel.camelCaseToSeparated = function( str , separator = ' ' , acronym = true ) 
 camel.camelCaseToDash =
 camel.camelCaseToDashed = ( str ) => camel.camelCaseToSeparated( str , '-' , false ) ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/babel-tower/node_modules/string-kit/lib/latinize.js' , '/node_modules/babel-tower/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -25332,8 +25332,8 @@ module.exports = function( str ) {
 	return str.replace( /[^\u0000-\u007e]/g , ( c ) => { return map[ c ] || c ; } ) ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/babel-tower/node_modules/string-kit/lib/toTitleCase.js' , '/node_modules/babel-tower/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -25423,8 +25423,8 @@ module.exports = ( str , options = DEFAULT_OPTIONS ) => {
 	} ) ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/babel-tower/node_modules/string-kit/lib/wordwrap.js' , '/node_modules/babel-tower/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -25629,8 +25629,8 @@ module.exports = function wordwrap( str , options ) {
 	return lines ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/babel-tower/node_modules/string-kit/lib/naturalSort.js' , '/node_modules/babel-tower/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -25778,8 +25778,8 @@ function naturalSort( a , b ) {
 
 module.exports = naturalSort ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/babel-tower/node_modules/string-kit/lib/fuzzy.js' , '/node_modules/babel-tower/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -26096,8 +26096,8 @@ fuzzy.levenshtein = ( left , right ) => {
 	return result ;
 } ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/babel-tower/node_modules/string-kit/lib/StringNumber.js' , '/node_modules/babel-tower/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 "use strict" ;
 /*
@@ -26512,18 +26512,18 @@ function arrayConcatSlice( intoArray , sourceArray , start = 0 , end = sourceArr
 	return intoArray ;
 }
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/babel-tower/node_modules/string-kit/lib/unicode-emoji-width-ranges.json' , '/node_modules/babel-tower/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 module.exports = [{"s":9728,"e":9747,"w":1},{"s":9748,"e":9749,"w":2},{"s":9750,"e":9799,"w":1},{"s":9800,"e":9811,"w":2},{"s":9812,"e":9854,"w":1},{"s":9855,"e":9855,"w":2},{"s":9856,"e":9874,"w":1},{"s":9875,"e":9875,"w":2},{"s":9876,"e":9888,"w":1},{"s":9889,"e":9889,"w":2},{"s":9890,"e":9897,"w":1},{"s":9898,"e":9899,"w":2},{"s":9900,"e":9916,"w":1},{"s":9917,"e":9918,"w":2},{"s":9919,"e":9923,"w":1},{"s":9924,"e":9925,"w":2},{"s":9926,"e":9933,"w":1},{"s":9934,"e":9934,"w":2},{"s":9935,"e":9939,"w":1},{"s":9940,"e":9940,"w":2},{"s":9941,"e":9961,"w":1},{"s":9962,"e":9962,"w":2},{"s":9963,"e":9969,"w":1},{"s":9970,"e":9971,"w":2},{"s":9972,"e":9972,"w":1},{"s":9973,"e":9973,"w":2},{"s":9974,"e":9977,"w":1},{"s":9978,"e":9978,"w":2},{"s":9979,"e":9980,"w":1},{"s":9981,"e":9981,"w":2},{"s":9982,"e":9983,"w":1},{"s":9984,"e":9988,"w":1},{"s":9989,"e":9989,"w":2},{"s":9990,"e":9993,"w":1},{"s":9994,"e":9995,"w":2},{"s":9996,"e":10023,"w":1},{"s":10024,"e":10024,"w":2},{"s":10025,"e":10059,"w":1},{"s":10060,"e":10060,"w":2},{"s":10061,"e":10061,"w":1},{"s":10062,"e":10062,"w":2},{"s":10063,"e":10066,"w":1},{"s":10067,"e":10069,"w":2},{"s":10070,"e":10070,"w":1},{"s":10071,"e":10071,"w":2},{"s":10072,"e":10132,"w":1},{"s":10133,"e":10135,"w":2},{"s":10136,"e":10159,"w":1},{"s":10160,"e":10160,"w":2},{"s":10161,"e":10174,"w":1},{"s":10175,"e":10175,"w":2},{"s":126976,"e":126979,"w":1},{"s":126980,"e":126980,"w":2},{"s":126981,"e":127182,"w":1},{"s":127183,"e":127183,"w":2},{"s":127184,"e":127373,"w":1},{"s":127374,"e":127374,"w":2},{"s":127375,"e":127376,"w":1},{"s":127377,"e":127386,"w":2},{"s":127387,"e":127487,"w":1},{"s":127744,"e":127776,"w":2},{"s":127777,"e":127788,"w":1},{"s":127789,"e":127797,"w":2},{"s":127798,"e":127798,"w":1},{"s":127799,"e":127868,"w":2},{"s":127869,"e":127869,"w":1},{"s":127870,"e":127891,"w":2},{"s":127892,"e":127903,"w":1},{"s":127904,"e":127946,"w":2},{"s":127947,"e":127950,"w":1},{"s":127951,"e":127955,"w":2},{"s":127956,"e":127967,"w":1},{"s":127968,"e":127984,"w":2},{"s":127985,"e":127987,"w":1},{"s":127988,"e":127988,"w":2},{"s":127989,"e":127991,"w":1},{"s":127992,"e":127994,"w":2},{"s":128000,"e":128062,"w":2},{"s":128063,"e":128063,"w":1},{"s":128064,"e":128064,"w":2},{"s":128065,"e":128065,"w":1},{"s":128066,"e":128252,"w":2},{"s":128253,"e":128254,"w":1},{"s":128255,"e":128317,"w":2},{"s":128318,"e":128330,"w":1},{"s":128331,"e":128334,"w":2},{"s":128335,"e":128335,"w":1},{"s":128336,"e":128359,"w":2},{"s":128360,"e":128377,"w":1},{"s":128378,"e":128378,"w":2},{"s":128379,"e":128404,"w":1},{"s":128405,"e":128406,"w":2},{"s":128407,"e":128419,"w":1},{"s":128420,"e":128420,"w":2},{"s":128421,"e":128506,"w":1},{"s":128507,"e":128591,"w":2},{"s":128592,"e":128639,"w":1},{"s":128640,"e":128709,"w":2},{"s":128710,"e":128715,"w":1},{"s":128716,"e":128716,"w":2},{"s":128717,"e":128719,"w":1},{"s":128720,"e":128722,"w":2},{"s":128723,"e":128724,"w":1},{"s":128725,"e":128727,"w":2},{"s":128728,"e":128746,"w":1},{"s":128747,"e":128748,"w":2},{"s":128749,"e":128755,"w":1},{"s":128756,"e":128764,"w":2},{"s":128765,"e":128991,"w":1},{"s":128992,"e":129003,"w":2},{"s":129004,"e":129291,"w":1},{"s":129292,"e":129338,"w":2},{"s":129339,"e":129339,"w":1},{"s":129340,"e":129349,"w":2},{"s":129350,"e":129350,"w":1},{"s":129351,"e":129400,"w":2},{"s":129401,"e":129401,"w":1},{"s":129402,"e":129483,"w":2},{"s":129484,"e":129484,"w":1},{"s":129485,"e":129535,"w":2},{"s":129536,"e":129647,"w":1},{"s":129648,"e":129652,"w":2},{"s":129653,"e":129655,"w":1},{"s":129656,"e":129658,"w":2},{"s":129659,"e":129663,"w":1},{"s":129664,"e":129670,"w":2},{"s":129671,"e":129679,"w":1},{"s":129680,"e":129704,"w":2},{"s":129705,"e":129711,"w":1},{"s":129712,"e":129718,"w":2},{"s":129719,"e":129727,"w":1},{"s":129728,"e":129730,"w":2},{"s":129731,"e":129743,"w":1},{"s":129744,"e":129750,"w":2},{"s":129751,"e":129791,"w":1}] ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_START_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_START_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 Module.prepare( '/node_modules/babel-tower/node_modules/string-kit/lib/latinize-map.json' , '/node_modules/babel-tower/node_modules/string-kit' , null , ( module , exports , require , __dirname , __filename ) => {
 module.exports = {"߀":"0","́":""," ":" ","Ⓐ":"A","Ａ":"A","À":"A","Á":"A","Â":"A","Ầ":"A","Ấ":"A","Ẫ":"A","Ẩ":"A","Ã":"A","Ā":"A","Ă":"A","Ằ":"A","Ắ":"A","Ẵ":"A","Ẳ":"A","Ȧ":"A","Ǡ":"A","Ä":"A","Ǟ":"A","Ả":"A","Å":"A","Ǻ":"A","Ǎ":"A","Ȁ":"A","Ȃ":"A","Ạ":"A","Ậ":"A","Ặ":"A","Ḁ":"A","Ą":"A","Ⱥ":"A","Ɐ":"A","Ꜳ":"AA","Æ":"AE","Ǽ":"AE","Ǣ":"AE","Ꜵ":"AO","Ꜷ":"AU","Ꜹ":"AV","Ꜻ":"AV","Ꜽ":"AY","Ⓑ":"B","Ｂ":"B","Ḃ":"B","Ḅ":"B","Ḇ":"B","Ƀ":"B","Ɓ":"B","ｃ":"C","Ⓒ":"C","Ｃ":"C","Ꜿ":"C","Ḉ":"C","Ç":"C","Ⓓ":"D","Ｄ":"D","Ḋ":"D","Ď":"D","Ḍ":"D","Ḑ":"D","Ḓ":"D","Ḏ":"D","Đ":"D","Ɗ":"D","Ɖ":"D","ᴅ":"D","Ꝺ":"D","Ð":"Dh","Ǳ":"DZ","Ǆ":"DZ","ǲ":"Dz","ǅ":"Dz","ɛ":"E","Ⓔ":"E","Ｅ":"E","È":"E","É":"E","Ê":"E","Ề":"E","Ế":"E","Ễ":"E","Ể":"E","Ẽ":"E","Ē":"E","Ḕ":"E","Ḗ":"E","Ĕ":"E","Ė":"E","Ë":"E","Ẻ":"E","Ě":"E","Ȅ":"E","Ȇ":"E","Ẹ":"E","Ệ":"E","Ȩ":"E","Ḝ":"E","Ę":"E","Ḙ":"E","Ḛ":"E","Ɛ":"E","Ǝ":"E","ᴇ":"E","ꝼ":"F","Ⓕ":"F","Ｆ":"F","Ḟ":"F","Ƒ":"F","Ꝼ":"F","Ⓖ":"G","Ｇ":"G","Ǵ":"G","Ĝ":"G","Ḡ":"G","Ğ":"G","Ġ":"G","Ǧ":"G","Ģ":"G","Ǥ":"G","Ɠ":"G","Ꞡ":"G","Ᵹ":"G","Ꝿ":"G","ɢ":"G","Ⓗ":"H","Ｈ":"H","Ĥ":"H","Ḣ":"H","Ḧ":"H","Ȟ":"H","Ḥ":"H","Ḩ":"H","Ḫ":"H","Ħ":"H","Ⱨ":"H","Ⱶ":"H","Ɥ":"H","Ⓘ":"I","Ｉ":"I","Ì":"I","Í":"I","Î":"I","Ĩ":"I","Ī":"I","Ĭ":"I","İ":"I","Ï":"I","Ḯ":"I","Ỉ":"I","Ǐ":"I","Ȉ":"I","Ȋ":"I","Ị":"I","Į":"I","Ḭ":"I","Ɨ":"I","Ⓙ":"J","Ｊ":"J","Ĵ":"J","Ɉ":"J","ȷ":"J","Ⓚ":"K","Ｋ":"K","Ḱ":"K","Ǩ":"K","Ḳ":"K","Ķ":"K","Ḵ":"K","Ƙ":"K","Ⱪ":"K","Ꝁ":"K","Ꝃ":"K","Ꝅ":"K","Ꞣ":"K","Ⓛ":"L","Ｌ":"L","Ŀ":"L","Ĺ":"L","Ľ":"L","Ḷ":"L","Ḹ":"L","Ļ":"L","Ḽ":"L","Ḻ":"L","Ł":"L","Ƚ":"L","Ɫ":"L","Ⱡ":"L","Ꝉ":"L","Ꝇ":"L","Ꞁ":"L","Ǉ":"LJ","ǈ":"Lj","Ⓜ":"M","Ｍ":"M","Ḿ":"M","Ṁ":"M","Ṃ":"M","Ɱ":"M","Ɯ":"M","ϻ":"M","Ꞥ":"N","Ƞ":"N","Ⓝ":"N","Ｎ":"N","Ǹ":"N","Ń":"N","Ñ":"N","Ṅ":"N","Ň":"N","Ṇ":"N","Ņ":"N","Ṋ":"N","Ṉ":"N","Ɲ":"N","Ꞑ":"N","ᴎ":"N","Ǌ":"NJ","ǋ":"Nj","Ⓞ":"O","Ｏ":"O","Ò":"O","Ó":"O","Ô":"O","Ồ":"O","Ố":"O","Ỗ":"O","Ổ":"O","Õ":"O","Ṍ":"O","Ȭ":"O","Ṏ":"O","Ō":"O","Ṑ":"O","Ṓ":"O","Ŏ":"O","Ȯ":"O","Ȱ":"O","Ö":"O","Ȫ":"O","Ỏ":"O","Ő":"O","Ǒ":"O","Ȍ":"O","Ȏ":"O","Ơ":"O","Ờ":"O","Ớ":"O","Ỡ":"O","Ở":"O","Ợ":"O","Ọ":"O","Ộ":"O","Ǫ":"O","Ǭ":"O","Ø":"O","Ǿ":"O","Ɔ":"O","Ɵ":"O","Ꝋ":"O","Ꝍ":"O","Œ":"OE","Ƣ":"OI","Ꝏ":"OO","Ȣ":"OU","Ⓟ":"P","Ｐ":"P","Ṕ":"P","Ṗ":"P","Ƥ":"P","Ᵽ":"P","Ꝑ":"P","Ꝓ":"P","Ꝕ":"P","Ⓠ":"Q","Ｑ":"Q","Ꝗ":"Q","Ꝙ":"Q","Ɋ":"Q","Ⓡ":"R","Ｒ":"R","Ŕ":"R","Ṙ":"R","Ř":"R","Ȑ":"R","Ȓ":"R","Ṛ":"R","Ṝ":"R","Ŗ":"R","Ṟ":"R","Ɍ":"R","Ɽ":"R","Ꝛ":"R","Ꞧ":"R","Ꞃ":"R","Ⓢ":"S","Ｓ":"S","ẞ":"S","Ś":"S","Ṥ":"S","Ŝ":"S","Ṡ":"S","Š":"S","Ṧ":"S","Ṣ":"S","Ṩ":"S","Ș":"S","Ş":"S","Ȿ":"S","Ꞩ":"S","Ꞅ":"S","Ⓣ":"T","Ｔ":"T","Ṫ":"T","Ť":"T","Ṭ":"T","Ț":"T","Ţ":"T","Ṱ":"T","Ṯ":"T","Ŧ":"T","Ƭ":"T","Ʈ":"T","Ⱦ":"T","Ꞇ":"T","Þ":"Th","Ꜩ":"TZ","Ⓤ":"U","Ｕ":"U","Ù":"U","Ú":"U","Û":"U","Ũ":"U","Ṹ":"U","Ū":"U","Ṻ":"U","Ŭ":"U","Ü":"U","Ǜ":"U","Ǘ":"U","Ǖ":"U","Ǚ":"U","Ủ":"U","Ů":"U","Ű":"U","Ǔ":"U","Ȕ":"U","Ȗ":"U","Ư":"U","Ừ":"U","Ứ":"U","Ữ":"U","Ử":"U","Ự":"U","Ụ":"U","Ṳ":"U","Ų":"U","Ṷ":"U","Ṵ":"U","Ʉ":"U","Ⓥ":"V","Ｖ":"V","Ṽ":"V","Ṿ":"V","Ʋ":"V","Ꝟ":"V","Ʌ":"V","Ꝡ":"VY","Ⓦ":"W","Ｗ":"W","Ẁ":"W","Ẃ":"W","Ŵ":"W","Ẇ":"W","Ẅ":"W","Ẉ":"W","Ⱳ":"W","Ⓧ":"X","Ｘ":"X","Ẋ":"X","Ẍ":"X","Ⓨ":"Y","Ｙ":"Y","Ỳ":"Y","Ý":"Y","Ŷ":"Y","Ỹ":"Y","Ȳ":"Y","Ẏ":"Y","Ÿ":"Y","Ỷ":"Y","Ỵ":"Y","Ƴ":"Y","Ɏ":"Y","Ỿ":"Y","Ⓩ":"Z","Ｚ":"Z","Ź":"Z","Ẑ":"Z","Ż":"Z","Ž":"Z","Ẓ":"Z","Ẕ":"Z","Ƶ":"Z","Ȥ":"Z","Ɀ":"Z","Ⱬ":"Z","Ꝣ":"Z","ⓐ":"a","ａ":"a","ẚ":"a","à":"a","á":"a","â":"a","ầ":"a","ấ":"a","ẫ":"a","ẩ":"a","ã":"a","ā":"a","ă":"a","ằ":"a","ắ":"a","ẵ":"a","ẳ":"a","ȧ":"a","ǡ":"a","ä":"a","ǟ":"a","ả":"a","å":"a","ǻ":"a","ǎ":"a","ȁ":"a","ȃ":"a","ạ":"a","ậ":"a","ặ":"a","ḁ":"a","ą":"a","ⱥ":"a","ɐ":"a","ɑ":"a","ꜳ":"aa","æ":"ae","ǽ":"ae","ǣ":"ae","ꜵ":"ao","ꜷ":"au","ꜹ":"av","ꜻ":"av","ꜽ":"ay","ⓑ":"b","ｂ":"b","ḃ":"b","ḅ":"b","ḇ":"b","ƀ":"b","ƃ":"b","ɓ":"b","Ƃ":"b","ⓒ":"c","ć":"c","ĉ":"c","ċ":"c","č":"c","ç":"c","ḉ":"c","ƈ":"c","ȼ":"c","ꜿ":"c","ↄ":"c","C":"c","Ć":"c","Ĉ":"c","Ċ":"c","Č":"c","Ƈ":"c","Ȼ":"c","ⓓ":"d","ｄ":"d","ḋ":"d","ď":"d","ḍ":"d","ḑ":"d","ḓ":"d","ḏ":"d","đ":"d","ƌ":"d","ɖ":"d","ɗ":"d","Ƌ":"d","Ꮷ":"d","ԁ":"d","Ɦ":"d","ð":"dh","ǳ":"dz","ǆ":"dz","ⓔ":"e","ｅ":"e","è":"e","é":"e","ê":"e","ề":"e","ế":"e","ễ":"e","ể":"e","ẽ":"e","ē":"e","ḕ":"e","ḗ":"e","ĕ":"e","ė":"e","ë":"e","ẻ":"e","ě":"e","ȅ":"e","ȇ":"e","ẹ":"e","ệ":"e","ȩ":"e","ḝ":"e","ę":"e","ḙ":"e","ḛ":"e","ɇ":"e","ǝ":"e","ⓕ":"f","ｆ":"f","ḟ":"f","ƒ":"f","ﬀ":"ff","ﬁ":"fi","ﬂ":"fl","ﬃ":"ffi","ﬄ":"ffl","ⓖ":"g","ｇ":"g","ǵ":"g","ĝ":"g","ḡ":"g","ğ":"g","ġ":"g","ǧ":"g","ģ":"g","ǥ":"g","ɠ":"g","ꞡ":"g","ꝿ":"g","ᵹ":"g","ⓗ":"h","ｈ":"h","ĥ":"h","ḣ":"h","ḧ":"h","ȟ":"h","ḥ":"h","ḩ":"h","ḫ":"h","ẖ":"h","ħ":"h","ⱨ":"h","ⱶ":"h","ɥ":"h","ƕ":"hv","ⓘ":"i","ｉ":"i","ì":"i","í":"i","î":"i","ĩ":"i","ī":"i","ĭ":"i","ï":"i","ḯ":"i","ỉ":"i","ǐ":"i","ȉ":"i","ȋ":"i","ị":"i","į":"i","ḭ":"i","ɨ":"i","ı":"i","ⓙ":"j","ｊ":"j","ĵ":"j","ǰ":"j","ɉ":"j","ⓚ":"k","ｋ":"k","ḱ":"k","ǩ":"k","ḳ":"k","ķ":"k","ḵ":"k","ƙ":"k","ⱪ":"k","ꝁ":"k","ꝃ":"k","ꝅ":"k","ꞣ":"k","ⓛ":"l","ｌ":"l","ŀ":"l","ĺ":"l","ľ":"l","ḷ":"l","ḹ":"l","ļ":"l","ḽ":"l","ḻ":"l","ſ":"l","ł":"l","ƚ":"l","ɫ":"l","ⱡ":"l","ꝉ":"l","ꞁ":"l","ꝇ":"l","ɭ":"l","ǉ":"lj","ⓜ":"m","ｍ":"m","ḿ":"m","ṁ":"m","ṃ":"m","ɱ":"m","ɯ":"m","ⓝ":"n","ｎ":"n","ǹ":"n","ń":"n","ñ":"n","ṅ":"n","ň":"n","ṇ":"n","ņ":"n","ṋ":"n","ṉ":"n","ƞ":"n","ɲ":"n","ŉ":"n","ꞑ":"n","ꞥ":"n","ԉ":"n","ǌ":"nj","ⓞ":"o","ｏ":"o","ò":"o","ó":"o","ô":"o","ồ":"o","ố":"o","ỗ":"o","ổ":"o","õ":"o","ṍ":"o","ȭ":"o","ṏ":"o","ō":"o","ṑ":"o","ṓ":"o","ŏ":"o","ȯ":"o","ȱ":"o","ö":"o","ȫ":"o","ỏ":"o","ő":"o","ǒ":"o","ȍ":"o","ȏ":"o","ơ":"o","ờ":"o","ớ":"o","ỡ":"o","ở":"o","ợ":"o","ọ":"o","ộ":"o","ǫ":"o","ǭ":"o","ø":"o","ǿ":"o","ꝋ":"o","ꝍ":"o","ɵ":"o","ɔ":"o","ᴑ":"o","œ":"oe","ƣ":"oi","ꝏ":"oo","ȣ":"ou","ⓟ":"p","ｐ":"p","ṕ":"p","ṗ":"p","ƥ":"p","ᵽ":"p","ꝑ":"p","ꝓ":"p","ꝕ":"p","ρ":"p","ⓠ":"q","ｑ":"q","ɋ":"q","ꝗ":"q","ꝙ":"q","ⓡ":"r","ｒ":"r","ŕ":"r","ṙ":"r","ř":"r","ȑ":"r","ȓ":"r","ṛ":"r","ṝ":"r","ŗ":"r","ṟ":"r","ɍ":"r","ɽ":"r","ꝛ":"r","ꞧ":"r","ꞃ":"r","ⓢ":"s","ｓ":"s","ś":"s","ṥ":"s","ŝ":"s","ṡ":"s","š":"s","ṧ":"s","ṣ":"s","ṩ":"s","ș":"s","ş":"s","ȿ":"s","ꞩ":"s","ꞅ":"s","ẛ":"s","ʂ":"s","ß":"ss","ⓣ":"t","ｔ":"t","ṫ":"t","ẗ":"t","ť":"t","ṭ":"t","ț":"t","ţ":"t","ṱ":"t","ṯ":"t","ŧ":"t","ƭ":"t","ʈ":"t","ⱦ":"t","ꞇ":"t","þ":"th","ꜩ":"tz","ⓤ":"u","ｕ":"u","ù":"u","ú":"u","û":"u","ũ":"u","ṹ":"u","ū":"u","ṻ":"u","ŭ":"u","ü":"u","ǜ":"u","ǘ":"u","ǖ":"u","ǚ":"u","ủ":"u","ů":"u","ű":"u","ǔ":"u","ȕ":"u","ȗ":"u","ư":"u","ừ":"u","ứ":"u","ữ":"u","ử":"u","ự":"u","ụ":"u","ṳ":"u","ų":"u","ṷ":"u","ṵ":"u","ʉ":"u","ⓥ":"v","ｖ":"v","ṽ":"v","ṿ":"v","ʋ":"v","ꝟ":"v","ʌ":"v","ꝡ":"vy","ⓦ":"w","ｗ":"w","ẁ":"w","ẃ":"w","ŵ":"w","ẇ":"w","ẅ":"w","ẘ":"w","ẉ":"w","ⱳ":"w","ⓧ":"x","ｘ":"x","ẋ":"x","ẍ":"x","ⓨ":"y","ｙ":"y","ỳ":"y","ý":"y","ŷ":"y","ỹ":"y","ȳ":"y","ẏ":"y","ÿ":"y","ỷ":"y","ẙ":"y","ỵ":"y","ƴ":"y","ɏ":"y","ỿ":"y","ⓩ":"z","ｚ":"z","ź":"z","ẑ":"z","ż":"z","ž":"z","ẓ":"z","ẕ":"z","ƶ":"z","ȥ":"z","ɀ":"z","ⱬ":"z","ꝣ":"z"} ;
 } ) ;
-BROTHERHOOD_END_MODULE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
-BROTHERHOOD_END_PACKAGE('ytpUgQ6eJ6hNunVxrFkJ2tj9WVEFi7Ni');
+BROTHERHOOD_END_MODULE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
+BROTHERHOOD_END_PACKAGE('607lr5YjdgTQJ7dObdRyu3t31dT9b0dg');
 const process = {
 	browser: true ,
 	title: 'browser' ,
