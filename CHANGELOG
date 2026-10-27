@@ -1,4 +1,10 @@
 
+v0.68.7
+-------
+
+KFG instance have a .getDeepFinalValue() method now
+
+
 v0.68.6
 -------
 
